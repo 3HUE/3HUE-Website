@@ -3273,6 +3273,26 @@ summary::-webkit-details-marker {
   border-color: rgba(68, 168, 217, 0.25);
 }
 
+[data-theme="dark"] .component-face {
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.96), rgba(9, 13, 22, 0.96));
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow: 0 12px 24px rgba(2, 6, 18, 0.55);
+}
+
+[data-theme="dark"] .component-title {
+  color: var(--ink-strong);
+}
+
+[data-theme="dark"] .component-desc {
+  color: var(--ink-default);
+}
+
+[data-theme="dark"] .component-icon {
+  background: rgba(68, 168, 217, 0.18);
+  border-color: rgba(68, 168, 217, 0.45);
+  color: #d7ecfb;
+}
+
 [data-theme="dark"] .card-muted {
   background: rgba(15, 23, 42, 0.75);
 }
