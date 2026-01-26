@@ -303,6 +303,110 @@ p {
   border-color: rgba(68, 168, 217, 0.35);
 }
 
+.engagement-snapshot {
+  position: relative;
+  border: 1px solid rgba(68, 168, 217, 0.22);
+  background: linear-gradient(160deg, #ffffff 0%, #f2f7fb 100%);
+  box-shadow: 0 26px 48px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+}
+
+.engagement-snapshot::after {
+  content: "";
+  position: absolute;
+  inset: auto -80px -140px auto;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(68, 168, 217, 0.2), transparent 70%);
+  pointer-events: none;
+}
+
+.snapshot-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--space-4);
+}
+
+.snapshot-grid {
+  display: grid;
+  gap: var(--space-3);
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--space-4);
+}
+
+.snapshot-item {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
+}
+
+.snapshot-label {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-subtle);
+}
+
+.snapshot-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+.snapshot-services {
+  position: relative;
+  z-index: 1;
+}
+
+.snapshot-services .snapshot-label {
+  margin-bottom: var(--space-3);
+}
+
+.snapshot-service-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.snapshot-service-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.06);
+  color: var(--ink-default);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.snapshot-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: rgba(68, 168, 217, 0.16);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: var(--brand-primary-700);
+}
+
+.snapshot-icon img,
+.snapshot-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
 .about-feature-band {
   position: relative;
   background:
@@ -1656,6 +1760,46 @@ p {
   padding: var(--space-9) 0 var(--space-7);
   background: linear-gradient(140deg, #ffffff 0%, #eef3f7 55%, #f6f7f9 100%);
   border-bottom: 1px solid var(--border-subtle);
+}
+
+.story-hero-logo {
+  width: 120px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+  margin-bottom: var(--space-4);
+}
+
+.story-hero-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+.story-card-logo {
+  width: 96px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.story-card-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1);
 }
 
 .page-hero p {
@@ -3712,6 +3856,13 @@ summary::-webkit-details-marker {
   border-bottom-color: rgba(148, 163, 184, 0.2);
 }
 
+[data-theme="dark"] .story-hero-logo,
+[data-theme="dark"] .story-card-logo {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow: var(--shadow-soft);
+}
+
 [data-theme="dark"] .hero-cinematic .hero-media {
   filter: saturate(1.05) contrast(1.12) brightness(0.78);
 }
@@ -3768,4 +3919,34 @@ summary::-webkit-details-marker {
 
 [data-theme="dark"] .proof-desc {
   color: var(--ink-subtle);
+}
+
+[data-theme="dark"] .engagement-snapshot {
+  background: linear-gradient(160deg, rgba(10, 16, 26, 0.96), rgba(15, 23, 42, 0.96));
+  border-color: rgba(68, 168, 217, 0.38);
+}
+
+[data-theme="dark"] .engagement-snapshot::after {
+  background: radial-gradient(circle, rgba(68, 168, 217, 0.28), transparent 70%);
+}
+
+[data-theme="dark"] .engagement-snapshot .snapshot-item,
+[data-theme="dark"] .engagement-snapshot .snapshot-service-list li {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: var(--shadow-soft);
+}
+
+[data-theme="dark"] .engagement-snapshot .snapshot-label {
+  color: #b6c4d5;
+}
+
+[data-theme="dark"] .engagement-snapshot .snapshot-value,
+[data-theme="dark"] .engagement-snapshot .snapshot-service-list li {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .engagement-snapshot .snapshot-icon {
+  background: rgba(68, 168, 217, 0.22);
+  color: #d9eff8;
 }
