@@ -1,5 +1,6 @@
 (() => {
   const body = document.body;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const menuToggle = document.querySelector('[data-menu-toggle]');
   const menuClose = document.querySelector('[data-menu-close]');
   const menuOverlay = document.querySelector('[data-menu-overlay]');
@@ -14,6 +15,35 @@
       mobileMenu.setAttribute('aria-hidden', String(!isOpen));
     }
   };
+
+  const preloader = document.querySelector('[data-preloader]');
+  if (preloader) {
+    const minDuration = prefersReducedMotion ? 0 : 420;
+    const maxDuration = prefersReducedMotion ? 0 : 1400;
+    const startTime = performance.now();
+    let hasFinished = false;
+    body.classList.add('is-preloading');
+
+    const finishPreloader = () => {
+      if (hasFinished) {
+        return;
+      }
+      hasFinished = true;
+      const elapsed = performance.now() - startTime;
+      const delay = Math.max(minDuration - elapsed, 0);
+      window.setTimeout(() => {
+        body.classList.remove('is-preloading');
+      }, delay);
+    };
+
+    if (document.readyState === 'complete') {
+      finishPreloader();
+    } else {
+      window.addEventListener('load', finishPreloader, { once: true });
+    }
+
+    window.setTimeout(finishPreloader, maxDuration);
+  }
 
   if (menuToggle) {
     menuToggle.addEventListener('click', () => {
@@ -42,7 +72,6 @@
     });
   });
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const accordionGroups = document.querySelectorAll('[data-accordion="exclusive"]');
 
   accordionGroups.forEach((group) => {
