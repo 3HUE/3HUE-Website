@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Knowledge Vault | Web3-DMP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page vault-page">
+    <header class="vault-hero">
+      <nav class="nav">
+        <div class="brand">
+          <a class="brand-link" href="/3hue-website/frameworks/index.html"><img class="brand-mark" src="assets/img/3hue%20cl-2021.png" alt="3HUE logo" /></a>
+          <div>
+            <div class="brand-title">3HUE</div>
+            <div class="brand-sub">Knowledge Vault</div>
+          </div>
+        </div>
+        <div class="nav-actions">
+          <a class="ghost" href="index.html">Back to Web3-DMP</a>
+          <button class="primary" id="btn-request-access" data-open-modal="access-flow">Request Access</button>
+        </div>
+      </nav>
+
+      <div class="vault-hero-grid">
+        <div>
+          <p class="eyebrow">Token-Gated • Zero-Knowledge • Evidence-Ready</p>
+          <h1>Secure, share, and verify maturity knowledge without exposure.</h1>
+          <p class="subhead">
+            The Knowledge Vault is a gated repository for assessment playbooks, evidence artifacts,
+            and transformation initiatives. Access is granted through verifiable credentials,
+            policy-driven approval workflows, and cryptographic proofs.
+          </p>
+          <div class="hero-cta">
+            <button class="primary" id="btn-verify" data-open-modal="connect-flow">Verify Credential</button>
+            <button class="ghost" id="btn-preview" data-open-modal="preview-flow">Preview Vault Contents</button>
+          </div>
+        </div>
+        <div class="vault-panel">
+          <div class="vault-panel-card">
+            <h3>Access Requirements</h3>
+            <ul>
+              <li>Verified security leader credential</li>
+              <li>Signed NDA / data sharing agreement</li>
+              <li>Role-based approval from vault stewards</li>
+            </ul>
+            <div class="vault-tags">
+              <span class="tag">Credentialed</span>
+              <span class="tag">Auditable</span>
+              <span class="tag">Encrypted</span>
+            </div>
+          </div>
+          <div class="vault-panel-card">
+            <h3>Vault Security</h3>
+            <p>Encrypted evidence shards, zero-knowledge proofs, and on-chain attestations for every share.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section alt">
+      <div class="section-head">
+        <h2>Gated Content UX</h2>
+        <p>Preview the vault while sensitive materials remain protected.</p>
+      </div>
+      <div class="gated-grid">
+        <div class="gated-card locked">
+          <div class="gated-state">Locked</div>
+          <h3>Security Program Optimization Playbook</h3>
+          <p>Includes assessment questions, testing procedures, and evidence checklists.</p>
+          <div class="gated-actions">
+            <button class="ghost" data-open-modal="connect-flow">Unlock with Credential</button>
+            <a class="ghost" href="vault-playbooks.html">View Details</a>
+          </div>
+        </div>
+        <div class="gated-card locked">
+          <div class="gated-state">Locked</div>
+          <h3>Threat Modeling Evidence Pack</h3>
+          <p>Repository of artifacts for architecture risk decisions.</p>
+          <div class="gated-actions">
+            <button class="ghost" data-open-modal="access-flow">Request Steward Approval</button>
+            <a class="ghost" href="vault-evidence-packs.html">View Details</a>
+          </div>
+        </div>
+        <div class="gated-card preview">
+          <div class="gated-state">Preview</div>
+          <h3>Framework Crosswalk Summary</h3>
+          <p>High-level mappings to NIST, ISO, COBIT, and CIS controls.</p>
+          <div class="gated-actions">
+            <button class="ghost" data-open-modal="preview-flow">Open Preview</button>
+            <a class="ghost" href="vault-crosswalks.html">View Details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Access Workflow</h2>
+        <p>How security leaders gain and maintain vault membership.</p>
+      </div>
+      <div class="roadmap">
+        <div class="roadmap-step">
+          <div class="step-index">01</div>
+          <h3>Credential Verification</h3>
+          <p>Validate identity and role using verifiable credentials.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-index">02</div>
+          <h3>Risk Review</h3>
+          <p>Vault stewards evaluate access requests and define scope.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-index">03</div>
+          <h3>Evidence Exchange</h3>
+          <p>Encrypted artifacts shared through policy-based smart contracts.</p>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-index">04</div>
+          <h3>Continuous Attestation</h3>
+          <p>Maintain access through periodic proof-of-maturity updates.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="cta">
+        <div>
+          <h2>Request vault access</h2>
+          <p>Submit your credentials and launch a secure knowledge-sharing flow.</p>
+        </div>
+        <div class="cta-actions">
+          <button class="primary" id="btn-submit" data-open-modal="access-flow">Submit Request</button>
+          <button class="ghost" id="btn-criteria" data-open-modal="preview-flow">View Eligibility Criteria</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="tutorial" id="vault-tutorial">
+      <div class="tutorial-card">
+        <div class="tutorial-step" id="vault-tutorial-step">Step 1 of 4</div>
+        <div class="tutorial-meter">
+          <div class="tutorial-meter-fill" id="vault-tutorial-meter"></div>
+        </div>
+        <h3 id="vault-tutorial-title">Welcome to the Knowledge Vault</h3>
+        <p id="vault-tutorial-body">This tour shows how access and evidence sharing work.</p>
+        <div class="tutorial-actions">
+          <button class="ghost" id="vault-tutorial-skip">Skip</button>
+          <button class="primary" id="vault-tutorial-next">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="tutorial-prompt" id="vault-tutorial-prompt">
+      <div>
+        <strong>Need a walkthrough?</strong> Explore how the vault is gated.
+      </div>
+      <div class="tutorial-prompt-actions">
+        <button class="ghost" id="vault-tutorial-dismiss">Not now</button>
+        <button class="primary" id="vault-tutorial-start">Start tutorial</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="connect-flow">
+    <div class="modal-panel" data-stepper>
+      <button class="drawer-close" data-close-modal>Close</button>
+      <div class="modal-step active" data-step>
+        <h2>Connect Credential Wallet</h2>
+        <p>Choose a verifier to authenticate your security leader credential.</p>
+        <div class="status-line" data-status-line data-state="pending">
+          <span class="status-dot"></span>
+          <span data-status-text>Connection pending</span>
+          <span class="status-pill pending" data-status-pill>In Progress</span>
+        </div>
+        <div class="modal-grid">
+          <button class="ghost">Enterprise SSO</button>
+          <button class="ghost">DID Wallet</button>
+          <button class="ghost">Hardware Key</button>
+        </div>
+        <div class="modal-actions">
+          <button class="primary" data-next>Continue</button>
+        </div>
+      </div>
+      <div class="modal-step" data-step data-review>
+        <h2>Credential Validation</h2>
+        <p>We verify issuer signature, role attributes, and expiration status.</p>
+        <div class="status-line" data-status-line data-state="pending">
+          <span class="status-dot"></span>
+          <span data-status-text>Verification running</span>
+          <span class="status-pill pending" data-status-pill>Verifying</span>
+        </div>
+        <div class="detail-block">
+          Status: Awaiting cryptographic proof validation.<br />
+          Required: Security Leader VC + NDA acknowledgement.
+        </div>
+        <div class="modal-actions">
+          <button class="ghost" data-prev>Back</button>
+          <button class="primary" data-next>Submit Proof</button>
+        </div>
+      </div>
+      <div class="modal-step" data-step data-final>
+        <h2>Access Granted</h2>
+        <p>Your credential is valid. Access scope can now be requested.</p>
+        <div class="status-line" data-status-line data-state="approved">
+          <span class="status-dot"></span>
+          <span data-status-text>Verification result</span>
+          <span class="status-pill approved" data-status-pill>Approved</span>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost" data-reset>Start Over</button>
+          <button class="primary" data-close-modal>Continue to Vault</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="access-flow">
+    <div class="modal-panel" data-stepper>
+      <button class="drawer-close" data-close-modal>Close</button>
+      <div class="modal-step active" data-step>
+        <h2>Request Access</h2>
+        <p>Provide scope details and the vault steward will review your request.</p>
+        <div class="status-line" data-status-line data-state="pending">
+          <span class="status-dot"></span>
+          <span data-status-text>Request drafted</span>
+          <span class="status-pill pending" data-status-pill>In Progress</span>
+        </div>
+        <div class="detail-block">
+          Scope: Security Program Optimization, Evidence Packs, Crosswalks.<br />
+          Data Handling: Encrypted evidence shards only.
+        </div>
+        <div class="modal-actions">
+          <button class="primary" data-next>Continue</button>
+        </div>
+      </div>
+      <div class="modal-step" data-step data-review>
+        <h2>Risk &amp; Compliance Review</h2>
+        <p>Confirm your organization's governance and data-sharing constraints.</p>
+        <div class="status-line" data-status-line data-state="pending">
+          <span class="status-dot"></span>
+          <span data-status-text>Review in progress</span>
+          <span class="status-pill pending" data-status-pill>Verifying</span>
+        </div>
+        <div class="modal-grid">
+          <button class="ghost">NDA Signed</button>
+          <button class="ghost">Data Residency Confirmed</button>
+          <button class="ghost">Steward Approval Pending</button>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost" data-prev>Back</button>
+          <button class="primary" data-next>Submit Request</button>
+        </div>
+      </div>
+      <div class="modal-step" data-step data-final>
+        <h2>Request Submitted</h2>
+        <p>Vault stewards will notify you within 48 hours.</p>
+        <div class="status-line" data-status-line data-state="approved">
+          <span class="status-dot"></span>
+          <span data-status-text>Decision</span>
+          <span class="status-pill approved" data-status-pill>Approved</span>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost" data-reset>Start Over</button>
+          <button class="primary" data-close-modal>Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="preview-flow">
+    <div class="modal-panel" data-stepper>
+      <button class="drawer-close" data-close-modal>Close</button>
+      <div class="modal-step active" data-step>
+        <h2>Preview Mode</h2>
+        <p>Explore summaries while sensitive content stays protected.</p>
+        <div class="status-line" data-status-line data-state="pending">
+          <span class="status-dot"></span>
+          <span data-status-text>Preview initializing</span>
+          <span class="status-pill pending" data-status-pill>In Progress</span>
+        </div>
+        <div class="detail-block">
+          Preview includes: crosswalk summaries, capability metadata, and anonymized insights.
+        </div>
+        <div class="modal-actions">
+          <button class="primary" data-next>Open Preview</button>
+        </div>
+      </div>
+      <div class="modal-step" data-step data-final>
+        <h2>Preview Access</h2>
+        <p>Preview access expires in 15 minutes. Full access requires verification.</p>
+        <div class="status-line" data-status-line data-state="approved">
+          <span class="status-dot"></span>
+          <span data-status-text>Preview status</span>
+          <span class="status-pill approved" data-status-pill>Active</span>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost" data-prev>Back</button>
+          <button class="primary" data-close-modal>Enter Vault Preview</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="vault.js"></script>
+  <script src="vault-tutorial.js"></script>
+</body>
+</html>
+
+

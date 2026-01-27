@@ -589,7 +589,7 @@
         ['Additional notes', getValue('notes')],
       ];
       summaryList.innerHTML = rows
-        .map(([label, value]) => `<dt>${label}</dt><dd>${value || 'â€”'}</dd>`)
+        .map(([label, value]) => `<dt>${label}</dt><dd>${value || 'â€"'}</dd>`)
         .join('');
     };
 
@@ -660,6 +660,61 @@
       }
     });
   }
+
+  const portalLoginModal = document.querySelector('[data-portal-login-modal]');
+  if (portalLoginModal) {
+    const openButtons = Array.from(document.querySelectorAll('[data-portal-login]'));
+    const closeButtons = Array.from(portalLoginModal.querySelectorAll('[data-portal-login-close]'));
+    const form = portalLoginModal.querySelector('[data-portal-login-form]');
+    const toggleButton = portalLoginModal.querySelector('[data-password-toggle]');
+    const passwordInput = portalLoginModal.querySelector('input[name="loginPassword"]');
+
+    const openLogin = () => {
+      portalLoginModal.classList.add('is-open');
+      portalLoginModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      const firstField = portalLoginModal.querySelector('input[name="loginEmail"]');
+      if (firstField) {
+        firstField.focus();
+      }
+    };
+
+    const closeLogin = () => {
+      portalLoginModal.classList.remove('is-open');
+      portalLoginModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    };
+
+    openButtons.forEach((button) =>
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        openLogin();
+      })
+    );
+
+    closeButtons.forEach((button) => button.addEventListener('click', closeLogin));
+
+    if (toggleButton && passwordInput) {
+      toggleButton.addEventListener('click', () => {
+        const isMasked = passwordInput.type === 'password';
+        passwordInput.type = isMasked ? 'text' : 'password';
+        toggleButton.textContent = isMasked ? 'Hide' : 'Show';
+        toggleButton.setAttribute('aria-label', isMasked ? 'Hide password' : 'Show password');
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && portalLoginModal.classList.contains('is-open')) {
+        closeLogin();
+      }
+    });
+  }
 })();
 const storageKey = "3hue-theme";
 const themeToggles = document.querySelectorAll(".theme-toggle");
@@ -696,3 +751,4 @@ themeToggles.forEach((btn) => {
     applyTheme(nextTheme);
   });
 });
+

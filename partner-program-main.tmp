@@ -1,4 +1,4 @@
-﻿<main id="main">
+<main id="main">
   <section class="page-hero partner-hero">
     <div class="container">
       <div class="eyebrow">Partner Program</div>
@@ -130,7 +130,7 @@
         <ul class="list-styled">
           <li>Agreement term is one year with automatic annual renewals unless notice is given.</li>
           <li>Monthly reports are delivered within 10 business days after month-end.</li>
-          <li>Termination for cause requires 30 days written notice and cure period.</li>
+          <li>Termination for cause requires 30 days' written notice and cure period.</li>
           <li>Final reporting and payouts are issued within 30 days after termination.</li>
         </ul>
       </article>
@@ -150,3 +150,4 @@
     </div>
   </section>
 </main>
+
