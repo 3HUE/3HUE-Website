@@ -1,0 +1,152 @@
+﻿<main id="main">
+  <section class="page-hero partner-hero">
+    <div class="container">
+      <div class="eyebrow">Partner Program</div>
+      <h1>Low-friction partnerships that turn opportunity into revenue.</h1>
+      <p class="lead">The 3HUE Partner Program helps referral and strategic partners unlock new revenue streams with clear incentives, governed engagement, and a simple path to get started.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://info.3hue.net/partners">Apply for Partner ID</a>
+        <a class="btn btn-outline" href="assets/docs/3HUE-Referral-Partner-Agreement.pdf">Download Referral Agreement</a>
+      </div>
+      <div class="partner-hero-meta">
+        <span class="tag">Referral Partner</span>
+        <span class="tag">Reseller / Technology Partner</span>
+        <span class="tag">North America</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <div class="eyebrow">Program Overview</div>
+        <h2>Built for partners who want clarity, speed, and measurable upside.</h2>
+        <p>3HUE provides professional services and managed programs across security, risk, and GRC. The Partner Program formalizes how referrals and strategic delivery partnerships are registered, tracked, and compensated.</p>
+        <ul class="list-styled">
+          <li>Qualified referrals are introduced in writing or by phone and must contract within three months.</li>
+          <li>Referrals are submitted through the partner portal and confirmed in writing by 3HUE.</li>
+          <li>Partner activity is tracked through a unique Partner ID issued during onboarding.</li>
+        </ul>
+      </div>
+      <aside class="card partner-hero-card">
+        <div class="eyebrow">Fast Start</div>
+        <h3>Submit referrals and track payouts quickly.</h3>
+        <ul class="list-styled">
+          <li>Partner ID issued through the online portal.</li>
+          <li>Monthly reporting within 10 business days after month end.</li>
+          <li>Commission payments based on closed, paid engagements.</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="https://info.3hue.net/partners">Go to Partner Portal</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <section class="section section-alt">
+    <div class="container">
+      <div class="eyebrow">Partner Types</div>
+      <h2>Choose the engagement model that matches your business.</h2>
+      <div class="grid-2">
+        <article class="card feature-card">
+          <h3>Referral Partner</h3>
+          <p>Introduce qualified opportunities. 3HUE leads the sales process and compensates referral partners when deals close.</p>
+          <ul class="list-styled">
+            <li>3HUE owns the selling process, quoting, discounting, and contracting.</li>
+            <li>3HUE provides a warm hand-off and leads the engagement.</li>
+            <li>Referral fees are paid net 30 after customer payment.</li>
+            <li>NDA agreements are required.</li>
+          </ul>
+        </article>
+        <article class="card feature-card">
+          <h3>Reseller / Technology Partner</h3>
+          <p>Deliver with 3HUE using wholesale rates while maintaining the customer relationship.</p>
+          <ul class="list-styled">
+            <li>3HUE provides wholesale rates to the partner.</li>
+            <li>3HUE bills the partner; the partner bills the customer.</li>
+            <li>Partner owns the customer relationship and acts as customer of record.</li>
+            <li>Non-integrated ticketing workflow may require coordination between teams.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="eyebrow">Benefits & Incentives</div>
+      <h2>Clear economics and transparent payout rules.</h2>
+      <div class="grid-3">
+        <article class="card reveal">
+          <h3>Referral payout</h3>
+          <p>Referral partners receive 5% of total contract value, paid within 30 days after 3HUE receives customer payment.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Payout limits</h3>
+          <p>Payouts apply for one year on projects acquired within that year and are capped at $50K ($1M total contract value). Larger deals require ICB approval.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Reseller discount</h3>
+          <p>Reseller/technology partners receive a 10% discount from standard rates on eligible services.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section section-alt">
+    <div class="container">
+      <div class="eyebrow">How Referrals Work</div>
+      <h2>Simple steps from application to payout.</h2>
+      <div class="grid-3">
+        <article class="card reveal">
+          <h3>1. Apply &amp; get a Partner ID</h3>
+          <p>Partners apply via the online portal to receive a unique Partner ID used for tracking referrals and payments.</p>
+        </article>
+        <article class="card reveal">
+          <h3>2. Submit referrals</h3>
+          <p>Referrals are submitted through the 3HUE referral form and confirmed in writing if accepted as qualified.</p>
+        </article>
+        <article class="card reveal">
+          <h3>3. Close, report, and pay</h3>
+          <p>3HUE manages the sales cycle and delivers monthly reporting; commissions are paid net 30 after customer payment.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <article class="card reveal">
+        <div class="eyebrow">Partner Expectations</div>
+        <h3>Operate with integrity and compliance.</h3>
+        <ul class="list-styled">
+          <li>Partners operate as independent contractors with no authority to bind 3HUE.</li>
+          <li>Referral activities must comply with applicable laws and avoid misleading representations.</li>
+          <li>Confidential information is protected and survives for five years after termination.</li>
+          <li>Referral activities are limited to North America per the agreement.</li>
+        </ul>
+      </article>
+      <article class="card reveal">
+        <div class="eyebrow">Term &amp; Reporting</div>
+        <h3>Clear governance and accountability.</h3>
+        <ul class="list-styled">
+          <li>Agreement term is one year with automatic annual renewals unless notice is given.</li>
+          <li>Monthly reports are delivered within 10 business days after month-end.</li>
+          <li>Termination for cause requires 30 days written notice and cure period.</li>
+          <li>Final reporting and payouts are issued within 30 days after termination.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band cta-band-wide">
+      <div>
+        <h2>Ready to partner with 3HUE?</h2>
+        <p>Apply for your Partner ID, submit a referral, or download the agreement for full terms.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://info.3hue.net/partners">Apply for Partner ID</a>
+        <a class="btn btn-outline" href="assets/docs/3HUE-Referral-Partner-Agreement.pdf">Referral Agreement</a>
+      </div>
+    </div>
+  </section>
+</main>
