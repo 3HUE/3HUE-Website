@@ -1,210 +1,209 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vault Evidence Packs | Knowledge Vault</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="page vault-page">
-    <nav class="nav">
-      <div class="brand">
-        <a class="brand-link" href="/frameworks/index.html"><img class="brand-mark" src="assets/img/3hue%20cl-2021.png" alt="3HUE logo" /></a>
-        <div>
-          <div class="brand-title">3HUE</div>
-          <div class="brand-sub">Evidence Packs</div>
-        </div>
-      </div>
-      <div class="nav-actions">
-        <a class="ghost" href="knowledge-vault.html">Back to Knowledge Vault</a>
-      </div>
-    </nav>
-
-    <section class="section alt">
-      <div class="section-head">
-        <h2>Evidence Packs</h2>
-        <p>Cryptographically protected artifact bundles for audits and attestations.</p>
-      </div>
-      <div class="gated-grid">
-        <div class="gated-card locked">
-          <div class="gated-state">Locked</div>
-          <h3>Threat Modeling Evidence Pack</h3>
-          <p>Architecture risk decisions, modeling logs, and remediation history.</p>
-          <div class="gated-actions">
-            <button class="ghost" data-open-modal="access-flow">Request Steward Approval</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vault Evidence Packs | Knowledge Vault</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page vault-page">
+      <nav class="nav">
+        <div class="brand">
+          <a class="brand-link" href="/frameworks/index.html"
+            ><img class="brand-mark" src="assets/img/3hue%20cl-2021.png" alt="3HUE logo"
+          /></a>
+          <div>
+            <div class="brand-title">3HUE</div>
+            <div class="brand-sub">Evidence Packs</div>
           </div>
         </div>
-        <div class="gated-card locked">
-          <div class="gated-state">Locked</div>
-          <h3>SOC Automation Evidence Pack</h3>
-          <p>Automation runbooks, detection tuning, and response metrics.</p>
-          <div class="gated-actions">
-            <button class="ghost" data-open-modal="connect-flow">Unlock with Credential</button>
+        <div class="nav-actions">
+          <a class="ghost" href="knowledge-vault.html">Back to Knowledge Vault</a>
+        </div>
+      </nav>
+
+      <section class="section alt">
+        <div class="section-head">
+          <h2>Evidence Packs</h2>
+          <p>Cryptographically protected artifact bundles for audits and attestations.</p>
+        </div>
+        <div class="gated-grid">
+          <div class="gated-card locked">
+            <div class="gated-state">Locked</div>
+            <h3>Threat Modeling Evidence Pack</h3>
+            <p>Architecture risk decisions, modeling logs, and remediation history.</p>
+            <div class="gated-actions">
+              <button class="ghost" data-open-modal="access-flow">Request Steward Approval</button>
+            </div>
+          </div>
+          <div class="gated-card locked">
+            <div class="gated-state">Locked</div>
+            <h3>SOC Automation Evidence Pack</h3>
+            <p>Automation runbooks, detection tuning, and response metrics.</p>
+            <div class="gated-actions">
+              <button class="ghost" data-open-modal="connect-flow">Unlock with Credential</button>
+            </div>
+          </div>
+          <div class="gated-card preview">
+            <div class="gated-state">Preview</div>
+            <h3>Identity Fraud Proof Set</h3>
+            <p>Behavioral signal summaries and assurance checkpoints.</p>
+            <div class="gated-actions">
+              <button class="ghost" data-open-modal="preview-flow">Open Preview</button>
+            </div>
           </div>
         </div>
-        <div class="gated-card preview">
-          <div class="gated-state">Preview</div>
-          <h3>Identity Fraud Proof Set</h3>
-          <p>Behavioral signal summaries and assurance checkpoints.</p>
-          <div class="gated-actions">
-            <button class="ghost" data-open-modal="preview-flow">Open Preview</button>
+      </section>
+    </div>
+
+    <div class="modal" data-modal="connect-flow">
+      <div class="modal-panel" data-stepper>
+        <button class="drawer-close" data-close-modal>Close</button>
+        <div class="modal-step active" data-step>
+          <h2>Connect Credential Wallet</h2>
+          <p>Authenticate your credential to unlock evidence packs.</p>
+          <div class="status-line" data-status-line data-state="pending">
+            <span class="status-dot"></span>
+            <span data-status-text>Connection pending</span>
+            <span class="status-pill pending" data-status-pill>In Progress</span>
+          </div>
+          <div class="modal-grid">
+            <button class="ghost">Enterprise SSO</button>
+            <button class="ghost">DID Wallet</button>
+            <button class="ghost">Hardware Key</button>
+          </div>
+          <div class="modal-actions">
+            <button class="primary" data-next>Continue</button>
+          </div>
+        </div>
+        <div class="modal-step" data-step data-review>
+          <h2>Credential Validation</h2>
+          <p>Issuer signature and role claims verified.</p>
+          <div class="status-line" data-status-line data-state="pending">
+            <span class="status-dot"></span>
+            <span data-status-text>Verification running</span>
+            <span class="status-pill pending" data-status-pill>Verifying</span>
+          </div>
+          <div class="modal-actions">
+            <button class="ghost" data-prev>Back</button>
+            <button class="primary" data-next>Submit Proof</button>
+          </div>
+        </div>
+        <div class="modal-step" data-step data-final>
+          <h2>Access Granted</h2>
+          <p>Evidence pack access unlocked for verified roles.</p>
+          <div class="status-line" data-status-line data-state="approved">
+            <span class="status-dot"></span>
+            <span data-status-text>Verification result</span>
+            <span class="status-pill approved" data-status-pill>Approved</span>
+          </div>
+          <div class="modal-actions">
+            <button class="ghost" data-reset>Start Over</button>
+            <button class="primary" data-close-modal>Continue</button>
           </div>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
 
-  <div class="modal" data-modal="connect-flow">
-    <div class="modal-panel" data-stepper>
-      <button class="drawer-close" data-close-modal>Close</button>
-      <div class="modal-step active" data-step>
-        <h2>Connect Credential Wallet</h2>
-        <p>Authenticate your credential to unlock evidence packs.</p>
-        <div class="status-line" data-status-line data-state="pending">
-          <span class="status-dot"></span>
-          <span data-status-text>Connection pending</span>
-          <span class="status-pill pending" data-status-pill>In Progress</span>
+    <div class="modal" data-modal="access-flow">
+      <div class="modal-panel" data-stepper>
+        <button class="drawer-close" data-close-modal>Close</button>
+        <div class="modal-step active" data-step>
+          <h2>Request Access</h2>
+          <p>Evidence packs require steward approval and NDA.</p>
+          <div class="status-line" data-status-line data-state="pending">
+            <span class="status-dot"></span>
+            <span data-status-text>Request drafted</span>
+            <span class="status-pill pending" data-status-pill>In Progress</span>
+          </div>
+          <div class="modal-actions">
+            <button class="primary" data-next>Continue</button>
+          </div>
         </div>
-        <div class="modal-grid">
-          <button class="ghost">Enterprise SSO</button>
-          <button class="ghost">DID Wallet</button>
-          <button class="ghost">Hardware Key</button>
+        <div class="modal-step" data-step data-review>
+          <h2>Risk Review</h2>
+          <p>Confirm compliance and data handling scope.</p>
+          <div class="status-line" data-status-line data-state="pending">
+            <span class="status-dot"></span>
+            <span data-status-text>Review in progress</span>
+            <span class="status-pill pending" data-status-pill>Verifying</span>
+          </div>
+          <div class="modal-actions">
+            <button class="ghost" data-prev>Back</button>
+            <button class="primary" data-next>Submit</button>
+          </div>
         </div>
-        <div class="modal-actions">
-          <button class="primary" data-next>Continue</button>
-        </div>
-      </div>
-      <div class="modal-step" data-step data-review>
-        <h2>Credential Validation</h2>
-        <p>Issuer signature and role claims verified.</p>
-        <div class="status-line" data-status-line data-state="pending">
-          <span class="status-dot"></span>
-          <span data-status-text>Verification running</span>
-          <span class="status-pill pending" data-status-pill>Verifying</span>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost" data-prev>Back</button>
-          <button class="primary" data-next>Submit Proof</button>
-        </div>
-      </div>
-      <div class="modal-step" data-step data-final>
-        <h2>Access Granted</h2>
-        <p>Evidence pack access unlocked for verified roles.</p>
-        <div class="status-line" data-status-line data-state="approved">
-          <span class="status-dot"></span>
-          <span data-status-text>Verification result</span>
-          <span class="status-pill approved" data-status-pill>Approved</span>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost" data-reset>Start Over</button>
-          <button class="primary" data-close-modal>Continue</button>
+        <div class="modal-step" data-step data-final>
+          <h2>Submitted</h2>
+          <p>Vault stewards will follow up shortly.</p>
+          <div class="status-line" data-status-line data-state="approved">
+            <span class="status-dot"></span>
+            <span data-status-text>Decision</span>
+            <span class="status-pill approved" data-status-pill>Approved</span>
+          </div>
+          <div class="modal-actions">
+            <button class="ghost" data-reset>Start Over</button>
+            <button class="primary" data-close-modal>Done</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal" data-modal="access-flow">
-    <div class="modal-panel" data-stepper>
-      <button class="drawer-close" data-close-modal>Close</button>
-      <div class="modal-step active" data-step>
-        <h2>Request Access</h2>
-        <p>Evidence packs require steward approval and NDA.</p>
-        <div class="status-line" data-status-line data-state="pending">
-          <span class="status-dot"></span>
-          <span data-status-text>Request drafted</span>
-          <span class="status-pill pending" data-status-pill>In Progress</span>
+    <div class="modal" data-modal="preview-flow">
+      <div class="modal-panel" data-stepper>
+        <button class="drawer-close" data-close-modal>Close</button>
+        <div class="modal-step active" data-step>
+          <h2>Preview Mode</h2>
+          <p>Preview summaries while sensitive data stays protected.</p>
+          <div class="status-line" data-status-line data-state="pending">
+            <span class="status-dot"></span>
+            <span data-status-text>Preview initializing</span>
+            <span class="status-pill pending" data-status-pill>In Progress</span>
+          </div>
+          <div class="modal-actions">
+            <button class="primary" data-next>Open Preview</button>
+          </div>
         </div>
-        <div class="modal-actions">
-          <button class="primary" data-next>Continue</button>
-        </div>
-      </div>
-      <div class="modal-step" data-step data-review>
-        <h2>Risk Review</h2>
-        <p>Confirm compliance and data handling scope.</p>
-        <div class="status-line" data-status-line data-state="pending">
-          <span class="status-dot"></span>
-          <span data-status-text>Review in progress</span>
-          <span class="status-pill pending" data-status-pill>Verifying</span>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost" data-prev>Back</button>
-          <button class="primary" data-next>Submit</button>
-        </div>
-      </div>
-      <div class="modal-step" data-step data-final>
-        <h2>Submitted</h2>
-        <p>Vault stewards will follow up shortly.</p>
-        <div class="status-line" data-status-line data-state="approved">
-          <span class="status-dot"></span>
-          <span data-status-text>Decision</span>
-          <span class="status-pill approved" data-status-pill>Approved</span>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost" data-reset>Start Over</button>
-          <button class="primary" data-close-modal>Done</button>
+        <div class="modal-step" data-step data-final>
+          <h2>Preview Access</h2>
+          <p>Preview access expires in 15 minutes.</p>
+          <div class="status-line" data-status-line data-state="approved">
+            <span class="status-dot"></span>
+            <span data-status-text>Preview status</span>
+            <span class="status-pill approved" data-status-pill>Active</span>
+          </div>
+          <div class="modal-actions">
+            <button class="ghost" data-prev>Back</button>
+            <button class="primary" data-close-modal>Enter Preview</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal" data-modal="preview-flow">
-    <div class="modal-panel" data-stepper>
-      <button class="drawer-close" data-close-modal>Close</button>
-      <div class="modal-step active" data-step>
-        <h2>Preview Mode</h2>
-        <p>Preview summaries while sensitive data stays protected.</p>
-        <div class="status-line" data-status-line data-state="pending">
-          <span class="status-dot"></span>
-          <span data-status-text>Preview initializing</span>
-          <span class="status-pill pending" data-status-pill>In Progress</span>
+    <div class="tutorial" id="vault-tutorial">
+      <div class="tutorial-card">
+        <div class="tutorial-step" id="vault-tutorial-step">Step 1 of 3</div>
+        <div class="tutorial-meter">
+          <div class="tutorial-meter-fill" id="vault-tutorial-meter"></div>
         </div>
-        <div class="modal-actions">
-          <button class="primary" data-next>Open Preview</button>
-        </div>
-      </div>
-      <div class="modal-step" data-step data-final>
-        <h2>Preview Access</h2>
-        <p>Preview access expires in 15 minutes.</p>
-        <div class="status-line" data-status-line data-state="approved">
-          <span class="status-dot"></span>
-          <span data-status-text>Preview status</span>
-          <span class="status-pill approved" data-status-pill>Active</span>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost" data-prev>Back</button>
-          <button class="primary" data-close-modal>Enter Preview</button>
+        <h3 id="vault-tutorial-title">Evidence Packs Overview</h3>
+        <p id="vault-tutorial-body">Learn how evidence packs are gated and verified.</p>
+        <div class="tutorial-actions">
+          <button class="ghost" id="vault-tutorial-skip">Skip</button>
+          <button class="primary" id="vault-tutorial-next">Next</button>
         </div>
       </div>
     </div>
-  </div>
+    <div class="tutorial-prompt" id="vault-tutorial-prompt">
+      <div><strong>Need a walkthrough?</strong> See how evidence access works.</div>
+      <div class="tutorial-prompt-actions">
+        <button class="ghost" id="vault-tutorial-dismiss">Not now</button>
+        <button class="primary" id="vault-tutorial-start">Start tutorial</button>
+      </div>
+    </div>
 
-  <div class="tutorial" id="vault-tutorial">
-    <div class="tutorial-card">
-      <div class="tutorial-step" id="vault-tutorial-step">Step 1 of 3</div>
-      <div class="tutorial-meter">
-        <div class="tutorial-meter-fill" id="vault-tutorial-meter"></div>
-      </div>
-      <h3 id="vault-tutorial-title">Evidence Packs Overview</h3>
-      <p id="vault-tutorial-body">Learn how evidence packs are gated and verified.</p>
-      <div class="tutorial-actions">
-        <button class="ghost" id="vault-tutorial-skip">Skip</button>
-        <button class="primary" id="vault-tutorial-next">Next</button>
-      </div>
-    </div>
-  </div>
-  <div class="tutorial-prompt" id="vault-tutorial-prompt">
-    <div>
-      <strong>Need a walkthrough?</strong> See how evidence access works.
-    </div>
-    <div class="tutorial-prompt-actions">
-      <button class="ghost" id="vault-tutorial-dismiss">Not now</button>
-      <button class="primary" id="vault-tutorial-start">Start tutorial</button>
-    </div>
-  </div>
-
-  <script src="vault.js"></script>
-  <script src="vault-detail-tutorial.js"></script>
-</body>
+    <script src="vault.js"></script>
+    <script src="vault-detail-tutorial.js"></script>
+  </body>
 </html>
-

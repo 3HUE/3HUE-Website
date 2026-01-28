@@ -1,297 +1,317 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DMP Assessment | 3HUE</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="page assessment-page">
-    <nav class="nav">
-      <div class="brand">
-        <a class="brand-link" href="/frameworks/index.html"><img class="brand-mark" src="assets/img/3hue%20cl-2021.png" alt="3HUE logo" /></a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DMP Assessment | 3HUE</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page assessment-page">
+      <nav class="nav">
+        <div class="brand">
+          <a class="brand-link" href="/frameworks/index.html"
+            ><img class="brand-mark" src="assets/img/3hue%20cl-2021.png" alt="3HUE logo"
+          /></a>
+          <div>
+            <div class="brand-title">3HUE</div>
+            <div class="brand-sub">DMP Assessment</div>
+          </div>
+        </div>
+        <div class="nav-actions">
+          <a class="ghost" href="index.html">Back to Web3-DMP</a>
+        </div>
+      </nav>
+
+      <header class="assessment-hero">
         <div>
-          <div class="brand-title">3HUE</div>
-          <div class="brand-sub">DMP Assessment</div>
+          <p class="eyebrow">Anonymous Full Pillar Assessment</p>
+          <h1>Launch the full Digital Maturity Assessment.</h1>
+          <p class="subhead">
+            Assess every capability across all pillars. Responses generate a detailed,
+            per-capability report with weighted scoring and maturity benchmarks.
+          </p>
+          <div class="hero-cta">
+            <button class="primary" id="btn-begin">Begin Assessment</button>
+            <button class="ghost" id="btn-export" data-requires-registration>Export Results</button>
+            <button class="ghost" id="btn-print" data-requires-registration>Print Report</button>
+            <button class="ghost" id="btn-reset">Reset</button>
+            <button class="ghost" id="btn-tutorial">Start Tutorial</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Maturity Scale</div>
+          <div class="scale mini">
+            <div class="scale-card">
+              <span class="scale-level">1</span>
+              <p>No strategy</p>
+            </div>
+            <div class="scale-card">
+              <span class="scale-level">2</span>
+              <p>Informal use</p>
+            </div>
+            <div class="scale-card">
+              <span class="scale-level">3</span>
+              <p>Documented, inconsistent</p>
+            </div>
+            <div class="scale-card">
+              <span class="scale-level">4</span>
+              <p>Repeatable &amp; integrated</p>
+            </div>
+            <div class="scale-card">
+              <span class="scale-level">5</span>
+              <p>Optimized &amp; adaptive</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section" id="assessment">
+        <div class="section-head">
+          <h2>Assessment Workspace</h2>
+          <p>Filter by pillar or core dimension to focus on a capability set.</p>
+        </div>
+
+        <div class="pillar-selector" id="pillar-selector">
+          <div class="pillar-card selectable" data-pillar="">
+            <h3>Full Assessment</h3>
+            <p>All pillars and core dimensions.</p>
+            <a class="assessment-link" href="assessment.html" data-pillar-link=""
+              >Start full scope</a
+            >
+          </div>
+        </div>
+
+        <div class="assessment-controls">
+          <div class="filter">
+            <label for="assess-pillar">Pillar</label>
+            <select id="assess-pillar"></select>
+          </div>
+          <div class="filter">
+            <label for="assess-core">Core Dimension</label>
+            <select id="assess-core"></select>
+          </div>
+          <div class="filter search">
+            <label for="assess-search">Search</label>
+            <input
+              id="assess-search"
+              type="search"
+              placeholder="Search capability, practice, objective"
+            />
+          </div>
+        </div>
+
+        <div class="sticky-metrics" id="sticky-metrics">
+          <div class="progress-grid">
+            <div class="meta-card">
+              <div class="meta-value" id="answered-count">0</div>
+              <div class="meta-label">Answered</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-value" id="remaining-count">0</div>
+              <div class="meta-label">Remaining</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-value" id="completion-rate">0%</div>
+              <div class="meta-label">Completion</div>
+            </div>
+          </div>
+          <div class="workspace-summary" id="workspace-summary">0 of 0 in this workspace</div>
+          <div class="pager">
+            <button class="ghost" id="btn-prev-page" aria-label="Previous page">Previous</button>
+            <div class="pager-status" id="pager-status">Page 1 of 1</div>
+            <button class="ghost" id="btn-next-page" aria-label="Next page">Next</button>
+          </div>
+        </div>
+
+        <div class="assessment-grid" id="assessment-grid"></div>
+        <div class="assessment-lock" id="assessment-lock">
+          <div class="assessment-lock-card">
+            <h3>Register to begin the assessment</h3>
+            <p>Create a quick profile to unlock assessment questions and exports.</p>
+            <button class="primary" data-requires-registration>Register to Continue</button>
+          </div>
+        </div>
+        <div class="atlas-footer">
+          <div class="atlas-count" id="assessment-count"></div>
+        </div>
+      </section>
+
+      <section class="section alt" id="results">
+        <div class="section-head">
+          <h2>Assessment Results</h2>
+          <p>Weighted scores are calculated from your submitted maturity ratings.</p>
+        </div>
+        <div class="results-grid" id="results-grid"></div>
+        <div class="core-breakdown">
+          <h3>Core Dimension Breakdown</h3>
+          <div class="core-grid" id="core-grid"></div>
+        </div>
+        <div class="results-summary">
+          <div>
+            <h3>Overall Weighted Score</h3>
+            <p class="meta-label">Calculated from all answered capabilities.</p>
+          </div>
+          <div class="score-pill" id="overall-score">0.0</div>
+        </div>
+      </section>
+
+      <section class="section" id="report">
+        <div class="section-head">
+          <h2>Detailed Capability Report</h2>
+          <p>Exportable, per-capability view of responses and weighting.</p>
+        </div>
+        <div class="print-cover" id="print-cover">
+          <div>
+            <h1>DMP Assessment</h1>
+            <p id="print-cover-date">Generated on</p>
+          </div>
+          <div class="print-exec" id="print-exec">
+            <h2>Executive Summary</h2>
+            <p>Top risk drivers are calculated from low maturity scores weighted by importance.</p>
+            <ol id="print-top-risks"></ol>
+          </div>
+          <div class="print-cover-grid" id="print-cover-grid"></div>
+        </div>
+        <div class="print-header" id="print-header">
+          <div>
+            <h2>DMP Assessment Report</h2>
+            <p id="print-date">Generated on</p>
+          </div>
+          <div class="print-summary">
+            <div><strong>Overall Score:</strong> <span id="print-overall">0.0</span></div>
+            <div><strong>Completion:</strong> <span id="print-completion">0%</span></div>
+            <div><strong>Answered:</strong> <span id="print-answered">0</span></div>
+          </div>
+        </div>
+        <div class="report-actions">
+          <button class="primary" id="btn-export-json" data-requires-registration>
+            Export JSON
+          </button>
+          <button class="ghost" id="btn-export-csv" data-requires-registration>Export CSV</button>
+          <button class="ghost" id="btn-print-report" data-requires-registration>
+            Print Report
+          </button>
+          <button class="ghost" id="btn-clear-storage">Clear Stored Responses</button>
+        </div>
+        <div class="report-table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th data-sort="pillar">
+                  Pillar <span class="sort-indicator" data-indicator="pillar">?</span
+                  ><span class="sort-badge" data-sort-badge="pillar">1</span>
+                </th>
+                <th>Core</th>
+                <th>Practice</th>
+                <th data-sort="weight">
+                  Weight <span class="sort-indicator" data-indicator="weight">?</span
+                  ><span class="sort-badge" data-sort-badge="weight">1</span>
+                </th>
+                <th>Maturity</th>
+                <th data-sort="score">
+                  Score <span class="sort-indicator" data-indicator="score">?</span
+                  ><span class="sort-badge" data-sort-badge="score">1</span>
+                </th>
+                <th>Objective</th>
+              </tr>
+            </thead>
+            <tbody id="report-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal" data-modal="clear-storage">
+      <div class="modal-panel">
+        <button class="drawer-close" data-close-modal>Close</button>
+        <div class="modal-step active">
+          <h2>Clear stored responses?</h2>
+          <p>This will permanently remove all saved assessment responses on this device.</p>
+          <div class="modal-actions">
+            <button class="ghost" data-close-modal>Cancel</button>
+            <button class="primary" id="btn-confirm-clear">Yes, clear</button>
+          </div>
         </div>
       </div>
-      <div class="nav-actions">
-        <a class="ghost" href="index.html">Back to Web3-DMP</a>
-      </div>
-    </nav>
+    </div>
 
-    <header class="assessment-hero">
-      <div>
-        <p class="eyebrow">Anonymous  Full Pillar Assessment</p>
-        <h1>Launch the full Digital Maturity Assessment.</h1>
-        <p class="subhead">
-          Assess every capability across all pillars. Responses generate a detailed, per-capability report
-          with weighted scoring and maturity benchmarks.
+    <div class="toast" id="toast">
+      <span id="toast-message">Stored responses cleared.</span>
+      <button class="toast-action" id="toast-undo">Undo</button>
+    </div>
+
+    <div class="tutorial" id="tutorial">
+      <div class="tutorial-card">
+        <div class="tutorial-step" id="tutorial-step">Step 1 of 5</div>
+        <div class="tutorial-meter">
+          <div class="tutorial-meter-fill" id="tutorial-meter-fill"></div>
+        </div>
+        <h3 id="tutorial-title">Welcome to the assessment</h3>
+        <p id="tutorial-body">
+          This guided tour will show you how to complete the assessment quickly.
         </p>
-        <div class="hero-cta">
-          <button class="primary" id="btn-begin">Begin Assessment</button>
-          <button class="ghost" id="btn-export" data-requires-registration>Export Results</button>
-          <button class="ghost" id="btn-print" data-requires-registration>Print Report</button>
-          <button class="ghost" id="btn-reset">Reset</button>
-          <button class="ghost" id="btn-tutorial">Start Tutorial</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">Maturity Scale</div>
-        <div class="scale mini">
-          <div class="scale-card">
-            <span class="scale-level">1</span>
-            <p>No strategy</p>
-          </div>
-          <div class="scale-card">
-            <span class="scale-level">2</span>
-            <p>Informal use</p>
-          </div>
-          <div class="scale-card">
-            <span class="scale-level">3</span>
-            <p>Documented, inconsistent</p>
-          </div>
-          <div class="scale-card">
-            <span class="scale-level">4</span>
-            <p>Repeatable &amp; integrated</p>
-          </div>
-          <div class="scale-card">
-            <span class="scale-level">5</span>
-            <p>Optimized &amp; adaptive</p>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="section" id="assessment">
-      <div class="section-head">
-        <h2>Assessment Workspace</h2>
-        <p>Filter by pillar or core dimension to focus on a capability set.</p>
-      </div>
-
-      <div class="pillar-selector" id="pillar-selector">
-        <div class="pillar-card selectable" data-pillar="">
-          <h3>Full Assessment</h3>
-          <p>All pillars and core dimensions.</p>
-          <a class="assessment-link" href="assessment.html" data-pillar-link="">Start full scope</a>
-        </div>
-      </div>
-
-      <div class="assessment-controls">
-        <div class="filter">
-          <label for="assess-pillar">Pillar</label>
-          <select id="assess-pillar"></select>
-        </div>
-        <div class="filter">
-          <label for="assess-core">Core Dimension</label>
-          <select id="assess-core"></select>
-        </div>
-        <div class="filter search">
-          <label for="assess-search">Search</label>
-          <input id="assess-search" type="search" placeholder="Search capability, practice, objective" />
-        </div>
-      </div>
-
-      <div class="sticky-metrics" id="sticky-metrics">
-        <div class="progress-grid">
-          <div class="meta-card">
-            <div class="meta-value" id="answered-count">0</div>
-            <div class="meta-label">Answered</div>
-          </div>
-          <div class="meta-card">
-            <div class="meta-value" id="remaining-count">0</div>
-            <div class="meta-label">Remaining</div>
-          </div>
-          <div class="meta-card">
-            <div class="meta-value" id="completion-rate">0%</div>
-            <div class="meta-label">Completion</div>
-          </div>
-        </div>
-        <div class="workspace-summary" id="workspace-summary">0 of 0 in this workspace</div>
-        <div class="pager">
-          <button class="ghost" id="btn-prev-page" aria-label="Previous page">Previous</button>
-          <div class="pager-status" id="pager-status">Page 1 of 1</div>
-          <button class="ghost" id="btn-next-page" aria-label="Next page">Next</button>
-        </div>
-      </div>
-
-      <div class="assessment-grid" id="assessment-grid"></div>
-      <div class="assessment-lock" id="assessment-lock">
-        <div class="assessment-lock-card">
-          <h3>Register to begin the assessment</h3>
-          <p>Create a quick profile to unlock assessment questions and exports.</p>
-          <button class="primary" data-requires-registration>Register to Continue</button>
-        </div>
-      </div>
-      <div class="atlas-footer">
-        <div class="atlas-count" id="assessment-count"></div>
-      </div>
-    </section>
-
-    <section class="section alt" id="results">
-      <div class="section-head">
-        <h2>Assessment Results</h2>
-        <p>Weighted scores are calculated from your submitted maturity ratings.</p>
-      </div>
-      <div class="results-grid" id="results-grid"></div>
-      <div class="core-breakdown">
-        <h3>Core Dimension Breakdown</h3>
-        <div class="core-grid" id="core-grid"></div>
-      </div>
-      <div class="results-summary">
-        <div>
-          <h3>Overall Weighted Score</h3>
-          <p class="meta-label">Calculated from all answered capabilities.</p>
-        </div>
-        <div class="score-pill" id="overall-score">0.0</div>
-      </div>
-    </section>
-
-    <section class="section" id="report">
-      <div class="section-head">
-        <h2>Detailed Capability Report</h2>
-        <p>Exportable, per-capability view of responses and weighting.</p>
-      </div>
-      <div class="print-cover" id="print-cover">
-        <div>
-          <h1>DMP Assessment</h1>
-          <p id="print-cover-date">Generated on </p>
-        </div>
-        <div class="print-exec" id="print-exec">
-          <h2>Executive Summary</h2>
-          <p>Top risk drivers are calculated from low maturity scores weighted by importance.</p>
-          <ol id="print-top-risks"></ol>
-        </div>
-        <div class="print-cover-grid" id="print-cover-grid"></div>
-      </div>
-      <div class="print-header" id="print-header">
-        <div>
-          <h2>DMP Assessment Report</h2>
-          <p id="print-date">Generated on </p>
-        </div>
-        <div class="print-summary">
-          <div><strong>Overall Score:</strong> <span id="print-overall">0.0</span></div>
-          <div><strong>Completion:</strong> <span id="print-completion">0%</span></div>
-          <div><strong>Answered:</strong> <span id="print-answered">0</span></div>
-        </div>
-      </div>
-      <div class="report-actions">
-        <button class="primary" id="btn-export-json" data-requires-registration>Export JSON</button>
-        <button class="ghost" id="btn-export-csv" data-requires-registration>Export CSV</button>
-        <button class="ghost" id="btn-print-report" data-requires-registration>Print Report</button>
-        <button class="ghost" id="btn-clear-storage">Clear Stored Responses</button>
-      </div>
-      <div class="report-table">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th data-sort="pillar">Pillar <span class="sort-indicator" data-indicator="pillar">?</span><span class="sort-badge" data-sort-badge="pillar">1</span></th>
-              <th>Core</th>
-              <th>Practice</th>
-              <th data-sort="weight">Weight <span class="sort-indicator" data-indicator="weight">?</span><span class="sort-badge" data-sort-badge="weight">1</span></th>
-              <th>Maturity</th>
-              <th data-sort="score">Score <span class="sort-indicator" data-indicator="score">?</span><span class="sort-badge" data-sort-badge="score">1</span></th>
-              <th>Objective</th>
-            </tr>
-          </thead>
-          <tbody id="report-body"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
-
-  <div class="modal" data-modal="clear-storage">
-    <div class="modal-panel">
-      <button class="drawer-close" data-close-modal>Close</button>
-      <div class="modal-step active">
-        <h2>Clear stored responses?</h2>
-        <p>This will permanently remove all saved assessment responses on this device.</p>
-        <div class="modal-actions">
-          <button class="ghost" data-close-modal>Cancel</button>
-          <button class="primary" id="btn-confirm-clear">Yes, clear</button>
+        <div class="tutorial-actions">
+          <button class="ghost" id="tutorial-skip">Skip</button>
+          <button class="primary" id="tutorial-next">Next</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="toast" id="toast">
-    <span id="toast-message">Stored responses cleared.</span>
-    <button class="toast-action" id="toast-undo">Undo</button>
-  </div>
-
-  <div class="tutorial" id="tutorial">
-    <div class="tutorial-card">
-      <div class="tutorial-step" id="tutorial-step">Step 1 of 5</div>
-      <div class="tutorial-meter">
-        <div class="tutorial-meter-fill" id="tutorial-meter-fill"></div>
-      </div>
-      <h3 id="tutorial-title">Welcome to the assessment</h3>
-      <p id="tutorial-body">This guided tour will show you how to complete the assessment quickly.</p>
-      <div class="tutorial-actions">
-        <button class="ghost" id="tutorial-skip">Skip</button>
-        <button class="primary" id="tutorial-next">Next</button>
+    <div class="tutorial-prompt" id="tutorial-prompt">
+      <div><strong>New here?</strong> Want a quick guided walkthrough?</div>
+      <div class="tutorial-prompt-actions">
+        <button class="ghost" id="tutorial-dismiss">Not now</button>
+        <button class="primary" id="tutorial-start">Start tutorial</button>
       </div>
     </div>
-  </div>
 
-  <div class="tutorial-prompt" id="tutorial-prompt">
-    <div>
-      <strong>New here?</strong> Want a quick guided walkthrough?
-    </div>
-    <div class="tutorial-prompt-actions">
-      <button class="ghost" id="tutorial-dismiss">Not now</button>
-      <button class="primary" id="tutorial-start">Start tutorial</button>
-    </div>
-  </div>
-
-  <div class="modal" id="registration-modal">
-    <div class="modal-panel">
-      <button class="drawer-close" data-close-registration>Close</button>
-      <div class="modal-step active">
-        <h2>Register to Access Assessments</h2>
-        <p>Before accessing assessments or exports, please register.</p>
-        <form id="registration-form" class="registration-form">
-          <label>
-            Full name
-            <input type="text" name="name" required />
-            <span class="field-error" data-error-for="name"></span>
-          </label>
-          <label>
-            Work email
-            <input type="email" name="email" required />
-            <span class="field-error" data-error-for="email"></span>
-          </label>
-          <label>
-            Organization
-            <input type="text" name="org" required />
-            <span class="field-error" data-error-for="org"></span>
-          </label>
-          <label>
-            Role
-            <input type="text" name="role" required />
-            <span class="field-error" data-error-for="role"></span>
-          </label>
-          <div class="modal-actions">
-            <button class="ghost" type="button" data-close-registration>Cancel</button>
-            <button class="primary" type="submit">Register</button>
-          </div>
-        </form>
-        <div class="registration-success" id="registration-success">
-          <h3>Thank you for registering!</h3>
-          <p>Your session is now unlocked. You can begin the assessment and export reports.</p>
-          <div class="modal-actions">
-            <button class="primary" type="button" data-close-registration>Continue</button>
+    <div class="modal" id="registration-modal">
+      <div class="modal-panel">
+        <button class="drawer-close" data-close-registration>Close</button>
+        <div class="modal-step active">
+          <h2>Register to Access Assessments</h2>
+          <p>Before accessing assessments or exports, please register.</p>
+          <form id="registration-form" class="registration-form">
+            <label>
+              Full name
+              <input type="text" name="name" required />
+              <span class="field-error" data-error-for="name"></span>
+            </label>
+            <label>
+              Work email
+              <input type="email" name="email" required />
+              <span class="field-error" data-error-for="email"></span>
+            </label>
+            <label>
+              Organization
+              <input type="text" name="org" required />
+              <span class="field-error" data-error-for="org"></span>
+            </label>
+            <label>
+              Role
+              <input type="text" name="role" required />
+              <span class="field-error" data-error-for="role"></span>
+            </label>
+            <div class="modal-actions">
+              <button class="ghost" type="button" data-close-registration>Cancel</button>
+              <button class="primary" type="submit">Register</button>
+            </div>
+          </form>
+          <div class="registration-success" id="registration-success">
+            <h3>Thank you for registering!</h3>
+            <p>Your session is now unlocked. You can begin the assessment and export reports.</p>
+            <div class="modal-actions">
+              <button class="primary" type="button" data-close-registration>Continue</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="data.js"></script>
-  <script src="assessment.js"></script>
-  <script src="gate.js"></script>
-</body>
+    <script src="data.js"></script>
+    <script src="assessment.js"></script>
+    <script src="gate.js"></script>
+  </body>
 </html>
-

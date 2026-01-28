@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+﻿@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
 
 :root {
   --ink: #0a0f1f;
@@ -25,7 +25,7 @@
 }
 
 body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
   background: radial-gradient(1200px 800px at 10% 5%, #1b2b52 0%, #0b1326 40%, #070b16 100%);
   color: var(--snow);
   line-height: 1.6;
@@ -39,7 +39,9 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 200;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
 }
 
 .preloader.hidden {
@@ -74,13 +76,13 @@ body {
     linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 80px 80px;
   opacity: 0.25;
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,0.8), transparent 65%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.8), transparent 65%);
 }
 
 .preloader-title {
   display: grid;
   gap: 4px;
-  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
   font-size: clamp(1.4rem, 2.4vw, 2.2rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -169,8 +171,10 @@ body {
   padding: 40px 24px 120px;
 }
 
-h1, h2, h3 {
-  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+h1,
+h2,
+h3 {
+  font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
   letter-spacing: -0.02em;
 }
 
@@ -268,11 +272,14 @@ p {
 }
 
 button {
-  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .primary {
@@ -511,13 +518,14 @@ button {
   letter-spacing: 0.1em;
 }
 
-select, input {
+select,
+input {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: var(--snow);
   padding: 10px 12px;
   border-radius: 12px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 }
 
 .atlas-grid {
@@ -532,7 +540,9 @@ select, input {
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: transform 0.2s ease, border 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border 0.2s ease;
 }
 
 .cap-card:hover {
@@ -582,7 +592,7 @@ select, input {
 }
 
 .step-index {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   color: var(--aqua);
   margin-bottom: 10px;
@@ -906,7 +916,7 @@ select, input {
   border: 1px solid rgba(80, 242, 196, 0.4);
   background: linear-gradient(135deg, rgba(80, 242, 196, 0.22), rgba(107, 183, 255, 0.18));
   color: var(--snow);
-  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
   font-weight: 600;
   font-size: 0.85rem;
   text-decoration: none;
@@ -1208,7 +1218,9 @@ select, input {
   box-shadow: 0 12px 24px rgba(80, 242, 196, 0.2);
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   z-index: 60;
 }
 
@@ -1287,7 +1299,9 @@ select, input {
 .tutorial-highlight {
   position: relative;
   z-index: 71;
-  box-shadow: 0 0 0 3px rgba(80, 242, 196, 0.6), 0 0 30px rgba(80, 242, 196, 0.3);
+  box-shadow:
+    0 0 0 3px rgba(80, 242, 196, 0.6),
+    0 0 30px rgba(80, 242, 196, 0.3);
   border-radius: 12px;
 }
 
@@ -1499,7 +1513,7 @@ select, input {
 }
 
 .gated-card.locked::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
@@ -1578,10 +1592,10 @@ select, input {
   }
 
   #btn-prev-page::before {
-    content: '←';
+    content: "←";
   }
 
   #btn-next-page::before {
-    content: '→';
+    content: "→";
   }
 }

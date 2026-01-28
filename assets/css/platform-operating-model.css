@@ -1,6 +1,7 @@
 .pom-hero {
   padding: var(--space-10) 0 var(--space-8);
-  background: radial-gradient(circle at 10% 10%, rgba(68, 168, 217, 0.2), transparent 50%),
+  background:
+    radial-gradient(circle at 10% 10%, rgba(68, 168, 217, 0.2), transparent 50%),
     linear-gradient(135deg, #ffffff 0%, #f3f6fb 60%, #eef2f7 100%);
 }
 
@@ -116,7 +117,10 @@
   border-radius: var(--radius);
   padding: var(--space-5);
   box-shadow: var(--shadow-soft);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .pom-card:hover {
