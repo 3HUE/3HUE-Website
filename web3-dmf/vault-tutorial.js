@@ -12,7 +12,7 @@ const tutorialDismiss = document.getElementById("vault-tutorial-dismiss");
 const STEPS = [
   {
     title: "Welcome to the Knowledge Vault",
-    body: "Understand how gated access protects sensitive playbooks and evidence.",
+    body: "Understand how gated access protects AI and digital playbooks and evidence.",
     target: ".vault-hero",
   },
   {
@@ -22,7 +22,7 @@ const STEPS = [
   },
   {
     title: "Access Workflow",
-    body: "Follow the approval and attestation steps for secure sharing.",
+    body: "Follow the approval and attestation steps for trusted sharing.",
     target: "#roadmap",
   },
   {

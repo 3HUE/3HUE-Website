@@ -25,7 +25,7 @@ const getStepsForPage = () => {
       },
       {
         title: "Operationalize",
-        body: "Apply playbooks to assessments and capture artifacts for audit readiness.",
+        body: "Apply playbooks to AI and digital assessments and capture artifacts for validation.",
         target: ".section.alt",
       },
     ];
@@ -39,12 +39,12 @@ const getStepsForPage = () => {
       },
       {
         title: "Secure exchange",
-        body: "Evidence is gated by credentials and steward approval for risk control.",
+        body: "Evidence is gated by credentials and steward approval for responsible sharing.",
         target: ".gated-grid",
       },
       {
         title: "Attestation-ready",
-        body: "Use the pack to produce verifiable proof for audits and certifications.",
+        body: "Use the pack to produce verifiable proof for governance and reporting.",
         target: ".section.alt",
       },
     ];
@@ -53,7 +53,7 @@ const getStepsForPage = () => {
     return [
       {
         title: "Framework mapping",
-        body: "See how maturity capabilities map to security frameworks.",
+        body: "See how AI and digital maturity capabilities map to governance frameworks.",
         target: ".gated-grid",
       },
       {
@@ -63,7 +63,7 @@ const getStepsForPage = () => {
       },
       {
         title: "Apply the crosswalk",
-        body: "Use mappings to align programs with NIST, ISO, COBIT, and CIS.",
+        body: "Use mappings to align programs with industry standards and guidance.",
         target: ".section.alt",
       },
     ];

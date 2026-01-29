@@ -71,11 +71,11 @@ const pillars = unique(DMP_DATA.map((item) => item.pillar));
 const cores = unique(DMP_DATA.map((item) => item.coreDimension));
 
 const maturityLabels = {
-  1: "No strategy",
-  2: "Informal use",
-  3: "Documented, inconsistent",
-  4: "Repeatable & integrated",
-  5: "Optimized & adaptive",
+  1: "Ad Hoc / No Strategy",
+  2: "Informal / Experimental",
+  3: "Defined but Inconsistent",
+  4: "Integrated & Repeatable",
+  5: "Optimized & Adaptive",
 };
 
 const buildSelect = (select, options) => {
@@ -327,7 +327,7 @@ const renderResults = () => {
     risks.forEach((risk) => {
       const li = document.createElement("li");
       const rationale = `Weight ${risk.weight}, maturity ${risk.maturity || 0}/5. ${risk.objective}`;
-      li.textContent = `${risk.practice} (${risk.pillar}) — Risk ${risk.riskScore.toFixed(1)}`;
+      li.textContent = `${risk.practice} (${risk.pillar}) — Priority ${risk.riskScore.toFixed(1)}`;
       li.title = rationale;
       printTopRisks.appendChild(li);
     });
@@ -576,12 +576,12 @@ const tutorialSteps = [
   },
   {
     title: "Answer capabilities",
-    body: "Rate each capability on the 1–5 maturity scale.",
+    body: "Rate each capability on the 1–5 AI and digital maturity scale.",
     target: "#assessment-grid",
   },
   {
     title: "Review results",
-    body: "Check pillar/core scores and overall maturity.",
+    body: "Check pillar/core scores and overall AI/digital maturity.",
     target: "#results",
   },
   {
