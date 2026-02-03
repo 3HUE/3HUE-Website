@@ -364,15 +364,27 @@
     const breadcrumbNav = document.createElement("nav");
     breadcrumbNav.className = "breadcrumbs";
     breadcrumbNav.setAttribute("aria-label", "Breadcrumb");
-    breadcrumbNav.innerHTML = `
-      <div class="container">
-        <ol>
-          <li><a href="${prefix}index.html">Home</a></li>
-          <li><a href="${prefix}${section}/index.html">${sectionLabel}</a></li>
-          <li aria-current="page">${currentTitle}</li>
-        </ol>
-      </div>
-    `;
+    const breadcrumbContainer = document.createElement("div");
+    breadcrumbContainer.className = "container";
+    const breadcrumbList = document.createElement("ol");
+    const homeItem = document.createElement("li");
+    const homeLink = document.createElement("a");
+    homeLink.href = `${prefix}index.html`;
+    homeLink.textContent = "Home";
+    homeItem.appendChild(homeLink);
+    const sectionItem = document.createElement("li");
+    const sectionLink = document.createElement("a");
+    sectionLink.href = `${prefix}${section}/index.html`;
+    sectionLink.textContent = sectionLabel;
+    sectionItem.appendChild(sectionLink);
+    const currentItem = document.createElement("li");
+    currentItem.setAttribute("aria-current", "page");
+    currentItem.textContent = currentTitle;
+    breadcrumbList.appendChild(homeItem);
+    breadcrumbList.appendChild(sectionItem);
+    breadcrumbList.appendChild(currentItem);
+    breadcrumbContainer.appendChild(breadcrumbList);
+    breadcrumbNav.appendChild(breadcrumbContainer);
     main.parentNode.insertBefore(breadcrumbNav, main);
   }
 
@@ -571,6 +583,15 @@
       return true;
     };
 
+    // Render summary rows using textContent to avoid HTML injection from form input.
+    const buildSummaryRow = (label, value) => {
+      const dt = document.createElement("dt");
+      dt.textContent = label;
+      const dd = document.createElement("dd");
+      dd.textContent = value || "Not provided";
+      return [dt, dd];
+    };
+
     const updateSummary = () => {
       if (!summaryList) {
         return;
@@ -599,9 +620,12 @@
         ["Referral source", getValue("referralSource")],
         ["Additional notes", getValue("notes")],
       ];
-      summaryList.innerHTML = rows
-        .map(([label, value]) => `<dt>${label}</dt><dd>${value || '�"'}</dd>`)
-        .join("");
+      summaryList.textContent = "";
+      rows.forEach(([label, value]) => {
+        const [dt, dd] = buildSummaryRow(label, value);
+        summaryList.appendChild(dt);
+        summaryList.appendChild(dd);
+      });
     };
 
     const submitForm = (event) => {
@@ -764,3 +788,4 @@ themeToggles.forEach((btn) => {
     applyTheme(nextTheme);
   });
 });
+

@@ -19,6 +19,23 @@ const state = {
   filtered: [],
 };
 
+// Build DOM nodes with textContent to prevent HTML injection from data fields.
+const createEl = (tag, className, text) => {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined && text !== null) el.textContent = text;
+  return el;
+};
+
+const appendTextWithBreaks = (el, text) => {
+  if (!text) return;
+  const parts = String(text).split("\n");
+  parts.forEach((part, idx) => {
+    if (idx > 0) el.appendChild(document.createElement("br"));
+    el.appendChild(document.createTextNode(part));
+  });
+};
+
 const unique = (arr) => [...new Set(arr.filter(Boolean))];
 
 const pillars = unique(DMP_DATA.map((item) => item.pillar));
@@ -36,22 +53,22 @@ const pillarMap = pillars.map((pillar) => {
 });
 
 const renderPillars = () => {
-  pillarsGrid.innerHTML = "";
+  pillarsGrid.textContent = "";
   pillarMap.forEach((entry) => {
-    const card = document.createElement("div");
-    card.className = "pillar-card";
-    card.innerHTML = `
-      <h3>${entry.pillar}</h3>
-      <div class="core-list">
-        ${entry.coreSet.map((core) => `<div class="core-item">${core}</div>`).join("")}
-      </div>
-    `;
+    const card = createEl("div", "pillar-card");
+    const title = createEl("h3", null, entry.pillar);
+    const list = createEl("div", "core-list");
+    entry.coreSet.forEach((core) => {
+      list.appendChild(createEl("div", "core-item", core));
+    });
+    card.appendChild(title);
+    card.appendChild(list);
     pillarsGrid.appendChild(card);
   });
 };
 
 const buildSelect = (select, options) => {
-  select.innerHTML = "";
+  select.textContent = "";
   const all = document.createElement("option");
   all.value = "";
   all.textContent = "All";
@@ -64,33 +81,38 @@ const buildSelect = (select, options) => {
   });
 };
 
-const formatBlock = (label, value) => {
-  if (!value) return "";
-  return `
-    <div class="detail-block">
-      <strong>${label}</strong><br />
-      ${value.replace(/\n/g, "<br />")}
-    </div>
-  `;
+const createDetailBlock = (label, value) => {
+  if (!value) return null;
+  const block = createEl("div", "detail-block");
+  const strong = createEl("strong", null, label);
+  block.appendChild(strong);
+  block.appendChild(document.createElement("br"));
+  appendTextWithBreaks(block, value);
+  return block;
 };
 
 const openDrawer = (item) => {
-  drawerContent.innerHTML = `
-    <h2>${item.practice || item.subDimension}</h2>
-    <p>${item.objective || item.subDescription || ""}</p>
-    ${formatBlock("Pillar", item.pillar)}
-    ${formatBlock("Core Dimension", item.coreDimension)}
-    ${formatBlock("Sub-Dimension", item.subDimension)}
-    ${formatBlock("Weight", item.weight ? String(item.weight) : "")}
-    ${formatBlock("Assessment Questions", item.assessmentQuestions)}
-    ${formatBlock("Testing Procedures", item.testingProcedures)}
-    ${formatBlock("Compliance Frameworks", item.complianceFrameworks)}
-    ${formatBlock("Supporting Technologies", item.supportingTech)}
-    ${formatBlock("Evidence & Artifacts", item.evidenceArtifacts)}
-    ${formatBlock("Stakeholders", item.stakeholders)}
-    ${formatBlock("Risk Implication", item.riskImplication)}
-    ${formatBlock("Transformation Initiative", item.transformationInitiative)}
-  `;
+  drawerContent.textContent = "";
+  drawerContent.appendChild(
+    createEl("h2", null, item.practice || item.subDimension || "Capability")
+  );
+  drawerContent.appendChild(createEl("p", null, item.objective || item.subDescription || ""));
+  [
+    createDetailBlock("Pillar", item.pillar),
+    createDetailBlock("Core Dimension", item.coreDimension),
+    createDetailBlock("Sub-Dimension", item.subDimension),
+    createDetailBlock("Weight", item.weight ? String(item.weight) : ""),
+    createDetailBlock("Assessment Questions", item.assessmentQuestions),
+    createDetailBlock("Testing Procedures", item.testingProcedures),
+    createDetailBlock("Compliance Frameworks", item.complianceFrameworks),
+    createDetailBlock("Supporting Technologies", item.supportingTech),
+    createDetailBlock("Evidence & Artifacts", item.evidenceArtifacts),
+    createDetailBlock("Stakeholders", item.stakeholders),
+    createDetailBlock("Risk Implication", item.riskImplication),
+    createDetailBlock("Transformation Initiative", item.transformationInitiative),
+  ]
+    .filter(Boolean)
+    .forEach((block) => drawerContent.appendChild(block));
   drawer.classList.add("open");
 };
 
@@ -121,19 +143,21 @@ const renderAtlas = () => {
   });
 
   const visible = state.filtered.slice(0, state.limit);
-  atlasGrid.innerHTML = "";
+  atlasGrid.textContent = "";
   visible.forEach((item) => {
-    const card = document.createElement("div");
-    card.className = "cap-card";
-    card.innerHTML = `
-      <div class="cap-meta">
-        <span>${item.pillar || "Pillar"}</span>
-        ${item.weight ? `<span class="weight">Weight ${item.weight}</span>` : ""}
-      </div>
-      <h3>${item.practice || item.subDimension || "Capability"}</h3>
-      <p>${item.objective || item.subDescription || ""}</p>
-      <div class="cap-meta">${item.coreDimension || ""}</div>
-    `;
+    const card = createEl("div", "cap-card");
+    const metaTop = createEl("div", "cap-meta");
+    metaTop.appendChild(createEl("span", null, item.pillar || "Pillar"));
+    if (item.weight) {
+      metaTop.appendChild(createEl("span", "weight", `Weight ${item.weight}`));
+    }
+    const title = createEl("h3", null, item.practice || item.subDimension || "Capability");
+    const desc = createEl("p", null, item.objective || item.subDescription || "");
+    const metaBottom = createEl("div", "cap-meta", item.coreDimension || "");
+    card.appendChild(metaTop);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(metaBottom);
     card.addEventListener("click", () => openDrawer(item));
     atlasGrid.appendChild(card);
   });

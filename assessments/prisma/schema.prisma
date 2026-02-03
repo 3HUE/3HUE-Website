@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SessionStatus {
+  draft
+  submitted
+  delivered
+  failed
+}
+
+enum DeliveryStatus {
+  pending
+  delivered
+  failed
+}
+
+model Session {
+  id          String        @id @default(uuid())
+  token       String        @unique
+  email       String?
+  status      SessionStatus @default(draft)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  submittedAt DateTime?
+
+  answers     Answer[]
+  uploads     Upload[]
+  deliveries  Delivery[]
+}
+
+model Answer {
+  id         String   @id @default(uuid())
+  sessionId  String
+  questionId String
+  valueJson  Json
+  updatedAt  DateTime @updatedAt
+
+  session    Session  @relation(fields: [sessionId], references: [id])
+
+  @@unique([sessionId, questionId])
+}
+
+model Upload {
+  id          String   @id @default(uuid())
+  sessionId   String
+  questionId  String
+  filename    String
+  mimeType    String
+  size        Int
+  storagePath String
+  uploadedAt  DateTime @default(now())
+
+  session     Session  @relation(fields: [sessionId], references: [id])
+}
+
+model Delivery {
+  id         String         @id @default(uuid())
+  sessionId  String
+  provider   String
+  status     DeliveryStatus @default(pending)
+  attempts   Int            @default(0)
+  lastError  String?
+  externalId String?
+  updatedAt  DateTime       @updatedAt
+
+  session    Session        @relation(fields: [sessionId], references: [id])
+
+  @@unique([sessionId, provider])
+}

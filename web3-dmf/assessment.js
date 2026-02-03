@@ -65,6 +65,23 @@ const state = {
   },
 };
 
+// Build DOM nodes with textContent to prevent HTML injection from data fields.
+const createEl = (tag, className, text) => {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined && text !== null) el.textContent = text;
+  return el;
+};
+
+const appendTextWithBreaks = (el, text) => {
+  if (!text) return;
+  const parts = String(text).split("\n");
+  parts.forEach((part, idx) => {
+    if (idx > 0) el.appendChild(document.createElement("br"));
+    el.appendChild(document.createTextNode(part));
+  });
+};
+
 const unique = (arr) => [...new Set(arr.filter(Boolean))];
 
 const pillars = unique(DMP_DATA.map((item) => item.pillar));
@@ -79,7 +96,7 @@ const maturityLabels = {
 };
 
 const buildSelect = (select, options) => {
-  select.innerHTML = "";
+  select.textContent = "";
   const all = document.createElement("option");
   all.value = "";
   all.textContent = "All";
@@ -136,37 +153,43 @@ const renderAssessment = () => {
   state.page = currentPage;
   const start = (currentPage - 1) * state.pageSize;
   const visible = filtered.slice(start, start + state.pageSize);
-  assessmentGrid.innerHTML = "";
+  assessmentGrid.textContent = "";
 
   visible.forEach((item, idx) => {
-    const card = document.createElement("div");
-    card.className = "cap-card assessment-card";
+    const card = createEl("div", "cap-card assessment-card");
     const selected = state.responses[item.id] || "";
     const globalIndex = start + idx + 1;
-
-    card.innerHTML = `
-      <div class="cap-meta">
-        <span>${item.pillar}</span>
-        <span class="weight">Weight ${item.weight ?? 1}</span>
-      </div>
-      <div class="cap-meta">${globalIndex} of ${filtered.length}</div>
-      <h3>${item.practice || item.subDimension}</h3>
-      <p>${item.objective || item.subDescription || ""}</p>
-      <div class="cap-meta">${item.coreDimension}</div>
-      <div class="question">${(item.assessmentQuestions || "").replace(/\n/g, "<br />")}</div>
-      <div class="rating">
-        ${[1, 2, 3, 4, 5]
-          .map(
-            (val) => `
-          <label>
-            <input type="radio" name="${item.id}" value="${val}" ${String(selected) === String(val) ? "checked" : ""} />
-            <span>${val}</span>
-          </label>
-        `
-          )
-          .join("")}
-      </div>
-    `;
+    const metaTop = createEl("div", "cap-meta");
+    metaTop.appendChild(createEl("span", null, item.pillar));
+    metaTop.appendChild(createEl("span", "weight", `Weight ${item.weight ?? 1}`));
+    const metaIndex = createEl("div", "cap-meta", `${globalIndex} of ${filtered.length}`);
+    const title = createEl("h3", null, item.practice || item.subDimension || "Capability");
+    const desc = createEl("p", null, item.objective || item.subDescription || "");
+    const metaCore = createEl("div", "cap-meta", item.coreDimension || "");
+    const question = createEl("div", "question");
+    appendTextWithBreaks(question, item.assessmentQuestions || "");
+    const rating = createEl("div", "rating");
+    [1, 2, 3, 4, 5].forEach((val) => {
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = item.id;
+      input.value = String(val);
+      if (String(selected) === String(val)) {
+        input.checked = true;
+      }
+      const span = createEl("span", null, String(val));
+      label.appendChild(input);
+      label.appendChild(span);
+      rating.appendChild(label);
+    });
+    card.appendChild(metaTop);
+    card.appendChild(metaIndex);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(metaCore);
+    card.appendChild(question);
+    card.appendChild(rating);
 
     card.querySelectorAll('input[type="radio"]').forEach((input) => {
       input.setAttribute("data-assessment-input", "true");
@@ -191,14 +214,16 @@ const renderAssessment = () => {
 const renderPillarSelector = () => {
   if (!pillarSelector) return;
   pillars.forEach((pillar) => {
-    const card = document.createElement("div");
-    card.className = "pillar-card selectable";
+    const card = createEl("div", "pillar-card selectable");
     card.dataset.pillar = pillar;
-    card.innerHTML = `
-      <h3>${pillar}</h3>
-      <p>Focused assessment for this pillar.</p>
-      <a class="assessment-link" data-pillar-link="${pillar}" href="assessment.html?pillar=${encodeURIComponent(pillar)}">Start ${pillar}</a>
-    `;
+    const title = createEl("h3", null, pillar);
+    const desc = createEl("p", null, "Focused assessment for this pillar.");
+    const link = createEl("a", "assessment-link", `Start ${pillar}`);
+    link.setAttribute("data-pillar-link", pillar);
+    link.href = `assessment.html?pillar=${encodeURIComponent(pillar)}`;
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(link);
     pillarSelector.appendChild(card);
   });
 };
@@ -238,36 +263,34 @@ const renderResults = () => {
     coreWeights[core] = (coreWeights[core] || 0) + weight;
   });
 
-  resultsGrid.innerHTML = "";
+  resultsGrid.textContent = "";
   pillars.forEach((pillar) => {
     const score = pillarWeights[pillar]
       ? (pillarScores[pillar] / pillarWeights[pillar]).toFixed(2)
       : "0.00";
-    const card = document.createElement("div");
-    card.className = "meta-card";
-    card.innerHTML = `
-      <div class="meta-value">${score}</div>
-      <div class="meta-label">${pillar}</div>
-    `;
+    const card = createEl("div", "meta-card");
+    const value = createEl("div", "meta-value", score);
+    const label = createEl("div", "meta-label", pillar);
+    card.appendChild(value);
+    card.appendChild(label);
     resultsGrid.appendChild(card);
   });
 
   if (coreGrid) {
-    coreGrid.innerHTML = "";
+    coreGrid.textContent = "";
     cores.forEach((core) => {
       const score = coreWeights[core] ? (coreScores[core] / coreWeights[core]).toFixed(2) : "0.00";
       const percent = Math.min((parseFloat(score) / 5) * 100, 100);
-      const row = document.createElement("div");
-      row.className = "core-row";
-      row.innerHTML = `
-        <div class="core-label">
-          <span>${core}</span>
-          <span class="core-score">${score}</span>
-        </div>
-        <div class="core-bar">
-          <div class="core-bar-fill" style="width: ${percent}%"></div>
-        </div>
-      `;
+      const row = createEl("div", "core-row");
+      const label = createEl("div", "core-label");
+      label.appendChild(createEl("span", null, core));
+      label.appendChild(createEl("span", "core-score", score));
+      const bar = createEl("div", "core-bar");
+      const fill = createEl("div", "core-bar-fill");
+      fill.style.width = `${percent}%`;
+      bar.appendChild(fill);
+      row.appendChild(label);
+      row.appendChild(bar);
       coreGrid.appendChild(row);
     });
   }
@@ -277,29 +300,23 @@ const renderResults = () => {
   if (printOverall) printOverall.textContent = overall;
 
   if (printCoverGrid) {
-    printCoverGrid.innerHTML = "";
+    printCoverGrid.textContent = "";
     pillars.forEach((pillar) => {
       const score = pillarWeights[pillar]
         ? (pillarScores[pillar] / pillarWeights[pillar]).toFixed(2)
         : "0.00";
-      const item = document.createElement("div");
-      item.className = "print-cover-card";
-      item.innerHTML = `
-        <div class="print-cover-label">Pillar</div>
-        <div class="print-cover-title">${pillar}</div>
-        <div class="print-cover-score">${score}</div>
-      `;
+      const item = createEl("div", "print-cover-card");
+      item.appendChild(createEl("div", "print-cover-label", "Pillar"));
+      item.appendChild(createEl("div", "print-cover-title", pillar));
+      item.appendChild(createEl("div", "print-cover-score", score));
       printCoverGrid.appendChild(item);
     });
     cores.forEach((core) => {
       const score = coreWeights[core] ? (coreScores[core] / coreWeights[core]).toFixed(2) : "0.00";
-      const item = document.createElement("div");
-      item.className = "print-cover-card";
-      item.innerHTML = `
-        <div class="print-cover-label">Core</div>
-        <div class="print-cover-title">${core}</div>
-        <div class="print-cover-score">${score}</div>
-      `;
+      const item = createEl("div", "print-cover-card");
+      item.appendChild(createEl("div", "print-cover-label", "Core"));
+      item.appendChild(createEl("div", "print-cover-title", core));
+      item.appendChild(createEl("div", "print-cover-score", score));
       printCoverGrid.appendChild(item);
     });
   }
@@ -323,7 +340,7 @@ const renderResults = () => {
       .sort((a, b) => b.riskScore - a.riskScore)
       .slice(0, 5);
 
-    printTopRisks.innerHTML = "";
+    printTopRisks.textContent = "";
     risks.forEach((risk) => {
       const li = document.createElement("li");
       const rationale = `Weight ${risk.weight}, maturity ${risk.maturity || 0}/5. ${risk.objective}`;
@@ -335,7 +352,7 @@ const renderResults = () => {
 };
 
 const renderReport = () => {
-  reportBody.innerHTML = "";
+  reportBody.textContent = "";
   const sorted = [...DMP_DATA].sort((a, b) => {
     const dir = state.sort.direction === "asc" ? 1 : -1;
     if (state.sort.key === "pillar") {
@@ -357,20 +374,26 @@ const renderReport = () => {
     const maturityScore = maturity ? Number(maturity) : 0;
     const barWidth = Math.min((maturityScore / 5) * 100, 100);
     const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${item.id}</td>
-      <td>${item.pillar}</td>
-      <td>${item.coreDimension}</td>
-      <td>${item.practice || item.subDimension}</td>
-      <td>${item.weight ?? 1}</td>
-      <td>${maturity ? `${maturity} - ${maturityLabels[maturity]}` : "Not answered"}</td>
-      <td>
-        <div class="mini-bar">
-          <div class="mini-bar-fill" style="width: ${barWidth}%"></div>
-        </div>
-      </td>
-      <td>${item.objective || item.subDescription || ""}</td>
-    `;
+    row.appendChild(createEl("td", null, item.id));
+    row.appendChild(createEl("td", null, item.pillar));
+    row.appendChild(createEl("td", null, item.coreDimension));
+    row.appendChild(createEl("td", null, item.practice || item.subDimension || ""));
+    row.appendChild(createEl("td", null, String(item.weight ?? 1)));
+    row.appendChild(
+      createEl(
+        "td",
+        null,
+        maturity ? `${maturity} - ${maturityLabels[maturity]}` : "Not answered"
+      )
+    );
+    const barCell = document.createElement("td");
+    const bar = createEl("div", "mini-bar");
+    const fill = createEl("div", "mini-bar-fill");
+    fill.style.width = `${barWidth}%`;
+    bar.appendChild(fill);
+    barCell.appendChild(bar);
+    row.appendChild(barCell);
+    row.appendChild(createEl("td", null, item.objective || item.subDescription || ""));
     reportBody.appendChild(row);
   });
 };
@@ -551,7 +574,8 @@ updateSortBadges();
 const applyPillarFromQuery = () => {
   const params = new URLSearchParams(window.location.search);
   const pillar = params.get("pillar");
-  if (pillar) {
+  // Only accept known pillar values from the query string.
+  if (pillar && pillars.includes(pillar)) {
     filterPillar.value = pillar;
     filterCore.value = "";
     filterSearch.value = "";

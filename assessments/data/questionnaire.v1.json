@@ -1,0 +1,368 @@
+{
+  "version": "1.0",
+  "sections": [
+    {
+      "id": "profile",
+      "title": "Customer & Contact Profile",
+      "description": "Primary contacts, company profile, and engagement intent."
+    },
+    {
+      "id": "scope",
+      "title": "Assessment Scope",
+      "description": "Applications, infrastructure scope, and user footprint."
+    },
+    {
+      "id": "posture",
+      "title": "Security Posture Snapshot",
+      "description": "Identity, logging, vulnerability management, backup, and IR readiness."
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Drivers",
+      "description": "Regulatory drivers, audits, and required attestations."
+    },
+    {
+      "id": "evidence",
+      "title": "Evidence Requests",
+      "description": "Upload or note evidence artifacts to accelerate the review."
+    },
+    {
+      "id": "review",
+      "title": "Review & Submit",
+      "description": "Confirm details and submit for delivery."
+    }
+  ],
+  "questions": [
+    {
+      "id": "org_name",
+      "label": "Organization legal name",
+      "type": "text",
+      "required": true,
+      "section": "profile"
+    },
+    {
+      "id": "org_domain",
+      "label": "Primary company domain",
+      "type": "text",
+      "required": true,
+      "section": "profile"
+    },
+    {
+      "id": "primary_contact",
+      "label": "Primary contact name",
+      "type": "text",
+      "required": true,
+      "section": "profile"
+    },
+    {
+      "id": "primary_email",
+      "label": "Primary contact email",
+      "type": "email",
+      "required": true,
+      "section": "profile"
+    },
+    {
+      "id": "industry",
+      "label": "Industry",
+      "type": "select",
+      "required": true,
+      "section": "profile",
+      "options": [
+        { "label": "SaaS", "value": "saas" },
+        { "label": "Financial Services", "value": "finance" },
+        { "label": "Healthcare", "value": "healthcare" },
+        { "label": "Retail", "value": "retail" },
+        { "label": "Manufacturing", "value": "manufacturing" },
+        { "label": "Other", "value": "other" }
+      ]
+    },
+    {
+      "id": "employee_count",
+      "label": "Employee count",
+      "type": "select",
+      "section": "profile",
+      "options": [
+        { "label": "1-50", "value": "1-50" },
+        { "label": "51-250", "value": "51-250" },
+        { "label": "251-1000", "value": "251-1000" },
+        { "label": "1000+", "value": "1000+" }
+      ]
+    },
+    {
+      "id": "assessment_goal",
+      "label": "Primary goal of the assessment",
+      "type": "textarea",
+      "section": "profile",
+      "required": true,
+      "helper": "Example: board-ready risk register, audit readiness, or cloud posture validation."
+    },
+    {
+      "id": "scope_apps",
+      "label": "How many applications are in scope?",
+      "type": "number",
+      "section": "scope",
+      "required": true
+    },
+    {
+      "id": "scope_cloud",
+      "label": "Cloud providers in scope",
+      "type": "multiselect",
+      "section": "scope",
+      "options": [
+        { "label": "AWS", "value": "aws" },
+        { "label": "Azure", "value": "azure" },
+        { "label": "GCP", "value": "gcp" },
+        { "label": "OCI", "value": "oci" },
+        { "label": "None", "value": "none" }
+      ]
+    },
+    {
+      "id": "aws_accounts",
+      "label": "AWS accounts in scope",
+      "type": "number",
+      "section": "scope",
+      "showIf": [{ "questionId": "scope_cloud", "operator": "includes", "value": "aws" }]
+    },
+    {
+      "id": "aws_regions",
+      "label": "Primary AWS regions",
+      "type": "text",
+      "section": "scope",
+      "showIf": [{ "questionId": "scope_cloud", "operator": "includes", "value": "aws" }]
+    },
+    {
+      "id": "scope_onprem",
+      "label": "On-prem environments",
+      "type": "select",
+      "section": "scope",
+      "options": [
+        { "label": "None", "value": "none" },
+        { "label": "Single data center", "value": "single" },
+        { "label": "Multiple data centers", "value": "multi" }
+      ]
+    },
+    {
+      "id": "has_ot",
+      "label": "Do you have OT/IoT environments in scope?",
+      "type": "select",
+      "section": "scope",
+      "options": [
+        { "label": "Yes", "value": "yes" },
+        { "label": "No", "value": "no" }
+      ]
+    },
+    {
+      "id": "ot_scope",
+      "label": "Describe OT/IoT scope",
+      "type": "textarea",
+      "section": "scope",
+      "showIf": [{ "questionId": "has_ot", "operator": "equals", "value": "yes" }]
+    },
+    {
+      "id": "regions",
+      "label": "Regions with customers or data",
+      "type": "multiselect",
+      "section": "scope",
+      "options": [
+        { "label": "North America", "value": "na" },
+        { "label": "Europe", "value": "eu" },
+        { "label": "APAC", "value": "apac" },
+        { "label": "LATAM", "value": "latam" },
+        { "label": "Middle East", "value": "me" }
+      ]
+    },
+    {
+      "id": "user_count",
+      "label": "Approximate user count",
+      "type": "select",
+      "section": "scope",
+      "options": [
+        { "label": "< 500", "value": "lt500" },
+        { "label": "500 - 5000", "value": "500-5000" },
+        { "label": "5000+", "value": "gt5000" }
+      ]
+    },
+    {
+      "id": "identity_provider",
+      "label": "Primary identity provider",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "Okta", "value": "okta" },
+        { "label": "Azure AD", "value": "azuread" },
+        { "label": "Google Workspace", "value": "google" },
+        { "label": "On-prem AD", "value": "onprem" },
+        { "label": "Other", "value": "other" }
+      ]
+    },
+    {
+      "id": "mfa_coverage",
+      "label": "MFA coverage",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "All users", "value": "all" },
+        { "label": "Admins only", "value": "admins" },
+        { "label": "Limited coverage", "value": "limited" },
+        { "label": "No MFA", "value": "none" }
+      ]
+    },
+    {
+      "id": "central_logging",
+      "label": "Do you have centralized logging?",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "Yes", "value": "yes" },
+        { "label": "No", "value": "no" }
+      ]
+    },
+    {
+      "id": "logging_tool",
+      "label": "Logging/SIEM platform",
+      "type": "text",
+      "section": "posture",
+      "showIf": [{ "questionId": "central_logging", "operator": "equals", "value": "yes" }]
+    },
+    {
+      "id": "vuln_mgmt",
+      "label": "Vulnerability management cadence",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "Continuous", "value": "continuous" },
+        { "label": "Monthly", "value": "monthly" },
+        { "label": "Quarterly", "value": "quarterly" },
+        { "label": "None", "value": "none" }
+      ]
+    },
+    {
+      "id": "backup_strategy",
+      "label": "Backup strategy",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "Immutable + tested", "value": "immutable" },
+        { "label": "Regular backups", "value": "regular" },
+        { "label": "Ad-hoc", "value": "adhoc" },
+        { "label": "None", "value": "none" }
+      ]
+    },
+    {
+      "id": "ir_plan",
+      "label": "Incident response plan",
+      "type": "select",
+      "section": "posture",
+      "options": [
+        { "label": "Documented + tested", "value": "tested" },
+        { "label": "Documented", "value": "doc" },
+        { "label": "No", "value": "no" }
+      ]
+    },
+    {
+      "id": "processes_payments",
+      "label": "Do you process card payments?",
+      "type": "select",
+      "section": "compliance",
+      "options": [
+        { "label": "Yes", "value": "yes" },
+        { "label": "No", "value": "no" }
+      ]
+    },
+    {
+      "id": "pci_scope",
+      "label": "PCI scope description",
+      "type": "textarea",
+      "section": "compliance",
+      "showIf": [{ "questionId": "processes_payments", "operator": "equals", "value": "yes" }]
+    },
+    {
+      "id": "compliance_frameworks",
+      "label": "Compliance frameworks in scope",
+      "type": "multiselect",
+      "section": "compliance",
+      "options": [
+        { "label": "SOC 2", "value": "soc2" },
+        { "label": "ISO 27001", "value": "iso27001" },
+        { "label": "PCI DSS", "value": "pci" },
+        { "label": "HIPAA", "value": "hipaa" },
+        { "label": "GDPR", "value": "gdpr" },
+        { "label": "NIST", "value": "nist" }
+      ]
+    },
+    {
+      "id": "last_audit",
+      "label": "Most recent audit date",
+      "type": "text",
+      "section": "compliance"
+    },
+    {
+      "id": "audit_gaps",
+      "label": "Open audit findings or gaps",
+      "type": "textarea",
+      "section": "compliance"
+    },
+    {
+      "id": "evidence_upload",
+      "label": "Upload core evidence pack",
+      "type": "file",
+      "section": "evidence",
+      "helper": "Policies, architecture diagrams, pen test reports, or audit reports."
+    },
+    {
+      "id": "evidence_notes",
+      "label": "Additional evidence notes",
+      "type": "textarea",
+      "section": "evidence"
+    },
+    {
+      "id": "review_ack",
+      "label": "I confirm the details above are accurate to the best of my knowledge.",
+      "type": "checkbox",
+      "required": true,
+      "section": "review"
+    },
+    {
+      "id": "review_contact",
+      "label": "Preferred contact for follow-up",
+      "type": "text",
+      "section": "review"
+    },
+    {
+      "id": "review_timeline",
+      "label": "Desired assessment timeline",
+      "type": "text",
+      "section": "review"
+    }
+  ],
+  "evidenceChecklist": [
+    {
+      "id": "evidence_policies",
+      "label": "Security policies and standards",
+      "description": "Information security, access control, incident response, and acceptable use."
+    },
+    {
+      "id": "evidence_architecture",
+      "label": "System architecture diagrams",
+      "description": "Current production architecture with data flows."
+    },
+    {
+      "id": "evidence_logging",
+      "label": "Centralized logging plan",
+      "description": "Provide roadmap or backlog for centralized logging.",
+      "showIf": [{ "questionId": "central_logging", "operator": "equals", "value": "no" }]
+    },
+    {
+      "id": "evidence_pci",
+      "label": "PCI DSS evidence",
+      "description": "AOC/ROC and PCI scope documentation.",
+      "showIf": [{ "questionId": "processes_payments", "operator": "equals", "value": "yes" }]
+    },
+    {
+      "id": "evidence_ot",
+      "label": "OT/IoT asset inventory",
+      "description": "Asset list, segmentation diagrams, and monitoring coverage.",
+      "showIf": [{ "questionId": "has_ot", "operator": "equals", "value": "yes" }]
+    }
+  ]
+}
