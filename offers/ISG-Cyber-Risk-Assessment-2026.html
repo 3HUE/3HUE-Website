@@ -1022,6 +1022,249 @@
         animation-delay: 0.3s;
       }
 
+      .vision-carousel-shell {
+        position: relative;
+        border-radius: 22px;
+        padding: clamp(16px, 2.5vw, 24px);
+        background: linear-gradient(135deg, rgba(8, 14, 24, 0.94), rgba(12, 22, 36, 0.94));
+        border: 1px solid rgba(68, 168, 217, 0.35);
+        box-shadow: 0 24px 46px rgba(3, 7, 18, 0.45);
+      }
+
+      body[data-theme="light"] .vision-carousel-shell {
+        background: linear-gradient(135deg, rgba(248, 251, 255, 0.95), rgba(240, 246, 252, 0.95));
+        border-color: rgba(47, 107, 255, 0.2);
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+      }
+
+      .vision-carousel {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .vision-control {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(68, 168, 217, 0.45);
+        background: rgba(5, 10, 18, 0.78);
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .vision-control:hover,
+      .vision-control:focus-visible {
+        transform: translateY(-1px);
+        background: rgba(68, 168, 217, 0.35);
+      }
+
+      body[data-theme="light"] .vision-control {
+        background: #ffffff;
+        color: #0f172a;
+        border-color: rgba(15, 23, 42, 0.16);
+      }
+
+      .vision-stage {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        aspect-ratio: 16 / 10;
+        border: 1px solid rgba(120, 146, 176, 0.28);
+        background: rgba(4, 9, 16, 0.7);
+      }
+
+      .vision-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease;
+      }
+
+      .vision-slide.is-active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .vision-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        cursor: zoom-in;
+      }
+
+      .vision-slide figcaption {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        margin: 0;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(6, 11, 18, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        color: #e5edf8;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      body[data-theme="light"] .vision-slide figcaption {
+        background: rgba(255, 255, 255, 0.88);
+        color: #0f172a;
+      }
+
+      .vision-thumbs-wrap {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .vision-thumbs {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 118px;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: thin;
+        scroll-behavior: smooth;
+      }
+
+      .vision-control-thumb {
+        width: 36px;
+        height: 36px;
+        background: rgba(5, 10, 18, 0.92);
+      }
+
+      .vision-thumb {
+        position: relative;
+        padding: 0;
+        border-radius: 12px;
+        border: 1px solid rgba(120, 146, 176, 0.35);
+        overflow: hidden;
+        background: rgba(9, 16, 26, 0.75);
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .vision-thumb img {
+        width: 100%;
+        height: 72px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .vision-thumb.is-active {
+        border-color: rgba(68, 168, 217, 0.95);
+        box-shadow: 0 0 0 1px rgba(68, 168, 217, 0.4);
+      }
+
+      .vision-thumb:hover,
+      .vision-thumb:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .vision-hover-preview {
+        position: absolute;
+        top: 22px;
+        right: 22px;
+        width: min(320px, calc(100% - 44px));
+        background: rgba(6, 11, 18, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.34);
+        border-radius: 14px;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+        padding: 10px;
+        opacity: 0;
+        transform: translateY(8px);
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .vision-hover-preview.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vision-hover-preview img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        border-radius: 10px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .vision-hover-preview p {
+        margin: 8px 0 0;
+        color: #dce6f6;
+        font-size: 0.82rem;
+        line-height: 1.4;
+      }
+
+      body[data-theme="light"] .vision-hover-preview {
+        background: rgba(255, 255, 255, 0.94);
+        border-color: rgba(15, 23, 42, 0.2);
+      }
+
+      body[data-theme="light"] .vision-hover-preview p {
+        color: #1f2937;
+      }
+
+      .vision-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: none;
+        place-items: center;
+        padding: 20px;
+        background: rgba(3, 7, 18, 0.82);
+        backdrop-filter: blur(6px);
+      }
+
+      .vision-lightbox.is-open {
+        display: grid;
+      }
+
+      .vision-lightbox-inner {
+        position: relative;
+        width: min(1200px, 96vw);
+        max-height: 92vh;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(120, 146, 176, 0.35);
+        background: #02050b;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      }
+
+      .vision-lightbox-inner img {
+        width: 100%;
+        max-height: 82vh;
+        object-fit: contain;
+        display: block;
+      }
+
+      .vision-lightbox-caption {
+        margin: 0;
+        padding: 12px 16px;
+        color: #dbe7f9;
+        background: rgba(8, 14, 24, 0.92);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .vision-lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
       @keyframes reveal {
         to {
           opacity: 1;
@@ -1047,6 +1290,15 @@
 
         .hero {
           padding: 72px 0 56px;
+        }
+
+        .vision-carousel {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+
+        .vision-carousel > .vision-control {
+          display: none;
         }
       }
 
@@ -1079,6 +1331,10 @@
 
         .glance-grid {
           grid-template-columns: 1fr;
+        }
+
+        .vision-hover-preview {
+          display: none;
         }
       }
 
@@ -1456,6 +1712,40 @@
         </div>
       </section>
 
+      <section class="section section-alt" id="visual-walkthrough">
+        <div class="container">
+          <div class="section-head">
+            <span class="pill">Visual Walkthrough</span>
+            <h2>Assessment platform screenshots</h2>
+            <p>Use the carousel to review sample views. Hover or focus a thumbnail for a high-quality preview and a short explanation.</p>
+          </div>
+          <div class="vision-carousel-shell" data-vision-carousel>
+            <div class="vision-carousel">
+              <button class="vision-control" type="button" data-vision-prev aria-label="Previous screenshot">
+                <span aria-hidden="true">&#8592;</span>
+              </button>
+              <div class="vision-stage" data-vision-stage></div>
+              <button class="vision-control" type="button" data-vision-next aria-label="Next screenshot">
+                <span aria-hidden="true">&#8594;</span>
+              </button>
+            </div>
+            <div class="vision-thumbs-wrap">
+              <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-prev aria-label="Scroll thumbnails left">
+                <span aria-hidden="true">&#8592;</span>
+              </button>
+              <div class="vision-thumbs" data-vision-thumbs aria-label="Screenshot thumbnails"></div>
+              <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-next aria-label="Scroll thumbnails right">
+                <span aria-hidden="true">&#8594;</span>
+              </button>
+            </div>
+            <div class="vision-hover-preview" aria-hidden="true" data-vision-preview>
+              <img src="../assets/img/vision/Vision-Sample-1.avif" alt="Hovered screenshot preview" loading="lazy" />
+              <p>Executive overview with top risk categories, trend movement, and current severity indicators.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="faq_section">
         <div class="container">
           <div class="section-head">
@@ -1490,6 +1780,16 @@
       <div class="section-divider" aria-hidden="true"></div>
     </main>
 
+    <div class="vision-lightbox" data-vision-lightbox aria-hidden="true" role="dialog" aria-label="Full-size screenshot viewer">
+      <div class="vision-lightbox-inner">
+        <button class="vision-control vision-lightbox-close" type="button" data-vision-lightbox-close aria-label="Close image preview">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="../assets/img/vision/Vision-Sample-1.avif" alt="Full-size screenshot preview" data-vision-lightbox-image />
+        <p class="vision-lightbox-caption" data-vision-lightbox-caption></p>
+      </div>
+    </div>
+
     <div class="sticky-cta" aria-label="Quick actions">
       <div class="cta-dual">
         <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/intro-risk-assessment-2026">Schedule Assessment</a>
@@ -1523,6 +1823,195 @@
           document.body.setAttribute("data-theme", nextTheme);
           localStorage.setItem("insider-theme", nextTheme);
         });
+      })();
+
+      (function () {
+        const root = document.querySelector("[data-vision-carousel]");
+        if (!root) return;
+        const stage = root.querySelector("[data-vision-stage]");
+        const thumbRail = root.querySelector("[data-vision-thumbs]");
+        const prev = root.querySelector("[data-vision-prev]");
+        const next = root.querySelector("[data-vision-next]");
+        const thumbPrev = root.querySelector("[data-vision-thumb-prev]");
+        const thumbNext = root.querySelector("[data-vision-thumb-next]");
+        const preview = root.querySelector("[data-vision-preview]");
+        const previewImage = preview ? preview.querySelector("img") : null;
+        const previewText = preview ? preview.querySelector("p") : null;
+        const lightbox = document.querySelector("[data-vision-lightbox]");
+        const lightboxImage = lightbox ? lightbox.querySelector("[data-vision-lightbox-image]") : null;
+        const lightboxCaption = lightbox ? lightbox.querySelector("[data-vision-lightbox-caption]") : null;
+        const lightboxClose = lightbox ? lightbox.querySelector("[data-vision-lightbox-close]") : null;
+        if (!stage || !thumbRail || !prev || !next || !thumbPrev || !thumbNext) return;
+
+        const imageFiles = [
+          "Vision-Sample-1.avif",
+          "Vision-Sample-10.avif",
+          "Vision-Sample-11.avif",
+          "Vision-Sample-12.avif",
+          "Vision-Sample-14.avif",
+          "Vision-Sample-15.avif",
+          "Vision-Sample-16.avif",
+          "Vision-Sample-17.avif",
+          "Vision-Sample-18.avif",
+          "Vision-Sample-19.avif",
+          "Vision-Sample-2.avif",
+          "Vision-Sample-20.avif",
+          "Vision-Sample-21.avif",
+          "Vision-Sample-22.avif",
+          "Vision-Sample-23.avif",
+          "Vision-Sample-24.avif",
+          "Vision-Sample-25.avif",
+          "Vision-Sample-26png.avif",
+          "Vision-Sample-3.avif",
+          "Vision-Sample-4.avif",
+          "Vision-Sample-5.avif",
+          "Vision-Sample-6.avif",
+          "Vision-Sample-7.avif",
+          "Vision-Sample-8.avif",
+          "Vision-Sample-9.avif"
+        ];
+
+        const galleryItems = imageFiles.map((file, idx) => {
+          const number = idx + 1;
+          return {
+            src: `../assets/img/vision/${file}`,
+            alt: `Cyber-risk assessment screenshot sample ${number}`,
+            caption: `Sample ${number}: Platform snapshot showing cyber-risk indicators, findings, and prioritized actions.`
+          };
+        });
+
+        galleryItems.forEach((item, idx) => {
+          const slide = document.createElement("figure");
+          slide.className = `vision-slide${idx === 0 ? " is-active" : ""}`;
+          slide.dataset.index = String(idx);
+          slide.innerHTML = `
+            <img src="${item.src}" alt="${item.alt}" loading="lazy" />
+            <figcaption>${item.caption}</figcaption>
+          `;
+          stage.appendChild(slide);
+
+          const thumb = document.createElement("button");
+          thumb.className = `vision-thumb${idx === 0 ? " is-active" : ""}`;
+          thumb.type = "button";
+          thumb.dataset.slide = String(idx);
+          thumb.dataset.caption = item.caption;
+          thumb.setAttribute("aria-label", `View screenshot ${idx + 1}`);
+          thumb.innerHTML = `<img src="${item.src}" alt="${item.alt}" loading="lazy" />`;
+          thumbRail.appendChild(thumb);
+        });
+
+        const slides = Array.from(root.querySelectorAll(".vision-slide"));
+        const thumbs = Array.from(root.querySelectorAll(".vision-thumb"));
+        let current = 0;
+        if (!slides.length || !thumbs.length) return;
+
+        function showSlide(index) {
+          current = (index + slides.length) % slides.length;
+          slides.forEach((slide, idx) => {
+            slide.classList.toggle("is-active", idx === current);
+          });
+          thumbs.forEach((thumb, idx) => {
+            const isActive = idx === current;
+            thumb.classList.toggle("is-active", isActive);
+            thumb.setAttribute("aria-current", isActive ? "true" : "false");
+            if (isActive) {
+              thumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            }
+          });
+        }
+
+        function showPreviewFor(thumb) {
+          if (!preview || !previewImage || !previewText) return;
+          const img = thumb.querySelector("img");
+          if (!img) return;
+          previewImage.src = img.src;
+          previewText.textContent = thumb.dataset.caption || "Assessment screenshot preview";
+          preview.classList.add("is-visible");
+          preview.setAttribute("aria-hidden", "false");
+        }
+
+        function hidePreview() {
+          if (!preview) return;
+          preview.classList.remove("is-visible");
+          preview.setAttribute("aria-hidden", "true");
+        }
+
+        function openLightbox() {
+          if (!lightbox || !lightboxImage || !lightboxCaption) return;
+          const activeSlide = slides[current];
+          const activeImage = activeSlide ? activeSlide.querySelector("img") : null;
+          if (!activeImage) return;
+          lightboxImage.src = activeImage.src;
+          lightboxImage.alt = activeImage.alt || "Full-size screenshot preview";
+          lightboxCaption.textContent = galleryItems[current]?.caption || "Assessment screenshot preview";
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+        }
+
+        function closeLightbox() {
+          if (!lightbox) return;
+          lightbox.classList.remove("is-open");
+          lightbox.setAttribute("aria-hidden", "true");
+        }
+
+        prev.addEventListener("click", () => showSlide(current - 1));
+        next.addEventListener("click", () => showSlide(current + 1));
+        thumbPrev.addEventListener("click", () => {
+          thumbRail.scrollBy({ left: -thumbRail.clientWidth * 0.8, behavior: "smooth" });
+        });
+        thumbNext.addEventListener("click", () => {
+          thumbRail.scrollBy({ left: thumbRail.clientWidth * 0.8, behavior: "smooth" });
+        });
+
+        thumbs.forEach((thumb, idx) => {
+          thumb.addEventListener("click", () => showSlide(idx));
+          thumb.addEventListener("mouseenter", () => showPreviewFor(thumb));
+          thumb.addEventListener("mouseleave", hidePreview);
+          thumb.addEventListener("focus", () => showPreviewFor(thumb));
+          thumb.addEventListener("blur", hidePreview);
+        });
+
+        stage.addEventListener("click", (event) => {
+          if (event.target.closest(".vision-slide img")) {
+            openLightbox();
+          }
+        });
+
+        if (lightboxClose) {
+          lightboxClose.addEventListener("click", closeLightbox);
+        }
+        if (lightbox) {
+          lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) {
+              closeLightbox();
+            }
+          });
+        }
+
+        root.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showSlide(current - 1);
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showSlide(current + 1);
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            closeLightbox();
+          }
+        });
+
+        showSlide(0);
+        if (previewText) {
+          previewText.textContent = galleryItems[0].caption;
+        }
+        if (previewImage) {
+          previewImage.src = galleryItems[0].src;
+        }
       })();
     </script>
 </body>
