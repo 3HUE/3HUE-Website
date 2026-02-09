@@ -1905,7 +1905,7 @@
         let current = 0;
         if (!slides.length || !thumbs.length) return;
 
-        function showSlide(index) {
+        function showSlide(index, shouldScrollThumb = true) {
           current = (index + slides.length) % slides.length;
           slides.forEach((slide, idx) => {
             slide.classList.toggle("is-active", idx === current);
@@ -1914,7 +1914,7 @@
             const isActive = idx === current;
             thumb.classList.toggle("is-active", isActive);
             thumb.setAttribute("aria-current", isActive ? "true" : "false");
-            if (isActive) {
+            if (isActive && shouldScrollThumb) {
               thumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
             }
           });
@@ -2008,7 +2008,7 @@
           }
         });
 
-        showSlide(0);
+        showSlide(0, false);
       })();
     </script>
 </body>
