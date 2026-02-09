@@ -1153,6 +1153,54 @@
         align-items: center;
       }
 
+      .carousel-overlay-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 6;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 22px 22px 14px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 10px 22px rgba(2, 6, 14, 0.32);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateY(0);
+        opacity: 1;
+        transition: transform 0.28s ease, opacity 0.28s ease;
+        pointer-events: none;
+      }
+
+      .carousel-overlay-bar.is-hidden {
+        transform: translateY(-110%);
+        opacity: 0;
+      }
+
+      .carousel-overlay-bar .cob-left {
+        flex: 0 0 auto;
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+      }
+
+      .carousel-overlay-bar .cob-right {
+        min-width: 0;
+        margin-left: auto;
+        color: #d8e5f8;
+        font-size: 0.74rem;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .vision-control {
         width: 44px;
         height: 44px;
@@ -1176,6 +1224,20 @@
         background: #ffffff;
         color: #0f172a;
         border-color: rgba(15, 23, 42, 0.16);
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(15, 23, 42, 0.16);
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-left {
+        color: #0f172a;
+        text-shadow: none;
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-right {
+        color: #334155;
       }
 
       .vision-stage {
@@ -1547,8 +1609,29 @@
           font-size: 0.8rem;
         }
 
+        .carousel-overlay-bar {
+          height: 52px;
+          padding: 0 10px;
+          border-radius: 22px 22px 12px 12px;
+        }
+
+        .carousel-overlay-bar .cob-left {
+          font-size: 0.74rem;
+        }
+
+        .carousel-overlay-bar .cob-right {
+          font-size: 0.68rem;
+          line-height: 1.2;
+        }
+
         .sticky-cta {
           display: none !important;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-overlay-bar {
+          transition: none;
         }
       }
     </style>
@@ -1595,7 +1678,13 @@
             </p>
           </div>
           <div class="media-first-frame reveal">
-            <div class="vision-carousel-shell" data-vision-carousel>
+            <div class="vision-carousel-shell" data-vision-carousel id="roar-carousel">
+              <div class="carousel-overlay-bar" id="roarOverlayBar" aria-hidden="true">
+                <div class="cob-left">ROAR Sample Output</div>
+                <div class="cob-right">
+                  Board-ready summary &bull; Prioritized exposure map &bull; Remediation starter plan
+                </div>
+              </div>
               <div class="vision-carousel">
                 <button class="vision-control" type="button" data-vision-prev aria-label="Previous screenshot">
                   <span aria-hidden="true">&#8592;</span>
@@ -2012,6 +2101,8 @@
       (function () {
         const root = document.querySelector("[data-vision-carousel]");
         if (!root) return;
+        const shell = document.getElementById("roar-carousel");
+        const overlayBar = document.getElementById("roarOverlayBar");
         const stage = root.querySelector("[data-vision-stage]");
         const thumbRail = root.querySelector("[data-vision-thumbs]");
         const prev = root.querySelector("[data-vision-prev]");
@@ -2026,6 +2117,19 @@
         const lightboxCaption = lightbox ? lightbox.querySelector("[data-vision-lightbox-caption]") : null;
         const lightboxClose = lightbox ? lightbox.querySelector("[data-vision-lightbox-close]") : null;
         if (!stage || !thumbRail || !prev || !next || !thumbPrev || !thumbNext) return;
+        let overlayHiddenLocked = false;
+
+        function hideOverlay(lock = true) {
+          if (!overlayBar) return;
+          overlayBar.classList.add("is-hidden");
+          overlayBar.dataset.hidden = "true";
+          if (lock) overlayHiddenLocked = true;
+        }
+
+        function onCarouselInteract() {
+          if (overlayHiddenLocked) return;
+          hideOverlay(true);
+        }
 
         const imageFiles = [
           "Vision-Sample-1-edit.avif",
@@ -2136,17 +2240,28 @@
           lightbox.setAttribute("aria-hidden", "true");
         }
 
-        prev.addEventListener("click", () => showSlide(current - 1));
-        next.addEventListener("click", () => showSlide(current + 1));
+        prev.addEventListener("click", () => {
+          onCarouselInteract();
+          showSlide(current - 1);
+        });
+        next.addEventListener("click", () => {
+          onCarouselInteract();
+          showSlide(current + 1);
+        });
         thumbPrev.addEventListener("click", () => {
+          onCarouselInteract();
           thumbRail.scrollBy({ left: -thumbRail.clientWidth * 0.8, behavior: "smooth" });
         });
         thumbNext.addEventListener("click", () => {
+          onCarouselInteract();
           thumbRail.scrollBy({ left: thumbRail.clientWidth * 0.8, behavior: "smooth" });
         });
 
         thumbs.forEach((thumb, idx) => {
-          thumb.addEventListener("click", () => showSlide(idx));
+          thumb.addEventListener("click", () => {
+            onCarouselInteract();
+            showSlide(idx);
+          });
           thumb.addEventListener("mouseenter", () => showPreviewFor(thumb));
           thumb.addEventListener("mouseleave", hidePreview);
           thumb.addEventListener("focus", () => showPreviewFor(thumb));
@@ -2173,13 +2288,20 @@
         root.addEventListener("keydown", (event) => {
           if (event.key === "ArrowLeft") {
             event.preventDefault();
+            onCarouselInteract();
             showSlide(current - 1);
           }
           if (event.key === "ArrowRight") {
             event.preventDefault();
+            onCarouselInteract();
             showSlide(current + 1);
           }
         });
+
+        if (shell) {
+          shell.addEventListener("pointerdown", onCarouselInteract, { passive: true });
+          shell.addEventListener("click", onCarouselInteract);
+        }
 
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") {
