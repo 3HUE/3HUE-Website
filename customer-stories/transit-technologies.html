@@ -26,6 +26,111 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .story-hero-card .portfolio-logos {
+        overflow: hidden;
+        margin-top: var(--space-3);
+        padding: 10px 0;
+        mask-image: linear-gradient(
+          90deg,
+          transparent 0%,
+          black 9%,
+          black 91%,
+          transparent 100%
+        );
+      }
+
+      .story-hero-card .portfolio-logo-track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        gap: 28px;
+        animation: tt-logo-marquee 24s linear infinite;
+      }
+
+      .story-hero-card .portfolio-logo {
+        flex: 0 0 auto;
+        min-width: 104px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .story-hero-card .portfolio-logo img {
+        width: auto;
+        max-width: 150px;
+        height: auto;
+        max-height: 24px;
+        object-fit: contain;
+        opacity: 0.92;
+        filter: grayscale(1) brightness(0) contrast(1.32);
+      }
+
+      .story-hero-card .portfolio-logo--faster {
+        min-width: 128px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.92);
+      }
+
+      .story-hero-card .portfolio-logo--faster img {
+        max-height: 22px;
+        filter: none;
+        opacity: 1;
+      }
+
+      @keyframes tt-logo-marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .story-hero-card .portfolio-logo-track {
+          gap: 20px;
+        }
+
+        .story-hero-card .portfolio-logo {
+          min-width: 90px;
+        }
+
+        .story-hero-card .portfolio-logo img {
+          max-height: 20px;
+          max-width: 128px;
+        }
+
+        .story-hero-card .portfolio-logo--faster img {
+          max-height: 19px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .story-hero-card .portfolio-logo-track {
+          animation: none;
+        }
+      }
+
+      [data-theme="dark"] .story-hero-card .portfolio-logo img {
+        opacity: 0.75;
+        filter: grayscale(1) invert(1) contrast(1.06);
+      }
+
+      [data-theme="dark"] .story-hero-card .portfolio-logo--faster {
+        background: rgba(148, 163, 184, 0.2);
+      }
+
+      [data-theme="dark"] .story-hero-card .portfolio-logo--faster img {
+        filter: none;
+        opacity: 1;
+      }
+    </style>
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
