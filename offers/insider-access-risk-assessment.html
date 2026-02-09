@@ -1015,6 +1015,105 @@
         animation-delay: 0.3s;
       }
 
+      .media-first {
+        padding: 26px 0 22px;
+      }
+
+      .media-first .section-head {
+        max-width: 760px;
+        margin: 0 auto 10px;
+        text-align: center;
+      }
+
+      .media-first .section-head .pill {
+        display: inline-flex;
+        margin-bottom: 4px;
+        margin-left: auto;
+        margin-right: auto;
+        background: transparent;
+        color: var(--accent);
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+      }
+
+      body[data-theme="dark"] .media-first .section-head .pill {
+        color: #ffffff;
+      }
+
+      .media-first-title {
+        margin: 0 auto 8px;
+        max-width: 24ch;
+        font-family: "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+        font-size: clamp(1.4rem, 4vw, 3.1rem);
+        font-weight: 500;
+        line-height: 0.94;
+        letter-spacing: -0.03em;
+        color: #f7f4fb;
+        text-wrap: balance;
+      }
+
+      .media-first-title-line {
+        display: block;
+        white-space: nowrap;
+      }
+
+      body[data-theme="light"] .media-first-title {
+        color: #10203b;
+      }
+
+      .media-first-subtitle {
+        margin: 0 auto 4px;
+        max-width: 34ch;
+        font-size: clamp(1.06rem, 2.2vw, 1.8rem);
+        line-height: 1.45;
+        color: #e8ecf6;
+      }
+
+      body[data-theme="light"] .media-first-subtitle {
+        color: #24324a;
+      }
+
+      .media-first-anchor {
+        margin: 6px auto 0;
+        max-width: 44ch;
+        font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+        line-height: 1.45;
+        color: #d8e4f7;
+      }
+
+      .media-first-anchor strong {
+        color: #ffffff;
+      }
+
+      body[data-theme="light"] .media-first-anchor {
+        color: #35465f;
+      }
+
+      body[data-theme="light"] .media-first-anchor strong {
+        color: #10203b;
+      }
+
+      .media-first-frame {
+        border-radius: 28px;
+        padding: clamp(14px, 2vw, 20px);
+        background:
+          radial-gradient(circle at 15% 25%, rgba(80, 215, 190, 0.22), transparent 46%),
+          radial-gradient(circle at 82% 30%, rgba(139, 92, 246, 0.26), transparent 42%),
+          radial-gradient(circle at 55% 100%, rgba(50, 84, 170, 0.42), transparent 58%),
+          linear-gradient(160deg, rgba(28, 20, 40, 0.94), rgba(10, 16, 32, 0.95));
+        border: 1px solid rgba(143, 165, 212, 0.35);
+        box-shadow: 0 30px 60px rgba(3, 7, 18, 0.48);
+      }
+
+      body[data-theme="light"] .media-first-frame {
+        background:
+          radial-gradient(circle at 15% 22%, rgba(68, 168, 217, 0.2), transparent 45%),
+          radial-gradient(circle at 85% 30%, rgba(90, 130, 214, 0.24), transparent 43%),
+          linear-gradient(155deg, rgba(243, 248, 255, 0.98), rgba(230, 238, 251, 0.96));
+        border-color: rgba(47, 107, 255, 0.2);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+      }
+
       .vision-carousel-shell {
         position: relative;
         border-radius: 22px;
@@ -1030,11 +1129,69 @@
         box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
       }
 
+      .media-first .vision-carousel-shell {
+        background: rgba(10, 18, 30, 0.78);
+        border-color: rgba(162, 179, 212, 0.3);
+      }
+
+      body[data-theme="light"] .media-first .vision-carousel-shell {
+        background: rgba(255, 255, 255, 0.88);
+        border-color: rgba(47, 107, 255, 0.2);
+      }
+
       .vision-carousel {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         gap: 16px;
         align-items: center;
+      }
+
+      .carousel-overlay-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 6;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 22px 22px 14px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 10px 22px rgba(2, 6, 14, 0.32);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateY(0);
+        opacity: 1;
+        transition: transform 0.28s ease, opacity 0.28s ease;
+        pointer-events: none;
+      }
+
+      .carousel-overlay-bar.is-hidden {
+        transform: translateY(-110%);
+        opacity: 0;
+      }
+
+      .carousel-overlay-bar .cob-left {
+        flex: 0 0 auto;
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+      }
+
+      .carousel-overlay-bar .cob-right {
+        min-width: 0;
+        margin-left: auto;
+        color: #d8e5f8;
+        font-size: 0.74rem;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .vision-control {
@@ -1060,6 +1217,20 @@
         background: #ffffff;
         color: #0f172a;
         border-color: rgba(15, 23, 42, 0.16);
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(15, 23, 42, 0.16);
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-left {
+        color: #0f172a;
+        text-shadow: none;
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-right {
+        color: #334155;
       }
 
       .vision-stage {
@@ -1272,6 +1443,15 @@
       }
 
       @media (max-width: 960px) {
+        .media-first {
+          padding-top: 20px;
+          padding-bottom: 16px;
+        }
+
+        .media-first-title {
+          line-height: 0.98;
+        }
+
         .hero-grid,
         .grid-3,
         .grid-2,
@@ -1377,8 +1557,29 @@
           font-size: 0.8rem;
         }
 
+        .carousel-overlay-bar {
+          height: 52px;
+          padding: 0 10px;
+          border-radius: 22px 22px 12px 12px;
+        }
+
+        .carousel-overlay-bar .cob-left {
+          font-size: 0.74rem;
+        }
+
+        .carousel-overlay-bar .cob-right {
+          font-size: 0.68rem;
+          line-height: 1.2;
+        }
+
         .sticky-cta {
           display: none !important;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-overlay-bar {
+          transition: none;
         }
       }
     </style>
@@ -1390,6 +1591,7 @@
           <img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE logo" />
         </a>
         <nav class="nav-links" aria-label="Primary">
+          <a href="#media-first">Media</a>
           <a href="#program">Program</a>
           <a href="#includes">Includes</a>
           <a href="#outcomes">Outcomes</a>
@@ -1416,6 +1618,60 @@
     </header>
 
     <main>
+      <section class="media-first" id="media-first">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="pill">Insider Early Access Platform</span>
+            <h2 class="media-first-title delay-1 reveal">
+              <span class="media-first-title-line">See risk clarity</span>
+              <span class="media-first-title-line">at the pace of execution.</span>
+            </h2>
+            <p class="media-first-subtitle delay-2 reveal">
+              From exposure signals &rarr; prioritized remediation &rarr; audit-ready outcomes.
+            </p>
+            <p class="media-first-anchor delay-2 reveal">
+              <strong>Insider Access: $12,500 fixed</strong><br />
+              AiVRIC-powered assessment + remediation support in 30 days.
+            </p>
+          </div>
+          <div class="media-first-frame reveal">
+            <div class="vision-carousel-shell" data-vision-carousel id="roar-carousel">
+              <div class="carousel-overlay-bar" id="roarOverlayBar" aria-hidden="true">
+                <div class="cob-left">ROAR Sample Output</div>
+                <div class="cob-right">
+                  Board-ready summary &bull; Prioritized exposure map &bull; Remediation starter plan
+                </div>
+              </div>
+              <div class="vision-carousel">
+                <button class="vision-control" type="button" data-vision-prev aria-label="Previous screenshot">
+                  <span aria-hidden="true">&#8592;</span>
+                </button>
+                <div class="vision-stage" data-vision-stage></div>
+                <button class="vision-control" type="button" data-vision-next aria-label="Next screenshot">
+                  <span aria-hidden="true">&#8594;</span>
+                </button>
+              </div>
+              <div class="vision-thumbs-wrap">
+                <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-prev aria-label="Scroll thumbnails left">
+                  <span aria-hidden="true">&#8592;</span>
+                </button>
+                <div class="vision-thumbs" data-vision-thumbs aria-label="Screenshot thumbnails"></div>
+                <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-next aria-label="Scroll thumbnails right">
+                  <span aria-hidden="true">&#8594;</span>
+                </button>
+              </div>
+              <div class="vision-hover-preview" aria-hidden="true" data-vision-preview>
+                <img src="../assets/img/vision/Vision-Sample-1-edit.avif" alt="Hovered screenshot preview" loading="lazy" />
+                <p>Sample 1: Platform snapshot showing cyber-risk indicators, findings, and prioritized actions.</p>
+              </div>
+            </div>
+            <div class="vision-report-cta">
+              <a class="btn btn-primary" href="../assets/docs/report.pdf" target="_blank" rel="noopener">View A Sample PDF Report</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="hero" id="program">
         <div class="container hero-grid">
           <div class="reveal">
@@ -1798,43 +2054,6 @@
         </div>
       </section>
 
-      <section class="section" id="visual-walkthrough">
-        <div class="container">
-          <div class="section-head">
-            <span class="pill">Visual Walkthrough</span>
-            <h2>Assessment platform screenshots</h2>
-            <p>Use the carousel to review sample views. Hover or focus a thumbnail for a high-quality preview and a short explanation.</p>
-          </div>
-          <div class="vision-carousel-shell" data-vision-carousel>
-            <div class="vision-carousel">
-              <button class="vision-control" type="button" data-vision-prev aria-label="Previous screenshot">
-                <span aria-hidden="true">&#8592;</span>
-              </button>
-              <div class="vision-stage" data-vision-stage></div>
-              <button class="vision-control" type="button" data-vision-next aria-label="Next screenshot">
-                <span aria-hidden="true">&#8594;</span>
-              </button>
-            </div>
-            <div class="vision-thumbs-wrap">
-              <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-prev aria-label="Scroll thumbnails left">
-                <span aria-hidden="true">&#8592;</span>
-              </button>
-              <div class="vision-thumbs" data-vision-thumbs aria-label="Screenshot thumbnails"></div>
-              <button class="vision-control vision-control-thumb" type="button" data-vision-thumb-next aria-label="Scroll thumbnails right">
-                <span aria-hidden="true">&#8594;</span>
-              </button>
-            </div>
-            <div class="vision-hover-preview" aria-hidden="true" data-vision-preview>
-              <img src="../assets/img/vision/Vision-Sample-1-edit.avif" alt="Hovered screenshot preview" loading="lazy" />
-              <p>Sample 1: Platform snapshot showing cyber-risk indicators, findings, and prioritized actions.</p>
-            </div>
-          </div>
-          <div class="vision-report-cta">
-            <a class="btn btn-primary" href="../assets/docs/report.pdf" target="_blank" rel="noopener">View A Sample PDF Report</a>
-          </div>
-        </div>
-      </section>
-
       <section class="section section-alt" id="faq_section">
         <div class="container">
           <div class="section-head">
@@ -1927,6 +2146,8 @@
       (function () {
         const root = document.querySelector("[data-vision-carousel]");
         if (!root) return;
+        const shell = document.getElementById("roar-carousel");
+        const overlayBar = document.getElementById("roarOverlayBar");
         const stage = root.querySelector("[data-vision-stage]");
         const thumbRail = root.querySelector("[data-vision-thumbs]");
         const prev = root.querySelector("[data-vision-prev]");
@@ -1941,6 +2162,19 @@
         const lightboxCaption = lightbox ? lightbox.querySelector("[data-vision-lightbox-caption]") : null;
         const lightboxClose = lightbox ? lightbox.querySelector("[data-vision-lightbox-close]") : null;
         if (!stage || !thumbRail || !prev || !next || !thumbPrev || !thumbNext) return;
+        let overlayHiddenLocked = false;
+
+        function hideOverlay(lock = true) {
+          if (!overlayBar) return;
+          overlayBar.classList.add("is-hidden");
+          overlayBar.dataset.hidden = "true";
+          if (lock) overlayHiddenLocked = true;
+        }
+
+        function onCarouselInteract() {
+          if (overlayHiddenLocked) return;
+          hideOverlay(true);
+        }
 
         const imageFiles = [
           "Vision-Sample-1-edit.avif",
@@ -2051,17 +2285,28 @@
           lightbox.setAttribute("aria-hidden", "true");
         }
 
-        prev.addEventListener("click", () => showSlide(current - 1));
-        next.addEventListener("click", () => showSlide(current + 1));
+        prev.addEventListener("click", () => {
+          onCarouselInteract();
+          showSlide(current - 1);
+        });
+        next.addEventListener("click", () => {
+          onCarouselInteract();
+          showSlide(current + 1);
+        });
         thumbPrev.addEventListener("click", () => {
+          onCarouselInteract();
           thumbRail.scrollBy({ left: -thumbRail.clientWidth * 0.8, behavior: "smooth" });
         });
         thumbNext.addEventListener("click", () => {
+          onCarouselInteract();
           thumbRail.scrollBy({ left: thumbRail.clientWidth * 0.8, behavior: "smooth" });
         });
 
         thumbs.forEach((thumb, idx) => {
-          thumb.addEventListener("click", () => showSlide(idx));
+          thumb.addEventListener("click", () => {
+            onCarouselInteract();
+            showSlide(idx);
+          });
           thumb.addEventListener("mouseenter", () => showPreviewFor(thumb));
           thumb.addEventListener("mouseleave", hidePreview);
           thumb.addEventListener("focus", () => showPreviewFor(thumb));
@@ -2088,13 +2333,20 @@
         root.addEventListener("keydown", (event) => {
           if (event.key === "ArrowLeft") {
             event.preventDefault();
+            onCarouselInteract();
             showSlide(current - 1);
           }
           if (event.key === "ArrowRight") {
             event.preventDefault();
+            onCarouselInteract();
             showSlide(current + 1);
           }
         });
+
+        if (shell) {
+          shell.addEventListener("pointerdown", onCarouselInteract, { passive: true });
+          shell.addEventListener("click", onCarouselInteract);
+        }
 
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") {
