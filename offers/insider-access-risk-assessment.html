@@ -1184,14 +1184,37 @@
       }
 
       .carousel-overlay-bar .cob-right {
+        flex: 1 1 auto;
         min-width: 0;
-        margin-left: auto;
+        margin-left: 6px;
         color: #d8e5f8;
         font-size: 0.74rem;
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      .carousel-overlay-bar .cob-report-link {
+        flex: 0 0 auto;
+        margin-left: auto;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        background: rgba(255, 255, 255, 0.12);
+        color: #f8fbff;
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        pointer-events: auto;
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .carousel-overlay-bar .cob-report-link:hover,
+      .carousel-overlay-bar .cob-report-link:focus-visible {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.6);
       }
 
       .vision-control {
@@ -1231,6 +1254,18 @@
 
       body[data-theme="light"] .carousel-overlay-bar .cob-right {
         color: #334155;
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-report-link {
+        background: rgba(15, 23, 42, 0.05);
+        border-color: rgba(15, 23, 42, 0.2);
+        color: #0f172a;
+      }
+
+      body[data-theme="light"] .carousel-overlay-bar .cob-report-link:hover,
+      body[data-theme="light"] .carousel-overlay-bar .cob-report-link:focus-visible {
+        background: rgba(15, 23, 42, 0.1);
+        border-color: rgba(15, 23, 42, 0.35);
       }
 
       .vision-stage {
@@ -1572,6 +1607,11 @@
           line-height: 1.2;
         }
 
+        .carousel-overlay-bar .cob-report-link {
+          padding: 4px 8px;
+          font-size: 0.64rem;
+        }
+
         .sticky-cta {
           display: none !important;
         }
@@ -1640,6 +1680,9 @@
                 <div class="cob-right">
                   Board-ready summary &bull; Prioritized exposure map &bull; Remediation starter plan
                 </div>
+                <a class="cob-report-link" href="../assets/docs/report.pdf" target="_blank" rel="noopener">
+                  View sample report
+                </a>
               </div>
               <div class="vision-carousel">
                 <button class="vision-control" type="button" data-vision-prev aria-label="Previous screenshot">
@@ -1665,7 +1708,7 @@
               </div>
             </div>
             <div class="vision-report-cta">
-              <a class="btn btn-primary" href="../assets/docs/report.pdf" target="_blank" rel="noopener">View A Sample PDF Report</a>
+              <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/insider-access-assessment">Schedule Scoping Call</a>
             </div>
           </div>
         </div>
