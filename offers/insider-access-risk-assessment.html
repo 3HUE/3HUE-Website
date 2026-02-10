@@ -2190,6 +2190,7 @@
         if (!root) return;
         const shell = document.getElementById("roar-carousel");
         const overlayBar = document.getElementById("roarOverlayBar");
+        const reportLink = root.querySelector(".cob-report-link");
         const stage = root.querySelector("[data-vision-stage]");
         const thumbRail = root.querySelector("[data-vision-thumbs]");
         const prev = root.querySelector("[data-vision-prev]");
@@ -2216,6 +2217,15 @@
         function onCarouselInteract() {
           if (overlayHiddenLocked) return;
           hideOverlay(true);
+        }
+
+        if (reportLink) {
+          reportLink.addEventListener("pointerdown", (event) => {
+            event.stopPropagation();
+          });
+          reportLink.addEventListener("click", (event) => {
+            event.stopPropagation();
+          });
         }
 
         const imageFiles = [
