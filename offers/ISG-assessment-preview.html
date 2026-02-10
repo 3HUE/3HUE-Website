@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2VZJKP6GM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-Z2VZJKP6GM");
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3HUE | Cloud Risk Signal Snapshot | Free 48-Hour Preview</title>
+    <meta
+      name="description"
+      content="Cloud Risk Signal Snapshot (Free): a rapid, executive-facing risk readout delivered in 48 hours."
+    />
+    <link rel="icon" href="../assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #05080f;
+        --panel: rgba(14, 24, 37, 0.9);
+        --surface: rgba(12, 19, 32, 0.8);
+        --surface-2: rgba(8, 14, 24, 0.85);
+        --ink: #e6edf6;
+        --muted: #a5b3c6;
+        --line: rgba(120, 146, 176, 0.25);
+        --accent: #44a8d9;
+        --accent-2: #2f6bff;
+        --shadow: 0 24px 48px rgba(0, 0, 0, 0.38);
+        --hero-bg: radial-gradient(circle at 50% 20%, #071a2e 0%, #05101f 45%, #03060d 100%);
+        --hero-glow: radial-gradient(circle at 50% 15%, rgba(8, 72, 145, 0.2), transparent 60%);
+      }
+
+      body[data-theme="light"] {
+        color-scheme: light;
+        --bg: #f6f7f9;
+        --panel: rgba(255, 255, 255, 0.95);
+        --surface: #ffffff;
+        --surface-2: #f0f2f6;
+        --ink: #0f172a;
+        --muted: #3f4b5c;
+        --line: rgba(15, 23, 42, 0.12);
+        --accent: #2f86b3;
+        --accent-2: #44a8d9;
+        --shadow: 0 22px 50px rgba(15, 23, 42, 0.12);
+        --hero-bg: radial-gradient(circle at 50% 20%, #0b2a55 0%, #0a1f3f 50%, #0a1a33 100%);
+        --hero-glow: radial-gradient(circle at 50% 15%, rgba(8, 72, 145, 0.22), transparent 62%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, rgba(40, 207, 213, 0.2), transparent 45%),
+          radial-gradient(circle at 15% 20%, rgba(247, 185, 85, 0.12), transparent 42%),
+          radial-gradient(circle at 85% 10%, rgba(89, 241, 209, 0.1), transparent 42%),
+          var(--hero-bg);
+      }
+
+      body[data-theme="light"] {
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        letter-spacing: -0.02em;
+        margin: 0 0 12px;
+      }
+
+      body[data-theme="light"] h1,
+      body[data-theme="light"] h2,
+      body[data-theme="light"] h3 {
+        font-family: "Sora", "Segoe UI", sans-serif;
+      }
+
+      p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1120px, 90%);
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        padding: 16px 0;
+        background: rgba(5, 8, 15, 0.88);
+        border-bottom: 1px solid rgba(120, 146, 176, 0.15);
+        backdrop-filter: blur(14px);
+      }
+
+      body[data-theme="light"] .site-header {
+        background: rgba(245, 248, 252, 0.92);
+        border-bottom: 1px solid rgba(40, 60, 90, 0.12);
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand img {
+        height: 34px;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.92rem;
+      }
+
+      .nav-links a {
+        padding: 5px 8px;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        background: rgba(68, 168, 217, 0.14);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      .theme-toggle input {
+        appearance: none;
+        width: 50px;
+        height: 28px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(40, 207, 213, 0.15);
+        position: relative;
+        cursor: pointer;
+      }
+
+      .theme-toggle input::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent-2);
+        transition: transform 0.2s ease;
+      }
+
+      .theme-toggle input:checked::after {
+        transform: translateX(22px);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: linear-gradient(120deg, rgba(9, 18, 31, 0.92), rgba(16, 33, 51, 0.86));
+        border: 1px solid rgba(121, 180, 212, 0.55);
+        color: #f8fcff;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 6px 14px rgba(3, 10, 18, 0.35);
+        font-size: 0.82rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      body[data-theme="light"] .pill {
+        color: #0f172a;
+        background: rgba(68, 168, 217, 0.16);
+        border-color: rgba(68, 168, 217, 0.35);
+        text-shadow: none;
+        box-shadow: none;
+      }
+
+      .hero .pill,
+      .section-on-dark .pill,
+      body[data-theme="light"] .hero .pill,
+      body[data-theme="light"] .section-on-dark .pill {
+        color: #eef6ff;
+        background: linear-gradient(120deg, rgba(9, 18, 31, 0.94), rgba(16, 33, 51, 0.9));
+        border-color: rgba(132, 193, 228, 0.62);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 14px rgba(3, 10, 18, 0.36);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 1px solid rgba(68, 168, 217, 0.35);
+        font-weight: 700;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(120deg, var(--accent-2), var(--accent));
+        color: #ffffff;
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus-visible {
+        transform: translateY(-1px);
+      }
+
+      .btn-outline {
+        background: transparent;
+      }
+
+      .btn-outline:hover,
+      .btn-outline:focus-visible {
+        background: rgba(68, 168, 217, 0.15);
+      }
+
+      .hero {
+        position: relative;
+        padding: 92px 0 64px;
+        overflow: hidden;
+        background: var(--hero-bg);
+      }
+
+      body[data-theme="dark"] .hero {
+        background: var(--hero-bg);
+        box-shadow: inset 0 -1px 0 rgba(148, 163, 184, 0.2);
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--hero-glow);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 34px;
+        align-items: start;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 4vw, 3.4rem);
+        line-height: 1.06;
+        color: #f8fafc;
+      }
+
+      body[data-theme="light"] .hero h1 {
+        color: #ffffff;
+      }
+
+      .hero p {
+        color: #dbe6f4;
+      }
+
+      .hero .btn-outline {
+        color: #e6f2ff;
+        border-color: rgba(226, 232, 240, 0.7);
+        background: rgba(8, 18, 33, 0.2);
+      }
+
+      .hero .btn-outline:hover,
+      .hero .btn-outline:focus-visible {
+        background: rgba(68, 168, 217, 0.2);
+        color: #f8fcff;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .hero-actions .hero-big-btn {
+        min-height: 81px;
+        padding: 21px 45px;
+        font-size: 1.62rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .hero-fit-mini {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: rgba(10, 20, 34, 0.55);
+        border: 1px solid rgba(132, 193, 228, 0.3);
+      }
+
+      .hero-fit-mini h3 {
+        margin: 0 0 8px;
+        font-size: 0.95rem;
+        color: #e8f2ff;
+      }
+
+      .hero-fit-mini ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 6px;
+      }
+
+      .hero-fit-mini li {
+        color: #d5e3f5;
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+
+      .mini-carousel {
+        position: relative;
+        background: rgba(10, 18, 30, 0.72);
+        border: 1px solid rgba(121, 180, 212, 0.35);
+        border-radius: 18px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .mini-carousel-topbar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 10px;
+        min-height: 34px;
+        margin-bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, rgba(18, 31, 47, 0.95), rgba(12, 22, 35, 0.92));
+        border: 1px solid rgba(121, 180, 212, 0.35);
+      }
+
+      .mini-carousel-win-dots {
+        display: inline-flex;
+        gap: 6px;
+      }
+
+      .mini-carousel-win-dots span {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .mini-carousel-win-dots span:nth-child(1) {
+        background: #ff5f56;
+      }
+
+      .mini-carousel-win-dots span:nth-child(2) {
+        background: #ffbd2e;
+      }
+
+      .mini-carousel-win-dots span:nth-child(3) {
+        background: #27c93f;
+      }
+
+      .mini-carousel-title {
+        text-align: center;
+        color: #e8f2ff;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .mini-carousel-topbar-spacer {
+        width: 33px;
+      }
+
+      .mini-carousel-track {
+        display: flex;
+        transition: transform 0.3s ease;
+        will-change: transform;
+      }
+
+      .mini-carousel-viewport {
+        overflow: hidden;
+        border-radius: 12px;
+      }
+
+      .mini-carousel-slide {
+        min-width: 100%;
+        margin: 0;
+      }
+
+      .mini-carousel-slide img {
+        width: 100%;
+        display: block;
+        aspect-ratio: 3 / 4;
+        object-fit: contain;
+        background: rgba(4, 10, 18, 0.7);
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+      }
+
+      .mini-carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        border: 1px solid rgba(226, 232, 240, 0.75);
+        background: rgba(7, 14, 24, 0.72);
+        color: #f8fcff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      .mini-carousel-control:hover,
+      .mini-carousel-control:focus-visible {
+        background: rgba(68, 168, 217, 0.35);
+      }
+
+      .mini-carousel-control.prev {
+        left: 22px;
+      }
+
+      .mini-carousel-control.next {
+        right: 22px;
+      }
+
+      .mini-carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .mini-carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 0;
+        background: rgba(148, 163, 184, 0.55);
+        cursor: pointer;
+      }
+
+      .mini-carousel-dot[aria-current="true"] {
+        background: #6ad1ff;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h3 {
+        font-size: 1.15rem;
+      }
+
+      .list-clean {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+
+      .list-clean li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .list-clean li::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        flex-shrink: 0;
+        background: var(--accent);
+        mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5l7-3z'/></svg>")
+          no-repeat center / contain;
+      }
+
+      .section {
+        padding: clamp(36px, 4vw, 64px) 0;
+      }
+
+      .section-alt {
+        background: var(--surface-2);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-head {
+        margin-bottom: 28px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(1.7rem, 3vw, 2.35rem);
+      }
+
+      .section-on-dark .section-head h2,
+      .section-on-dark .section-head h3 {
+        color: #f4f8ff;
+        text-shadow: 0 2px 8px rgba(3, 7, 18, 0.28);
+      }
+
+      .section-on-dark .section-head p {
+        color: #d5e3f5;
+      }
+
+      .section-on-dark .btn-outline {
+        color: #e6f2ff;
+        border-color: rgba(226, 232, 240, 0.72);
+        background: rgba(8, 18, 33, 0.22);
+      }
+
+      .section-on-dark .btn-outline:hover,
+      .section-on-dark .btn-outline:focus-visible {
+        color: #f8fcff;
+        background: rgba(68, 168, 217, 0.2);
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .sticky-cta {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 32;
+      }
+
+      .sticky-cta .cta-shell {
+        display: flex;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 16px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .footer {
+        padding: 28px 0 44px;
+        border-top: 1px solid var(--line);
+      }
+
+      .footer p {
+        color: #c8d7ea;
+      }
+
+      @media (max-width: 1024px) {
+        .hero-grid,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-carousel-control.prev {
+          left: 16px;
+        }
+
+        .mini-carousel-control.next {
+          right: 16px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .header-inner {
+          flex-wrap: wrap;
+        }
+
+        .nav-links {
+          width: 100%;
+        }
+
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+
+        .sticky-cta {
+          left: 10px;
+          right: 10px;
+          bottom: 10px;
+        }
+
+        .sticky-cta .cta-shell {
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html" aria-label="3HUE Home">
+          <img src="../assets/img/logos/Logo-Wide-White-v1.avif" alt="3HUE" />
+        </a>
+        <nav class="nav-links" aria-label="Page sections">
+          <a href="#offer">Offer</a>
+          <a href="#deliverables">What You Receive</a>
+          <a href="#inputs">What We Need</a>
+          <a href="#request">Request</a>
+        </nav>
+        <div class="header-actions">
+          <label class="theme-toggle" for="theme-toggle">
+            Theme
+            <input id="theme-toggle" type="checkbox" role="switch" aria-label="Toggle light or dark mode" />
+          </label>
+          <a class="btn btn-outline" href="#request">Request Snapshot</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="offer">
+        <div class="container hero-grid">
+          <div>
+            <span class="pill">Free 48-Hour Preview</span>
+            <h1>Cloud Risk Signal Snapshot (Free)</h1>
+            <p>
+              A rapid, executive-facing risk readout delivered in 48 hours.
+            </p>
+            <p>
+              Before committing to a full assessment, get a clear, independent signal on where your cloud and
+              identity exposure is most likely to matter.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary hero-big-btn" href="#request">Get your Snapshot in 72-hours</a>
+            </div>
+            <div class="hero-fit-mini" aria-label="Who this is for summary">
+              <h3>Who This Is For</h3>
+              <ul>
+                <li>SOC 2 / ISO readiness pressure</li>
+                <li>Board or customer assurance requests</li>
+                <li>Insurance-driven control scrutiny</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mini-carousel" data-mini-carousel>
+            <div class="mini-carousel-topbar" aria-hidden="true">
+              <div class="mini-carousel-win-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="mini-carousel-title">ROAR Sample Pages</div>
+              <div class="mini-carousel-topbar-spacer"></div>
+            </div>
+            <button class="mini-carousel-control prev" type="button" aria-label="Previous slide" data-mini-prev>&lsaquo;</button>
+            <div class="mini-carousel-viewport">
+              <div class="mini-carousel-track" data-mini-track>
+                <figure class="mini-carousel-slide">
+                  <img src="../assets/img/vision/ROAR-cover-page.png" alt="ROAR report cover page preview" loading="lazy" />
+                </figure>
+                <figure class="mini-carousel-slide">
+                  <img src="../assets/img/vision/Vision-Sample-11.avif" alt="Risk snapshot sample 11" loading="lazy" />
+                </figure>
+                <figure class="mini-carousel-slide">
+                  <img src="../assets/img/vision/Vision-Sample-20.avif" alt="Risk snapshot sample 20" loading="lazy" />
+                </figure>
+                <figure class="mini-carousel-slide">
+                  <img src="../assets/img/vision/Vision-Sample-4.avif" alt="Risk snapshot sample 4" loading="lazy" />
+                </figure>
+              </div>
+            </div>
+            <button class="mini-carousel-control next" type="button" aria-label="Next slide" data-mini-next>&rsaquo;</button>
+            <div class="mini-carousel-dots" data-mini-dots aria-label="Slide navigation"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="deliverables">
+        <div class="container">
+          <div class="section-head">
+            <span class="pill">What You Receive</span>
+            <h2>Simple, concrete output built for executive action.</h2>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <h3>5 Findings (Ranked)</h3>
+              <p>Prioritized risks across cloud configuration, identity exposure, and control gaps.</p>
+            </article>
+            <article class="card">
+              <h3>1 Material Risk Insight</h3>
+              <p>A concise statement of what matters most and its business relevance.</p>
+            </article>
+            <article class="card">
+              <h3>ROAR Fit Recommendation</h3>
+              <p>A clear next-step recommendation: urgent remediation, targeted follow-up, or strong posture confirmation.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-on-dark" id="method">
+        <div class="container">
+          <div class="section-head">
+            <span class="pill">What This Is</span>
+            <h2>Not a generic AI scan dump.</h2>
+            <p>This is a human-validated signal review designed for decision-makers.</p>
+          </div>
+          <div class="grid-2">
+            <article class="card">
+              <h3>How It Works</h3>
+              <ul class="list-clean">
+                <li>AI accelerates detection and exposure triage.</li>
+                <li>Senior assessors validate materiality and business significance.</li>
+                <li>Output is short, clear, and executive-ready.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>What It Is Not</h3>
+              <ul class="list-clean">
+                <li>Not a high-volume automated report export.</li>
+                <li>Not a long onboarding or scope-heavy engagement.</li>
+                <li>Not a commitment to full assessment unless it makes sense.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="inputs">
+        <div class="container">
+          <div class="section-head">
+            <span class="pill">Low Friction Intake</span>
+            <h2>What We Need From You</h2>
+            <p>No long onboarding. No commitment.</p>
+          </div>
+          <div class="card">
+            <ul class="list-clean">
+              <li>Your primary cloud platform (AWS, Azure, or GCP).</li>
+              <li>Scope size (small, mid, or large).</li>
+              <li>One technical point of contact.</li>
+              <li>Optional compliance driver (SOC 2, HIPAA, PCI).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-on-dark" id="request">
+        <div class="container">
+          <div class="section-head">
+            <span class="pill">Delivery Format</span>
+            <h2>Delivered within 48 hours.</h2>
+            <p>You receive a short executive-ready output with 5 findings, 1 material risk insight, and a ROAR fit recommendation.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/intro-risk-assessment-2026">Request Free Snapshot</a>
+            <a class="btn btn-outline" href="../contact.html">Ask a Question</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="sticky-cta" aria-label="Quick actions">
+      <div class="cta-shell">
+        <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/intro-risk-assessment-2026">Get My Risk Signal</a>
+        <a class="btn btn-outline" href="../contact.html">Contact 3HUE</a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Independent cyber-risk signal reviews for board, customer, and insurance confidence.</p>
+        <p>&copy; 2026 3HUE. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>
+    <!-- End of HubSpot Embed Code -->
+
+    <script>
+      (function () {
+        const toggle = document.getElementById("theme-toggle");
+        if (!toggle) return;
+
+        const savedTheme = localStorage.getItem("insider-theme");
+        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        const initialTheme = savedTheme || (prefersLight ? "light" : "dark");
+
+        document.body.setAttribute("data-theme", initialTheme);
+        toggle.checked = initialTheme === "dark";
+
+        toggle.addEventListener("change", () => {
+          const nextTheme = toggle.checked ? "dark" : "light";
+          document.body.setAttribute("data-theme", nextTheme);
+          localStorage.setItem("insider-theme", nextTheme);
+        });
+      })();
+
+      (function () {
+        const root = document.querySelector("[data-mini-carousel]");
+        if (!root) return;
+
+        const track = root.querySelector("[data-mini-track]");
+        const prev = root.querySelector("[data-mini-prev]");
+        const next = root.querySelector("[data-mini-next]");
+        const dotsWrap = root.querySelector("[data-mini-dots]");
+        const slides = Array.from(root.querySelectorAll(".mini-carousel-slide"));
+        if (!track || !prev || !next || !dotsWrap || !slides.length) return;
+
+        let current = 0;
+        const dots = slides.map((_, idx) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "mini-carousel-dot";
+          dot.setAttribute("aria-label", `Go to slide ${idx + 1}`);
+          dot.addEventListener("click", () => show(idx));
+          dotsWrap.appendChild(dot);
+          return dot;
+        });
+
+        function show(index) {
+          current = (index + slides.length) % slides.length;
+          track.style.transform = `translateX(-${current * 100}%)`;
+          dots.forEach((dot, idx) => {
+            dot.setAttribute("aria-current", idx === current ? "true" : "false");
+          });
+        }
+
+        prev.addEventListener("click", () => show(current - 1));
+        next.addEventListener("click", () => show(current + 1));
+        root.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowLeft") show(current - 1);
+          if (event.key === "ArrowRight") show(current + 1);
+        });
+
+        show(0);
+      })();
+    </script>
+  </body>
+</html>
