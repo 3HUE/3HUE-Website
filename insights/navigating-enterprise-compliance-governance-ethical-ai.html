@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,114 +624,373 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">Compliance</div>
-          <h1>Navigating Enterprise Compliance, Governance, and Ethical AI</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>9 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_1211739918_optimized_.webp"
-              alt="Compliance and governance review for enterprise AI programs."
-              width="1920"
-              height="1280"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            As AI moves deeper into enterprise operations, compliance and ethics become inseparable
-            from delivery. Regulations are evolving, stakeholder expectations are rising, and the
-            tolerance for opaque AI decisions is shrinking. Enterprise leaders need a governance
-            model that treats AI as a controlled, auditable capability.
-          </p>
-          <h2>Know the regulatory terrain</h2>
-          <ul>
-            <li>
-              <strong>Privacy regulation.</strong> GDPR, CCPA/CPRA, and sector-specific mandates
-              apply to AI data flows.
-            </li>
-            <li>
-              <strong>Emerging AI laws.</strong> The EU AI Act introduces risk-based requirements
-              for high-impact systems.
-            </li>
-            <li>
-              <strong>Standards alignment.</strong> NIST AI RMF and ISO/IEC 23894 set expectations
-              for risk management.
-            </li>
-          </ul>
-          <h2>Build a governance structure that scales</h2>
-          <ul>
-            <li>AI steering committee with cross-functional ownership.</li>
-            <li>Model inventory with risk classification, owners, and evidence trails.</li>
-            <li>Documented exception workflows for approved risk acceptance.</li>
-            <li>Continuous monitoring for drift, bias, and policy violations.</li>
-          </ul>
-          <h2>Ethical AI is operational, not abstract</h2>
-          <p>
-            Ethical commitments must be embedded into workflows: model evaluation, access controls,
-            audit logging, and transparency practices. This includes communicating when AI is used,
-            documenting decisions, and providing human escalation paths for high-impact outcomes.
-          </p>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
-              <li>Compliance and ethics are core AI delivery requirements, not add-ons.</li>
-              <li>Risk-based governance aligns AI investments to enterprise accountability.</li>
-              <li>Continuous monitoring is required to sustain trust and regulatory readiness.</li>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <p class="iv2-print-title">Navigating Enterprise Compliance, Governance & Ethical AI | Last updated: 2026-01-20</p>
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">AI Governance &amp; Ethics</span>
+            <h1>Navigating Enterprise Compliance, Governance &amp; Ethical AI</h1>
+            <p class="iv2-abstract">
+              Enterprise AI scales quickly, while compliance, governance, and ethics are often
+              treated as afterthoughts, creating audit and operational exposure. This brief presents
+              an operational model for defensible AI adoption. The target state is secure, ethical,
+              audit-ready enterprise AI.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-01-20</span>
+              <span>9 min read</span>
+              <span class="iv2-tags"
+                ><span>Compliance</span><span>AI Governance</span><span>Ethical AI</span
+                ><span>Risk Management</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/enterprise-compliance-ethical-ai-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="../contact.html"
+                >Request a 72-Hour Compliance Risk Snapshot</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_1211739918_optimized_.webp"
+                  alt="Compliance and governance review for enterprise AI programs."
+                  width="1920"
+                  height="1280"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Ethical AI becomes defensible only when controls produce evidence continuously.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>The enterprise problem</h3>
+                <p>AI deployment velocity is rising faster than governance and compliance maturity.</p>
+              </div>
+              <div>
+                <h3>The governance thesis</h3>
+                <p>Ethics and compliance only work when operationalized into delivery controls and evidence workflows.</p>
+              </div>
+              <div>
+                <h3>What leaders must do now</h3>
+                <ul>
+                  <li>Unify governance, compliance, and ethical guardrails in one operating model.</li>
+                  <li>Link requirements to control pipelines and accountable owners.</li>
+                  <li>Measure readiness through evidence completeness and response cadence.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What good looks like</h3>
+                <p>
+                  AI systems are approved, monitored, and evidenced continuously with clear decision
+                  ownership and auditable exception handling.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="signals-panel">
+            <h2 class="iv2-h2">
+              Enterprise Signals Driving Compliance and Ethical AI
+              <button class="iv2-copy-link" type="button" data-copy-link="signals-panel">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Policy exists but not enforced</h3>
+                <p>Documented standards fail when no control checkpoints enforce them.</p>
+                <p><strong>What proof looks like:</strong> policy-as-code evaluation logs by release.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Ethics principles lack artifacts</h3>
+                <p>Values statements without evaluations are non-defensible under audit.</p>
+                <p><strong>What proof looks like:</strong> bias/fairness test records with approvals.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Distributed AI sprawl without audit logging</h3>
+                <p>Untracked models and use cases create unmanaged risk surfaces.</p>
+                <p><strong>What proof looks like:</strong> inventory completeness and decision logs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>No risk acceptance discipline for exceptions</h3>
+                <p>Exception handling becomes informal and invisible to leadership.</p>
+                <p><strong>What proof looks like:</strong> approved exception register with expiry.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="governance-stack">
+            <h2 class="iv2-h2">
+              Ethical AI Governance Stack
+              <button class="iv2-copy-link" type="button" data-copy-link="governance-stack">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 420" role="img" aria-labelledby="stack-title stack-desc">
+                <title id="stack-title">Ethical AI Governance Stack</title>
+                <desc id="stack-desc">Four connected quadrants for governance, controls, ethics, and evidence.</desc>
+                <rect x="140" y="40" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="480" y="40" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="140" y="220" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="480" y="220" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="290" y="85" text-anchor="middle" fill="#0f172a" font-size="14">Governance &amp; Policy</text>
+                <text x="630" y="85" text-anchor="middle" fill="#0f172a" font-size="14">Compliance &amp; Control Pipeline</text>
+                <text x="290" y="265" text-anchor="middle" fill="#0f172a" font-size="14">Ethical Guardrails &amp; Bias Mgmt</text>
+                <text x="630" y="265" text-anchor="middle" fill="#0f172a" font-size="14">Evidence &amp; Audit Trail</text>
+                <line x1="460" y1="40" x2="460" y2="380" stroke="#2f86b3" stroke-width="1.5"></line>
+                <line x1="140" y1="210" x2="780" y2="210" stroke="#2f86b3" stroke-width="1.5"></line>
+              </svg>
+              <p>Enterprise compliance is defensible when each layer produces evidence.</p>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="compliance-matrix">
+            <h2 class="iv2-h2">
+              Compliance and Governance Requirements Matrix
+              <button class="iv2-copy-link" type="button" data-copy-link="compliance-matrix">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 110" role="img" aria-labelledby="matrix-vis-title matrix-vis-desc">
+                <title id="matrix-vis-title">Compliance to artifact mapping visual</title>
+                <desc id="matrix-vis-desc">Visual mapping of requirements to evidence and ownership.</desc>
+                <rect x="20" y="24" width="200" height="62" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="240" y="24" width="200" height="62" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="460" y="24" width="200" height="62" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="680" y="24" width="220" height="62" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="120" y="60" text-anchor="middle" fill="#0f172a" font-size="13">Requirement</text>
+                <text x="340" y="60" text-anchor="middle" fill="#0f172a" font-size="13">Driver</text>
+                <text x="560" y="60" text-anchor="middle" fill="#0f172a" font-size="13">Evidence</text>
+                <text x="790" y="60" text-anchor="middle" fill="#0f172a" font-size="13">Owner</text>
+              </svg>
+              <div class="iv2-table-wrap" style="margin-top: 12px">
+                <table class="iv2-table">
+                  <thead>
+                    <tr>
+                      <th>Requirement</th>
+                      <th>Drivers (Regulator / Risk / Audit)</th>
+                      <th>Evidence artifacts</th>
+                      <th>Who owns it</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Policy + Standards</td><td>Regulator + board governance expectations</td><td>Approved policy set, review records</td><td>CISO / AI Governance Lead</td></tr>
+                    <tr><td>Risk Assessment + Treatment</td><td>Risk committees, internal audit</td><td>Risk register, treatment decisions, acceptance logs</td><td>Risk Officer</td></tr>
+                    <tr><td>Control Mapping (NIST AI RMF / CSF / ISO / Microsoft RAI / FTC principles)</td><td>Compliance + customer due diligence</td><td>Control mapping matrix, gap tracker</td><td>Compliance Lead</td></tr>
+                    <tr><td>Monitoring + Reporting</td><td>Operational assurance and incident response</td><td>Monitoring dashboards, alerts, executive brief pack</td><td>Ops + Security Monitoring Lead</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="ethical-guardrails">
+            <h2 class="iv2-h2">
+              Ethical AI Guardrails
+              <button class="iv2-copy-link" type="button" data-copy-link="ethical-guardrails">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Transparent decision pathways</h3>
+                <p>Users and reviewers must understand how outcomes are produced.</p>
+                <p><strong>Required artifact:</strong> decision pathway documentation and trace logs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Bias and fairness evidence</h3>
+                <p>Fairness claims require repeatable subgroup testing evidence.</p>
+                <p><strong>Required artifact:</strong> fairness evaluation package + signoff.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Human-in-the-loop signoff</h3>
+                <p>High-impact decisions need explicit human authority checkpoints.</p>
+                <p><strong>Required artifact:</strong> approver log with rationale and timestamp.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Escalation and incident response</h3>
+                <p>Misuse, drift, or harmful outputs need pre-defined escalation pathways.</p>
+                <p><strong>Required artifact:</strong> AI incident runbook + case records.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="patterns">
+            <h2 class="iv2-h2">
+              Operational Patterns That Scale
+              <button class="iv2-copy-link" type="button" data-copy-link="patterns">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Governance council + AI inventory</h3>
+                <p><strong>When to use:</strong> multi-business-unit AI expansion.</p>
+                <p><strong>How to evidence it:</strong> council minutes + inventory coverage trend.</p>
+                <p><strong>Common pitfall:</strong> inventory not tied to ownership updates.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Policy-as-Code + CI/CD checks</h3>
+                <p><strong>When to use:</strong> high release velocity environments.</p>
+                <p><strong>How to evidence it:</strong> pipeline policy evaluation logs.</p>
+                <p><strong>Common pitfall:</strong> checks exist but are advisory-only.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Ethics evaluation gates</h3>
+                <p><strong>When to use:</strong> customer-facing or high-impact decisions.</p>
+                <p><strong>How to evidence it:</strong> fairness/bias gate approvals.</p>
+                <p><strong>Common pitfall:</strong> one-time evaluations with no refresh cadence.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Continuous compliance pipeline</h3>
+                <p><strong>When to use:</strong> regulated or audit-heavy operations.</p>
+                <p><strong>How to evidence it:</strong> rolling evidence completeness and freshness reports.</p>
+                <p><strong>Common pitfall:</strong> evidence assembled only pre-audit.</p>
+              </div>
+            </div>
+            <p class="iv2-pullquote">
+              Ethics without evidence is not audit-ready.
+            </p>
+          </section>
+
+          <section class="iv2-section" id="scorecard">
+            <h2 class="iv2-h2">
+              Compliance Scorecard
+              <button class="iv2-copy-link" type="button" data-copy-link="scorecard">Copy Link</button>
+            </h2>
+            <div class="iv2-kpi-grid">
+              <div class="iv2-kpi-card">
+                <h3>Control Coverage (%)</h3>
+                <p><strong>What it measures:</strong> required controls with active enforcement.</p>
+                <p><strong>Why it matters:</strong> indicates governance execution depth.</p>
+                <p><strong>Target direction:</strong> Increase.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Evidence Completeness Index</h3>
+                <p><strong>What it measures:</strong> required artifacts present for sampled controls.</p>
+                <p><strong>Why it matters:</strong> proxy for audit readiness.</p>
+                <p><strong>Target direction:</strong> Increase and stabilize.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Incident Drift Detection Rate</h3>
+                <p><strong>What it measures:</strong> drift events detected before material impact.</p>
+                <p><strong>Why it matters:</strong> demonstrates monitoring effectiveness.</p>
+                <p><strong>Target direction:</strong> Increase early detection.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Bias Drift Indicator</h3>
+                <p><strong>What it measures:</strong> fairness metric deviation over time.</p>
+                <p><strong>Why it matters:</strong> central ethical risk signal.</p>
+                <p><strong>Target direction:</strong> Reduce variance.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>Ethics without evidence is not audit-ready.</strong> Proof: fairness evaluation logs with approver history.</li>
+              <li><strong>Policy without enforcement is governance theater.</strong> Proof: pipeline control enforcement and exception records.</li>
+              <li><strong>Inventory gaps create hidden risk.</strong> Proof: inventory coverage by business unit and owner.</li>
+              <li><strong>Continuous monitoring is mandatory for trust.</strong> Proof: drift and misuse alerts with closure cadence.</li>
             </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>vCISO-led governance frameworks tied to CSF 2.0 and ISO 27001:2022.</li>
-              <li>Model inventory, risk classification, and evidence capture workflows.</li>
-              <li>Compliance monitoring and audit-ready reporting for regulated AI programs.</li>
-              <li>Executive briefings that translate AI risk into governance priorities.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a
-                  href="https://www.nist.gov/itl/ai-risk-management-framework"
-                  rel="noopener"
-                  target="_blank"
-                  >NIST AI Risk Management Framework</a
-                >
-              </li>
-              <li>
-                <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank"
-                  >NIST Cybersecurity Framework 2.0</a
-                >
-              </li>
-              <li>
-                <a href="https://www.iso.org/standard/77304.html" rel="noopener" target="_blank"
-                  >ISO/IEC 23894 AI risk management overview</a
-                >
-              </li>
-              <li>
-                <a href="https://artificialintelligenceact.eu/" rel="noopener" target="_blank"
-                  >EU AI Act tracker</a
-                >
-              </li>
-              <li>
-                <a href="https://www.oecd.org/ai/principles/" rel="noopener" target="_blank"
-                  >OECD AI Principles</a
-                >
-              </li>
-            </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Operationalizing with 3HUE
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1 (2-3 weeks): Governance baseline + control mapping</h3>
+                <p><strong>Outputs:</strong> policy inventory, risk map, evidence gap map.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2 (4-6 weeks): Ethics guardrails + compliance pipeline</h3>
+                <p><strong>Outputs:</strong> guardrail artifacts, evaluation templates, exceptions workflow.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3 (ongoing): Measurement + continuous assurance</h3>
+                <p><strong>Outputs:</strong> compliance scorecard, reporting pack, board brief.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Further Reading
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
+                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Guidance for trustworthy AI risk governance and controls.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">
+                <h3>NIST Cybersecurity Framework 2.0 <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Outcome-driven cyber governance structure applicable to AI controls.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.iso.org/standard/77304.html" rel="noopener" target="_blank">
+                <h3>ISO/IEC 23894 AI Risk Management <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">AI risk standard aligned to enterprise governance practices.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://artificialintelligenceact.eu/" rel="noopener" target="_blank">
+                <h3>EU AI Act Tracker <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Monitoring source for evolving risk-based AI regulatory obligations.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.oecd.org/ai/principles/" rel="noopener" target="_blank">
+                <h3>OECD AI Principles <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Policy principles supporting trustworthy and responsible AI use.</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="iv2-card iv2-next" id="next-step">
+            <h2 class="iv2-h2">
+              Next Step
+              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
+            </h2>
+            <p>
+              If you're facing an audit cycle, regulatory inquiry, or customer due diligence, start
+              with a focused compliance and governance risk signal.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="../contact.html">Request a 72-Hour Compliance Risk Snapshot</a>
+              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Schedule a Strategic Consultation</a
+              >
+            </p>
+          </section>
+
           <div class="post-tags">
             <span>Compliance</span><span>AI Governance</span><span>Ethical AI</span
             ><span>Risk Management</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#signals-panel">Signals Panel</a>
+          <a href="#governance-stack">Governance Stack</a>
+          <a href="#compliance-matrix">Compliance Matrix</a>
+          <a href="#ethical-guardrails">Ethical Guardrails</a>
+          <a href="#patterns">Operational Patterns</a>
+          <a href="#scorecard">Compliance Scorecard</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">Further Reading</a>
+          <a href="#next-step">Next Step</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -773,6 +1034,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

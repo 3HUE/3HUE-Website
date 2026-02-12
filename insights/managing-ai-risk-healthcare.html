@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,117 +624,352 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">Healthcare</div>
-          <h1>Managing AI Risk in Healthcare</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>7 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_1249231812_optimized_.webp"
-              alt="AI governance for regulated healthcare environments."
-              width="1920"
-              height="1446"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            Healthcare organizations are adopting AI for clinical decision support, operational
-            automation, and patient engagement. These deployments introduce new risks: PHI handling,
-            model reliability, and cloud configuration drift can create compliance gaps and patient
-            safety concerns if governance is not continuous.
-          </p>
-          <h2>Healthcare AI risk drivers</h2>
-          <ul>
-            <li>
-              <strong>PHI exposure and residency.</strong> Sensitive data must be encrypted, logged,
-              and retained according to policy.
-            </li>
-            <li>
-              <strong>Third-party integrations.</strong> EHR and lab systems increase the attack
-              surface and require continuous access validation.
-            </li>
-            <li>
-              <strong>Model safety and drift.</strong> Clinical and operational models need ongoing
-              evaluation for reliability and bias.
-            </li>
-            <li>
-              <strong>Audit readiness.</strong> Evidence must be available for HIPAA-aligned reviews
-              and vendor assessments.
-            </li>
-          </ul>
-          <h2>Governance patterns that hold up to scrutiny</h2>
-          <p>
-            Successful programs unify cloud posture, model governance, and evidence management in
-            one operational view. This includes clear data lineage, role-based access controls, and
-            documented exception workflows.
-          </p>
-          <h2>Deployment models that preserve control</h2>
-          <p>
-            Healthcare teams often require customer-hosted or private-cloud deployments. These
-            models allow data residency controls, private networking, and regional isolation while
-            maintaining consistent governance across facilities.
-          </p>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
-              <li>AI governance is inseparable from data governance in healthcare.</li>
-              <li>Continuous evidence reduces audit risk and accelerates vendor assessments.</li>
-              <li>Model monitoring should align to clinical safety and compliance objectives.</li>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <p class="iv2-print-title">Managing AI Risk in Healthcare | Last updated: 2026-01-20</p>
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">Healthcare</span>
+            <h1>Managing AI Risk in Healthcare</h1>
+            <p class="iv2-abstract">
+              In healthcare, AI risk is judged under consequence: patient safety, PHI handling,
+              and regulated workflows. Governance must be continuous, evidence-backed, and
+              operational, not policy-only. Defensibility is proven when data, model, platform,
+              and decision controls remain auditable over time.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-01-20</span>
+              <span>7 min read</span>
+              <span class="iv2-tags"
+                ><span>Healthcare</span><span>AI Governance</span><span>Compliance</span
+                ><span>Data Residency</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/managing-ai-risk-healthcare-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Request a Consult</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_1249231812_optimized_.webp"
+                  alt="AI governance for regulated healthcare environments."
+                  width="1920"
+                  height="1446"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Defensibility in healthcare AI is evidence-led.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>What's changing</h3>
+                <p>
+                  AI is moving deeper into clinical support and operational workflows where model
+                  quality and PHI handling have direct consequence.
+                </p>
+              </div>
+              <div>
+                <h3>What can fail</h3>
+                <p>
+                  PHI exposure, model drift, bias, misconfiguration, and vendor data leakage can
+                  create simultaneous safety and compliance breakdowns.
+                </p>
+              </div>
+              <div>
+                <h3>What leaders must do now</h3>
+                <ul>
+                  <li>Establish a live AI inventory linked to accountable owners.</li>
+                  <li>Require evidence lineage for high-impact model and access decisions.</li>
+                  <li>Operationalize exception approvals with clear expiry and review cadence.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>If you do nothing</h3>
+                <p>
+                  Programs may look compliant on paper but fail during HIPAA scrutiny, vendor due
+                  diligence, or clinical incident review.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="risk-signals">
+            <h2 class="iv2-h2">
+              Healthcare AI Risk Drivers
+              <button class="iv2-copy-link" type="button" data-copy-link="risk-signals">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>PHI Exposure &amp; Residency</h3>
+                <p><strong>Implication:</strong> Data boundary failures become compliance and trust events.</p>
+                <p><strong>Minimum Control:</strong> Encryption, logging, retention controls, and access reviews.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Third-party Integration Risk</h3>
+                <p><strong>Implication:</strong> EHR and lab integrations expand attack and data-leak surface.</p>
+                <p><strong>Minimum Control:</strong> Interface validation, scoped access, and vendor accountability.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Model Safety &amp; Drift</h3>
+                <p><strong>Implication:</strong> Clinical and operational recommendations degrade without visibility.</p>
+                <p><strong>Minimum Control:</strong> Drift thresholds, bias checks, and intervention triggers.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Audit Defensibility Pressure</h3>
+                <p><strong>Implication:</strong> Controls fail if evidence cannot be produced quickly.</p>
+                <p><strong>Minimum Control:</strong> Decision logs, evidence lineage, and exception approvals.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="defensibility-model">
+            <h2 class="iv2-h2">
+              Healthcare AI Defensibility Model
+              <button class="iv2-copy-link" type="button" data-copy-link="defensibility-model">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 360" role="img" aria-labelledby="health-model-title health-model-desc">
+                <title id="health-model-title">Healthcare AI Defensibility Model</title>
+                <desc id="health-model-desc">Four pillar model: data, model, platform, evidence.</desc>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="30" y="88" width="200" height="190" rx="14"></rect>
+                  <rect x="250" y="88" width="200" height="190" rx="14"></rect>
+                  <rect x="470" y="88" width="200" height="190" rx="14"></rect>
+                  <rect x="690" y="88" width="200" height="190" rx="14"></rect>
+                </g>
+                <g fill="#0f172a" font-size="13">
+                  <text x="130" y="118" text-anchor="middle">DATA</text>
+                  <text x="130" y="144" text-anchor="middle">PHI/ePHI lineage</text>
+                  <text x="130" y="162" text-anchor="middle">Residency</text>
+                  <text x="130" y="180" text-anchor="middle">Minimization</text>
+
+                  <text x="350" y="118" text-anchor="middle">MODEL</text>
+                  <text x="350" y="144" text-anchor="middle">Safety controls</text>
+                  <text x="350" y="162" text-anchor="middle">Drift monitoring</text>
+                  <text x="350" y="180" text-anchor="middle">Bias monitoring</text>
+
+                  <text x="570" y="118" text-anchor="middle">PLATFORM</text>
+                  <text x="570" y="144" text-anchor="middle">Cloud posture</text>
+                  <text x="570" y="162" text-anchor="middle">Identity + config</text>
+                  <text x="570" y="180" text-anchor="middle">Segmentation</text>
+
+                  <text x="790" y="118" text-anchor="middle">EVIDENCE</text>
+                  <text x="790" y="144" text-anchor="middle">Audit trail</text>
+                  <text x="790" y="162" text-anchor="middle">Decision logs</text>
+                  <text x="790" y="180" text-anchor="middle">Exception approvals</text>
+                </g>
+                <line x1="230" y1="183" x2="250" y2="183" stroke="#2f86b3" stroke-width="2"></line>
+                <line x1="450" y1="183" x2="470" y2="183" stroke="#2f86b3" stroke-width="2"></line>
+                <line x1="670" y1="183" x2="690" y2="183" stroke="#2f86b3" stroke-width="2"></line>
+              </svg>
+              <p>
+                Healthcare AI governance is defensible only when all four pillars produce evidence continuously.
+              </p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="operating-patterns">
+            <h2 class="iv2-h2">
+              Operating Patterns That Hold Up to Scrutiny
+              <button class="iv2-copy-link" type="button" data-copy-link="operating-patterns">Copy Link</button>
+            </h2>
+            <div class="iv2-two-col">
+              <div class="iv2-mini-card">
+                <p class="iv2-kicker">Patterns that survive audit + incident consequence</p>
+                <ul>
+                  <li>AI inventory with model, vendor, version, use case, and owner.</li>
+                  <li>Role-based access and least privilege by clinical, ops, and vendor roles.</li>
+                  <li>Documented exception workflow with approvals and expiry.</li>
+                  <li>Continuous monitoring of cloud posture and model drift.</li>
+                </ul>
+              </div>
+              <div class="iv2-mini-card">
+                <p class="iv2-kicker">What auditors and regulators will ask to see</p>
+                <ul>
+                  <li>Evidence samples with timestamps and lineage.</li>
+                  <li>Decision approvals plus exception rationale.</li>
+                  <li>Monitoring thresholds and response actions.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="iv2-pullquote">
+              In healthcare, AI output is not defensible unless the control narrative remains human-defensible.
+            </p>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="deployment-models">
+            <h2 class="iv2-h2">
+              Deployment Models That Preserve Control
+              <button class="iv2-copy-link" type="button" data-copy-link="deployment-models">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 120" role="img" aria-labelledby="deploy-model-title deploy-model-desc">
+                <title id="deploy-model-title">Deployment model comparison header</title>
+                <desc id="deploy-model-desc">Three deployment options with control emphasis.</desc>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="20" y="22" width="280" height="76" rx="10"></rect>
+                  <rect x="320" y="22" width="280" height="76" rx="10"></rect>
+                  <rect x="620" y="22" width="280" height="76" rx="10"></rect>
+                </g>
+                <g fill="#0f172a" font-size="13">
+                  <text x="160" y="50" text-anchor="middle">Customer-hosted / On-prem</text>
+                  <text x="460" y="50" text-anchor="middle">Private Cloud</text>
+                  <text x="760" y="50" text-anchor="middle">Hybrid (Regional Isolation)</text>
+                </g>
+              </svg>
+              <div class="iv2-table-wrap" style="margin-top: 12px">
+                <table class="iv2-table">
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>Data residency control</th>
+                      <th>Network isolation</th>
+                      <th>Operational overhead</th>
+                      <th>Evidence capture approach</th>
+                      <th>Recommended use cases</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Customer-hosted / on-prem</td>
+                      <td>Highest local control</td>
+                      <td>Strong physical/logical segregation</td>
+                      <td>High</td>
+                      <td>Local system logs + controlled export</td>
+                      <td>High-sensitivity clinical workflows</td>
+                    </tr>
+                    <tr>
+                      <td>Private cloud</td>
+                      <td>High, policy-driven</td>
+                      <td>Strong virtual segmentation</td>
+                      <td>Medium</td>
+                      <td>Cloud-native telemetry + centralized evidence store</td>
+                      <td>Operational + non-critical clinical workloads</td>
+                    </tr>
+                    <tr>
+                      <td>Hybrid (regional isolation)</td>
+                      <td>Targeted by data class</td>
+                      <td>Boundary controls across environments</td>
+                      <td>Medium-High</td>
+                      <td>Unified evidence model across regions</td>
+                      <td>Mixed clinical and enterprise operations</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="evidence-pack">
+            <h2 class="iv2-h2">
+              Minimum Evidence Pack for Healthcare AI
+              <button class="iv2-copy-link" type="button" data-copy-link="evidence-pack">Copy Link</button>
+            </h2>
+            <p>
+              This evidence pack supports HIPAA-aligned oversight and continuous assurance posture.
+            </p>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card"><h3>PHI data flow + residency statement</h3></div>
+              <div class="iv2-cap-card"><h3>Encryption + key management evidence</h3></div>
+              <div class="iv2-cap-card"><h3>Access review evidence (clinical + vendor)</h3></div>
+              <div class="iv2-cap-card"><h3>Model monitoring plan (drift, bias, safety)</h3></div>
+              <div class="iv2-cap-card"><h3>Incident response pathway (clinical + security)</h3></div>
+              <div class="iv2-cap-card"><h3>Vendor risk packet (BAA/data-use/audit rights)</h3></div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>AI safety and privacy are inseparable in healthcare.</strong> Proof: linked PHI flow controls and model safety thresholds.</li>
+              <li><strong>Evidence freshness determines defensibility.</strong> Proof: timestamped evidence samples for high-impact controls.</li>
+              <li><strong>Exception governance must be explicit.</strong> Proof: approved exceptions with rationale, owner, and expiry compliance.</li>
+              <li><strong>Deployment choice is a risk decision.</strong> Proof: model-by-model residency and isolation mapping.</li>
+              <li><strong>Continuous monitoring is non-optional.</strong> Proof: drift alerts with documented response actions and closure trend.</li>
             </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>
-                Control mapping and evidence capture aligned to healthcare compliance requirements.
-              </li>
-              <li>vCISO-led governance and monthly executive risk briefings.</li>
-              <li>Continuous posture monitoring with documented exception workflows.</li>
-              <li>Audit-ready reporting for security, compliance, and clinical leadership.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a href="https://www.hhs.gov/hipaa/index.html" rel="noopener" target="_blank"
-                  >HHS HIPAA guidance</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.nist.gov/itl/ai-risk-management-framework"
-                  rel="noopener"
-                  target="_blank"
-                  >NIST AI Risk Management Framework</a
-                >
-              </li>
-              <li>
-                <a href="https://www.hhs.gov/ocr/" rel="noopener" target="_blank"
-                  >HHS Office for Civil Rights</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.cisa.gov/healthcare-and-public-health-sector"
-                  rel="noopener"
-                  target="_blank"
-                  >CISA Healthcare and Public Health resources</a
-                >
-              </li>
-            </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Engagement Pathway
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1 (2 weeks): Scope + inventory + baseline defensibility</h3>
+                <p><strong>Outputs:</strong> AI inventory, PHI mapping, top exposure list, evidence baseline.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2 (4-6 weeks): Evidence pipelines + exception workflow + monitoring</h3>
+                <p><strong>Outputs:</strong> exception register, decision log template, monitoring thresholds, audit-ready reporting pack.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3 (ongoing): Executive cadence + continuous improvement</h3>
+                <p><strong>Outputs:</strong> monthly executive risk brief, evidence freshness dashboard, drift review cadence.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Further Reading
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://www.hhs.gov/hipaa/index.html" rel="noopener" target="_blank">
+                <h3>HHS HIPAA Guidance <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Primary federal guidance for HIPAA privacy and security expectations.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
+                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Framework for trustworthy AI governance and risk treatment.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.hhs.gov/ocr/" rel="noopener" target="_blank">
+                <h3>HHS Office for Civil Rights (OCR) <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Regulatory authority for HIPAA enforcement and guidance.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.cisa.gov/healthcare-and-public-health-sector" rel="noopener" target="_blank">
+                <h3>CISA Healthcare and Public Health <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Sector-focused cyber resilience and operational security resources.</p>
+              </a>
+            </div>
+          </section>
+
           <div class="post-tags">
             <span>Healthcare</span><span>AI Governance</span><span>Compliance</span
             ><span>Data Residency</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#risk-signals">Risk Drivers</a>
+          <a href="#defensibility-model">Defensibility Model</a>
+          <a href="#operating-patterns">Operating Patterns</a>
+          <a href="#deployment-models">Deployment Models</a>
+          <a href="#evidence-pack">Evidence Pack</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">Further Reading</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -776,6 +1013,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

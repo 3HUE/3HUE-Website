@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,154 +624,342 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">AI Governance</div>
-          <h1>Recognizing the Red Flags: Risks and Pitfalls in Enterprise AI</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>8 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_1003906566_optimized_.webp"
-              alt="Enterprise teams reviewing AI risk signals and governance controls."
-              width="1920"
-              height="1076"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            Enterprise AI programs promise faster decisions, automation, and new revenue paths, but
-            the execution risk is real. The most common failures do not stem from the model itself,
-            but from gaps in governance, data integrity, and operational accountability. Recognizing
-            the red flags early keeps AI initiatives aligned to security, compliance, and business
-            outcomes.
-          </p>
-          <h2>Red flag: unclear data ownership and lineage</h2>
-          <p>
-            AI systems are only as strong as the data feeding them. If teams cannot trace data
-            provenance, retention policies, and access controls, they cannot defend decisions or
-            prove compliance. This becomes a critical issue in regulated environments where
-            auditability is non-negotiable.
-          </p>
-          <h2>Red flag: expanding attack surface without guardrails</h2>
-          <ul>
-            <li>
-              <strong>Model exposure.</strong> Prompt injection, model extraction, and data leakage
-              increase risk if access is not tightly controlled.
-            </li>
-            <li>
-              <strong>Pipeline vulnerabilities.</strong> Data pipelines, APIs, and orchestration
-              layers can fall outside traditional security coverage.
-            </li>
-            <li>
-              <strong>Third-party risk.</strong> Vendors must disclose how data is handled, where it
-              is stored, and how incidents are reported.
-            </li>
-          </ul>
-          <h2>Red flag: governance gaps and undefined accountability</h2>
-          <p>
-            When AI decisions are made without clear ownership, responsibility diffuses across
-            engineering, security, compliance, and legal teams. NIST CSF 2.0 elevates governance as
-            a core function for a reason: without a defined decision authority, risk acceptance
-            becomes informal and untracked.
-          </p>
-          <h2>Red flag: model integrity risks are ignored</h2>
-          <ul>
-            <li>
-              <strong>Bias and drift.</strong> Models can become less reliable as data shifts over
-              time.
-            </li>
-            <li>
-              <strong>Poisoning and adversarial inputs.</strong> Malicious data can silently degrade
-              output quality.
-            </li>
-            <li>
-              <strong>Lack of monitoring.</strong> Without continuous evaluation, leaders lose
-              visibility into model performance.
-            </li>
-          </ul>
-          <h2>Red flag: compliance is treated as an afterthought</h2>
-          <p>
-            AI initiatives must align to ISO 27001:2022, privacy regulations, and sector-specific
-            requirements from day one. Waiting until audit season to evaluate AI controls often
-            uncovers gaps that are costly and time-consuming to remediate.
-          </p>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
-              <li>
-                AI governance must address data lineage, model integrity, and decision
-                accountability.
-              </li>
-              <li>
-                Security guardrails are mandatory as AI expands the enterprise attack surface.
-              </li>
-              <li>
-                Continuous monitoring is the only way to detect drift, bias, and emerging risk.
-              </li>
-              <li>Compliance alignment should start before deployment, not during audit week.</li>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <p class="iv2-print-title">Recognizing the Red Flags of Enterprise AI | Last updated: 2026-01-20</p>
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">AI Risk &amp; Assurance</span>
+            <h1>Recognizing the Red Flags of Enterprise AI</h1>
+            <p class="iv2-abstract">
+              Enterprise AI risk signals are often structural, not model-only. Programs fail when
+              governance, evidence, and control accountability are not operationalized at delivery speed.
+              This brief outlines a defensible operating pattern leaders can apply across risk,
+              compliance, and engineering functions.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-01-20</span>
+              <span>8 min read</span>
+              <span class="iv2-tags"
+                ><span>AI Governance</span><span>Risk</span><span>Assurance</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/enterprise-ai-red-flags-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="../contact.html"
+                >Request a 72-Hour Risk Signal Snapshot</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_1003906566_optimized_.webp"
+                  alt="Enterprise teams reviewing AI risk signals and governance controls."
+                  width="1920"
+                  height="1076"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Risk posture is governance-driven before it is model-driven.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>The problem</h3>
+                <p>
+                  Enterprise AI adoption is outpacing governance discipline in inventory,
+                  controls, and evidence operations.
+                </p>
+              </div>
+              <div>
+                <h3>The red flags</h3>
+                <ul>
+                  <li>Unmapped AI inventory and undefined ownership.</li>
+                  <li>Access control drift and uncontrolled privileges.</li>
+                  <li>No evidence lineage for decisions and exceptions.</li>
+                  <li>Monitoring blind spots for model performance drift.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Impact</h3>
+                <p>
+                  Red flags create compounding exposure across security, compliance, and business
+                  continuity, especially during audit or incident escalation.
+                </p>
+              </div>
+              <div>
+                <h3>What leaders must do now</h3>
+                <ul>
+                  <li>Establish an enterprise AI inventory with named owners.</li>
+                  <li>Stand up evidence pipelines tied to control assertions.</li>
+                  <li>Enforce exception governance with approval and expiry discipline.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="signals-panel">
+            <h2 class="iv2-h2">
+              Signals Panel: Red Flags of Enterprise AI
+              <button class="iv2-copy-link" type="button" data-copy-link="signals-panel">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Unmapped AI inventory</h3>
+                <p>Unknown models and use cases create unmanaged risk domains.</p>
+                <p><strong>Minimum evidence:</strong> model/use-case register with owner and status.</p>
+                <p><em>Auditor question:</em> Which models are in production and who owns them?</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Uncontrolled access and privileges</h3>
+                <p>Excessive access enables silent policy bypass and data misuse.</p>
+                <p><strong>Minimum evidence:</strong> role matrix + periodic access review logs.</p>
+                <p><em>Auditor question:</em> How do you validate least-privilege access?</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Data lineage gaps</h3>
+                <p>Decisions cannot be defended when provenance is unclear.</p>
+                <p><strong>Minimum evidence:</strong> lineage record from source data to output.</p>
+                <p><em>Auditor question:</em> Can you trace this output to source and controls?</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Model drift without monitoring</h3>
+                <p>Performance decay becomes operational risk before teams notice.</p>
+                <p><strong>Minimum evidence:</strong> drift threshold logs and response workflow.</p>
+                <p><em>Auditor question:</em> When drift occurs, what action is triggered and by whom?</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Policy-exception chaos</h3>
+                <p>Informal risk acceptance produces invisible and compounding exposure.</p>
+                <p><strong>Minimum evidence:</strong> exception register with approvals and expiry.</p>
+                <p><em>Auditor question:</em> How are policy exceptions approved and retired?</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>No decision log or audit trail</h3>
+                <p>Without decisions-in-context, assurance claims are narrative only.</p>
+                <p><strong>Minimum evidence:</strong> timestamped decision log with evidence links.</p>
+                <p><em>Auditor question:</em> Show the record for this AI-assisted decision.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="defensibility-model">
+            <h2 class="iv2-h2">
+              Enterprise AI Defensibility Model
+              <button class="iv2-copy-link" type="button" data-copy-link="defensibility-model">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 420" role="img" aria-labelledby="ai-pillars-title ai-pillars-desc">
+                <title id="ai-pillars-title">Enterprise AI Defensibility Model</title>
+                <desc id="ai-pillars-desc">Four governance pillars in a quadrant model.</desc>
+                <rect x="140" y="40" width="300" height="150" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="480" y="40" width="300" height="150" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="140" y="230" width="300" height="150" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <rect x="480" y="230" width="300" height="150" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="290" y="82" text-anchor="middle" fill="#0f172a" font-size="14">Governance &amp; Policy</text>
+                <text x="630" y="82" text-anchor="middle" fill="#0f172a" font-size="14">Control Mapping &amp; Lineage</text>
+                <text x="290" y="272" text-anchor="middle" fill="#0f172a" font-size="14">Evidence &amp; Audit Trail</text>
+                <text x="630" y="272" text-anchor="middle" fill="#0f172a" font-size="14">Measurement &amp; Monitoring</text>
+                <line x1="460" y1="40" x2="460" y2="380" stroke="#2f86b3" stroke-width="1.5"></line>
+                <line x1="140" y1="210" x2="780" y2="210" stroke="#2f86b3" stroke-width="1.5"></line>
+              </svg>
+              <p>If a pillar lacks measurable evidence, it becomes a red flag.</p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="evidence-pipeline">
+            <h2 class="iv2-h2">
+              How to Prove You Are Safe (Not Just Compliant)
+              <button class="iv2-copy-link" type="button" data-copy-link="evidence-pipeline">Copy Link</button>
+            </h2>
+            <p>
+              Evidence should be captured by design from source logs, decision logs, change approvals,
+              exception registers, model performance/drift logs, and access review cycles.
+            </p>
+            <div class="iv2-table-wrap">
+              <table class="iv2-table">
+                <thead>
+                  <tr>
+                    <th>Artifact</th>
+                    <th>Source</th>
+                    <th>Why it matters</th>
+                    <th>Link example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Inference decision log</td><td>Application telemetry</td><td>Shows who/what/when for AI-assisted outcomes</td><td><code>OPS-2241</code></td></tr>
+                  <tr><td>Change approval record</td><td>Change management system</td><td>Proves governed release and owner accountability</td><td><code>CHG-1882</code></td></tr>
+                  <tr><td>Exception register entry</td><td>Risk workflow</td><td>Documents accepted risk rationale and expiry</td><td><code>EX-330</code></td></tr>
+                  <tr><td>Model drift report</td><td>Monitoring service</td><td>Demonstrates ongoing performance oversight</td><td><code>ML-DRIFT-41</code></td></tr>
+                  <tr><td>Access review evidence</td><td>Identity platform</td><td>Validates least-privilege enforcement</td><td><code>IAM-REV-Q1</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="diagnostic-table">
+            <h2 class="iv2-h2">
+              Red Flag Diagnostic Table
+              <button class="iv2-copy-link" type="button" data-copy-link="diagnostic-table">Copy Link</button>
+            </h2>
+            <div class="iv2-table-wrap">
+              <table class="iv2-table">
+                <thead>
+                  <tr>
+                    <th>Red Flag</th>
+                    <th>Why it matters</th>
+                    <th>What evidence would disprove it</th>
+                    <th>First remedial step</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>No AI inventory</td><td>Ungoverned risk surface</td><td>Owned model register by business unit</td><td>Mandate inventory onboarding in 30 days</td></tr>
+                  <tr><td>No decision trail</td><td>Low audit defensibility</td><td>Tied decision log with timestamp and approver</td><td>Deploy decision logging template</td></tr>
+                  <tr><td>Unmanaged exceptions</td><td>Invisible risk acceptance</td><td>Exception list with owner, rationale, expiry</td><td>Stand up exception workflow + SLA</td></tr>
+                  <tr><td>Missing drift monitoring</td><td>Silent model degradation</td><td>Threshold alerts + action records</td><td>Define drift KPIs and runbook</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="risk-scorecard">
+            <h2 class="iv2-h2">
+              Enterprise AI Risk Scorecard
+              <button class="iv2-copy-link" type="button" data-copy-link="risk-scorecard">Copy Link</button>
+            </h2>
+            <div class="iv2-kpi-grid">
+              <div class="iv2-kpi-card">
+                <h3>Governance Coverage</h3>
+                <p><strong>Definition:</strong> AI use cases with documented policy and owner.</p>
+                <p><strong>Why it matters:</strong> Baseline indicator of decision accountability.</p>
+                <p><strong>Example target:</strong> &gt;85% documented coverage.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Evidence Availability %</h3>
+                <p><strong>Definition:</strong> Required artifacts present for sampled controls.</p>
+                <p><strong>Why it matters:</strong> Direct measure of assurance readiness.</p>
+                <p><strong>Example target:</strong> &gt;90% artifact completeness.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Monitoring Coverage</h3>
+                <p><strong>Definition:</strong> Models under active alerting and drift thresholds.</p>
+                <p><strong>Why it matters:</strong> Captures ability to detect degradation early.</p>
+                <p><strong>Example target:</strong> 100% for high-impact models.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Exception Approval Lag</h3>
+                <p><strong>Definition:</strong> Median days to decision for policy exceptions.</p>
+                <p><strong>Why it matters:</strong> Long lag indicates weak governance cadence.</p>
+                <p><strong>Example target:</strong> Under 10 business days.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>No AI inventory means ungoverned risk.</strong> Operational proof: inventory coverage ratio; Metric: % assets registered.</li>
+              <li><strong>Evidence maturity defines audit confidence.</strong> Operational proof: sample-ready artifact packs; Metric: evidence availability %.</li>
+              <li><strong>Monitoring is a governance control, not just MLOps.</strong> Operational proof: drift threshold alerts + response tickets; Metric: monitoring coverage.</li>
+              <li><strong>Exceptions must be managed as first-class risk objects.</strong> Operational proof: approval/expiry logs; Metric: median approval lag.</li>
             </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>vCISO-led governance that defines AI decision authority and escalation paths.</li>
-              <li>
-                Evidence pipelines that track data lineage, access controls, and control
-                effectiveness.
-              </li>
-              <li>
-                Risk registers and exception workflows aligned to ISO 27001, SOC 2, and privacy
-                expectations.
-              </li>
-              <li>
-                Continuous monitoring and review cadences for model drift and operational risk.
-              </li>
-              <li>Executive-ready briefings that translate AI risk into business impact.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a
-                  href="https://www.nist.gov/itl/ai-risk-management-framework"
-                  rel="noopener"
-                  target="_blank"
-                  >NIST AI Risk Management Framework</a
-                >
-              </li>
-              <li>
-                <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank"
-                  >NIST Cybersecurity Framework 2.0</a
-                >
-              </li>
-              <li>
-                <a href="https://www.iso.org/standard/77304.html" rel="noopener" target="_blank"
-                  >ISO/IEC 23894 AI risk management overview</a
-                >
-              </li>
-              <li>
-                <a href="https://www.iso.org/standard/27001" rel="noopener" target="_blank"
-                  >ISO/IEC 27001:2022 overview</a
-                >
-              </li>
-              <li>
-                <a href="https://www.cisa.gov/ai" rel="noopener" target="_blank"
-                  >CISA AI resources</a
-                >
-              </li>
-            </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Operationalizing with 3HUE
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1 (2-3 weeks): Baseline inventory + red flag baseline</h3>
+                <p><strong>Outputs:</strong> AI inventory register, evidence gap map.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2 (4-6 weeks): Evidence pipeline + monitoring</h3>
+                <p><strong>Outputs:</strong> decision log template, risk dashboard, KPI baseline.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3 (ongoing): Operating cadence + continuous improvement</h3>
+                <p><strong>Outputs:</strong> monthly executive risk brief, risk fence reviews.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Further Reading
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
+                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Practical operating model for trustworthy AI risk governance.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.iso.org/standard/77304.html" rel="noopener" target="_blank">
+                <h3>ISO/IEC 23894 AI Risk Management <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Standardized AI risk principles and control expectations.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.cisa.gov/ai" rel="noopener" target="_blank">
+                <h3>CISA AI Resources <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Federal guidance on AI-related security and resilience.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" rel="noopener" target="_blank">
+                <h3>Gartner Hype Cycle Methodology <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Adoption-cycle framing useful for investment timing and risk posture.</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="iv2-card iv2-next" id="next-step">
+            <h2 class="iv2-h2">
+              Next Step
+              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
+            </h2>
+            <p>
+              If enterprise AI risk is on your radar and you need defendable evidence posture in
+              30-90 days, start with a focused signal and assurance baseline.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="../contact.html">Request a 72-Hour Risk Signal Snapshot</a>
+              <a class="iv2-btn-secondary" href="../services/risk-posture-assessment.html"
+                >Start an Enterprise AI Risk Baseline Assessment</a
+              >
+            </p>
+          </section>
+
           <div class="post-tags">
             <span>AI Governance</span><span>Risk Management</span><span>Compliance</span
             ><span>Data Security</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#signals-panel">Red Flag Signals</a>
+          <a href="#defensibility-model">Defensibility Model</a>
+          <a href="#evidence-pipeline">Evidence Pipeline</a>
+          <a href="#diagnostic-table">Diagnostic Table</a>
+          <a href="#risk-scorecard">Risk Scorecard</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">Further Reading</a>
+          <a href="#next-step">Next Step</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -813,6 +1003,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

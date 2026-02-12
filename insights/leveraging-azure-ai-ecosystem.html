@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,152 +624,442 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">Cloud</div>
-          <h1>Leveraging the Microsoft Azure AI Ecosystem for the Enterprise</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>13 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_1383359475_optimized_.webp"
-              alt="Enterprise cloud teams orchestrating Azure AI services."
-              width="1920"
-              height="1280"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            Azure AI gives enterprises a unified path to build, deploy, and govern AI at scale. The
-            ecosystem spans foundation models, machine learning platforms, search, and pre-built
-            cognitive services. The key is knowing how these services map to real enterprise
-            requirements: data control, policy alignment, and operational reliability.
-          </p>
-          <h2>Start with governance and data boundaries</h2>
-          <p>
-            Azure provides enterprise-grade security and compliance capabilities, but governance
-            still requires a clear operating model. Establish AI use case intake, data
-            classification, and risk acceptance criteria before implementation. Align oversight to
-            NIST CSF 2.0 Govern and ISO 27001:2022 control expectations.
-          </p>
-          <h2>Core Azure AI building blocks</h2>
-          <ul>
-            <li>
-              <strong>Azure OpenAI Service.</strong> Secure access to foundation models with tenant
-              isolation and enterprise controls.
-            </li>
-            <li>
-              <strong>Azure AI Studio.</strong> Centralized model management, evaluation, and
-              lifecycle oversight.
-            </li>
-            <li>
-              <strong>Azure AI Search.</strong> Semantic and retrieval capabilities for enterprise
-              knowledge and RAG applications.
-            </li>
-            <li>
-              <strong>Azure AI Services.</strong> Pre-built APIs for vision, language, speech, and
-              decisioning tasks.
-            </li>
-            <li>
-              <strong>Azure Machine Learning.</strong> Full lifecycle ML with monitoring,
-              explainability, and governance workflows.
-            </li>
-          </ul>
-          <h2>Enterprise integration patterns that scale</h2>
-          <ul>
-            <li>
-              Secure data ingestion from Microsoft 365, Dynamics 365, and internal data platforms.
-            </li>
-            <li>Private networking and identity controls for model access and API exposure.</li>
-            <li>Evidence capture aligned to SOC 2, ISO 27001, and PCI DSS requirements.</li>
-            <li>Continuous monitoring for drift, misuse, and policy violations.</li>
-          </ul>
-          <h2>Operating AI in regulated environments</h2>
-          <p>
-            Azure AI supports regulated industries, but compliance still depends on evidence, audit
-            trails, and role-based oversight. Enterprises should document model purpose, data
-            sources, evaluation criteria, and exception workflows to ensure audit readiness.
-          </p>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
-              <li>
-                Azure AI is strongest when paired with a clear governance and control framework.
-              </li>
-              <li>
-                Enterprise AI success depends on integration, data boundaries, and ongoing
-                monitoring.
-              </li>
-              <li>Evidence and audit workflows must be designed before models reach production.</li>
-              <li>
-                Security posture is shaped by how services are configured, not just which services
-                are chosen.
-              </li>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <p class="iv2-print-title">Leveraging the Microsoft Azure AI Ecosystem for the Enterprise | Last updated: 2026-01-20</p>
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">Cloud</span>
+            <h1>Leveraging the Microsoft Azure AI Ecosystem for the Enterprise</h1>
+            <p class="iv2-abstract">
+              Azure AI is attractive because it combines model services, orchestration, and enterprise
+              controls in a cohesive cloud platform. Programs still fail when governance, data boundaries,
+              and evidence workflows are designed after deployment. Azure AI succeeds when governance and
+              evidence pipelines are designed before production.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-01-20</span>
+              <span>13 min read</span>
+              <span class="iv2-tags"
+                ><span>Cloud</span><span>AI Governance</span><span>Risk Management</span
+                ><span>Enterprise AI</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/azure-ai-ecosystem-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Request a Consult</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_1383359475_optimized_.webp"
+                  alt="Enterprise cloud teams orchestrating Azure AI services."
+                  width="1920"
+                  height="1280"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Enterprise AI becomes defensible when controls are engineered into delivery.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>The opportunity</h3>
+                <p>
+                  Azure AI enables cohesive enterprise delivery across model access, orchestration,
+                  security controls, and platform operations.
+                </p>
+              </div>
+              <div>
+                <h3>The failure mode</h3>
+                <p>
+                  Programs that launch models before governance and evidence design accumulate hidden
+                  compliance and operational risk.
+                </p>
+              </div>
+              <div>
+                <h3>What leaders should do now</h3>
+                <ul>
+                  <li>Define governance decisions before use cases enter production.</li>
+                  <li>Map Azure services to control objectives and evidence artifacts.</li>
+                  <li>Operationalize monitoring and exception workflows with accountable owners.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What good looks like</h3>
+                <p>
+                  AI workloads scale with clear boundaries, auditable decisions, and continuous
+                  evidence availability for audit and regulatory review.
+                </p>
+              </div>
+              <p class="iv2-summary-note">
+                <strong>Scope note:</strong> This brief maps Azure AI services to governance, data
+                boundaries, and audit defensibility.
+              </p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="signals">
+            <h2 class="iv2-h2">
+              What Changes When AI Goes Enterprise
+              <button class="iv2-copy-link" type="button" data-copy-link="signals">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Data boundary failures are the primary risk multiplier</h3>
+                <p>Mis-scoped data access quickly expands legal, security, and trust exposure.</p>
+                <p><strong>Minimum evidence requirement:</strong> data classification, residency, and access logs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Model lifecycle is not the software lifecycle</h3>
+                <p>Evaluation, retraining, and drift behavior demand additional governance controls.</p>
+                <p><strong>Minimum evidence requirement:</strong> model version history and evaluation gates.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Evidence must be continuous</h3>
+                <p>Audit defensibility depends on ongoing evidence, not retroactive evidence assembly.</p>
+                <p><strong>Minimum evidence requirement:</strong> time-bound artifacts per control domain.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>RAG increases governance surface area</h3>
+                <p>Source quality, retention, access, and citation all become control obligations.</p>
+                <p><strong>Minimum evidence requirement:</strong> indexed-source and retrieval control logs.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="control-plane">
+            <h2 class="iv2-h2">
+              Azure AI Enterprise Control Plane
+              <button class="iv2-copy-link" type="button" data-copy-link="control-plane">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 1180 280" role="img" aria-labelledby="azure-plane-title azure-plane-desc">
+                <title id="azure-plane-title">Azure AI Enterprise Control Plane</title>
+                <desc id="azure-plane-desc">Flow from data sources to evidence and audit trail.</desc>
+                <defs>
+                  <marker id="iv2-arrow-azure" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#2f86b3"></path>
+                  </marker>
+                </defs>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="20" y="100" width="165" height="70" rx="10"></rect>
+                  <rect x="205" y="100" width="165" height="70" rx="10"></rect>
+                  <rect x="390" y="100" width="165" height="70" rx="10"></rect>
+                  <rect x="575" y="100" width="165" height="70" rx="10"></rect>
+                  <rect x="760" y="100" width="165" height="70" rx="10"></rect>
+                  <rect x="945" y="100" width="215" height="70" rx="10"></rect>
+                </g>
+                <g fill="#0f172a" font-size="12.5">
+                  <text x="102" y="128" text-anchor="middle">Data Sources</text>
+                  <text x="102" y="146" text-anchor="middle">(M365/Dynamics/Internal)</text>
+                  <text x="287" y="128" text-anchor="middle">Ingestion +</text>
+                  <text x="287" y="146" text-anchor="middle">Classification</text>
+                  <text x="472" y="128" text-anchor="middle">Retrieval Layer</text>
+                  <text x="472" y="146" text-anchor="middle">(Azure AI Search)</text>
+                  <text x="657" y="128" text-anchor="middle">Model Layer</text>
+                  <text x="657" y="146" text-anchor="middle">(OpenAI / AML)</text>
+                  <text x="842" y="128" text-anchor="middle">Orchestration + Eval</text>
+                  <text x="842" y="146" text-anchor="middle">(Azure AI Studio)</text>
+                  <text x="1052" y="128" text-anchor="middle">Monitoring, Evidence Store,</text>
+                  <text x="1052" y="146" text-anchor="middle">Audit Trail</text>
+                </g>
+                <g stroke="#2f86b3" stroke-width="2" marker-end="url(#iv2-arrow-azure)">
+                  <line x1="185" y1="135" x2="205" y2="135"></line>
+                  <line x1="370" y1="135" x2="390" y2="135"></line>
+                  <line x1="555" y1="135" x2="575" y2="135"></line>
+                  <line x1="740" y1="135" x2="760" y2="135"></line>
+                  <line x1="925" y1="135" x2="945" y2="135"></line>
+                </g>
+              </svg>
+              <p>Enterprise AI is a control plane problem, not a model selection problem.</p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="operating-model">
+            <h2 class="iv2-h2">
+              Start with Governance and Data Boundaries
+              <button class="iv2-copy-link" type="button" data-copy-link="operating-model">Copy Link</button>
+            </h2>
+            <div class="iv2-two-col">
+              <div class="iv2-mini-card">
+                <p class="iv2-kicker">Governance decisions to lock early</p>
+                <ul>
+                  <li>Use case intake and consequence tiering.</li>
+                  <li>Data classification and residency rules.</li>
+                  <li>Risk acceptance criteria and approver model.</li>
+                  <li>Logging and retention requirements by workload class.</li>
+                </ul>
+              </div>
+              <div class="iv2-mini-card">
+                <p class="iv2-kicker">What auditors will ask</p>
+                <ul>
+                  <li>Who approved what, when, and on what evidence.</li>
+                  <li>Where data flowed and who accessed it.</li>
+                  <li>How drift or misuse is monitored and responded to.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="iv2-pullquote">
+              Azure AI succeeds when governance and evidence pipelines are designed before production.
+            </p>
+          </section>
+
+          <section class="iv2-section" id="service-mapping">
+            <h2 class="iv2-h2">
+              Core Azure AI Building Blocks
+              <button class="iv2-copy-link" type="button" data-copy-link="service-mapping">Copy Link</button>
+            </h2>
+            <div class="iv2-table-wrap">
+              <table class="iv2-table">
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>What it's for</th>
+                    <th>Governance implications</th>
+                    <th>Evidence artifacts to capture</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Azure OpenAI Service</td>
+                    <td>Foundation model access for enterprise AI workloads</td>
+                    <td>Prompt/data handling policy, access control, usage boundaries</td>
+                    <td>Access logs, model usage logs, approved use-case register</td>
+                  </tr>
+                  <tr>
+                    <td>Azure AI Studio</td>
+                    <td>Orchestration, evaluation, and lifecycle oversight</td>
+                    <td>Evaluation criteria and promotion governance</td>
+                    <td>Evaluation reports, decision approvals, workflow history</td>
+                  </tr>
+                  <tr>
+                    <td>Azure AI Search</td>
+                    <td>Retrieval and indexing for RAG workloads</td>
+                    <td>Source quality, retention, and access governance</td>
+                    <td>Index source inventory, data access logs, citation checks</td>
+                  </tr>
+                  <tr>
+                    <td>Azure AI Services</td>
+                    <td>Pre-built APIs for vision/language/speech capabilities</td>
+                    <td>Purpose limitation and control mapping by use case</td>
+                    <td>API call logs, use-case approvals, exception records</td>
+                  </tr>
+                  <tr>
+                    <td>Azure Machine Learning</td>
+                    <td>Custom model lifecycle, monitoring, and MLOps</td>
+                    <td>Model risk governance and retraining control points</td>
+                    <td>Model version history, drift metrics, retraining evidence</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="data-handling">
+            <h2 class="iv2-h2">
+              Data Privacy and Data Handling
+              <button class="iv2-copy-link" type="button" data-copy-link="data-handling">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <p><strong>Data handling must be explicitly understood and documented.</strong></p>
+              <ul>
+                <li>Define prompt and data handling expectations per workload type.</li>
+                <li>Monitor for misuse patterns and terms/policy violations.</li>
+                <li>Document retention and access logging decisions for audit defensibility.</li>
+              </ul>
+              <p>
+                Reference Microsoft data privacy guidance for Azure OpenAI and Azure AI Foundry model deployments.
+              </p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="integration-patterns">
+            <h2 class="iv2-h2">
+              Enterprise Integration Patterns That Scale
+              <button class="iv2-copy-link" type="button" data-copy-link="integration-patterns">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Private networking + identity enforced access</h3>
+                <p><strong>When to use:</strong> Regulated workloads with strict segmentation.</p>
+                <p><strong>Control points:</strong> Private endpoints, RBAC, identity governance.</p>
+                <p><strong>Evidence artifacts:</strong> Network policy state, access review logs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>RAG with bounded corpora and controlled indexing</h3>
+                <p><strong>When to use:</strong> Knowledge-grounded enterprise assistants.</p>
+                <p><strong>Control points:</strong> Source approval, index scope, citation controls.</p>
+                <p><strong>Evidence artifacts:</strong> Source register, index change history.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Evaluation flows before production promotion</h3>
+                <p><strong>When to use:</strong> High-impact models and decision workflows.</p>
+                <p><strong>Control points:</strong> Evaluation gates, approver thresholds, rollback.</p>
+                <p><strong>Evidence artifacts:</strong> Gate decisions, evaluation reports.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Continuous monitoring + AI misuse incident pathway</h3>
+                <p><strong>When to use:</strong> Always-on enterprise workloads.</p>
+                <p><strong>Control points:</strong> Alert thresholds, incident runbooks.</p>
+                <p><strong>Evidence artifacts:</strong> Alert history, incident closure records.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="regulated-operations">
+            <h2 class="iv2-h2">
+              Operating AI in Regulated Environments
+              <button class="iv2-copy-link" type="button" data-copy-link="regulated-operations">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <h3>Minimum Evidence Pack</h3>
+              <div class="iv2-cap-grid">
+                <div class="iv2-cap-card"><h3>Model purpose + intended use</h3></div>
+                <div class="iv2-cap-card"><h3>Data sources + classification + approvals</h3></div>
+                <div class="iv2-cap-card"><h3>Evaluation criteria + test evidence</h3></div>
+                <div class="iv2-cap-card"><h3>Exception workflow + expiry governance</h3></div>
+                <div class="iv2-cap-card"><h3>Monitoring thresholds + response playbooks</h3></div>
+              </div>
+              <h3 style="margin-top: 16px">Decision Log Template</h3>
+              <div class="iv2-table-wrap">
+                <table class="iv2-table">
+                  <thead>
+                    <tr>
+                      <th>Use case</th>
+                      <th>Model/service used</th>
+                      <th>Data sources</th>
+                      <th>Evaluation gate passed</th>
+                      <th>Approver</th>
+                      <th>Date/time</th>
+                      <th>Linked ticket/artifact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Internal assistant</td><td>Azure OpenAI + AI Search</td><td>M365 + approved policy docs</td><td>Y</td><td>AI Governance Lead</td><td>2026-01-12</td><td>AI-412</td></tr>
+                    <tr><td>Case triage support</td><td>Azure ML model endpoint</td><td>CRM + support archive</td><td>N</td><td>Risk Officer</td><td>2026-01-15</td><td>ML-208</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>Azure AI security posture is configuration-driven.</strong> Proof: private endpoints + RBAC + logging evidence.</li>
+              <li><strong>Evidence readiness determines audit confidence.</strong> Proof: timestamped artifacts linked to controls and decisions.</li>
+              <li><strong>RAG governance is a data control problem.</strong> Proof: bounded index sources with approval and access records.</li>
+              <li><strong>Model quality must be operationally monitored.</strong> Proof: drift thresholds and documented response actions.</li>
+              <li><strong>Governance must precede production scale.</strong> Proof: use-case intake and consequence-tier approval logs.</li>
             </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>
-                AI program governance aligned to enterprise risk, compliance, and policy objectives.
-              </li>
-              <li>Control mapping and evidence pipelines for Azure AI workloads.</li>
-              <li>vCISO-led oversight for AI risk acceptance and exception management.</li>
-              <li>Monitoring and reporting that ties model performance to operational risk.</li>
-              <li>Audit-ready documentation for regulated business units.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a
-                  href="https://learn.microsoft.com/azure/ai-services/"
-                  rel="noopener"
-                  target="_blank"
-                  >Azure AI Services documentation</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://learn.microsoft.com/azure/ai-studio/"
-                  rel="noopener"
-                  target="_blank"
-                  >Azure AI Studio overview</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://learn.microsoft.com/azure/ai-services/openai/"
-                  rel="noopener"
-                  target="_blank"
-                  >Azure OpenAI Service</a
-                >
-              </li>
-              <li>
-                <a href="https://learn.microsoft.com/azure/search/" rel="noopener" target="_blank"
-                  >Azure AI Search</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://learn.microsoft.com/azure/machine-learning/"
-                  rel="noopener"
-                  target="_blank"
-                  >Azure Machine Learning</a
-                >
-              </li>
-            </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Operationalizing with 3HUE
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1 (2 weeks): Governance baseline + data boundaries</h3>
+                <p><strong>Outputs:</strong> use case intake, consequence tiering, evidence baseline map.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2 (4-6 weeks): Control-plane implementation + evidence pipelines</h3>
+                <p><strong>Outputs:</strong> control mapping, decision log, monitoring thresholds, audit-ready pack.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3 (ongoing): vCISO oversight + continuous assurance cadence</h3>
+                <p><strong>Outputs:</strong> monthly executive brief, exceptions review, drift/misuse reporting.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Further Reading
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/ai-services/" rel="noopener" target="_blank">
+                <h3>Azure AI Services documentation <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Core service reference for enterprise AI capability adoption.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/ai-studio/" rel="noopener" target="_blank">
+                <h3>Azure AI Studio overview <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Orchestration and evaluation workflows for model lifecycle governance.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/ai-services/openai/" rel="noopener" target="_blank">
+                <h3>Azure OpenAI Service <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Enterprise model access with governance and usage controls.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/search/" rel="noopener" target="_blank">
+                <h3>Azure AI Search <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Retrieval and indexing controls for governed RAG architectures.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/machine-learning/" rel="noopener" target="_blank">
+                <h3>Azure Machine Learning <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Model lifecycle management and monitoring for production ML workloads.</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="iv2-card iv2-next" id="next-step">
+            <h2 class="iv2-h2">
+              Next Step
+              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
+            </h2>
+            <p>
+              If you're deploying Azure AI in a regulated business unit or under audit pressure,
+              start with a current-state risk and evidence signal.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Request a Consult</a
+              >
+              <a class="iv2-btn-secondary" href="../contact.html"
+                >Request a 72-hour Risk Signal Snapshot</a
+              >
+            </p>
+          </section>
+
           <div class="post-tags">
             <span>Cloud</span><span>AI Governance</span><span>Risk Management</span
             ><span>Enterprise AI</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#signals">Enterprise Signals</a>
+          <a href="#control-plane">Control Plane</a>
+          <a href="#operating-model">Governance + Boundaries</a>
+          <a href="#service-mapping">Service Mapping</a>
+          <a href="#data-handling">Data Handling</a>
+          <a href="#integration-patterns">Integration Patterns</a>
+          <a href="#regulated-operations">Regulated Operations</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">Further Reading</a>
+          <a href="#next-step">Next Step</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -811,6 +1103,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

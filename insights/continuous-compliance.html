@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,128 +624,355 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">Compliance</div>
-          <h1>Why Continuous Compliance Matters in 2026</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>7 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_720879092_optimized_.webp"
-              alt="Secure operations workspace supporting continuous compliance."
-              width="1920"
-              height="1076"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            Continuous compliance has moved from a best practice to a board-level expectation.
-            Enterprises are operating in fast-changing cloud environments, shipping software
-            continuously, and facing evolving regulations. In that reality, annual point-in-time
-            audits are no longer enough to demonstrate control effectiveness.
-          </p>
-          <p>
-            Modern compliance programs align security and governance to real operational telemetry.
-            They track control health continuously, collect evidence as systems change, and provide
-            executives with clear, audit-ready insight.
-          </p>
-          <h2>What changed since 2024</h2>
-          <p>
-            The update to the NIST Cybersecurity Framework 2.0 introduced a stronger emphasis on
-            governance, while ISO/IEC 27001:2022 refined Annex A controls to better align with cloud
-            operating models. These shifts reinforce that compliance is an operating posture, not a
-            seasonal project.
-          </p>
-          <h2>Core capabilities of continuous compliance</h2>
-          <ul>
-            <li>
-              <strong>Control monitoring at source.</strong> Validate configuration, access, and
-              logging controls directly in cloud environments.
-            </li>
-            <li>
-              <strong>Evidence pipelines.</strong> Capture artifacts automatically as systems
-              change, not during audit week.
-            </li>
-            <li>
-              <strong>Workflow integration.</strong> Route findings into delivery backlogs with
-              clear ownership and remediation paths.
-            </li>
-            <li>
-              <strong>Executive reporting.</strong> Provide program health and readiness updates
-              with clear risk context.
-            </li>
-          </ul>
-          <h2>Metrics that matter to leadership</h2>
-          <ul>
-            <li>Coverage of continuously monitored controls versus manual checks.</li>
-            <li>Time to detect and remediate control drift.</li>
-            <li>Evidence freshness for high-impact controls and systems.</li>
-            <li>Open exceptions and risk trends by framework and severity.</li>
-          </ul>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">Compliance</span>
+            <h1>Why Continuous Compliance Matters in 2026</h1>
+            <p class="iv2-abstract">
+              Continuous compliance is now a board-level operating requirement, not an audit
+              efficiency project. Leaders are being measured on whether controls are continuously
+              enforced, evidenced, and decision-ready under scrutiny.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-02-11</span>
+              <span>9 min read</span>
+              <span class="iv2-tags"
+                ><span>Compliance</span><span>Continuous Monitoring</span
+                ><span>Governance</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/continuous-compliance-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="../contact.html"
+                >Request a Risk Signal Snapshot (72 hours)</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_720879092_optimized_.webp"
+                  alt="Secure operations workspace supporting continuous compliance."
+                  width="1920"
+                  height="1076"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Operational telemetry becomes assurance.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>What it is</h3>
+                <p>
+                  Continuous compliance is an operating model where control health and evidence are
+                  continuously verified from live systems.
+                </p>
+              </div>
+              <div>
+                <h3>Why it changed</h3>
+                <p>
+                  Faster cloud change rates and heightened audit, insurer, and customer scrutiny
+                  have made annual evidence cycles insufficient.
+                </p>
+              </div>
+              <div>
+                <h3>What leaders should do now</h3>
+                <ul>
+                  <li>Prioritize controls tied to business consequence and regulator attention.</li>
+                  <li>Automate evidence collection for high-impact controls at source.</li>
+                  <li>Stand up an executive cadence for exceptions, drift, and remediation velocity.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>If you do nothing</h3>
+                <p>
+                  Programs will keep generating reports, but not defensible assurance when audit,
+                  insurer, or customer due diligence pressure arrives.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <hr class="iv2-divider" />
+
+          <section class="iv2-section" id="signals">
+            <h2 class="iv2-h2">
+              Signals Driving the Shift
+              <button class="iv2-copy-link" type="button" data-copy-link="signals">Copy Link</button>
+            </h2>
+            <ul class="iv2-signal-list">
               <li>
-                Continuous compliance reduces audit surprises and shortens preparation cycles.
-              </li>
-              <li>Governance frameworks now expect ongoing evidence, not point-in-time reports.</li>
-              <li>Operational telemetry is the most defensible source of truth for compliance.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>vCISO-led governance with defined control ownership and escalation paths.</li>
-              <li>
-                Daily posture monitoring and control gap tracking aligned to SOC 2, ISO 27001, and
-                PCI DSS.
-              </li>
-              <li>Integrated evidence collection and audit preparation workflows.</li>
-              <li>Weekly analyst reviews and monthly executive risk briefings.</li>
-              <li>Audit-ready reporting tailored to leadership and compliance teams.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank"
-                  >NIST Cybersecurity Framework 2.0</a
-                >
-              </li>
-              <li>
-                <a href="https://www.iso.org/standard/27001" rel="noopener" target="_blank"
-                  >ISO/IEC 27001:2022 overview</a
-                >
+                <strong>Governance emphasis (NIST CSF 2.0).</strong> Boards now expect explicit
+                accountability for cyber risk decisions, not implied ownership.
               </li>
               <li>
-                <a
-                  href="https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite"
-                  rel="noopener"
-                  target="_blank"
-                  >AICPA SOC 2 resources</a
-                >
+                <strong>Annex A refinement (ISO/IEC 27001:2022).</strong> Control language now
+                aligns more tightly to cloud-native execution and ongoing oversight.
               </li>
               <li>
-                <a
-                  href="https://www.cisa.gov/secure-cloud-business-applications"
-                  rel="noopener"
-                  target="_blank"
-                  >CISA cloud security guidance</a
-                >
+                <strong>Buyer and insurer scrutiny is operational.</strong> Third-party reviews are
+                increasingly evidence-first, with less tolerance for narrative-only responses.
+              </li>
+              <li>
+                <strong>Release velocity increases drift.</strong> High-frequency change creates
+                more control exceptions unless monitoring is continuous and integrated.
               </li>
             </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="capability-model">
+            <h2 class="iv2-h2">
+              Capability Model
+              <button class="iv2-copy-link" type="button" data-copy-link="capability-model">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3 class="iv2-cap-title">
+                  <span class="iv2-cap-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 12h18"></path><path d="M12 3v18"></path></svg
+                  ></span>
+                  <span>Control Monitoring at Source</span>
+                </h3>
+                <p>Validate configuration, access, and logging directly in production systems.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3 class="iv2-cap-title">
+                  <span class="iv2-cap-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg
+                  ></span>
+                  <span>Evidence Pipelines</span>
+                </h3>
+                <p>Capture timestamped artifacts continuously as environments change.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3 class="iv2-cap-title">
+                  <span class="iv2-cap-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 6h7v5H4z"></path><path d="M13 13h7v5h-7z"></path><path d="M11 8l2 2"></path></svg
+                  ></span>
+                  <span>Workflow Integration</span>
+                </h3>
+                <p>Route control failures into engineering backlog with owner and SLA.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3 class="iv2-cap-title">
+                  <span class="iv2-cap-icon" aria-hidden="true"
+                    ><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 19V9"></path><path d="M12 19V5"></path><path d="M19 19v-7"></path></svg
+                  ></span>
+                  <span>Executive Reporting</span>
+                </h3>
+                <p>Translate technical telemetry into board-level risk and readiness narratives.</p>
+              </div>
+            </div>
+            <p class="iv2-pullquote">
+              Defensibility comes from operational telemetry, not slideware.
+            </p>
+          </section>
+
+          <section class="iv2-section" id="kpi-scorecard">
+            <h2 class="iv2-h2">
+              KPI Scorecard
+              <button class="iv2-copy-link" type="button" data-copy-link="kpi-scorecard">Copy Link</button>
+            </h2>
+            <div class="iv2-kpi-grid">
+              <div class="iv2-kpi-card">
+                <h3>Control Coverage Ratio</h3>
+                <p><strong>Definition:</strong> Continuously monitored controls vs. manual controls.</p>
+                <p><strong>Why it matters:</strong> Indicates how much assurance is real-time vs. episodic.</p>
+                <p><strong>Suggested target:</strong> 70-90% for high-impact control domains.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Control Drift MTTR</h3>
+                <p><strong>Definition:</strong> Mean time to remediate control drift.</p>
+                <p><strong>Why it matters:</strong> Measures operational responsiveness to compliance risk.</p>
+                <p><strong>Suggested target:</strong> Under 14 days for critical controls.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Evidence Freshness</h3>
+                <p><strong>Definition:</strong> Age of evidence for key controls.</p>
+                <p><strong>Why it matters:</strong> Older evidence weakens audit and due diligence defensibility.</p>
+                <p><strong>Suggested target:</strong> 80% of critical evidence under 30 days.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Exception Closure Velocity</h3>
+                <p><strong>Definition:</strong> Percent of open exceptions closed within agreed windows.</p>
+                <p><strong>Why it matters:</strong> Shows governance effectiveness and execution discipline.</p>
+                <p><strong>Suggested target:</strong> 75-90% closed within SLA.</p>
+              </div>
+            </div>
+            <div class="iv2-efi">
+              <h3>Evidence Freshness Index</h3>
+              <div class="iv2-efi-bar" aria-label="Evidence freshness index scale">
+                <span class="iv2-efi-green">0-30 days</span>
+                <span class="iv2-efi-amber">31-90 days</span>
+                <span class="iv2-efi-red">90+ days</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="operating-model">
+            <h2 class="iv2-h2">
+              Continuous Compliance Operating Model
+              <button class="iv2-copy-link" type="button" data-copy-link="operating-model">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 980 220" role="img" aria-labelledby="cc-model-title cc-model-desc">
+                <title id="cc-model-title">Continuous Compliance Operating Model</title>
+                <desc id="cc-model-desc">Flow from telemetry sources to executive reporting.</desc>
+                <defs>
+                  <marker id="iv2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#2f86b3"></path>
+                  </marker>
+                </defs>
+                <rect x="20" y="70" width="160" height="76" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="100" y="104" text-anchor="middle" font-size="13" fill="#0f172a">Telemetry</text>
+                <text x="100" y="124" text-anchor="middle" font-size="13" fill="#0f172a">Sources</text>
+
+                <rect x="210" y="70" width="160" height="76" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="290" y="104" text-anchor="middle" font-size="13" fill="#0f172a">Control</text>
+                <text x="290" y="124" text-anchor="middle" font-size="13" fill="#0f172a">Checks</text>
+
+                <rect x="400" y="70" width="160" height="76" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="480" y="104" text-anchor="middle" font-size="13" fill="#0f172a">Evidence</text>
+                <text x="480" y="124" text-anchor="middle" font-size="13" fill="#0f172a">Store</text>
+
+                <rect x="590" y="70" width="170" height="76" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="675" y="104" text-anchor="middle" font-size="13" fill="#0f172a">Exceptions /</text>
+                <text x="675" y="124" text-anchor="middle" font-size="13" fill="#0f172a">Backlog</text>
+
+                <rect x="790" y="70" width="170" height="76" rx="10" fill="#f8fafc" stroke="#cbd5e1"></rect>
+                <text x="875" y="104" text-anchor="middle" font-size="13" fill="#0f172a">Executive</text>
+                <text x="875" y="124" text-anchor="middle" font-size="13" fill="#0f172a">Reporting</text>
+
+                <line x1="180" y1="108" x2="210" y2="108" stroke="#2f86b3" stroke-width="2" marker-end="url(#iv2-arrow)"></line>
+                <line x1="370" y1="108" x2="400" y2="108" stroke="#2f86b3" stroke-width="2" marker-end="url(#iv2-arrow)"></line>
+                <line x1="560" y1="108" x2="590" y2="108" stroke="#2f86b3" stroke-width="2" marker-end="url(#iv2-arrow)"></line>
+                <line x1="760" y1="108" x2="790" y2="108" stroke="#2f86b3" stroke-width="2" marker-end="url(#iv2-arrow)"></line>
+              </svg>
+              <p>
+                This model links real-time control telemetry to leadership-ready assurance reporting,
+                with exceptions managed through accountable remediation workflows.
+              </p>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>Audit readiness is now a continuous outcome.</strong> Point-in-time preparation is increasingly viewed as control weakness.</li>
+              <li><strong>Customer trust depends on defensible evidence.</strong> Procurement and diligence cycles are evidence-first, not policy-first.</li>
+              <li><strong>Operational risk appears as exception backlog.</strong> Open control exceptions are leading indicators of material exposure.</li>
+              <li><strong>Governance quality is observable.</strong> Leadership cadence and closure velocity are measurable, not narrative claims.</li>
+            </ul>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Engagement Pathway
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1: Baseline &amp; Scope (2 weeks)</h3>
+                <p><strong>Outcomes:</strong> Consequence map, critical control scope, ownership model.</p>
+                <p><strong>Artifacts:</strong> Exposure register, control inventory, governance charter.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2: Evidence Pipelines (4-6 weeks)</h3>
+                <p><strong>Outcomes:</strong> Automated evidence capture, control checks, exception routing.</p>
+                <p><strong>Artifacts:</strong> Pipeline map, evidence schema, remediation workflow.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3: Operating Cadence (ongoing)</h3>
+                <p><strong>Outcomes:</strong> Executive reporting rhythm, KPI governance, closure discipline.</p>
+                <p><strong>Artifacts:</strong> Monthly brief pack, KPI dashboard, decision log.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Reference Cards
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">
+                <h3>NIST Cybersecurity Framework 2.0 <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Governance-forward model for strategic cyber risk oversight.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.iso.org/standard/27001" rel="noopener" target="_blank">
+                <h3>ISO/IEC 27001:2022 Overview <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Annex A refinements supporting modern control operations.</p>
+              </a>
+              <a
+                class="iv2-ref-card"
+                href="https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite"
+                rel="noopener"
+                target="_blank"
+              >
+                <h3>AICPA SOC 2 Resources <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">SOC assurance guidance for defensible control evidence.</p>
+              </a>
+              <a
+                class="iv2-ref-card"
+                href="https://www.cisa.gov/secure-cloud-business-applications"
+                rel="noopener"
+                target="_blank"
+              >
+                <h3>CISA Cloud Security Guidance <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Operational practices for cloud control hardening and resilience.</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="iv2-card iv2-next" id="next-step">
+            <h2 class="iv2-h2">
+              Next Step
+              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
+            </h2>
+            <p>
+              If your next audit, insurer review, or customer due diligence is within 90 days,
+              start with a focused signal pass to identify what is defensible now and what must be
+              corrected first.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="../contact.html">Request a 72-hour Risk Signal Snapshot</a>
+              <a class="iv2-btn-secondary" href="../services/isg-managed-programs.html">Talk to ISG</a>
+            </p>
+          </section>
+
           <div class="post-tags">
             <span>Compliance</span><span>Continuous Monitoring</span><span>Governance</span
             ><span>Audit Readiness</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#signals">Signals</a>
+          <a href="#capability-model">Capability Model</a>
+          <a href="#kpi-scorecard">KPI Scorecard</a>
+          <a href="#operating-model">Operating Model</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">References</a>
+          <a href="#next-step">Next Step</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -787,6 +1016,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

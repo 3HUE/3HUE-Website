@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -36,6 +37,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -622,118 +624,406 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main">
-      <article class="post-content">
-        <a class="post-back" href="index.html">Back to Insights</a>
-        <header class="post-header">
-          <div class="eyebrow">Enterprise AI</div>
-          <h1>Building Enterprise AI Capability: People, Skills, and Culture</h1>
-          <div class="post-meta"><span>Last updated: 2026-01-20</span><span>6 min read</span></div>
-          <div class="media-card aspect-16x9">
-            <img
-              src="../assets/img/AdobeStock_302940695-2_optimized_.webp"
-              alt="Enterprise teams aligning AI skills, operating models, and culture."
-              width="1125"
-              height="750"
-              decoding="async"
-            />
-          </div>
-        </header>
-        <div class="post-body">
-          <p>
-            Technology alone does not create enterprise AI capability. Sustainable outcomes depend
-            on defined roles, coordinated delivery, and a culture that treats AI as a governed
-            operational discipline. Teams need clear responsibilities, shared language, and a
-            structured path from experimentation to production.
-          </p>
-          <h2>Define the operating model first</h2>
-          <ul>
-            <li>
-              <strong>AI steering committee.</strong> Cross-functional oversight to align
-              investments, risk, and policy.
-            </li>
-            <li>
-              <strong>Executive sponsorship.</strong> Clear decision authority for funding,
-              priorities, and risk acceptance.
-            </li>
-            <li>
-              <strong>Model inventory.</strong> A single view of use cases, owners, data sources,
-              and risk classification.
-            </li>
-          </ul>
-          <h2>Build the right skills mix</h2>
-          <ul>
-            <li>Data science and ML engineering for model development and deployment.</li>
-            <li>
-              Security and compliance leads to align with ISO 27001 and regulatory expectations.
-            </li>
-            <li>Product and domain experts to keep models grounded in business outcomes.</li>
-            <li>AI governance and risk specialists for auditability and policy enforcement.</li>
-          </ul>
-          <h2>Create a culture that scales responsibly</h2>
-          <p>
-            AI literacy cannot be limited to technical teams. Enterprises that scale responsibly
-            invest in training, shared playbooks, and practical guardrails. Encourage
-            experimentation with clear escalation paths, and normalize model reviews the same way
-            you review security or compliance controls.
-          </p>
-          <h2>Operationalize learning and change management</h2>
-          <ul>
-            <li>AI training paths for business stakeholders and delivery teams.</li>
-            <li>Prompt and model review workflows integrated into delivery governance.</li>
-            <li>Feedback loops for model performance, risk signals, and user trust.</li>
-          </ul>
-          <div class="post-section">
-            <h3>Key takeaways</h3>
-            <ul>
-              <li>Enterprise AI success depends on governance, people, and operational clarity.</li>
-              <li>AI literacy must extend beyond engineering to business and risk leaders.</li>
-              <li>Defined ownership and model inventories prevent blind spots at scale.</li>
+    <main id="main" class="iv2-main">
+      <div class="iv2-layout">
+        <article class="iv2-article">
+          <p class="iv2-print-title">Building Enterprise AI Capability: People, Skills, and Culture | Last updated: 2026-01-20</p>
+          <a class="post-back" href="index.html">Back to Insights</a>
+          <header class="iv2-hero">
+            <span class="iv2-label">AI Strategy &amp; Organization</span>
+            <h1>Building Enterprise AI Capability: People, Skills, and Culture</h1>
+            <p class="iv2-abstract">
+              AI creates value or increases risk based on capability, not tools alone. Many
+              enterprises underinvest in skills, culture, and governance alignment, then struggle to
+              scale responsibly. This brief provides a capability model tied to people, skills, and
+              performance evidence.
+            </p>
+            <div class="iv2-meta">
+              <span>Last updated: 2026-01-20</span>
+              <span>6 min read</span>
+              <span class="iv2-tags"
+                ><span>Enterprise AI</span><span>AI Governance</span
+                ><span>Change Management</span><span>Skills</span></span
+              >
+            </div>
+            <div class="iv2-actions">
+              <a class="btn btn-primary" href="../assets/briefs/enterprise-ai-capability-executive-brief.pdf"
+                >Download Executive Brief (PDF)</a
+              >
+              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Request a Consult</a
+              >
+            </div>
+            <figure class="iv2-hero-media">
+              <div class="iv2-hero-media-wrap">
+                <img
+                  src="../assets/img/AdobeStock_302940695-2_optimized_.webp"
+                  alt="Enterprise teams aligning AI skills, operating models, and culture."
+                  width="1125"
+                  height="750"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="iv2-caption">Capability is the constraint before technology is the differentiator.</figcaption>
+            </figure>
+          </header>
+
+          <section class="iv2-card" id="executive-summary">
+            <h2 class="iv2-h2">
+              Executive Summary
+              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
+            </h2>
+            <div class="iv2-summary-grid">
+              <div>
+                <h3>The problem</h3>
+                <p>AI programs launch before organizational readiness is established.</p>
+              </div>
+              <div>
+                <h3>The solution</h3>
+                <p>Build capability through role clarity, skills taxonomy, culture, and aligned incentives.</p>
+              </div>
+              <div>
+                <h3>What leaders should do now</h3>
+                <ul>
+                  <li>Define an enterprise AI operating model with explicit ownership.</li>
+                  <li>Map critical skills to business roles and delivery outcomes.</li>
+                  <li>Track readiness and performance through evidence-backed metrics.</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What success looks like</h3>
+                <p>
+                  AI initiatives move from isolated pilots to repeatable, governed execution with
+                  measurable impact and lower risk.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="readiness-signals">
+            <h2 class="iv2-h2">
+              Enterprise Readiness Signals
+              <button class="iv2-copy-link" type="button" data-copy-link="readiness-signals">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Siloed AI skill clusters</h3>
+                <p><strong>Implication:</strong> delivery quality varies by team, not standard.</p>
+                <p><strong>Minimum readiness evidence:</strong> enterprise skills map by function.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Lack of role clarity</h3>
+                <p><strong>Implication:</strong> accountability diffuses across engineering, risk, and business.</p>
+                <p><strong>Minimum readiness evidence:</strong> RACI matrix for AI lifecycle decisions.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Experimentation without governance</h3>
+                <p><strong>Implication:</strong> pilot velocity rises while risk controls lag.</p>
+                <p><strong>Minimum readiness evidence:</strong> intake and approval workflow logs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Training untied to outcomes</h3>
+                <p><strong>Implication:</strong> capability spend does not translate into value.</p>
+                <p><strong>Minimum readiness evidence:</strong> skills uplift tied to delivery KPIs.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Weak change adoption loops</h3>
+                <p><strong>Implication:</strong> new patterns fail to stick across business units.</p>
+                <p><strong>Minimum readiness evidence:</strong> adoption cadence and participation trend.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="capability-model">
+            <h2 class="iv2-h2">
+              Enterprise AI Capability Model
+              <button class="iv2-copy-link" type="button" data-copy-link="capability-model">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 380" role="img" aria-labelledby="cap-model-title cap-model-desc">
+                <title id="cap-model-title">Enterprise AI Capability Stack</title>
+                <desc id="cap-model-desc">Three-layer stack of strategy, organization, and skills/culture.</desc>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="140" y="60" width="640" height="82" rx="12"></rect>
+                  <rect x="110" y="154" width="700" height="92" rx="12"></rect>
+                  <rect x="80" y="260" width="760" height="96" rx="12"></rect>
+                </g>
+                <g fill="#0f172a" font-size="14">
+                  <text x="460" y="92" text-anchor="middle">Leadership &amp; Strategy</text>
+                  <text x="460" y="114" text-anchor="middle">AI strategy endorsed by C-suite | AI governance council</text>
+                  <text x="460" y="188" text-anchor="middle">Organization &amp; Roles</text>
+                  <text x="460" y="210" text-anchor="middle">Clear ownership | AI product/engineering + risk partners</text>
+                  <text x="460" y="294" text-anchor="middle">Skills, Culture &amp; Performance</text>
+                  <text x="460" y="318" text-anchor="middle">Skills taxonomy | Metrics &amp; incentives | Continuous learning loops</text>
+                </g>
+              </svg>
+              <p>Capability is the intersection of strategy, organizational design, and culture.</p>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="skills-taxonomy">
+            <h2 class="iv2-h2">
+              Skills Taxonomy
+              <button class="iv2-copy-link" type="button" data-copy-link="skills-taxonomy">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 120" role="img" aria-labelledby="skills-vis-title skills-vis-desc">
+                <title id="skills-vis-title">Skills Taxonomy Visual Summary</title>
+                <desc id="skills-vis-desc">Domains spanning strategy, engineering, risk, and oversight.</desc>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="20" y="22" width="172" height="76" rx="10"></rect>
+                  <rect x="204" y="22" width="172" height="76" rx="10"></rect>
+                  <rect x="388" y="22" width="172" height="76" rx="10"></rect>
+                  <rect x="572" y="22" width="172" height="76" rx="10"></rect>
+                  <rect x="756" y="22" width="144" height="76" rx="10"></rect>
+                </g>
+                <g fill="#0f172a" font-size="12.5">
+                  <text x="106" y="52" text-anchor="middle">AI Strategy</text>
+                  <text x="106" y="70" text-anchor="middle">&amp; Governance</text>
+                  <text x="290" y="52" text-anchor="middle">Risk &amp;</text>
+                  <text x="290" y="70" text-anchor="middle">Compliance</text>
+                  <text x="474" y="52" text-anchor="middle">Data Engineering</text>
+                  <text x="474" y="70" text-anchor="middle">&amp; Lineage</text>
+                  <text x="658" y="52" text-anchor="middle">Model Lifecycle</text>
+                  <text x="658" y="70" text-anchor="middle">&amp; MLOps</text>
+                  <text x="828" y="52" text-anchor="middle">Human</text>
+                  <text x="828" y="70" text-anchor="middle">Oversight</text>
+                </g>
+              </svg>
+              <div class="iv2-table-wrap" style="margin-top: 12px">
+                <table class="iv2-table">
+                  <thead>
+                    <tr>
+                      <th>Domain</th>
+                      <th>Skill</th>
+                      <th>Typical role(s)</th>
+                      <th>Minimum proficiency</th>
+                      <th>Evidence of mastery</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>AI strategy</td><td>AI governance and risk</td><td>CIO, vCISO, AI Program Lead</td><td>Intermediate</td><td>Policy approval record + risk decisions</td></tr>
+                    <tr><td>Model lifecycle</td><td>Model lifecycle management</td><td>ML Engineer, MLOps Lead</td><td>Advanced</td><td>Version/release metrics + drift response evidence</td></tr>
+                    <tr><td>Data and ethics</td><td>Data lineage and ethics</td><td>Data Engineer, Privacy Lead</td><td>Intermediate</td><td>Lineage artifacts + review outcomes</td></tr>
+                    <tr><td>Human oversight</td><td>Human-in-the-loop design</td><td>Product Owner, Risk Analyst</td><td>Foundational</td><td>Escalation logs + intervention KPIs</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section iv2-diagram" id="org-design">
+            <h2 class="iv2-h2">
+              Organizational Design Patterns
+              <button class="iv2-copy-link" type="button" data-copy-link="org-design">Copy Link</button>
+            </h2>
+            <div class="iv2-card">
+              <svg viewBox="0 0 920 120" role="img" aria-labelledby="org-vis-title org-vis-desc">
+                <title id="org-vis-title">Organization Design Comparison</title>
+                <desc id="org-vis-desc">Centralized, federated, and hybrid AI operating models.</desc>
+                <g fill="#f8fafc" stroke="#cbd5e1">
+                  <rect x="20" y="22" width="280" height="76" rx="10"></rect>
+                  <rect x="320" y="22" width="280" height="76" rx="10"></rect>
+                  <rect x="620" y="22" width="280" height="76" rx="10"></rect>
+                </g>
+                <g fill="#0f172a" font-size="13">
+                  <text x="160" y="52" text-anchor="middle">Centralized AI COE</text>
+                  <text x="460" y="52" text-anchor="middle">Federated Model</text>
+                  <text x="760" y="52" text-anchor="middle">Hybrid COE + Embedded Squads</text>
+                </g>
+              </svg>
+              <div class="iv2-table-wrap" style="margin-top: 12px">
+                <table class="iv2-table">
+                  <thead>
+                    <tr>
+                      <th>Pattern</th>
+                      <th>When to use</th>
+                      <th>Governance boundary</th>
+                      <th>Skills deployment</th>
+                      <th>Evidence of success / risk signposts</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Centralized AI COE</td><td>Early-stage standardization</td><td>Central policy and approvals</td><td>Specialized core team</td><td>High consistency / slower BU responsiveness</td></tr>
+                    <tr><td>Federated Model</td><td>BU-specific use case velocity</td><td>Central guardrails, BU execution</td><td>Domain-aligned local capabilities</td><td>Higher innovation / variable control quality</td></tr>
+                    <tr><td>Hybrid</td><td>Scale with strong governance</td><td>Central standards + local delivery autonomy</td><td>COE expertise + embedded squads</td><td>Balanced speed and defensibility</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="culture-playbook">
+            <h2 class="iv2-h2">
+              Culture Change Pathway
+              <button class="iv2-copy-link" type="button" data-copy-link="culture-playbook">Copy Link</button>
+            </h2>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Leadership sponsorship</h3>
+                <p><strong>Objectives:</strong> strategic clarity and risk ownership.</p>
+                <p><strong>Actions:</strong> executive cadence, decision authority model.</p>
+                <p><strong>Metrics:</strong> governance decision cycle time, escalation closure.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Value acceleration loops</h3>
+                <p><strong>Objectives:</strong> translate capability into measurable outcomes.</p>
+                <p><strong>Actions:</strong> prioritized use-case backlog + release checkpoints.</p>
+                <p><strong>Metrics:</strong> value realization by use case and risk tier.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Learning loops</h3>
+                <p><strong>Objectives:</strong> sustained uplift in role-level proficiency.</p>
+                <p><strong>Actions:</strong> role paths, labs, post-incident retrospectives.</p>
+                <p><strong>Metrics:</strong> skill gap coverage and adoption rate.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Incentive alignment</h3>
+                <p><strong>Objectives:</strong> align behavior with safe and scalable outcomes.</p>
+                <p><strong>Actions:</strong> KPI-linked objectives across business and delivery.</p>
+                <p><strong>Metrics:</strong> guardrail adherence and defect escape trend.</p>
+              </div>
+            </div>
+            <p class="iv2-pullquote">
+              Capability precedes pace; speed without capability only accelerates risk.
+            </p>
+          </section>
+
+          <section class="iv2-section" id="scorecard">
+            <h2 class="iv2-h2">
+              Metrics and Readiness Scorecard
+              <button class="iv2-copy-link" type="button" data-copy-link="scorecard">Copy Link</button>
+            </h2>
+            <div class="iv2-kpi-grid">
+              <div class="iv2-kpi-card">
+                <h3>AI Product Velocity (with guardrails)</h3>
+                <p><strong>Definition:</strong> release throughput that passes governance controls.</p>
+                <p><strong>Why it matters:</strong> links speed to safe execution.</p>
+                <p><strong>Target direction:</strong> Improve while stabilizing defect escapes.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Skill Gap Coverage (%)</h3>
+                <p><strong>Definition:</strong> critical roles with required proficiency met.</p>
+                <p><strong>Why it matters:</strong> exposes readiness constraints early.</p>
+                <p><strong>Target direction:</strong> Increase quarter-over-quarter.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Decision Confidence Score</h3>
+                <p><strong>Definition:</strong> sampled decisions with complete evidence lineage.</p>
+                <p><strong>Why it matters:</strong> indicator of audit and regulator readiness.</p>
+                <p><strong>Target direction:</strong> Improve and sustain above threshold.</p>
+              </div>
+              <div class="iv2-kpi-card">
+                <h3>Continuous Learning Adoption (%)</h3>
+                <p><strong>Definition:</strong> workforce participation in defined learning cadence.</p>
+                <p><strong>Why it matters:</strong> predicts durability of capability gains.</p>
+                <p><strong>Target direction:</strong> Stabilize at enterprise-wide participation.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="board-takeaways">
+            <h2 class="iv2-h2">
+              Board Takeaways
+              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
+            </h2>
+            <ul class="iv2-board-list">
+              <li><strong>Capability precedes pace.</strong> Proof: guardrail coverage correlated with defect escape rate.</li>
+              <li><strong>Role clarity reduces risk diffusion.</strong> Proof: decision ownership matrix completeness and cycle time.</li>
+              <li><strong>Skills programs must be outcome-tied.</strong> Proof: skill gap coverage tied to delivery performance.</li>
+              <li><strong>Culture determines control durability.</strong> Proof: learning adoption plus exception recurrence trends.</li>
+              <li><strong>Governance must be measurable.</strong> Proof: evidence completeness in sampled executive decisions.</li>
             </ul>
-          </div>
-          <div class="post-section">
-            <h3>Operationalizing with 3HUE</h3>
-            <ul>
-              <li>vCISO-led governance models and AI risk decisioning.</li>
-              <li>Program roadmaps that define roles, capabilities, and delivery milestones.</li>
-              <li>Training and enablement aligned to regulated operating environments.</li>
-              <li>Evidence capture and reporting to support audits and oversight.</li>
-            </ul>
-          </div>
-          <div class="post-section">
-            <h3>Further reading</h3>
-            <ul>
-              <li>
-                <a
-                  href="https://www.nist.gov/itl/ai-risk-management-framework"
-                  rel="noopener"
-                  target="_blank"
-                  >NIST AI Risk Management Framework</a
-                >
-              </li>
-              <li>
-                <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank"
-                  >NIST Cybersecurity Framework 2.0</a
-                >
-              </li>
-              <li>
-                <a href="https://www.iso.org/standard/77304.html" rel="noopener" target="_blank"
-                  >ISO/IEC 23894 AI risk management overview</a
-                >
-              </li>
-              <li>
-                <a href="https://www.cisa.gov/ai" rel="noopener" target="_blank"
-                  >CISA AI resources</a
-                >
-              </li>
-            </ul>
-          </div>
+          </section>
+
+          <section class="iv2-section" id="engagement-pathway">
+            <h2 class="iv2-h2">
+              Operationalizing with 3HUE
+              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
+            </h2>
+            <div class="iv2-path-grid">
+              <div class="iv2-phase">
+                <h3>Phase 1 (2-3 weeks): Capability Baseline</h3>
+                <p><strong>Outputs:</strong> AI readiness assessment, skills gap map, role/accountability matrix.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 2 (4-6 weeks): Enablement and Operating Build</h3>
+                <p><strong>Outputs:</strong> skills taxonomy deployment, org design recommendations, initial KPI dashboard.</p>
+              </div>
+              <div class="iv2-phase">
+                <h3>Phase 3 (ongoing): Continuous Capability Uplift</h3>
+                <p><strong>Outputs:</strong> monthly leadership brief, learning cadence, incentive alignment reporting.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="iv2-section" id="references">
+            <h2 class="iv2-h2">
+              Further Reading
+              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
+            </h2>
+            <div class="iv2-ref-grid">
+              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
+                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Foundational model for enterprise AI risk governance.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" rel="noopener" target="_blank">
+                <h3>McKinsey State of AI Insights <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Adoption patterns and capability maturity signals across enterprises.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://online.hbs.edu/blog/post/change-management-models" rel="noopener" target="_blank">
+                <h3>Harvard Business School on Change Models <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Practical transformation frameworks for sustained organizational change.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://dailysensemaking.com/2021/10/14/the-learning-organization/" rel="noopener" target="_blank">
+                <h3>Organizational Learning Foundations <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Conceptual foundations for learning loops and capability growth.</p>
+              </a>
+              <a class="iv2-ref-card" href="https://www.wharton.upenn.edu/story/how-companies-can-adopt-ai-responsibly/" rel="noopener" target="_blank">
+                <h3>Wharton on Responsible AI Adoption <span class="iv2-ref-icon">↗</span></h3>
+                <p class="iv2-ref-meta">Leadership considerations for scaling AI with trust.</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="iv2-card iv2-next" id="next-step">
+            <h2 class="iv2-h2">
+              Next Step
+              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
+            </h2>
+            <p>
+              If your enterprise is scaling AI and wants defensible capability gains in the next
+              quarter, begin with a focused capability baseline.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="../contact.html">Request a Capability Snapshot (72 hours)</a>
+              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
+                >Schedule a Strategic Consultation</a
+              >
+            </p>
+          </section>
+
           <div class="post-tags">
             <span>Enterprise AI</span><span>AI Governance</span><span>Change Management</span
             ><span>Skills</span>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <aside class="iv2-toc" aria-label="On this page">
+          <h3>On This Page</h3>
+          <a href="#executive-summary">Executive Summary</a>
+          <a href="#readiness-signals">Readiness Signals</a>
+          <a href="#capability-model">Capability Model</a>
+          <a href="#skills-taxonomy">Skills Taxonomy</a>
+          <a href="#org-design">Organization Design</a>
+          <a href="#culture-playbook">Culture Playbook</a>
+          <a href="#scorecard">Readiness Scorecard</a>
+          <a href="#board-takeaways">Board Takeaways</a>
+          <a href="#engagement-pathway">Engagement Pathway</a>
+          <a href="#references">Further Reading</a>
+          <a href="#next-step">Next Step</a>
+        </aside>
+      </div>
     </main>
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -777,6 +1067,7 @@
         </div>
       </div>
     </footer>
+    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

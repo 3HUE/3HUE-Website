@@ -13,14 +13,20 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      3HUE | Considering OpenAI Direct Implementation: Strengths vs. Enterprise Integration
-      Challenges
-    </title>
+    <title>3HUE | CISO Gap Assessments: Why Maturity Isn't the Problem - Exposure Is</title>
     <meta
       name="description"
-      content="A balanced view of direct OpenAI adoption, highlighting benefits and integration challenges for enterprise environments."
+      content="An operator-focused guide to CISO gap assessments: exposure-based risk analysis, six critical gap categories, practical assessment steps, and operationalization guidance."
     />
+    <meta
+      property="og:title"
+      content="CISO Gap Assessments: Why Maturity Isn't the Problem - Exposure Is"
+    />
+    <meta
+      property="og:description"
+      content="A practical guide to identifying and closing CISO exposure gaps with defensible controls, evidence pipelines, and operating cadence."
+    />
+    <meta property="og:type" content="article" />
     <link rel="icon" href="../assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +35,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
+    <link rel="stylesheet" href="../assets/css/insights-executive.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -40,7 +46,7 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
+    <div class="insight-progress" aria-hidden="true"><span data-reading-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -627,326 +633,297 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main" class="iv2-main">
-      <div class="iv2-layout">
-        <article class="iv2-article">
-          <p class="iv2-print-title">Considering OpenAI Direct Implementation | Last updated: 2026-01-20</p>
-          <a class="post-back" href="index.html">Back to Insights</a>
-          <header class="iv2-hero">
-            <span class="iv2-label">Enterprise AI Adoption</span>
-            <h1>Considering OpenAI Direct Implementation</h1>
-            <p class="iv2-abstract">
-              Direct OpenAI implementation can accelerate experimentation, but enterprise decisions
-              must account for governance, data control, and compliance boundaries. The strategic
-              question is not model access alone, it is whether the operating model is secure and
-              defensible. Success means implementation paths that balance velocity with audit-ready controls.
-            </p>
-            <div class="iv2-meta">
-              <span>Last updated: 2026-01-20</span>
-              <span>8 min read</span>
-              <span class="iv2-tags"
-                ><span>AI Governance</span><span>Risk Management</span><span>Enterprise AI</span
-                ><span>Security</span></span
-              >
-            </div>
-            <div class="iv2-actions">
-              <a class="btn btn-primary" href="../assets/briefs/openai-direct-implementation-executive-brief.pdf"
-                >Download Executive Brief (PDF)</a
-              >
-              <a class="iv2-btn-secondary" href="../contact.html">Request a 72-Hour Risk Snapshot</a>
-            </div>
-            <figure class="iv2-hero-media">
-              <div class="iv2-hero-media-wrap">
-                <img
-                  src="../assets/img/AdobeStock_896166536_optimized_.webp"
-                  alt="AI infrastructure choices and integration decision points."
-                  width="1920"
-                  height="1076"
-                  decoding="async"
-                />
-              </div>
-              <figcaption class="iv2-caption">Enterprise AI choices are control architecture decisions.</figcaption>
-            </figure>
-          </header>
+    <main id="main">
+      <section class="executive-hero insight-wide">
+        <a class="post-back" href="index.html">Back to Insights</a>
+        <span class="executive-label">Risk &amp; Assurance</span>
+        <h1>CISO Gap Assessments: Why Maturity Isn't the Problem - Exposure Is</h1>
+        <p class="executive-subtitle">
+          A CISO Gap Assessment is not a maturity scorecard. It is a defensibility check across
+          audit, insurer, regulatory, and incident consequence domains. This brief outlines the
+          signals, framework, and operating path leaders can use to close material exposure.
+        </p>
+        <div class="executive-meta">
+          <span>Updated 2026-02-11</span><span>12 min read</span>
+          <span class="executive-tags"
+            ><span>NIST CSF 2.0</span><span>SOC 2</span><span>ISO 27001</span></span
+          >
+        </div>
+        <p>
+          <a class="btn btn-primary" href="../assets/briefs/ciso-gap-assessment-executive-brief.pdf"
+            >Download Executive Brief (PDF)</a
+          >
+        </p>
+      </section>
 
-          <section class="iv2-card" id="executive-summary">
-            <h2 class="iv2-h2">
-              Executive Summary
-              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
-            </h2>
-            <div class="iv2-summary-grid">
-              <div>
-                <h3>The challenge</h3>
-                <p>
-                  Enterprise teams want speed, but direct implementations often outpace governance
-                  readiness and control integration.
-                </p>
-              </div>
-              <div>
-                <h3>The key risks</h3>
-                <p>Data leakage, compliance blind spots, and fragmented control ownership.</p>
-              </div>
-              <div>
-                <h3>What leaders should do now</h3>
-                <ul>
-                  <li>Classify use cases by data sensitivity and regulatory consequence.</li>
-                  <li>Define direct vs mediated implementation criteria up front.</li>
-                  <li>Mandate evidence capture for decisions, exceptions, and model usage.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>What success looks like</h3>
-                <p>
-                  Delivery velocity is maintained while governance, auditability, and compliance
-                  posture remain measurable and defensible.
-                </p>
-              </div>
-            </div>
-          </section>
+      <div class="insight-shell">
+        <article class="executive-article">
+          <div class="media-card aspect-16x9">
+            <img
+              src="../assets/img/AdobeStock_1003906566_optimized_.webp"
+              alt="Security governance leaders reviewing enterprise risk and control evidence."
+              width="1920"
+              height="1280"
+              decoding="async"
+            />
+          </div>
 
-          <section class="iv2-section" id="signals">
-            <h2 class="iv2-h2">
-              Enterprise Signals to Watch
-              <button class="iv2-copy-link" type="button" data-copy-link="signals">Copy Link</button>
-            </h2>
-            <div class="iv2-cap-grid">
-              <div class="iv2-cap-card">
-                <h3>Direct API usage bypasses governance workflows</h3>
-                <p>Unreviewed adoption creates policy and oversight gaps.</p>
-                <p><strong>Minimum evidence:</strong> approved use-case register linked to deployment.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Shadow AI in business units</h3>
-                <p>Decentralized experimentation increases unmanaged exposure.</p>
-                <p><strong>Minimum evidence:</strong> inventory coverage and owner accountability map.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Lack of audit logs and decision trail</h3>
-                <p>Without logs, decisions cannot be defended under scrutiny.</p>
-                <p><strong>Minimum evidence:</strong> request-outcome logs with approver linkage.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Model drift without monitoring</h3>
-                <p>Reliability and risk posture degrade silently over time.</p>
-                <p><strong>Minimum evidence:</strong> threshold alerts and remediation records.</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="iv2-section iv2-diagram" id="implementation-checklist">
-            <h2 class="iv2-h2">
-              Enterprise AI Implementation Checklist
-              <button class="iv2-copy-link" type="button" data-copy-link="implementation-checklist">Copy Link</button>
-            </h2>
-            <div class="iv2-card">
-              <svg viewBox="0 0 920 420" role="img" aria-labelledby="checklist-title checklist-desc">
-                <title id="checklist-title">Enterprise AI Implementation Checklist</title>
-                <desc id="checklist-desc">Four pillars for direct AI implementation governance.</desc>
-                <rect x="140" y="40" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
-                <rect x="480" y="40" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
-                <rect x="140" y="220" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
-                <rect x="480" y="220" width="300" height="160" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
-                <text x="290" y="82" text-anchor="middle" fill="#0f172a" font-size="14">Data Governance &amp; Controls</text>
-                <text x="630" y="82" text-anchor="middle" fill="#0f172a" font-size="14">Security &amp; Compliance</text>
-                <text x="290" y="262" text-anchor="middle" fill="#0f172a" font-size="14">Operational Integration</text>
-                <text x="630" y="262" text-anchor="middle" fill="#0f172a" font-size="14">Performance &amp; Output Assurance</text>
-                <line x1="460" y1="40" x2="460" y2="380" stroke="#2f86b3" stroke-width="1.5"></line>
-                <line x1="140" y1="210" x2="780" y2="210" stroke="#2f86b3" stroke-width="1.5"></line>
-              </svg>
-              <ul>
-                <li><strong>What it protects:</strong> enterprise data, decisions, and trust posture.</li>
-                <li><strong>Decision criteria:</strong> risk tolerance, compliance boundaries, integration complexity.</li>
-                <li><strong>Evidence to capture:</strong> control mappings, decision logs, monitoring outcomes.</li>
-              </ul>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="decision-matrix">
-            <h2 class="iv2-h2">
-              Enterprise Decision Matrix
-              <button class="iv2-copy-link" type="button" data-copy-link="decision-matrix">Copy Link</button>
-            </h2>
-            <div class="iv2-table-wrap">
-              <table class="iv2-table">
-                <thead>
-                  <tr>
-                    <th>Use case category</th>
-                    <th>Data sensitivity</th>
-                    <th>Compliance boundary</th>
-                    <th>Risk tolerance</th>
-                    <th>Implementation path</th>
-                    <th>Required controls</th>
-                    <th>Evidence artifacts required</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Low-risk content generation</td><td>Low</td><td>Standard policy</td><td>Moderate</td><td>Direct OpenAI</td><td>API key governance, logging</td><td>Usage logs, approval record</td></tr>
-                  <tr><td>Customer support augmentation</td><td>Moderate</td><td>Privacy + retention</td><td>Low-Moderate</td><td>Hybrid</td><td>Gateway filtering, RBAC, review gates</td><td>Decision logs, retention evidence</td></tr>
-                  <tr><td>Regulated decision support</td><td>High</td><td>High regulatory oversight</td><td>Low</td><td>Platform mediation</td><td>Policy enforcement, segmentation, exception workflow</td><td>Control map, audit pack, exception log</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="risk-patterns">
-            <h2 class="iv2-h2">
-              Risk Patterns
-              <button class="iv2-copy-link" type="button" data-copy-link="risk-patterns">Copy Link</button>
-            </h2>
-            <div class="iv2-cap-grid">
-              <div class="iv2-cap-card">
-                <h3>Direct API bypasses enterprise governance</h3>
-                <p><strong>Why it matters:</strong> policy and access gaps scale quickly.</p>
-                <p><strong>Defensible artifact:</strong> approved architecture + data boundary map.</p>
-                <p><strong>Remediation:</strong> route through governed gateway controls.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Shadow AI across business units</h3>
-                <p><strong>Why it matters:</strong> inconsistent risk controls and duplicated exposure.</p>
-                <p><strong>Defensible artifact:</strong> centralized AI inventory with owner map.</p>
-                <p><strong>Remediation:</strong> enforce onboarding to enterprise registry.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>No audit trail for model decisions</h3>
-                <p><strong>Why it matters:</strong> low defensibility in audits and incidents.</p>
-                <p><strong>Defensible artifact:</strong> request-to-decision logging chain.</p>
-                <p><strong>Remediation:</strong> implement decision logs + ticket linkage.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Drift unmanaged in production</h3>
-                <p><strong>Why it matters:</strong> degraded outputs and trust erosion.</p>
-                <p><strong>Defensible artifact:</strong> drift metrics with threshold alerts.</p>
-                <p><strong>Remediation:</strong> define monitoring cadence and response playbook.</p>
-              </div>
-            </div>
-            <p class="iv2-pullquote">
-              Direct implementation is viable only when control ownership and evidence pipelines are explicit.
-            </p>
-          </section>
-
-          <section class="iv2-section" id="operating-models">
-            <h2 class="iv2-h2">
-              Operating Models for Enterprise
-              <button class="iv2-copy-link" type="button" data-copy-link="operating-models">Copy Link</button>
-            </h2>
-            <div class="iv2-table-wrap">
-              <table class="iv2-table">
-                <thead>
-                  <tr>
-                    <th>Pattern</th>
-                    <th>Pros / cons</th>
-                    <th>Control implications</th>
-                    <th>Evidence required</th>
-                    <th>Ownership model</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Direct implementation</td><td>Fast iteration / higher governance burden</td><td>Requires explicit data, access, and logging controls</td><td>Usage logs, boundary controls, decision approvals</td><td>AI platform + security jointly</td></tr>
-                  <tr><td>Platform mediation</td><td>Slower startup / stronger standardized governance</td><td>Centralized policy enforcement and observability</td><td>Policy evaluation logs, exception records</td><td>Central AI governance function</td></tr>
-                  <tr><td>Hybrid</td><td>Balanced agility / higher architecture complexity</td><td>Policy-enforced direct access through gateway</td><td>Gateway logs, integration controls, KPI dashboard</td><td>Shared (COE + BU leads)</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="board-takeaways">
-            <h2 class="iv2-h2">
-              Board Takeaways
-              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
-            </h2>
-            <ul class="iv2-board-list">
-              <li><strong>Speed without controls increases enterprise exposure.</strong> Measurable outcome: gate escape rate trend.</li>
-              <li><strong>Governance maturity determines implementation viability.</strong> Measurable outcome: policy/control coverage by use case.</li>
-              <li><strong>Evidence posture is the audit readiness indicator.</strong> Measurable outcome: evidence completeness and freshness index.</li>
-              <li><strong>Direct access needs explicit ownership boundaries.</strong> Measurable outcome: decision log completeness by team.</li>
+          <div class="executive-card takeaways-box" id="thesis">
+            <h3>Key Takeaways</h3>
+            <ul>
+              <li>Exposure is discovered under consequence, not in dashboards.</li>
+              <li>Controls must be operational, enforceable, and evidenced.</li>
+              <li>Prioritize top exposures, not long findings inventories.</li>
+              <li>Evidence pipelines matter as much as technical remediation.</li>
+              <li>Operating cadence is what prevents recurrence.</li>
             </ul>
-          </section>
+          </div>
 
-          <section class="iv2-section" id="engagement-pathway">
-            <h2 class="iv2-h2">
-              Operationalizing with 3HUE
-              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
-            </h2>
-            <div class="iv2-path-grid">
-              <div class="iv2-phase">
-                <h3>Phase 1 (2-3 weeks): Scoping + data classification</h3>
-                <p><strong>Outputs:</strong> risk map, use case taxonomy.</p>
-              </div>
-              <div class="iv2-phase">
-                <h3>Phase 2 (4-6 weeks): Controls and evidence pipeline</h3>
-                <p><strong>Outputs:</strong> policy-as-code baseline, guardrails, decision logs.</p>
-              </div>
-              <div class="iv2-phase">
-                <h3>Phase 3 (ongoing): Monitoring and continuous improvement</h3>
-                <p><strong>Outputs:</strong> KPI dashboards, audit pack.</p>
-              </div>
-            </div>
-          </section>
+          <h2 id="signals">Where Leaders See Signals First</h2>
+          <p>
+            CISO gap assessments are usually triggered by pressure events: a board update cycle,
+            audit scope expansion, insurer scrutiny, or a near-miss incident. These are not
+            maturity exercises. They are tests of whether control design survives operational
+            reality.
+          </p>
+          <ul>
+            <li>New CISO inheritance with unclear control ownership.</li>
+            <li>Board demand for defensible status rather than broad metrics.</li>
+            <li>Cloud drift between architecture intent and live enforcement.</li>
+            <li>Vendor sprawl with weak dependency assurance controls.</li>
+            <li>Incident response uncertainty when time pressure is high.</li>
+          </ul>
 
-          <section class="iv2-section" id="references">
-            <h2 class="iv2-h2">
-              Further Reading
-              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
-            </h2>
-            <div class="iv2-ref-grid">
-              <a class="iv2-ref-card" href="https://openai.com/policies/enterprise-privacy" rel="noopener" target="_blank">
-                <h3>OpenAI enterprise privacy <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Data handling and privacy posture for enterprise deployments.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
-                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Risk governance model for responsible AI adoption.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">
-                <h3>NIST Cybersecurity Framework 2.0 <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Outcome-focused governance model for enterprise risk controls.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://learn.microsoft.com/azure/ai-services/openai/" rel="noopener" target="_blank">
-                <h3>Azure OpenAI Service <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Mediated enterprise path for OpenAI capability with cloud controls.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" rel="noopener" target="_blank">
-                <h3>CSA Cloud Controls Matrix <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Cloud control baseline useful for AI implementation governance.</p>
-              </a>
-            </div>
-          </section>
-
-          <section class="iv2-card iv2-next" id="next-step">
-            <h2 class="iv2-h2">
-              Next Step
-              <button class="iv2-copy-link" type="button" data-copy-link="next-step">Copy Link</button>
-            </h2>
+          <div class="executive-card signal-callout">
+            <h3>Exposure Signal: Where control failure becomes material.</h3>
             <p>
-              If your organization is deciding between direct and mediated AI implementation models,
-              begin with a focused readiness and risk baseline.
+              A gap is material when a control cannot be evidenced, enforced, or defended under
+              audit, regulator, insurer, or incident conditions.
+            </p>
+          </div>
+
+          <hr class="insight-divider" />
+
+          <h2 id="framework">Executive Gap Framework</h2>
+          <p>
+            The framework below separates maturity language from defensibility outcomes. Leaders can
+            use it to frame exposure across the six categories that repeatedly drive findings.
+          </p>
+
+          <div class="executive-card framework-card">
+            <h3>Executive Gap Framework (Visual Placeholder)</h3>
+            <div class="framework-visual">
+              <div class="framework-axis">Axis: Maturity posture vs. Defensibility under consequence</div>
+              <div class="framework-grid">
+                <span>Governance &amp; Accountability</span>
+                <span>Evidence Readiness</span>
+                <span>Cloud Boundary Enforcement</span>
+                <span>Vendor / External Dependency Risk</span>
+                <span>Incident Response Defensibility</span>
+                <span>Continuous Monitoring Reality</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="executive-pullquote">
+            "Boards do not fund maturity levels. They fund defensibility against foreseeable
+            consequence."
+          </p>
+
+          <h2 id="method">Method: Thesis to Action Path</h2>
+          <h3>1. Map consequence domains</h3>
+          <p>
+            Define where breakdown creates material impact: audit findings, customer commitments,
+            insurer conditions, regulatory escalations, and incident containment.
+          </p>
+          <h3>2. Identify control failure paths</h3>
+          <p>
+            Trace where controls fail in actual execution, including ownership breaks, exception
+            handling, and weak enforcement points.
+          </p>
+          <h3>3. Validate operational proof</h3>
+          <p>
+            Validate evidence from systems of record: logs, approvals, tickets, and runbooks with
+            timestamps and traceability.
+          </p>
+          <h3>4. Prioritize top five exposures</h3>
+          <p>
+            Focus resources on the highest-consequence issues rather than broad control inventories.
+          </p>
+          <h3>5. Build the closure system</h3>
+          <p>
+            Integrate governance, engineering, and evidence pipelines into a durable operating
+            cadence.
+          </p>
+
+          <div class="executive-card">
+            <h3>Download Briefing Tool</h3>
+            <p>
+              <strong>Free download:</strong> CISO Gap Assessment Starter Template
+              (<code>/assets/templates/3hue-ciso-gap-assessment-starter.xlsx</code>)
             </p>
             <p>
-              <a class="btn btn-primary" href="../contact.html">Request a 72-Hour Risk Snapshot</a>
-              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
-                >Schedule a Strategic Consultation</a
+              <a href="../assets/templates/3hue-ciso-gap-assessment-starter.xlsx"
+                >Download starter template</a
               >
             </p>
-          </section>
+            <!-- Optional short form module. To enable, remove the hidden attribute and update action target. -->
+            <form hidden method="post" action="/contact.html" aria-label="Template request form">
+              <p><strong>Optional form:</strong> Request the template by email.</p>
+              <p><label>Name <input type="text" name="name" /></label></p>
+              <p><label>Work Email <input type="email" name="email" /></label></p>
+              <p><button type="submit">Send me the template</button></p>
+            </form>
+          </div>
+
+          <h2>Frameworks and Standards Alignment</h2>
+          <ul>
+            <li>NIST CSF 2.0</li>
+            <li>ISO/IEC 27001:2022 Annex A</li>
+            <li>SOC 2 Trust Services Criteria</li>
+            <li>CIS Controls v8</li>
+            <li>CSA Cloud Controls Matrix</li>
+          </ul>
+
+          <div class="post-section">
+            <h3>Further Reading</h3>
+            <ul>
+              <li>
+                <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank"
+                  >NIST CSF 2.0</a
+                >
+              </li>
+              <li>
+                <a href="https://www.cisecurity.org/controls" rel="noopener" target="_blank"
+                  >CIS Controls v8</a
+                >
+              </li>
+              <li>
+                <a href="https://www.iso.org/standard/82875.html" rel="noopener" target="_blank"
+                  >ISO 27001 overview</a
+                >
+              </li>
+              <li>
+                <a href="https://cloudsecurityalliance.org" rel="noopener" target="_blank"
+                  >Cloud Security Alliance CCM</a
+                >
+              </li>
+              <li>
+                <a href="https://www.cisa.gov" rel="noopener" target="_blank"
+                  >CISA incident response resources</a
+                >
+              </li>
+              <li>
+                <a href="https://www.aicpa.org" rel="noopener" target="_blank"
+                  >AICPA SOC resources</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="executive-card timeline-module" id="action-path">
+            <h3>Board-Level Next Steps</h3>
+            <div class="timeline-grid">
+              <div class="timeline-step">
+                <h4>0-30 Days</h4>
+                <p>Establish control owners, consequence map, and top-risk evidence gaps.</p>
+              </div>
+              <div class="timeline-step">
+                <h4>30-90 Days</h4>
+                <p>Close highest exposures with targeted remediation and proof pipelines.</p>
+              </div>
+              <div class="timeline-step">
+                <h4>90-180 Days</h4>
+                <p>Institutionalize cadence, governance reviews, and executive assurance reporting.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="executive-card advisory-cta">
+            <h3>Request a Risk Signal Snapshot (72 hours)</h3>
+            <p>
+              For teams preparing for board, audit, insurer, or regulator scrutiny and needing a
+              clear current-state signal before full program redesign.
+            </p>
+            <ul>
+              <li><strong>What you get:</strong> top exposure signal, defensibility readout, closure priorities.</li>
+              <li><strong>Who it's for:</strong> CISOs, CIOs, Risk Officers, and control owners in transition periods.</li>
+            </ul>
+            <div class="cta-actions">
+              <a href="../contact.html" class="btn btn-primary"
+                >Request a Risk Signal Snapshot (72 hours)</a
+              >
+              <a href="../services/isg-managed-programs.html">Talk to ISG</a>
+            </div>
+          </div>
+
+          <div class="executive-card footer-enhanced">
+            <h3>Related Insights</h3>
+            <div class="related-cards">
+              <a class="related-card" href="continuous-compliance.html">
+                <img
+                  src="../assets/img/AdobeStock_720879092_optimized_.webp"
+                  alt="Continuous compliance monitoring dashboard"
+                  loading="lazy"
+                />
+                <div class="related-card-body">
+                  <h4>Why Continuous Compliance Matters</h4>
+                  <p>How evidence operations change audit outcomes.</p>
+                </div>
+              </a>
+              <a class="related-card" href="future-of-cloud-security.html">
+                <img
+                  src="../assets/img/AdobeStock_1067174027_optimized_.webp"
+                  alt="Future cloud security architecture visualization"
+                  loading="lazy"
+                />
+                <div class="related-card-body">
+                  <h4>The Future of Cloud Security</h4>
+                  <p>Signals reshaping governance and control assurance.</p>
+                </div>
+              </a>
+              <a
+                class="related-card"
+                href="navigating-enterprise-compliance-governance-ethical-ai.html"
+              >
+                <img
+                  src="../assets/img/AdobeStock_1211739918_optimized_.webp"
+                  alt="Enterprise governance and compliance strategy workshop"
+                  loading="lazy"
+                />
+                <div class="related-card-body">
+                  <h4>Governance in Ethical AI</h4>
+                  <p>Operating controls where emerging risk meets oversight.</p>
+                </div>
+              </a>
+            </div>
+            <div class="about-program">
+              <h3>About ISG Managed Programs</h3>
+              <p>
+                ISG Managed Programs help regulated teams operationalize governance, evidence, and
+                risk closure through integrated leadership and execution models.
+              </p>
+              <p>
+                <a href="../services/isg-managed-programs.html">Explore ISG Managed Programs</a>
+                | <a href="../trust/index.html">Trust Center</a> |
+                <a href="../partner-portal/index.html">Partner Program</a>
+              </p>
+            </div>
+          </div>
 
           <div class="post-tags">
-            <span>AI Governance</span><span>Risk Management</span><span>Enterprise AI</span
-            ><span>Security</span>
+            <span>Security Governance</span><span>Risk &amp; Assurance</span
+            ><span>CISO Strategy</span><span>Compliance Operations</span>
           </div>
         </article>
 
-        <aside class="iv2-toc" aria-label="On this page">
-          <h3>On This Page</h3>
-          <a href="#executive-summary">Executive Summary</a>
-          <a href="#signals">Enterprise Signals</a>
-          <a href="#implementation-checklist">Implementation Checklist</a>
-          <a href="#decision-matrix">Decision Matrix</a>
-          <a href="#risk-patterns">Risk Patterns</a>
-          <a href="#operating-models">Operating Models</a>
-          <a href="#board-takeaways">Board Takeaways</a>
-          <a href="#engagement-pathway">Engagement Pathway</a>
-          <a href="#references">Further Reading</a>
-          <a href="#next-step">Next Step</a>
+        <aside class="executive-summary-nav" aria-label="Executive Summary">
+          <h3>Executive Summary</h3>
+          <a href="#thesis">Thesis</a>
+          <a href="#signals">Signals</a>
+          <a href="#framework">Framework</a>
+          <a href="#method">Method</a>
+          <a href="#action-path">Action Path</a>
         </aside>
       </div>
     </main>
@@ -992,7 +969,20 @@
         </div>
       </div>
     </footer>
-    <script defer src="../assets/js/insights-v2.js"></script>
+    <script>
+      (() => {
+        const progressBar = document.querySelector("[data-reading-progress]");
+        if (!progressBar) return;
+        const updateProgress = () => {
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+          progressBar.style.width = `${Math.max(0, Math.min(1, ratio)) * 100}%`;
+        };
+        updateProgress();
+        window.addEventListener("scroll", updateProgress, { passive: true });
+        window.addEventListener("resize", updateProgress);
+      })();
+    </script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>
