@@ -61,10 +61,10 @@
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
-          <span class="top-bar-label">Enterprise Advisory + Managed Services</span>
+          <span class="top-bar-label">AI Advisory + Security-Led Managed Services</span>
           <div class="top-bar-links">
-            <a href="/trust/index.html">Trust Center</a>
-            <a href="/partner-portal/index.html">Partner Program</a>
+            <a href="../trust/index.html">Trust Center</a>
+            <a href="../partner-portal/index.html">Partner Program</a>
             <span class="top-bar-divider" aria-hidden="true"></span>
             <div class="top-bar-social" aria-label="Social media">
               <a href="https://www.linkedin.com/company/3hue/" aria-label="LinkedIn">
@@ -144,7 +144,7 @@
         </div>
       </div>
       <div class="container header-inner">
-        <a class="brand" href="/index.html">
+        <a class="brand" href="../index.html">
           <img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE logo" />
         </a>
         <nav class="site-nav" aria-label="Primary">
@@ -161,17 +161,26 @@
               <div
                 class="dropdown mega-menu mega-solutions"
                 id="dropdown-solutions"
-                data-mega-active="managed"
+                data-mega-active="ai"
               >
                 <div class="mega-tabs" role="tablist" aria-label="Solutions">
                   <button
-                    class="mega-tab is-active"
+                    class="mega-tab is-active mega-tab-ai"
+                    type="button"
+                    data-mega-tab="ai"
+                    aria-selected="true"
+                    aria-controls="mega-ai"
+                  >
+                    AI Advisory
+                  </button>
+                  <button
+                    class="mega-tab"
                     type="button"
                     data-mega-tab="managed"
-                    aria-selected="true"
+                    aria-selected="false"
                     aria-controls="mega-managed"
                   >
-                    Managed Services
+                    Security &amp; GRC
                   </button>
                   <button
                     class="mega-tab"
@@ -194,6 +203,42 @@
                 </div>
                 <div class="mega-grid mega-solutions-grid">
                   <div class="mega-list-col">
+                    <div class="mega-section" data-panel="ai" id="mega-ai">
+                      <div class="mega-title">AI Advisory</div>
+                      <a
+                        class="mega-link"
+                        href="../ai-advisory/ai-snapshot.html"
+                        data-preview-title="AI Risk &amp; Readiness Snapshot"
+                        data-preview-text="A 10-day founder-led diagnostic — use cases, governance gaps, and a 90-day action plan."
+                        data-preview-image="../assets/img/AdobeStock_613332494_optimized_.webp"
+                        data-preview-alt="Enterprise AI risk and readiness planning"
+                      >
+                        <span class="mega-link-title">AI Risk &amp; Readiness Snapshot</span>
+                        <span class="mega-link-desc">10-day diagnostic. Executive readout. 90-day plan.</span>
+                      </a>
+                      <a
+                        class="mega-link"
+                        href="../ai-advisory/ai-consulting.html"
+                        data-preview-title="AI Consulting"
+                        data-preview-text="Identify high-value use cases, shape vendor and platform choices, and sequence adoption deliberately."
+                        data-preview-image="../assets/img/AdobeStock_809673684_optimized_.webp"
+                        data-preview-alt="Enterprise AI consulting and strategy"
+                      >
+                        <span class="mega-link-title">AI Consulting</span>
+                        <span class="mega-link-desc">Use-case selection, investment logic, executive alignment.</span>
+                      </a>
+                      <a
+                        class="mega-link"
+                        href="../ai-advisory/ai-governance.html"
+                        data-preview-title="AI Governance"
+                        data-preview-text="Build governance that fits how the business runs — policy, controls, decision rights, and review cadence."
+                        data-preview-image="../assets/img/AdobeStock_809673684_optimized_.webp"
+                        data-preview-alt="AI governance and policy framework"
+                      >
+                        <span class="mega-link-title">AI Governance</span>
+                        <span class="mega-link-desc">Policy, controls, accountability, and vendor risk.</span>
+                      </a>
+                    </div>
                     <div class="mega-section" data-panel="managed" id="mega-managed">
                       <div class="mega-title">Managed Services</div>
                       <a
@@ -307,7 +352,7 @@
                       <div class="mega-title">Industries</div>
                       <a
                         class="mega-link"
-                        href="/industries/financial-services.html"
+                        href="../industries/financial-services.html"
                         data-preview-title="Financial services"
                         data-preview-text="Regulated, risk-aware programs for complex financial environments."
                         data-preview-image="../assets/img/AdobeStock_1128886828_optimized_.webp"
@@ -318,7 +363,7 @@
                       </a>
                       <a
                         class="mega-link"
-                        href="/industries/saas.html"
+                        href="../industries/saas.html"
                         data-preview-title="SaaS &amp; digital products"
                         data-preview-text="Scale security and compliance for multi-cloud product delivery."
                         data-preview-image="../assets/img/AdobeStock_1077005193_optimized_.webp"
@@ -329,7 +374,7 @@
                       </a>
                       <a
                         class="mega-link"
-                        href="/industries/transportation-logistics.html"
+                        href="../industries/transportation-logistics.html"
                         data-preview-title="Transportation &amp; logistics"
                         data-preview-text="Operational resilience and governance for critical infrastructure."
                         data-preview-image="../assets/img/AdobeStock_1067174027_optimized_.webp"
@@ -345,16 +390,16 @@
                   <aside class="mega-preview" aria-live="polite">
                     <div class="mega-preview-media">
                       <img
-                        src="../assets/img/AdobeStock_116575030.avif"
-                        alt="Abstract governance and risk visualization"
+                        src="../assets/img/AdobeStock_613332494_optimized_.webp"
+                        alt="Enterprise AI risk and readiness planning"
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
                     <div class="mega-preview-body">
-                      <div class="mega-preview-title">Audit-ready security program</div>
+                      <div class="mega-preview-title">AI Risk &amp; Readiness Snapshot</div>
                       <p class="mega-preview-desc">
-                        Defensible governance with clear ownership, cadence, and audit alignment.
+                        A 10-day founder-led diagnostic — use cases, governance gaps, and a 90-day action plan.
                       </p>
                     </div>
                   </aside>
@@ -376,7 +421,7 @@
                     <div class="mega-title">Featured Stories</div>
                     <a
                       class="mega-link"
-                      href="../services/transit-technologies.html"
+                      href="../customer-stories/transit-technologies.html"
                       data-preview-title="Transit Technologies"
                       data-preview-text="SOC 2 readiness and portfolio-wide Type II compliance."
                       data-preview-image="../assets/img/AdobeStock_1067174027_optimized_.webp"
@@ -387,7 +432,7 @@
                     </a>
                     <a
                       class="mega-link"
-                      href="../services/large-north-american-bank.html"
+                      href="../customer-stories/large-north-american-bank.html"
                       data-preview-title="Large North American Bank"
                       data-preview-text="Cloud governance certification for 1,000+ systems."
                       data-preview-image="../assets/img/AdobeStock_1002223551_optimized_.webp"
@@ -398,7 +443,7 @@
                     </a>
                     <a
                       class="mega-link"
-                      href="../services/rolly-marine.html"
+                      href="../customer-stories/rolly-marine.html"
                       data-preview-title="Rolly Marine"
                       data-preview-text="Application modernization and process maturity upgrades."
                       data-preview-image="../assets/img/AdobeStock_1240236158_optimized_.webp"
@@ -407,7 +452,7 @@
                       <span class="mega-link-title">Rolly Marine</span>
                       <span class="mega-link-desc">Marine services</span>
                     </a>
-                    <a class="mega-link" href="../services/index.html">
+                    <a class="mega-link" href="../customer-stories/index.html">
                       <span class="mega-link-title">View all customer stories</span>
                       <span class="mega-link-desc">Explore additional outcomes and programs.</span>
                     </a>
@@ -444,11 +489,11 @@
                 <div class="mega-grid two-col">
                   <div class="mega-section">
                     <div class="mega-title">Explore</div>
-                    <a class="mega-link" href="/insights/index.html">
+                    <a class="mega-link" href="../insights/index.html">
                       <span class="mega-link-title">Insights Library</span>
                       <span class="mega-link-desc">Blogs, guidance, and program resources.</span>
                     </a>
-                    <a class="mega-link" href="/frameworks/index.html">
+                    <a class="mega-link" href="../frameworks/index.html">
                       <span class="mega-link-title">Frameworks &amp; Standards</span>
                       <span class="mega-link-desc"
                         >Delivery alignment for audit-ready programs.</span
@@ -457,11 +502,11 @@
                   </div>
                   <div class="mega-section mega-feature">
                     <div class="mega-title">Featured</div>
-                    <a class="mega-card" href="/insights/leveraging-azure-ai-ecosystem.html">
+                    <a class="mega-card" href="../insights/leveraging-azure-ai-ecosystem.html">
                       <span class="mega-card-title">Azure AI Ecosystem for the Enterprise</span>
                       <span class="mega-card-desc">Framework-level guidance for AI delivery.</span>
                     </a>
-                    <a class="mega-card" href="/insights/future-of-cloud-security.html">
+                    <a class="mega-card" href="../insights/future-of-cloud-security.html">
                       <span class="mega-card-title">Future of Cloud Security</span>
                       <span class="mega-card-desc">Operational alignment for cloud risk.</span>
                     </a>
@@ -474,33 +519,81 @@
                 class="nav-trigger"
                 data-dropdown-toggle
                 aria-expanded="false"
-                aria-controls="dropdown-resources"
+                aria-controls="dropdown-about"
               >
-                Resources
+                About
               </button>
-              <div class="dropdown mega-menu" id="dropdown-resources">
+              <div class="dropdown mega-menu" id="dropdown-about">
                 <div class="mega-grid two-col">
                   <div class="mega-section">
-                    <div class="mega-title">Resources</div>
-                    <a class="mega-link" href="/about.html">
-                      <span class="mega-link-title">About</span>
+                    <div class="mega-title">Company</div>
+                    <a class="mega-link" href="../about.html">
+                      <span class="mega-link-title">3HUE Overview</span>
                       <span class="mega-link-desc">Practitioner-led, enterprise delivery.</span>
                     </a>
-                    <a class="mega-link" href="/isg/pricing.html">
-                      <span class="mega-link-title">Pricing</span>
-                      <span class="mega-link-desc">Outcome-based tiers and scope guardrails.</span>
+                    <a class="mega-link" href="../about.html">
+                      <span class="mega-link-title">Our Approach</span>
+                      <span class="mega-link-desc">Programmatic, audit-ready operations.</span>
                     </a>
-                    <a class="mega-link" href="/contact.html">
-                      <span class="mega-link-title">Contact</span>
-                      <span class="mega-link-desc">Start a conversation with ISG.</span>
+                    <a class="mega-link" href="../about.html">
+                      <span class="mega-link-title">Leadership</span>
+                      <span class="mega-link-desc">vCIO/vCISO-led advisory model.</span>
                     </a>
                   </div>
                   <div class="mega-section mega-panel">
-                    <div class="mega-title">Get started</div>
+                    <div class="mega-title">Why 3HUE</div>
                     <p class="mega-panel-copy">
-                      Align scope, cadence, and outcomes with ISG leadership.
+                      Managed programs backed by ISG leadership, aligned to modern enterprise
+                      environments.
                     </p>
-                    <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult">Request a Consult</a>
+                    <a class="btn btn-outline" href="../about.html">Learn more</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item has-dropdown">
+              <button
+                class="nav-trigger"
+                data-dropdown-toggle
+                aria-expanded="false"
+                aria-controls="dropdown-contact"
+              >
+                Contact
+              </button>
+              <div class="dropdown mega-menu" id="dropdown-contact">
+                <div class="mega-grid two-col">
+                  <div class="mega-section">
+                    <div class="mega-title">Start a conversation</div>
+                    <a class="mega-link" href="#snapshot-offer">
+                      <span class="mega-link-title">AI Risk &amp; Readiness Snapshot</span>
+                      <span class="mega-link-desc"
+                        >A founder-led diagnostic for AI readiness, governance, and control
+                        gaps.</span
+                      >
+                    </a>
+                    <a class="mega-link" href="../contact.html">
+                      <span class="mega-link-title">General Inquiry</span>
+                      <span class="mega-link-desc"
+                        >Questions about services, fit, or delivery model.</span
+                      >
+                    </a>
+                    <a class="mega-link" href="../partner-portal/index.html">
+                      <span class="mega-link-title">Partnerships</span>
+                      <span class="mega-link-desc"
+                        >Explore delivery or alliance opportunities.</span
+                      >
+                    </a>
+                  </div>
+                  <div class="mega-section mega-cta">
+                    <div class="mega-title">Start with clarity</div>
+                    <p class="mega-panel-copy">
+                      Book the Snapshot to align AI priorities, risks, and next-step decisions.
+                    </p>
+                    <a
+                      href="https://calendly.com/claude-decarish-3hue/general-consult"
+                      class="btn btn-primary"
+                      >Book the Snapshot</a
+                    >
                   </div>
                 </div>
               </div>
@@ -519,7 +612,11 @@
               ><span class="theme-toggle-thumb"></span
             ></span>
           </button>
-          <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult">Request a Consult</a>
+          <a
+            href="https://calendly.com/claude-decarish-3hue/general-consult"
+            class="btn btn-primary"
+            >Book the Snapshot</a
+          >
         </div>
         <button
           class="menu-toggle"
@@ -547,7 +644,7 @@
             ><span class="theme-toggle-thumb"></span
           ></span>
         </button>
-        <a class="brand" href="/index.html">
+        <a class="brand" href="../index.html">
           <img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE logo" />
         </a>
         <button class="menu-close" data-menu-close aria-label="Close menu">&times;</button>
@@ -563,11 +660,16 @@
         </button>
         <div class="accordion-panel" id="mobile-solutions" hidden>
           <div class="mobile-group">
-            <span class="mobile-group-title">Managed Services</span>
+            <span class="mobile-group-title">AI Advisory</span>
+            <a href="../ai-advisory/ai-snapshot.html">AI Risk &amp; Readiness Snapshot</a>
+            <a href="../ai-advisory/ai-consulting.html">AI Consulting</a>
+            <a href="../ai-advisory/ai-governance.html">AI Governance</a>
+          </div>
+          <div class="mobile-group">
+            <span class="mobile-group-title">Security &amp; GRC</span>
             <a href="../services/isg-managed-programs.html">Audit-Ready Security Program</a>
-            <a href="../services/continuous-risk-management.html"
-              >Managed Security Operations (OPS)</a
-            >
+
+            <a href="../services/continuous-risk-management.html">Managed Security Operations (OPS)</a>
             <a href="../services/itg-managed-services.html">Technology Governance for Scale</a>
           </div>
           <div class="mobile-group">
@@ -579,9 +681,9 @@
           </div>
           <div class="mobile-group">
             <span class="mobile-group-title">Industries</span>
-            <a href="/industries/financial-services.html">Financial Services</a>
-            <a href="/industries/saas.html">SaaS &amp; Digital Products</a>
-            <a href="/industries/transportation-logistics.html">Transportation &amp; Logistics</a>
+            <a href="../industries/financial-services.html">Financial Services</a>
+            <a href="../industries/saas.html">SaaS &amp; Digital Products</a>
+            <a href="../industries/transportation-logistics.html">Transportation &amp; Logistics</a>
           </div>
         </div>
         <button
@@ -595,13 +697,13 @@
         <div class="accordion-panel" id="mobile-insights" hidden>
           <div class="mobile-group">
             <span class="mobile-group-title">Explore</span>
-            <a href="/insights/index.html">Insights Library</a>
-            <a href="/frameworks/index.html">Frameworks &amp; Standards</a>
+            <a href="../insights/index.html">Insights Library</a>
+            <a href="../frameworks/index.html">Frameworks &amp; Standards</a>
           </div>
           <div class="mobile-group">
             <span class="mobile-group-title">Featured</span>
-            <a href="/insights/continuous-compliance.html">Why Continuous Compliance Matters</a>
-            <a href="/insights/recognizing-the-red-flags-enterprise-ai.html"
+            <a href="../insights/continuous-compliance.html">Why Continuous Compliance Matters</a>
+            <a href="../insights/recognizing-the-red-flags-enterprise-ai.html"
               >Recognizing Red Flags in Enterprise AI</a
             >
           </div>
@@ -617,28 +719,43 @@
         <div class="accordion-panel" id="mobile-stories" hidden>
           <div class="mobile-group">
             <span class="mobile-group-title">Stories</span>
-            <a href="../services/index.html">Customer Stories Overview</a>
-            <a href="../services/transit-technologies.html">Transit Technologies</a>
-            <a href="../services/large-north-american-bank.html">Large North American Bank</a>
-            <a href="../services/rolly-marine.html">Rolly Marine</a>
+            <a href="../customer-stories/index.html">Customer Stories Overview</a>
+            <a href="../customer-stories/transit-technologies.html">Transit Technologies</a>
+            <a href="../customer-stories/large-north-american-bank.html">Large North American Bank</a>
+            <a href="../customer-stories/rolly-marine.html">Rolly Marine</a>
           </div>
         </div>
         <button
           class="accordion-trigger"
           data-accordion-toggle
           aria-expanded="false"
-          aria-controls="mobile-resources"
+          aria-controls="mobile-about"
         >
-          Resources
+          About
         </button>
-        <div class="accordion-panel" id="mobile-resources" hidden>
-          <a href="/about.html">About</a>
-          <a href="/isg/pricing.html">Pricing</a>
-          <a href="/contact.html">Contact</a>
+        <div class="accordion-panel" id="mobile-about" hidden>
+          <a href="../about.html">Company</a>
+          <a href="../about.html">Approach</a>
+          <a href="../about.html">Leadership</a>
+        </div>
+        <button
+          class="accordion-trigger"
+          data-accordion-toggle
+          aria-expanded="false"
+          aria-controls="mobile-contact"
+        >
+          Contact
+        </button>
+        <div class="accordion-panel" id="mobile-contact" hidden>
+          <a href="#snapshot-offer">AI Risk &amp; Readiness Snapshot</a>
+          <a href="../contact.html">General Inquiry</a>
+          <a href="../contact.html">Partnerships</a>
         </div>
       </nav>
       <div class="hero-actions">
-        <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult">Request a Consult</a>
+        <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary"
+          >Book the Snapshot</a
+        >
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>

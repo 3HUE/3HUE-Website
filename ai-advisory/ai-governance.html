@@ -13,10 +13,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3HUE | Managing AI Risk in Healthcare</title>
+    <title>3HUE | AI Governance — Policy, Controls, and Accountability for AI Adoption</title>
     <meta
       name="description"
-      content="Managing AI risk in healthcare with governance, evidence, and regulated delivery models."
+      content="3HUE builds AI governance that fits how your business actually runs — covering AI policy, model risk, data oversight, vendor controls, and executive decision rights."
     />
     <link rel="icon" href="../assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +26,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="../assets/css/insights-v2.css" />
   </head>
   <body class="is-preloading">
     <div class="preloader" data-preloader aria-hidden="true">
@@ -37,7 +36,6 @@
       </div>
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="iv2-progress" aria-hidden="true"><span class="iv2-progress-bar" data-iv2-progress></span></div>
     <header class="site-header">
       <div class="top-bar">
         <div class="container top-bar-inner">
@@ -739,351 +737,563 @@
       </div>
     </div>
     <div class="overlay" data-menu-overlay></div>
-    <main id="main" class="iv2-main">
-      <div class="iv2-layout">
-        <article class="iv2-article">
-          <p class="iv2-print-title">Managing AI Risk in Healthcare | Last updated: 2026-01-20</p>
-          <a class="post-back" href="index.html">Back to Insights</a>
-          <header class="iv2-hero">
-            <span class="iv2-label">Healthcare</span>
-            <h1>Managing AI Risk in Healthcare</h1>
-            <p class="iv2-abstract">
-              In healthcare, AI risk is judged under consequence: patient safety, PHI handling,
-              and regulated workflows. Governance must be continuous, evidence-backed, and
-              operational, not policy-only. Defensibility is proven when data, model, platform,
-              and decision controls remain auditable over time.
-            </p>
-            <div class="iv2-meta">
-              <span>Last updated: 2026-01-20</span>
-              <span>7 min read</span>
-              <span class="iv2-tags"
-                ><span>Healthcare</span><span>AI Governance</span><span>Compliance</span
-                ><span>Data Residency</span></span
-              >
-            </div>
-            <div class="iv2-actions">
-              <a class="btn btn-primary" href="../assets/briefs/managing-ai-risk-healthcare-executive-brief.pdf"
-                >Download Executive Brief (PDF)</a
-              >
-              <a class="iv2-btn-secondary" href="https://calendly.com/claude-decarish-3hue/general-consult"
-                >Request a Consult</a
-              >
-            </div>
-            <figure class="iv2-hero-media">
-              <div class="iv2-hero-media-wrap">
-                <img
-                  src="../assets/img/AdobeStock_1249231812_optimized_.webp"
-                  alt="AI governance for regulated healthcare environments."
-                  width="1920"
-                  height="1446"
-                  decoding="async"
-                />
+    <main id="main">
+      <section class="service-hero">
+        <div class="container">
+          <div class="service-hero-grid">
+            <div class="service-hero-copy">
+              <div class="service-hero-header">
+                <div>
+                  <div class="eyebrow">AI Advisory</div>
+                  <h1>Put Policy, Controls, and Accountability Around AI Adoption</h1>
+                </div>
               </div>
-              <figcaption class="iv2-caption">Defensibility in healthcare AI is evidence-led.</figcaption>
-            </figure>
-          </header>
-
-          <section class="iv2-card" id="executive-summary">
-            <h2 class="iv2-h2">
-              Executive Summary
-              <button class="iv2-copy-link" type="button" data-copy-link="executive-summary">Copy Link</button>
-            </h2>
-            <div class="iv2-summary-grid">
-              <div>
-                <h3>What's changing</h3>
-                <p>
-                  AI is moving deeper into clinical support and operational workflows where model
-                  quality and PHI handling have direct consequence.
-                </p>
-              </div>
-              <div>
-                <h3>What can fail</h3>
-                <p>
-                  PHI exposure, model drift, bias, misconfiguration, and vendor data leakage can
-                  create simultaneous safety and compliance breakdowns.
-                </p>
-              </div>
-              <div>
-                <h3>What leaders must do now</h3>
-                <ul>
-                  <li>Establish a live AI inventory linked to accountable owners.</li>
-                  <li>Require evidence lineage for high-impact model and access decisions.</li>
-                  <li>Operationalize exception approvals with clear expiry and review cadence.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>If you do nothing</h3>
-                <p>
-                  Programs may look compliant on paper but fail during HIPAA scrutiny, vendor due
-                  diligence, or clinical incident review.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="risk-signals">
-            <h2 class="iv2-h2">
-              Healthcare AI Risk Drivers
-              <button class="iv2-copy-link" type="button" data-copy-link="risk-signals">Copy Link</button>
-            </h2>
-            <div class="iv2-cap-grid">
-              <div class="iv2-cap-card">
-                <h3>PHI Exposure &amp; Residency</h3>
-                <p><strong>Implication:</strong> Data boundary failures become compliance and trust events.</p>
-                <p><strong>Minimum Control:</strong> Encryption, logging, retention controls, and access reviews.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Third-party Integration Risk</h3>
-                <p><strong>Implication:</strong> EHR and lab integrations expand attack and data-leak surface.</p>
-                <p><strong>Minimum Control:</strong> Interface validation, scoped access, and vendor accountability.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Model Safety &amp; Drift</h3>
-                <p><strong>Implication:</strong> Clinical and operational recommendations degrade without visibility.</p>
-                <p><strong>Minimum Control:</strong> Drift thresholds, bias checks, and intervention triggers.</p>
-              </div>
-              <div class="iv2-cap-card">
-                <h3>Audit Defensibility Pressure</h3>
-                <p><strong>Implication:</strong> Controls fail if evidence cannot be produced quickly.</p>
-                <p><strong>Minimum Control:</strong> Decision logs, evidence lineage, and exception approvals.</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="iv2-section iv2-diagram" id="defensibility-model">
-            <h2 class="iv2-h2">
-              Healthcare AI Defensibility Model
-              <button class="iv2-copy-link" type="button" data-copy-link="defensibility-model">Copy Link</button>
-            </h2>
-            <div class="iv2-card">
-              <svg viewBox="0 0 920 360" role="img" aria-labelledby="health-model-title health-model-desc">
-                <title id="health-model-title">Healthcare AI Defensibility Model</title>
-                <desc id="health-model-desc">Four pillar model: data, model, platform, evidence.</desc>
-                <g fill="#f8fafc" stroke="#cbd5e1">
-                  <rect x="30" y="88" width="200" height="190" rx="14"></rect>
-                  <rect x="250" y="88" width="200" height="190" rx="14"></rect>
-                  <rect x="470" y="88" width="200" height="190" rx="14"></rect>
-                  <rect x="690" y="88" width="200" height="190" rx="14"></rect>
-                </g>
-                <g fill="#0f172a" font-size="13">
-                  <text x="130" y="118" text-anchor="middle">DATA</text>
-                  <text x="130" y="144" text-anchor="middle">PHI/ePHI lineage</text>
-                  <text x="130" y="162" text-anchor="middle">Residency</text>
-                  <text x="130" y="180" text-anchor="middle">Minimization</text>
-
-                  <text x="350" y="118" text-anchor="middle">MODEL</text>
-                  <text x="350" y="144" text-anchor="middle">Safety controls</text>
-                  <text x="350" y="162" text-anchor="middle">Drift monitoring</text>
-                  <text x="350" y="180" text-anchor="middle">Bias monitoring</text>
-
-                  <text x="570" y="118" text-anchor="middle">PLATFORM</text>
-                  <text x="570" y="144" text-anchor="middle">Cloud posture</text>
-                  <text x="570" y="162" text-anchor="middle">Identity + config</text>
-                  <text x="570" y="180" text-anchor="middle">Segmentation</text>
-
-                  <text x="790" y="118" text-anchor="middle">EVIDENCE</text>
-                  <text x="790" y="144" text-anchor="middle">Audit trail</text>
-                  <text x="790" y="162" text-anchor="middle">Decision logs</text>
-                  <text x="790" y="180" text-anchor="middle">Exception approvals</text>
-                </g>
-                <line x1="230" y1="183" x2="250" y2="183" stroke="#2f86b3" stroke-width="2"></line>
-                <line x1="450" y1="183" x2="470" y2="183" stroke="#2f86b3" stroke-width="2"></line>
-                <line x1="670" y1="183" x2="690" y2="183" stroke="#2f86b3" stroke-width="2"></line>
-              </svg>
-              <p>
-                Healthcare AI governance is defensible only when all four pillars produce evidence continuously.
+              <p class="lead">
+                3HUE builds AI governance that fits how the business actually runs — across data, vendors, model risk, human review, and executive decision rights — before adoption expands beyond what security and compliance can support.
               </p>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="operating-patterns">
-            <h2 class="iv2-h2">
-              Operating Patterns That Hold Up to Scrutiny
-              <button class="iv2-copy-link" type="button" data-copy-link="operating-patterns">Copy Link</button>
-            </h2>
-            <div class="iv2-two-col">
-              <div class="iv2-mini-card">
-                <p class="iv2-kicker">Patterns that survive audit + incident consequence</p>
-                <ul>
-                  <li>AI inventory with model, vendor, version, use case, and owner.</li>
-                  <li>Role-based access and least privilege by clinical, ops, and vendor roles.</li>
-                  <li>Documented exception workflow with approvals and expiry.</li>
-                  <li>Continuous monitoring of cloud posture and model drift.</li>
-                </ul>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult">Book the AI Snapshot</a
+                ><a class="btn btn-outline" href="../ai-advisory/ai-readiness.html">Explore AI Readiness</a>
               </div>
-              <div class="iv2-mini-card">
-                <p class="iv2-kicker">What auditors and regulators will ask to see</p>
-                <ul>
-                  <li>Evidence samples with timestamps and lineage.</li>
-                  <li>Decision approvals plus exception rationale.</li>
-                  <li>Monitoring thresholds and response actions.</li>
-                </ul>
+              <div class="service-tags" aria-label="Program focus">
+                <span class="tag">AI Policy</span><span class="tag">Model Risk</span
+                ><span class="tag">Data Governance</span><span class="tag">Vendor Oversight</span
+                ><span class="tag">Decision Rights</span>
               </div>
             </div>
-            <p class="iv2-pullquote">
-              In healthcare, AI output is not defensible unless the control narrative remains human-defensible.
-            </p>
-          </section>
-
-          <section class="iv2-section iv2-diagram" id="deployment-models">
-            <h2 class="iv2-h2">
-              Deployment Models That Preserve Control
-              <button class="iv2-copy-link" type="button" data-copy-link="deployment-models">Copy Link</button>
-            </h2>
-            <div class="iv2-card">
-              <svg viewBox="0 0 920 120" role="img" aria-labelledby="deploy-model-title deploy-model-desc">
-                <title id="deploy-model-title">Deployment model comparison header</title>
-                <desc id="deploy-model-desc">Three deployment options with control emphasis.</desc>
-                <g fill="#f8fafc" stroke="#cbd5e1">
-                  <rect x="20" y="22" width="280" height="76" rx="10"></rect>
-                  <rect x="320" y="22" width="280" height="76" rx="10"></rect>
-                  <rect x="620" y="22" width="280" height="76" rx="10"></rect>
-                </g>
-                <g fill="#0f172a" font-size="13">
-                  <text x="160" y="50" text-anchor="middle">Customer-hosted / On-prem</text>
-                  <text x="460" y="50" text-anchor="middle">Private Cloud</text>
-                  <text x="760" y="50" text-anchor="middle">Hybrid (Regional Isolation)</text>
-                </g>
-              </svg>
-              <div class="iv2-table-wrap" style="margin-top: 12px">
-                <table class="iv2-table">
-                  <thead>
-                    <tr>
-                      <th>Model</th>
-                      <th>Data residency control</th>
-                      <th>Network isolation</th>
-                      <th>Operational overhead</th>
-                      <th>Evidence capture approach</th>
-                      <th>Recommended use cases</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Customer-hosted / on-prem</td>
-                      <td>Highest local control</td>
-                      <td>Strong physical/logical segregation</td>
-                      <td>High</td>
-                      <td>Local system logs + controlled export</td>
-                      <td>High-sensitivity clinical workflows</td>
-                    </tr>
-                    <tr>
-                      <td>Private cloud</td>
-                      <td>High, policy-driven</td>
-                      <td>Strong virtual segmentation</td>
-                      <td>Medium</td>
-                      <td>Cloud-native telemetry + centralized evidence store</td>
-                      <td>Operational + non-critical clinical workloads</td>
-                    </tr>
-                    <tr>
-                      <td>Hybrid (regional isolation)</td>
-                      <td>Targeted by data class</td>
-                      <td>Boundary controls across environments</td>
-                      <td>Medium-High</td>
-                      <td>Unified evidence model across regions</td>
-                      <td>Mixed clinical and enterprise operations</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="evidence-pack">
-            <h2 class="iv2-h2">
-              Minimum Evidence Pack for Healthcare AI
-              <button class="iv2-copy-link" type="button" data-copy-link="evidence-pack">Copy Link</button>
-            </h2>
-            <p>
-              This evidence pack supports HIPAA-aligned oversight and continuous assurance posture.
-            </p>
-            <div class="iv2-cap-grid">
-              <div class="iv2-cap-card"><h3>PHI data flow + residency statement</h3></div>
-              <div class="iv2-cap-card"><h3>Encryption + key management evidence</h3></div>
-              <div class="iv2-cap-card"><h3>Access review evidence (clinical + vendor)</h3></div>
-              <div class="iv2-cap-card"><h3>Model monitoring plan (drift, bias, safety)</h3></div>
-              <div class="iv2-cap-card"><h3>Incident response pathway (clinical + security)</h3></div>
-              <div class="iv2-cap-card"><h3>Vendor risk packet (BAA/data-use/audit rights)</h3></div>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="board-takeaways">
-            <h2 class="iv2-h2">
-              Board Takeaways
-              <button class="iv2-copy-link" type="button" data-copy-link="board-takeaways">Copy Link</button>
-            </h2>
-            <ul class="iv2-board-list">
-              <li><strong>AI safety and privacy are inseparable in healthcare.</strong> Proof: linked PHI flow controls and model safety thresholds.</li>
-              <li><strong>Evidence freshness determines defensibility.</strong> Proof: timestamped evidence samples for high-impact controls.</li>
-              <li><strong>Exception governance must be explicit.</strong> Proof: approved exceptions with rationale, owner, and expiry compliance.</li>
-              <li><strong>Deployment choice is a risk decision.</strong> Proof: model-by-model residency and isolation mapping.</li>
-              <li><strong>Continuous monitoring is non-optional.</strong> Proof: drift alerts with documented response actions and closure trend.</li>
-            </ul>
-          </section>
-
-          <section class="iv2-section" id="engagement-pathway">
-            <h2 class="iv2-h2">
-              Engagement Pathway
-              <button class="iv2-copy-link" type="button" data-copy-link="engagement-pathway">Copy Link</button>
-            </h2>
-            <div class="iv2-path-grid">
-              <div class="iv2-phase">
-                <h3>Phase 1 (2 weeks): Scope + inventory + baseline defensibility</h3>
-                <p><strong>Outputs:</strong> AI inventory, PHI mapping, top exposure list, evidence baseline.</p>
-              </div>
-              <div class="iv2-phase">
-                <h3>Phase 2 (4-6 weeks): Evidence pipelines + exception workflow + monitoring</h3>
-                <p><strong>Outputs:</strong> exception register, decision log template, monitoring thresholds, audit-ready reporting pack.</p>
-              </div>
-              <div class="iv2-phase">
-                <h3>Phase 3 (ongoing): Executive cadence + continuous improvement</h3>
-                <p><strong>Outputs:</strong> monthly executive risk brief, evidence freshness dashboard, drift review cadence.</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="iv2-section" id="references">
-            <h2 class="iv2-h2">
-              Further Reading
-              <button class="iv2-copy-link" type="button" data-copy-link="references">Copy Link</button>
-            </h2>
-            <div class="iv2-ref-grid">
-              <a class="iv2-ref-card" href="https://www.hhs.gov/hipaa/index.html" rel="noopener" target="_blank">
-                <h3>HHS HIPAA Guidance <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Primary federal guidance for HIPAA privacy and security expectations.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">
-                <h3>NIST AI Risk Management Framework <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Framework for trustworthy AI governance and risk treatment.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://www.hhs.gov/ocr/" rel="noopener" target="_blank">
-                <h3>HHS Office for Civil Rights (OCR) <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Regulatory authority for HIPAA enforcement and guidance.</p>
-              </a>
-              <a class="iv2-ref-card" href="https://www.cisa.gov/healthcare-and-public-health-sector" rel="noopener" target="_blank">
-                <h3>CISA Healthcare and Public Health <span class="iv2-ref-icon">↗</span></h3>
-                <p class="iv2-ref-meta">Sector-focused cyber resilience and operational security resources.</p>
-              </a>
-            </div>
-          </section>
-
-          <div class="post-tags">
-            <span>Healthcare</span><span>AI Governance</span><span>Compliance</span
-            ><span>Data Residency</span>
+            <aside class="service-outcomes-card card" aria-labelledby="outcomes-glance">
+              <h2 id="outcomes-glance">Outcomes at-a-glance</h2>
+              <ul class="outcomes-mini">
+                <li>
+                  <span class="outcomes-chip">01</span>
+                  <div class="outcome-body">
+                    <span class="outcome-title">AI governance policy</span
+                    ><span class="outcome-desc"
+                      >Documented policy covering acceptable use, accountability, human review requirements, and prohibited use cases.</span
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="outcomes-chip">02</span>
+                  <div class="outcome-body">
+                    <span class="outcome-title">Model and data oversight</span
+                    ><span class="outcome-desc"
+                      >Controls for model risk, data quality, lineage, and classification across AI systems in production and development.</span
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="outcomes-chip">03</span>
+                  <div class="outcome-body">
+                    <span class="outcome-title">Vendor governance</span
+                    ><span class="outcome-desc"
+                      >Oversight framework for AI vendors, third-party APIs, and externally sourced models integrated into business operations.</span
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="outcomes-chip">04</span>
+                  <div class="outcome-body">
+                    <span class="outcome-title">Decision rights and escalation</span
+                    ><span class="outcome-desc"
+                      >Defined roles, approval thresholds, and escalation paths for AI decisions, overrides, and incidents.</span
+                    >
+                  </div>
+                </li>
+              </ul>
+            </aside>
           </div>
-        </article>
-
-        <aside class="iv2-toc" aria-label="On this page">
-          <h3>On This Page</h3>
-          <a href="#executive-summary">Executive Summary</a>
-          <a href="#risk-signals">Risk Drivers</a>
-          <a href="#defensibility-model">Defensibility Model</a>
-          <a href="#operating-patterns">Operating Patterns</a>
-          <a href="#deployment-models">Deployment Models</a>
-          <a href="#evidence-pack">Evidence Pack</a>
-          <a href="#board-takeaways">Board Takeaways</a>
-          <a href="#engagement-pathway">Engagement Pathway</a>
-          <a href="#references">Further Reading</a>
-        </aside>
+        </div>
+      </section>
+      <div class="service-body">
+        <section class="section service-block">
+          <div class="container grid-2">
+            <article class="card block-card feature-card audience-card">
+              <h3 class="card-title">Who is it for</h3>
+              <div class="icon-tiles">
+                <div class="icon-tile">
+                  <span class="icon-tile-icon" aria-hidden="true"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3l7 3v6c0 5-3.4 7.6-7 9-3.6-1.4-7-4-7-9V6l7-3z"></path>
+                      <path d="M9.5 12l2 2 4-4"></path>
+                      <path d="M6 18h12"></path></svg
+                  ></span>
+                  <p>
+                    <span class="audience-title">CISO and risk leadership</span
+                    ><span class="audience-desc">Leaders building AI control frameworks that connect to existing security, privacy, and GRC programs.</span>
+                  </p>
+                </div>
+                <div class="icon-tile">
+                  <span class="icon-tile-icon" aria-hidden="true"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="4" y="4" width="16" height="12" rx="2"></rect>
+                      <path d="M7 8h10"></path>
+                      <path d="M7 11h6"></path>
+                      <path d="M8 19h8"></path>
+                      <path d="M10 16v3"></path>
+                      <path d="M14 16v3"></path></svg
+                  ></span>
+                  <p>
+                    <span class="audience-title">Legal, compliance, and procurement</span
+                    ><span class="audience-desc"
+                      >Teams managing AI regulatory obligations, acceptable use policies, and vendor contract requirements.</span
+                    >
+                  </p>
+                </div>
+                <div class="icon-tile">
+                  <span class="icon-tile-icon" aria-hidden="true"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="7" cy="7" r="2.2"></circle>
+                      <circle cx="17" cy="7" r="2.2"></circle>
+                      <circle cx="12" cy="17" r="2.2"></circle>
+                      <path d="M8.6 8.4l2.6 6.2"></path>
+                      <path d="M15.4 8.4l-2.6 6.2"></path>
+                      <path d="M9 7h6"></path></svg
+                  ></span>
+                  <p>
+                    <span class="audience-title">Technology and data leadership</span
+                    ><span class="audience-desc"
+                      >CTOs, data leads, and architects who need governance guardrails before AI systems move into production.</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </article>
+            <article class="card block-card feature-card outcomes-card">
+              <h3 class="card-title">Outcomes</h3>
+              <ol class="outcomes-list">
+                <li>
+                  <span class="outcomes-num">01</span>
+                  <div class="outcomes-text">
+                    <span class="outcome-title">A governance framework that holds up under scrutiny</span
+                    ><span class="outcome-desc"
+                      >AI policy, controls, and oversight that can be demonstrated to boards, auditors, regulators, and enterprise customers.</span
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="outcomes-num">02</span>
+                  <div class="outcomes-text">
+                    <span class="outcome-title">Vendor and model risk under management</span
+                    ><span class="outcome-desc"
+                      >Third-party AI dependencies are tracked, assessed, and governed with appropriate oversight and contract controls.</span
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="outcomes-num">03</span>
+                  <div class="outcomes-text">
+                    <span class="outcome-title">Clear accountability at every AI decision point</span
+                    ><span class="outcome-desc"
+                      >Roles, decision rights, human review requirements, and incident escalation paths are defined and documented.</span
+                    >
+                  </div>
+                </li>
+              </ol>
+            </article>
+          </div>
+        </section>
+        <section class="section service-block">
+          <div class="container">
+            <div class="section-kicker">What You Get</div>
+            <div class="grid-2">
+              <article class="card block-card feature-card components-card">
+                <h3 class="card-title">Governance components</h3>
+                <div class="component-grid">
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path
+                              d="M6 4h9l3 3v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"
+                            ></path>
+                            <path d="M15 4v4h4"></path>
+                            <path d="M8 12h8"></path>
+                            <path d="M8 16h5"></path></svg></span
+                        ><span class="component-title">AI Acceptable Use Policy</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Defines permitted use cases, prohibited applications, human review requirements, and employee obligations for AI tools.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M4 6h8v6H4z"></path>
+                            <path d="M12 9h8"></path>
+                            <path d="M12 14h8"></path>
+                            <path d="M4 16h6"></path></svg></span
+                        ><span class="component-title">AI Risk Register</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Documents AI systems, associated risks, control owners, and residual risk across the organization.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v4"></path>
+                            <path d="M12 18v4"></path>
+                            <path d="M4 12h4"></path>
+                            <path d="M16 12h4"></path></svg></span
+                        ><span class="component-title">Model Risk and Lifecycle Framework</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Governs model selection, validation, monitoring, change management, and retirement for AI systems in production.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M3 5v6c0 1.7 4 3 9 3s9-1.3 9-3V5"></path>
+                            <path d="M3 11v6c0 1.7 4 3 9 3s9-1.3 9-3v-6"></path></svg></span
+                        ><span class="component-title">Data Governance for AI</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Addresses data classification, lineage, quality requirements, and access controls for AI training and inference data.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="6" r="3"></circle>
+                            <circle cx="18" cy="18" r="3"></circle>
+                            <path d="M8.6 10.8l6.8-3.6"></path>
+                            <path d="M8.6 13.2l6.8 3.6"></path></svg></span
+                        ><span class="component-title">Third-Party AI Oversight</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Vendor assessment criteria, contractual control requirements, and ongoing oversight for externally sourced AI capabilities.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component-item" tabindex="0">
+                    <div class="component-card">
+                      <div class="component-face component-front">
+                        <span class="component-icon" aria-hidden="true"
+                          ><svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M12 2v4"></path>
+                            <path d="M12 18v4"></path>
+                            <path d="M4 12h4"></path>
+                            <path d="M16 12h4"></path>
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M9.5 9.5l5 5"></path>
+                            <path d="M14.5 9.5l-5 5"></path></svg></span
+                        ><span class="component-title">AI Incident Response Integration</span>
+                      </div>
+                      <div class="component-face component-back">
+                        <span class="component-desc">Extends existing incident response processes to cover AI-specific failure modes, bias events, and data exposure scenarios.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="card block-card feature-card delivery-card">
+                <h3 class="card-title">How delivery works</h3>
+                <div class="delivery-rows">
+                  <div class="delivery-row">
+                    <span class="delivery-label"
+                      ><svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M12 7v5l3 2"></path>
+                      </svg>
+                      Cadence
+                    </span>
+                    <p>Policy and framework development sessions with security, legal, compliance, and technology stakeholders — scoped to your operating model.</p>
+                  </div>
+                  <div class="delivery-row">
+                    <span class="delivery-label"
+                      ><svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M16 11a4 4 0 1 0-8 0"></path>
+                        <path d="M4 20a8 8 0 0 1 16 0"></path>
+                        <circle cx="12" cy="7" r="3"></circle>
+                      </svg>
+                      Roles
+                    </span>
+                    <p>Founder-led advisory with direct involvement in framework design, policy drafting, and stakeholder alignment.</p>
+                  </div>
+                  <div class="delivery-row">
+                    <span class="delivery-label"
+                      ><svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="3" y="5" width="18" height="12" rx="2"></rect>
+                        <path d="M7 9h10"></path>
+                        <path d="M8 17h8"></path>
+                      </svg>
+                      Output
+                    </span>
+                    <p>AI governance policy suite, risk register, vendor oversight framework, decision rights matrix, and IR integration guide.</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+        <section class="section service-block">
+          <div class="container">
+            <div class="section-kicker">Technical Depth</div>
+            <div class="tech-accordion" data-accordion="exclusive">
+              <button
+                class="acc-card tech-acc-card"
+                type="button"
+                aria-expanded="false"
+                aria-controls="tech-framework"
+              >
+                <span class="tech-acc-title">Governance framework components</span
+                ><span class="tech-acc-icon" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 6l6 6-6 6"></path></svg
+                ></span>
+              </button>
+              <div id="tech-framework" class="acc-panel" hidden>
+                <div class="acc-panel-inner">
+                  <div class="acc-panel-head">
+                    <h3>Governance framework components</h3>
+                    <p>The structural elements that make AI governance operational and auditable.</p>
+                  </div>
+                  <div class="program-components-grid">
+                    <div class="program-mini-card">
+                      <h4>Acceptable use and prohibited use</h4>
+                      <p>
+                        Clear guidance on which AI applications are approved, which require oversight, and which are prohibited — with rationale employees and auditors can follow.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Human review and override</h4>
+                      <p>
+                        Defines when human review is mandatory before AI output is acted upon, who is responsible, and how override decisions are documented.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Accountability and decision rights</h4>
+                      <p>
+                        Maps AI decision authority to specific roles, defines escalation thresholds, and establishes governance bodies responsible for AI oversight.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Monitoring and review cadence</h4>
+                      <p>
+                        Establishes ongoing monitoring requirements for AI systems in production and a defined governance review cycle aligned to business risk.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="acc-card tech-acc-card"
+                type="button"
+                aria-expanded="false"
+                aria-controls="tech-security"
+              >
+                <span class="tech-acc-title">How AI governance connects to security and GRC</span
+                ><span class="tech-acc-icon" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 6l6 6-6 6"></path></svg
+                ></span>
+              </button>
+              <div id="tech-security" class="acc-panel" hidden>
+                <div class="acc-panel-inner">
+                  <div class="acc-panel-head">
+                    <h3>How AI governance connects to security and GRC</h3>
+                    <p>AI governance is not a standalone program — it maps to the controls and frameworks already in place.</p>
+                  </div>
+                  <div class="program-components-grid">
+                    <div class="program-mini-card">
+                      <h4>Security program integration</h4>
+                      <p>
+                        AI governance controls map to your existing ISMS, risk register, and security policy structure rather than operating as a parallel program.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>SOC 2 and audit readiness</h4>
+                      <p>
+                        AI governance artifacts — policies, vendor assessments, risk registers — are structured to support SOC 2 Type II and other assurance requirements.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Regulatory alignment</h4>
+                      <p>
+                        Framework designed with GDPR, AI Act, NIST AI RMF, and sector-specific obligations (financial services, healthcare) in mind.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>GRC platform compatibility</h4>
+                      <p>
+                        Governance outputs are structured to integrate into existing GRC tools and evidence management workflows.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="acc-card tech-acc-card"
+                type="button"
+                aria-expanded="false"
+                aria-controls="tech-readiness"
+              >
+                <span class="tech-acc-title">Governance readiness indicators</span
+                ><span class="tech-acc-icon" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 6l6 6-6 6"></path></svg
+                ></span>
+              </button>
+              <div id="tech-readiness" class="acc-panel" hidden>
+                <div class="acc-panel-inner">
+                  <div class="acc-panel-head">
+                    <h3>Governance readiness indicators</h3>
+                    <p>Signs you need AI governance now — before the next audit cycle, enterprise sales cycle, or incident.</p>
+                  </div>
+                  <div class="program-components-grid">
+                    <div class="program-mini-card">
+                      <h4>AI tools in production without policy</h4>
+                      <p>
+                        AI tools in production without documented acceptable use policy or vendor oversight.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Stakeholder transparency demands</h4>
+                      <p>
+                        Enterprise customers or boards asking for AI transparency, risk documentation, or SOC 2 coverage of AI systems.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Decisions without human review</h4>
+                      <p>
+                        AI decisions affecting customers, employees, or regulated processes without defined human review requirements.
+                      </p>
+                    </div>
+                    <div class="program-mini-card">
+                      <h4>Regulatory obligation uncertainty</h4>
+                      <p>
+                        Legal or compliance team uncertain about AI obligations under existing privacy, data, or sector-specific regulations.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="container cta-band cta-band-wide">
+            <div>
+              <h2>Ready to put real governance around your AI program?</h2>
+              <p>Start with the AI Snapshot to surface gaps, then build the governance framework your program needs before scale.</p>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://calendly.com/claude-decarish-3hue/general-consult">Book the AI Snapshot</a
+              ><a class="btn btn-outline" href="../ai-advisory/ai-readiness.html">Explore AI Readiness</a>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
     <footer class="site-footer">
@@ -1092,31 +1302,31 @@
           <a class="brand" href="../index.html"
             ><img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE logo" /><span>3HUE</span></a
           >
-          <p>Insights and resources from 3HUE managed programs.</p>
+          <p>AI governance and security-led managed services for enterprise teams.</p>
         </div>
         <div>
-          <h4>Insights</h4>
+          <h4>Start Here</h4>
           <div class="footer-links">
-            <a href="../trust/index.html">Trust Center</a>
-            <a href="../partner-portal/index.html">Partner Program</a
-            ><a href="../frameworks/index.html">Standards Alignment</a
-            ><a href="../services/isg-managed-programs.html">ISG Managed Programs</a>
+            <a href="../ai-advisory/ai-snapshot.html">AI Risk &amp; Readiness Snapshot</a
+            ><a href="../ai-advisory/ai-consulting.html">AI Consulting</a
+            ><a href="../ai-advisory/ai-governance.html">AI Governance</a
+            ><a href="../ai-advisory/ai-readiness.html">AI Readiness &amp; Deployment</a>
+          </div>
+        </div>
+        <div>
+          <h4>Security &amp; GRC</h4>
+          <div class="footer-links">
+            <a href="../services/isg-managed-programs.html">Audit-Ready Security Program</a
+            ><a href="../services/continuous-risk-management.html">Managed Security Operations (OPS)</a
+            ><a href="../services/itg-managed-services.html">Technology Governance for Scale</a
+            ><a href="../services/security-compliance-services.html">SOC 2 Type II Readiness</a>
           </div>
         </div>
         <div>
           <h4>Company</h4>
           <div class="footer-links">
-            <a href="../about.html">About</a><a href="../contact.html">Contact</a
-            ><a href="../privacy.html">Privacy</a><a href="../trust/index.html">Trust Center</a>
-            <a href="../partner-portal/index.html">Partner Program</a>
-          </div>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <div class="footer-links">
-            <a href="../services/itg-managed-services.html">ITG Managed Services</a
-            ><a href="../services/security-compliance-services.html">Security Compliance</a
-            ><a href="../services/staff-augmentation.html">Staff Augmentation</a>
+            <a href="../about.html">About</a><a href="../insights/index.html">Insights</a
+            ><a href="../contact.html">Contact</a><a href="../trust/index.html">Trust Center</a>
           </div>
         </div>
       </div>
@@ -1124,11 +1334,10 @@
         <span>&copy; 2026 3HUE. All Rights Reserved.</span>
         <div class="footer-social">
           <a href="../contact.html" aria-label="Contact">Contact</a
-          ><a href="index.html" aria-label="Insights">Insights</a>
+          ><a href="../insights/index.html" aria-label="Insights">Insights</a>
         </div>
       </div>
     </footer>
-    <script defer src="../assets/js/insights-v2.js"></script>
     <script defer src="../assets/js/main.js"></script>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>

@@ -59,6 +59,12 @@
     menuOverlay.addEventListener("click", () => setMenuState(false));
   }
 
+  if (mobileMenu) {
+    mobileMenu.querySelectorAll("a[href]").forEach((link) => {
+      link.addEventListener("click", () => setMenuState(false));
+    });
+  }
+
   const accordionButtons = document.querySelectorAll("[data-accordion-toggle]");
   accordionButtons.forEach((button) => {
     const targetId = button.getAttribute("aria-controls");
@@ -788,4 +794,3 @@ themeToggles.forEach((btn) => {
     applyTheme(nextTheme);
   });
 });
-
