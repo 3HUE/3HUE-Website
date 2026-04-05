@@ -13,10 +13,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3HUE | Contact</title>
+    <title>3HUE | Contact — Book the AI Snapshot or Start a Conversation</title>
     <meta
       name="description"
-      content="Request a consult with 3HUE to align managed security, compliance, and IT programs."
+      content="Book the AI Risk &amp; Readiness Snapshot or reach out about AI consulting, governance, and security programs. 3HUE — founder-led AI advisory."
     />
     <link rel="icon" href="assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -741,10 +741,9 @@
       <section class="page-hero">
         <div class="container">
           <div class="eyebrow">Contact</div>
-          <h1>Request a consult with 3HUE.</h1>
+          <h1>Start with the AI Snapshot or send an inquiry.</h1>
           <p class="lead">
-            Tell us about your program goals, compliance needs, and delivery timeline. We will align
-            the right managed service and delivery model.
+            Book the AI Risk &amp; Readiness Snapshot directly, or use the form below to tell us about your program goals, AI initiatives, and delivery context. We respond within one business day.
           </p>
         </div>
       </section>
@@ -752,63 +751,52 @@
         <div class="container grid-2">
           <div class="card reveal">
             <h2>Start the conversation</h2>
-            <form
-              class="form-grid"
-              action="mailto:info@3hue.net"
-              method="post"
-              enctype="text/plain"
-            >
-              <label
-                ><span>Full name</span
-                ><input type="text" name="name" autocomplete="name" required /></label
-              ><label
-                ><span>Work email</span
-                ><input type="email" name="email" autocomplete="email" required /></label
-              ><label
-                ><span>Company</span
-                ><input type="text" name="company" autocomplete="organization" /></label
-              ><label
-                ><span>Role</span
-                ><input type="text" name="role" autocomplete="organization-title" /></label
-              ><label
-                ><span>Program focus</span
-                ><select name="focus">
-                  <option value="">Select one</option>
-                  <option>Audit-Ready Security Program</option>
-                  <option>SOC 2 Type II Readiness</option>
-                  <option>Managed Security Operations (OPS)</option>
-                  <option>AI-Enabled Expertise</option>
-                  <option>Technology Governance for Scale</option>
-                </select></label
-              ><label class="full"
-                ><span>Message</span
-                ><textarea
-                  name="message"
-                  rows="5"
-                  placeholder="Share your goals, timelines, and current state."
-                ></textarea></label
-              ><button class="btn btn-primary" type="submit">Request a Consult</button>
-              <p class="form-note">
-                Submitting opens your email client to send your request to info@3hue.net.
-              </p>
-            </form>
+            <!-- HubSpot embedded form — portal 2999425 -->
+            <!-- To activate: create a form in HubSpot (Marketing > Forms), copy the Form ID UUID, and replace REPLACE_WITH_HF_FORM_ID below -->
+            <div id="hs-contact-form"></div>
+            <script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/embed/v2.js"></script>
+            <script>
+              hbspt.forms.create({
+                portalId: "2999425",
+                formId: "REPLACE_WITH_HF_FORM_ID",
+                target: "#hs-contact-form",
+                onFormSubmit: function($form) {
+                  // Optional: fire a GA4 event on submit
+                  if (typeof gtag === "function") {
+                    gtag("event", "form_submit", { event_category: "contact", event_label: "contact_page" });
+                  }
+                }
+              });
+            </script>
           </div>
           <div class="card reveal">
             <h2>What happens next</h2>
             <ul class="list-clean">
-              <li>We review your scope, compliance goals, and delivery timeline.</li>
-              <li>We align the right managed program and delivery cadence.</li>
-              <li>We share a clear plan for scope, artifacts, and next steps.</li>
+              <li>We review your AI program goals, governance gaps, and delivery context.</li>
+              <li>We align the right service — Snapshot, advisory engagement, or managed program.</li>
+              <li>We share a clear plan for scope, timeline, and first-step deliverables.</li>
             </ul>
             <div class="divider"></div>
-            <h3>Contact details</h3>
+            <h3>Book directly</h3>
             <p>
-              Use the form to connect with the right service lead. Direct contact details are
-              provided during intake.
+              Skip the form and book the AI Risk &amp; Readiness Snapshot on Calendly. 10 business days to a leadership-ready view of your AI program.
             </p>
+            <div class="hero-actions">
+              <a
+                href="https://calendly.com/claude-decarish-3hue/general-consult"
+                class="btn btn-primary"
+                >Book the AI Snapshot</a
+              >
+            </div>
             <div class="divider"></div>
-            <h3>Explore services</h3>
-            <p>Review managed program options before our intake discussion.</p>
+            <h3>Explore AI Advisory</h3>
+            <p>Review the AI Advisory services before our intake discussion.</p>
+            <div class="footer-links">
+              <a href="ai-advisory/ai-snapshot.html">AI Risk &amp; Readiness Snapshot</a>
+              <a href="ai-advisory/ai-consulting.html">AI Consulting</a>
+              <a href="ai-advisory/ai-governance.html">AI Governance</a>
+              <a href="ai-advisory/ai-readiness.html">AI Readiness &amp; Deployment</a>
+            </div>
           </div>
         </div>
       </section>

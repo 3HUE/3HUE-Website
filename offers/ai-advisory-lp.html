@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2VZJKP6GM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-Z2VZJKP6GM");
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Consulting &amp; Governance for Enterprise Teams — 3HUE</title>
+    <meta
+      name="description"
+      content="3HUE helps enterprise teams move from AI ambition to governed execution. AI consulting, governance, and readiness programs — founder-led, security-grounded."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="../assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #44a8d9;
+        --brand-dark: #2f86b3;
+        --brand-bg: rgba(68,168,217,0.08);
+        --ink: #0f172a;
+        --ink-soft: #1f2937;
+        --muted: #4b5563;
+        --surface: #ffffff;
+        --surface-2: #f4f7fa;
+        --surface-dark: #0b1525;
+        --border: rgba(15,23,42,0.1);
+        --radius: 16px;
+        --shadow: 0 22px 50px rgba(15,23,42,0.1);
+        --shadow-soft: 0 8px 24px rgba(15,23,42,0.07);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--surface);
+        line-height: 1.6;
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      img { display: block; max-width: 100%; }
+
+      .container { width: min(1100px, 90%); margin: 0 auto; }
+
+      /* ── Buttons ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 13px 22px;
+        border-radius: 8px;
+        font-family: "Sora", system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      }
+
+      .btn-primary { background: var(--brand); color: #fff; }
+      .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(68,168,217,0.35); }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--ink);
+        border: 1.5px solid var(--border);
+      }
+      .btn-outline:hover { background: var(--surface-2); }
+
+      /* ── Nav ── */
+      .lp-nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255,255,255,0.94);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 24px;
+      }
+
+      .lp-nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .lp-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Sora", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--ink);
+      }
+
+      .lp-logo img { height: 30px; width: auto; }
+
+      /* ── Hero ── */
+      .lp-hero {
+        background: linear-gradient(160deg, #0a1e38 0%, #0e2b50 50%, #061525 100%);
+        padding: 80px 24px 88px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lp-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 0%, rgba(68,168,217,0.18) 0%, transparent 65%);
+        pointer-events: none;
+      }
+
+      .lp-hero-inner { position: relative; max-width: 780px; margin: 0 auto; }
+
+      .lp-hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background: rgba(68,168,217,0.16);
+        border: 1px solid rgba(68,168,217,0.3);
+        border-radius: 999px;
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #7dd3f0;
+        margin-bottom: 24px;
+      }
+
+      .lp-hero h1 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: clamp(30px, 4.5vw, 54px);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        color: #f0f8ff;
+        margin-bottom: 22px;
+      }
+
+      .lp-hero h1 span { color: #7dd3f0; }
+
+      .lp-hero-lead {
+        font-size: clamp(16px, 1.5vw, 19px);
+        color: #a8c5db;
+        line-height: 1.7;
+        margin-bottom: 36px;
+        max-width: 620px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .lp-hero-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .lp-hero-actions .btn-secondary {
+        background: rgba(255,255,255,0.08);
+        color: #d0e8f4;
+        border: 1.5px solid rgba(255,255,255,0.18);
+      }
+
+      .lp-hero-actions .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+      .lp-hero-stats {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 52px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .lp-stat {
+        text-align: center;
+      }
+
+      .lp-stat-num {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #7dd3f0;
+        letter-spacing: -0.02em;
+      }
+
+      .lp-stat-label {
+        font-size: 0.82rem;
+        color: #6e9ab0;
+        margin-top: 2px;
+      }
+
+      /* ── Section base ── */
+      .section {
+        padding: 72px 24px;
+      }
+
+      .section-alt { background: var(--surface-2); }
+
+      .section-eyebrow {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--brand);
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: clamp(24px, 2.8vw, 36px);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 16px;
+      }
+
+      .section-lead {
+        font-size: 1.05rem;
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 620px;
+      }
+
+      /* ── Problem section ── */
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 48px;
+      }
+
+      @media (max-width: 720px) { .problem-grid { grid-template-columns: 1fr; } }
+
+      .problem-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px 26px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .problem-icon {
+        width: 42px;
+        height: 42px;
+        background: rgba(239,68,68,0.1);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+
+      .problem-icon svg { width: 20px; height: 20px; stroke: #ef4444; }
+
+      .problem-card h3 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 10px;
+      }
+
+      .problem-card p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── Services grid ── */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 48px;
+      }
+
+      @media (max-width: 680px) { .services-grid { grid-template-columns: 1fr; } }
+
+      .service-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 30px 28px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition: box-shadow 0.2s, transform 0.2s;
+      }
+
+      .service-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+      .service-num {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--brand);
+        letter-spacing: 0.08em;
+      }
+
+      .service-card h3 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1.3;
+      }
+
+      .service-card p {
+        font-size: 0.92rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .service-card-link {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--brand);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: auto;
+        transition: gap 0.15s;
+      }
+
+      .service-card-link:hover { gap: 8px; }
+
+      /* ── Why 3HUE ── */
+      .why-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: center;
+        margin-top: 48px;
+      }
+
+      @media (max-width: 720px) { .why-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+      .why-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .why-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .why-icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        background: var(--brand-bg);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .why-icon svg { width: 18px; height: 18px; stroke: var(--brand); }
+
+      .why-item h4 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .why-item p {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .why-callout {
+        background: linear-gradient(145deg, #0d2040, #0a1a35);
+        border-radius: var(--radius);
+        padding: 36px 32px;
+        color: #d0e8f4;
+      }
+
+      .why-callout-eyebrow {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #7dd3f0;
+        margin-bottom: 12px;
+      }
+
+      .why-callout h3 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #e8f4fb;
+        line-height: 1.3;
+        margin-bottom: 16px;
+      }
+
+      .why-callout p {
+        font-size: 0.92rem;
+        color: #7a9eb8;
+        line-height: 1.7;
+        margin-bottom: 24px;
+      }
+
+      .why-callout-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .why-callout-stat {
+        background: rgba(255,255,255,0.06);
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .why-callout-stat-num {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #7dd3f0;
+      }
+
+      .why-callout-stat-label {
+        font-size: 0.78rem;
+        color: #6a8fa6;
+        margin-top: 2px;
+        line-height: 1.4;
+      }
+
+      /* ── CTA section ── */
+      .lp-cta {
+        background: linear-gradient(160deg, #071220 0%, #0c2040 100%);
+        padding: 80px 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lp-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 100%, rgba(68,168,217,0.12), transparent 60%);
+        pointer-events: none;
+      }
+
+      .lp-cta-inner { position: relative; max-width: 680px; margin: 0 auto; }
+
+      .lp-cta h2 {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: clamp(26px, 3.5vw, 42px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: #f0f8ff;
+        margin-bottom: 16px;
+      }
+
+      .lp-cta p {
+        font-size: 1.05rem;
+        color: #7a9eb8;
+        line-height: 1.7;
+        margin-bottom: 36px;
+      }
+
+      .lp-cta-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .lp-cta-actions .btn-outline-light {
+        background: transparent;
+        color: #a8c5db;
+        border: 1.5px solid rgba(255,255,255,0.2);
+      }
+
+      .lp-cta-actions .btn-outline-light:hover { background: rgba(255,255,255,0.07); }
+
+      /* ── Footer ── */
+      .lp-footer {
+        background: #060e1a;
+        padding: 32px 24px;
+        text-align: center;
+        font-size: 0.82rem;
+        color: #4a6478;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .lp-footer a { color: var(--brand); }
+      .lp-footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+
+      .btn-block { width: 100%; justify-content: center; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Nav -->
+    <nav class="lp-nav" aria-label="Page navigation">
+      <div class="lp-nav-inner">
+        <a href="../index.html" class="lp-logo">
+          <img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE" />
+          3HUE
+        </a>
+        <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary">
+          Book the AI Snapshot
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="lp-hero">
+      <div class="lp-hero-inner">
+        <div class="lp-hero-eyebrow">AI Advisory · Security-Grounded</div>
+        <h1>Enterprise AI needs <span>a governing layer</span>. We build it.</h1>
+        <p class="lp-hero-lead">
+          Most teams are running AI pilots without policy, vendor risk oversight, or operating model clarity. 3HUE helps enterprise and regulated organizations move from AI ambition to governed, defensible execution.
+        </p>
+        <div class="lp-hero-actions">
+          <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary">
+            Book the AI Snapshot
+          </a>
+          <a href="#services" class="btn btn-secondary">
+            See the advisory services
+          </a>
+        </div>
+        <div class="lp-hero-stats">
+          <div class="lp-stat">
+            <div class="lp-stat-num">10</div>
+            <div class="lp-stat-label">Business days to a<br>leadership-ready view</div>
+          </div>
+          <div class="lp-stat">
+            <div class="lp-stat-num">4</div>
+            <div class="lp-stat-label">AI advisory services<br>covering the full arc</div>
+          </div>
+          <div class="lp-stat">
+            <div class="lp-stat-num">1</div>
+            <div class="lp-stat-label">Advisor owns every<br>deliverable, start to finish</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-eyebrow">The Problem</div>
+        <h2 class="section-title">AI without governance is a liability,<br>not an asset.</h2>
+        <p class="section-lead">Regulated industries and operationally complex organizations can't afford to treat AI like a SaaS tool. These are the gaps we see in every engagement.</p>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <h3>No governance framework</h3>
+            <p>AI pilots move faster than policy. Vendor contracts, data handling, and decision accountability are undefined until something breaks.</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <h3>Use-case sprawl</h3>
+            <p>Teams pursue too many AI initiatives simultaneously without a prioritization framework tied to business value, risk, and delivery capacity.</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <h3>Security posture not AI-ready</h3>
+            <p>Existing security controls, data classification policies, and vendor risk processes were not designed for AI workloads, APIs, and training data flows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-eyebrow">AI Advisory Services</div>
+        <h2 class="section-title">Four programs. One advisory arc.</h2>
+        <p class="section-lead">Start with the Snapshot to diagnose. Progress through consulting, governance, and readiness as your program matures.</p>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-num">01 · Primary Offer</div>
+            <h3>AI Risk &amp; Readiness Snapshot</h3>
+            <p>A 10-day founder-led diagnostic covering use-case priorities, governance gaps, and a 90-day action plan. The right starting point before committing to broader AI investment.</p>
+            <a href="../ai-advisory/ai-snapshot.html" class="service-card-link">
+              Learn more →
+            </a>
+          </div>
+          <div class="service-card">
+            <div class="service-num">02</div>
+            <h3>AI Consulting</h3>
+            <p>Identify high-value AI use cases, evaluate platforms and vendors, and sequence adoption so investment is deliberate rather than reactive. From strategy through build-or-buy decisions.</p>
+            <a href="../ai-advisory/ai-consulting.html" class="service-card-link">
+              Learn more →
+            </a>
+          </div>
+          <div class="service-card">
+            <div class="service-num">03</div>
+            <h3>AI Governance</h3>
+            <p>Build the policy, controls, accountability structure, and vendor oversight framework your AI program needs to operate responsibly at scale — aligned to your existing risk posture.</p>
+            <a href="../ai-advisory/ai-governance.html" class="service-card-link">
+              Learn more →
+            </a>
+          </div>
+          <div class="service-card">
+            <div class="service-num">04</div>
+            <h3>AI Readiness &amp; Deployment</h3>
+            <p>Close the security, data, and operating model gaps before AI rollout accelerates. Readiness across four dimensions: security controls, data governance, vendor risk, and team operating model.</p>
+            <a href="../ai-advisory/ai-readiness.html" class="service-card-link">
+              Learn more →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why 3HUE -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-eyebrow">Why 3HUE</div>
+        <h2 class="section-title">Practitioner depth. No handoff.</h2>
+        <div class="why-grid">
+          <div class="why-list">
+            <div class="why-item">
+              <div class="why-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"></circle>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
+                  <path d="M17 6l2 2 3-3"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Founder-led delivery</h4>
+                <p>The advisor who scopes your engagement conducts every session and writes every deliverable. No junior staff handoff after kickoff.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3l7 3v6c0 5-3.4 7.6-7 9-3.6-1.4-7-4-7-9V6l7-3z"></path>
+                  <path d="M9.5 12l2 2 4-4"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Security-grounded AI advisory</h4>
+                <p>Most AI consultants don't understand security controls, compliance requirements, or risk frameworks. We do — they're built into every deliverable.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                  <path d="M8 2v4"></path>
+                  <path d="M16 2v4"></path>
+                  <path d="M3 10h18"></path>
+                  <path d="M8 14h2"></path>
+                  <path d="M14 14h2"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Time-boxed, deliverable-driven</h4>
+                <p>Engagements have defined outputs, defined timelines, and defined next steps. No open-ended retainers that drift without accountability.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Built for regulated environments</h4>
+                <p>Financial services, healthcare adjacent, SaaS, and complex operations — organizations where governance is a requirement, not a preference.</p>
+              </div>
+            </div>
+          </div>
+          <div class="why-callout">
+            <div class="why-callout-eyebrow">Start Here</div>
+            <h3>The AI Risk &amp; Readiness Snapshot</h3>
+            <p>A 10-day founder-led diagnostic for enterprise teams moving from AI experimentation to governed execution. You leave with priorities, gaps, and a plan leadership can act on immediately.</p>
+            <div class="why-callout-stats">
+              <div class="why-callout-stat">
+                <div class="why-callout-stat-num">10</div>
+                <div class="why-callout-stat-label">Business days to executive readout</div>
+              </div>
+              <div class="why-callout-stat">
+                <div class="why-callout-stat-num">90</div>
+                <div class="why-callout-stat-label">Day action plan delivered</div>
+              </div>
+            </div>
+            <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary btn-block">
+              Book the Snapshot
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="lp-cta">
+      <div class="lp-cta-inner">
+        <h2>Start with clarity. Act in 10 days.</h2>
+        <p>Book the AI Risk &amp; Readiness Snapshot and leave with a leadership-ready view of your AI program — use-case priorities, governance gaps, and a 90-day action plan.</p>
+        <div class="lp-cta-actions">
+          <a href="https://calendly.com/claude-decarish-3hue/general-consult" class="btn btn-primary">
+            Book the AI Snapshot
+          </a>
+          <a href="../contact.html" class="btn btn-outline-light">
+            Send an inquiry
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="lp-footer">
+      <div class="lp-footer-links">
+        <a href="../ai-advisory/ai-snapshot.html">AI Snapshot</a>
+        <a href="../ai-advisory/ai-consulting.html">AI Consulting</a>
+        <a href="../ai-advisory/ai-governance.html">AI Governance</a>
+        <a href="../ai-advisory/ai-readiness.html">AI Readiness</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy</a>
+      </div>
+      <span>&copy; 2026 3HUE. All Rights Reserved.</span>
+    </footer>
+
+    <!-- HubSpot tracking -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="https://js.hs-scripts.com/2999425.js"></script>
+  </body>
+</html>
