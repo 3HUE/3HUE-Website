@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 export function FileUpload({
   sessionId,
+  token,
   questionId,
   onUploaded
 }: {
   sessionId: string;
+  token: string;
   questionId: string;
   onUploaded: (fileInfo: { id: string; filename: string }) => void;
 }) {
@@ -24,6 +26,7 @@ export function FileUpload({
     formData.append("file", file);
     formData.append("sessionId", sessionId);
     formData.append("questionId", questionId);
+    formData.append("token", token);
 
     try {
       const response = await fetch("/api/uploads", {
@@ -52,7 +55,7 @@ export function FileUpload({
         className="text-sm"
       />
       <p className="helper mt-2">PDF, DOCX, PNG, JPG accepted. Files upload to local storage in dev.</p>
-      {uploading && <p className="helper mt-2 text-tide">Uploading…</p>}
+      {uploading && <p className="helper mt-2 text-tide">Uploadingï¿½</p>}
       {error && <p className="helper mt-2 text-red-600">{error}</p>}
     </div>
   );

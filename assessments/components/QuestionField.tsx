@@ -5,11 +5,13 @@ import { FileUpload } from "./FileUpload";
 export function QuestionField({
   question,
   form,
-  sessionId
+  sessionId,
+  token
 }: {
   question: Question;
   form: UseFormReturn<Record<string, unknown>>;
   sessionId: string;
+  token: string;
 }) {
   const {
     register,
@@ -98,6 +100,7 @@ export function QuestionField({
           render={() => (
             <FileUpload
               sessionId={sessionId}
+              token={token}
               questionId={question.id}
               onUploaded={(fileInfo) => {
                 const current = (value as string[]) || [];

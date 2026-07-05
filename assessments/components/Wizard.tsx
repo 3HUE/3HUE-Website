@@ -135,7 +135,7 @@ export function Wizard({ sessionId, token, initialValues }: WizardProps) {
       <div className="card rounded-3xl p-8">
         <div className="space-y-6">
           {sectionQuestions.map((question) => (
-            <QuestionField key={question.id} question={question} form={form} sessionId={sessionId} />
+            <QuestionField key={question.id} question={question} form={form} sessionId={sessionId} token={token} />
           ))}
 
           {currentSection.id === "evidence" && (

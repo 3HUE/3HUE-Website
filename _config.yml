@@ -1,0 +1,26 @@
+# GitHub Pages (Jekyll) publishing config.
+#
+# Jekyll's built-in dotfile/underscore-prefix exclusion already keeps things
+# like .git, .env, and _config.yml itself out of the published site. Setting
+# `exclude` here REPLACES (not appends to) Jekyll's own default exclude list,
+# so we start from that default list and add our own repo-maintenance files
+# on top of it, rather than silently dropping the defaults.
+exclude:
+  # Jekyll defaults (kept so future Gemfile/vendor/node_modules usage stays excluded)
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  # Repo-maintenance scripts and lockfiles — not part of the published site
+  - "*.py"
+  - "*.ps1"
+  - "scripts/fix-nav.ps1"
+  - "package.json"
+  - "package-lock.json"
+  - __pycache__/
