@@ -421,21 +421,8 @@
         <div class="sq-form-sub">We'll confirm availability and send next steps within one business day.</div>
 
         <!-- HubSpot embedded form — portal 2999425 -->
-        <!-- Replace REPLACE_WITH_HF_FORM_ID with your HubSpot form UUID (Marketing > Forms > Embed) -->
-        <div id="hs-snapshot-form"></div>
-        <script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/embed/v2.js"></script>
-        <script>
-          hbspt.forms.create({
-            portalId: "2999425",
-            formId: "REPLACE_WITH_HF_FORM_ID",
-            target: "#hs-snapshot-form",
-            onFormSubmit: function() {
-              if (typeof gtag === "function") {
-                gtag("event", "form_submit", { event_category: "lead", event_label: "ai_snapshot_squeeze" });
-              }
-            }
-          });
-        </script>
+        <script src="https://js.hsforms.net/forms/embed/2999425.js" defer></script>
+        <div class="hs-form-frame" data-region="na1" data-form-id="2a469d5c-f381-4005-8353-b68ab7eb3d4a" data-portal-id="2999425"></div>
 
         <div class="sq-divider"></div>
         <a href="https://calendly.com/aramirez-vcio/15min" class="sq-calendly-link">

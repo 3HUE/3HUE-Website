@@ -752,22 +752,8 @@
           <div class="card reveal">
             <h2>Start the conversation</h2>
             <!-- HubSpot embedded form — portal 2999425 -->
-            <!-- To activate: create a form in HubSpot (Marketing > Forms), copy the Form ID UUID, and replace REPLACE_WITH_HF_FORM_ID below -->
-            <div id="hs-contact-form"></div>
-            <script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/embed/v2.js"></script>
-            <script>
-              hbspt.forms.create({
-                portalId: "2999425",
-                formId: "REPLACE_WITH_HF_FORM_ID",
-                target: "#hs-contact-form",
-                onFormSubmit: function($form) {
-                  // Optional: fire a GA4 event on submit
-                  if (typeof gtag === "function") {
-                    gtag("event", "form_submit", { event_category: "contact", event_label: "contact_page" });
-                  }
-                }
-              });
-            </script>
+            <script src="https://js.hsforms.net/forms/embed/2999425.js" defer></script>
+            <div class="hs-form-frame" data-region="na1" data-form-id="2a469d5c-f381-4005-8353-b68ab7eb3d4a" data-portal-id="2999425"></div>
           </div>
           <div class="card reveal">
             <h2>What happens next</h2>
