@@ -1003,14 +1003,38 @@
               records, configuration state, and documented approvals or exception decisions.
             </p>
             <div class="iv2-cap-grid">
-              <div class="iv2-cap-card"><h3>Release approvals</h3></div>
-              <div class="iv2-cap-card"><h3>Build provenance</h3></div>
-              <div class="iv2-cap-card"><h3>SBOM</h3></div>
-              <div class="iv2-cap-card"><h3>Scan summaries</h3></div>
-              <div class="iv2-cap-card"><h3>Policy evaluation logs</h3></div>
-              <div class="iv2-cap-card"><h3>Access approvals</h3></div>
-              <div class="iv2-cap-card"><h3>Change tickets</h3></div>
-              <div class="iv2-cap-card"><h3>Post-deploy validation</h3></div>
+              <div class="iv2-cap-card">
+                <h3>Release approvals</h3>
+                <p>Timestamped sign-off tied to the specific build and change ticket it authorized.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Build provenance</h3>
+                <p>Verifiable record of source commit, build pipeline, and artifact signing.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>SBOM</h3>
+                <p>Software bill of materials generated per build, not reconstructed after the fact.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Scan summaries</h3>
+                <p>SAST/DAST/dependency scan outcomes linked to the gate decision they informed.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Policy evaluation logs</h3>
+                <p>Every policy-as-code check result, pass or fail, preserved for audit replay.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Access approvals</h3>
+                <p>Just-in-time or standing access grants tied to requester, approver, and scope.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Change tickets</h3>
+                <p>Traceable link from requested change through implementation to verified outcome.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Post-deploy validation</h3>
+                <p>Automated confirmation that the deployed state matches the approved configuration.</p>
+              </div>
             </div>
             <p class="iv2-pullquote">
               Automation without evidence is not assurance.

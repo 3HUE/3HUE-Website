@@ -987,17 +987,42 @@
               Data Privacy and Data Handling
               <button class="iv2-copy-link" type="button" data-copy-link="data-handling">Copy Link</button>
             </h2>
-            <div class="iv2-card">
-              <p><strong>Data handling must be explicitly understood and documented.</strong></p>
-              <ul>
-                <li>Define prompt and data handling expectations per workload type.</li>
-                <li>Monitor for misuse patterns and terms/policy violations.</li>
-                <li>Document retention and access logging decisions for audit defensibility.</li>
-              </ul>
-              <p>
-                Reference Microsoft data privacy guidance for Azure OpenAI and Azure AI Foundry model deployments.
-              </p>
+            <p>
+              Data handling must be explicitly understood and documented before workloads move to
+              production &mdash; not inferred after the fact from vendor terms. Four boundaries
+              matter most for Azure AI deployments:
+            </p>
+            <div class="iv2-cap-grid">
+              <div class="iv2-cap-card">
+                <h3>Data residency and regional boundaries</h3>
+                <p><strong>When to use:</strong> Any workload with data sovereignty or regional compliance requirements.</p>
+                <p><strong>Control points:</strong> Region pinning for Azure OpenAI and Azure AI Search, data processing addendum terms.</p>
+                <p><strong>Evidence artifacts:</strong> Deployment region inventory, data residency attestation.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Prompt and output retention controls</h3>
+                <p><strong>When to use:</strong> Workloads handling regulated, confidential, or customer data in prompts.</p>
+                <p><strong>Control points:</strong> Abuse-monitoring opt-out configuration, retention window, logging destination.</p>
+                <p><strong>Evidence artifacts:</strong> Retention policy config, logging destination map.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Training and fine-tuning data boundaries</h3>
+                <p><strong>When to use:</strong> Any use of customer or proprietary data with Azure OpenAI or Azure AI Foundry.</p>
+                <p><strong>Control points:</strong> Contractual confirmation that customer data does not train shared base models; isolation of fine-tuned models per tenant.</p>
+                <p><strong>Evidence artifacts:</strong> Signed data-use terms, fine-tuned model ownership record.</p>
+              </div>
+              <div class="iv2-cap-card">
+                <h3>Cross-service data flow mapping</h3>
+                <p><strong>When to use:</strong> Architectures chaining Azure OpenAI, Azure AI Search, and Azure Machine Learning.</p>
+                <p><strong>Control points:</strong> Data flow diagram across services, classification carried at each hop.</p>
+                <p><strong>Evidence artifacts:</strong> Current data flow diagram, classification-to-service mapping.</p>
+              </div>
             </div>
+            <p style="margin-top: 16px">
+              Treat Microsoft's published data privacy guidance for Azure OpenAI and Azure AI
+              Foundry as the compliance floor, not the control &mdash; each boundary above still
+              needs an accountable owner and evidence trail inside your own environment.
+            </p>
           </section>
 
           <section class="iv2-section" id="integration-patterns">
