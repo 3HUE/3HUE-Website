@@ -306,6 +306,16 @@ p {
   background: var(--surface-2);
 }
 
+/* Third-party embeds (e.g. HubSpot forms) render fixed dark text on a
+   transparent background, so they need a guaranteed light surface behind
+   them regardless of site theme. */
+.form-embed-surface {
+  background: #ffffff;
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  margin-top: var(--space-5);
+}
+
 .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
@@ -3352,7 +3362,22 @@ summary::-webkit-details-marker {
 }
 
 .list-clean li {
+  position: relative;
+  padding-left: 18px;
   color: var(--ink-muted);
+}
+
+ul.list-clean li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  opacity: 0.85;
+  transform: translateY(-50%);
 }
 
 .list-styled {
