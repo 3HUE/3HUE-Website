@@ -5101,11 +5101,11 @@ ul.list-clean li::before {
 }
 
 /* ---- "Start Here" nav tab indicator ---- */
-.mega-tab-ai {
+.mega-tab-managed {
   position: relative;
 }
 
-.mega-tab-ai::after {
+.mega-tab-managed::after {
   content: "Start here";
   position: absolute;
   top: -6px;
