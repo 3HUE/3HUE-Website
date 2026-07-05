@@ -493,7 +493,8 @@
       });
 
       if (countEl) {
-        countEl.textContent = `${visibleCount} insight${visibleCount === 1 ? "" : "s"}`;
+        const noun = countEl.getAttribute("data-count-label") || "insight";
+        countEl.textContent = `${visibleCount} ${noun}${visibleCount === 1 ? "" : "s"}`;
       }
     };
 

@@ -59,6 +59,15 @@
   color: var(--hero-card-muted);
 }
 
+.pom-hero-card h2,
+.pom-hero-card h3 {
+  color: var(--hero-card-text);
+}
+
+.pom-hero-card li {
+  color: var(--hero-card-muted);
+}
+
 .pom-layout {
   padding: var(--space-8) 0 var(--space-10);
 }
