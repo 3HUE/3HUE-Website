@@ -8,7 +8,7 @@
   --iv2-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
-body[data-theme="dark"] {
+[data-theme="dark"] {
   --iv2-ink: #f1f5f9;
   --iv2-muted: #cbd5e1;
   --iv2-surface: #0f172a;
@@ -324,17 +324,17 @@ body[data-theme="dark"] {
   color: #991b1b;
 }
 
-body[data-theme="dark"] .iv2-efi-green {
+[data-theme="dark"] .iv2-efi-green {
   background: #113a2a;
   color: #86efac;
 }
 
-body[data-theme="dark"] .iv2-efi-amber {
+[data-theme="dark"] .iv2-efi-amber {
   background: #3f2f10;
   color: #fcd34d;
 }
 
-body[data-theme="dark"] .iv2-efi-red {
+[data-theme="dark"] .iv2-efi-red {
   background: #3c1717;
   color: #fca5a5;
 }
