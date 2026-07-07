@@ -776,7 +776,8 @@
               delivery across managed programs.
             </p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="../contact.html">Request Trust Packet</a
+              <a class="btn btn-primary" href="../contact.html" data-trust-packet-request
+                >Request Trust Packet</a
               ><a class="btn btn-outline" href="../privacy.html">View Privacy Policy</a>
             </div>
             <div class="tag-row">
@@ -961,7 +962,8 @@
             </p>
           </div>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="../contact.html">Request Packet</a
+            <a class="btn btn-primary" href="../contact.html" data-trust-packet-request
+              >Request Packet</a
             ><a class="btn btn-outline" href="../services/index.html">Explore Services</a>
           </div>
         </div>
@@ -1010,6 +1012,116 @@
       </div>
     </footer>
     <script defer src="../assets/js/main.js"></script>
+    <div class="trust-modal" data-trust-modal aria-hidden="true">
+      <div class="trust-modal-overlay" data-trust-modal-close></div>
+      <div
+        class="trust-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trust-modal-title"
+      >
+        <button
+          class="trust-modal-close"
+          type="button"
+          data-trust-modal-close
+          aria-label="Close security packet request"
+        >
+          &times;
+        </button>
+        <div class="trust-modal-header">
+          <div class="eyebrow">Trust &amp; Compliance Center</div>
+          <h2 id="trust-modal-title">Request Your Security Packet</h2>
+          <p>
+            Tell us who you are and what you need. We route every request to our compliance team
+            and follow up within one business day, typically under NDA where required.
+          </p>
+        </div>
+        <ul class="trust-packet-includes">
+          <li>SOC 2 Type II report summary and bridge letter</li>
+          <li>ISO 27001 / CMMC-L2 alignment summary</li>
+          <li>Penetration test executive summary</li>
+          <li>Information security &amp; data protection policies</li>
+          <li>Subprocessor and sub-vendor list</li>
+          <li>Business continuity &amp; incident response overview</li>
+        </ul>
+        <form class="trust-modal-form" data-trust-form>
+          <div class="form-grid">
+            <label
+              >Full name*
+              <input type="text" name="requesterName" required autocomplete="name" />
+            </label>
+            <label
+              >Work email*
+              <input type="email" name="workEmail" required autocomplete="email" />
+            </label>
+            <label
+              >Company name*
+              <input type="text" name="companyName" required autocomplete="organization" />
+            </label>
+            <label
+              >Job title
+              <input type="text" name="jobTitle" autocomplete="organization-title" />
+            </label>
+            <label class="full"
+              >Company website
+              <input type="url" name="companyWebsite" placeholder="https://" />
+            </label>
+            <label
+              >Purpose of request*
+              <select name="purpose" required>
+                <option value="">Select purpose</option>
+                <option>Vendor security review</option>
+                <option>RFP / procurement</option>
+                <option>Compliance or audit diligence</option>
+                <option>Investment / M&amp;A diligence</option>
+                <option>Insurance underwriting</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label
+              >NDA status
+              <select name="ndaStatus">
+                <option value="">Select</option>
+                <option>NDA already executed with 3HUE</option>
+                <option>Need a mutual NDA before review</option>
+                <option>Not sure</option>
+              </select>
+            </label>
+            <label class="full"
+              >Specific documents needed
+              <textarea
+                name="documentsNeeded"
+                rows="3"
+                placeholder="e.g. SOC 2 report, pen test summary, subprocessor list"
+              ></textarea>
+            </label>
+            <label class="full"
+              >Additional context
+              <textarea name="additionalContext" rows="3"></textarea>
+            </label>
+          </div>
+          <div class="trust-modal-actions">
+            <button class="btn btn-outline" type="button" data-trust-modal-close>Cancel</button>
+            <button class="btn btn-primary" type="submit">Send Request</button>
+          </div>
+          <p class="trust-modal-note">
+            Submitting opens your email client with a pre-filled message to
+            info@3hue.net. No documents are sent automatically — our team follows up directly.
+          </p>
+        </form>
+        <div class="trust-modal-success">
+          <h3>Request ready to send</h3>
+          <p>
+            Your email client should now be open with your request addressed to
+            info@3hue.net. If nothing opened, email us directly at
+            <a href="mailto:info@3hue.net">info@3hue.net</a>.
+          </p>
+          <div class="trust-modal-actions">
+            <button class="btn btn-outline" type="button" data-trust-modal-close>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2999425.js"></script>
 <!-- End of HubSpot Embed Code -->

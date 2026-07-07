@@ -705,6 +705,76 @@
     });
   }
 
+  const trustModal = document.querySelector("[data-trust-modal]");
+  if (trustModal) {
+    const openButtons = Array.from(document.querySelectorAll("[data-trust-packet-request]"));
+    const closeButtons = Array.from(trustModal.querySelectorAll("[data-trust-modal-close]"));
+    const form = trustModal.querySelector("[data-trust-form]");
+
+    const openModal = () => {
+      trustModal.classList.remove("is-success");
+      trustModal.classList.add("is-open");
+      trustModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const firstField = form ? form.querySelector("input, select, textarea") : null;
+      if (firstField) {
+        firstField.focus();
+      }
+    };
+
+    const closeModal = () => {
+      trustModal.classList.remove("is-open");
+      trustModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    };
+
+    const submitForm = (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const formData = new FormData(form);
+      const getValue = (name) => (formData.get(name) || "").toString().trim();
+      const lines = [
+        `Full name: ${getValue("requesterName")}`,
+        `Work email: ${getValue("workEmail")}`,
+        `Company name: ${getValue("companyName")}`,
+        `Job title: ${getValue("jobTitle")}`,
+        `Company website: ${getValue("companyWebsite")}`,
+        `Purpose of request: ${getValue("purpose")}`,
+        `NDA status: ${getValue("ndaStatus")}`,
+        `Specific documents needed: ${getValue("documentsNeeded")}`,
+        `Additional context: ${getValue("additionalContext")}`,
+      ];
+      const subject = encodeURIComponent(
+        `Security Packet Request - ${getValue("companyName") || getValue("requesterName") || "3HUE"}`
+      );
+      const body = encodeURIComponent(lines.join("\n"));
+      window.location.href = `mailto:info@3hue.net?subject=${subject}&body=${body}`;
+      trustModal.classList.add("is-success");
+      form.reset();
+    };
+
+    openButtons.forEach((button) =>
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        openModal();
+      })
+    );
+    closeButtons.forEach((button) => button.addEventListener("click", closeModal));
+
+    if (form) {
+      form.addEventListener("submit", submitForm);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && trustModal.classList.contains("is-open")) {
+        closeModal();
+      }
+    });
+  }
+
   const portalLoginModal = document.querySelector("[data-portal-login-modal]");
   if (portalLoginModal) {
     const openButtons = Array.from(document.querySelectorAll("[data-portal-login]"));
