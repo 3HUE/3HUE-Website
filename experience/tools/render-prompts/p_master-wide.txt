@@ -1,0 +1,19 @@
+WIDE MASTER PLATE (replaces the 3:2 concept plate). Output 2560×1440, landscape 16:9, no letterboxing.
+
+Composition rule — the building must fill the frame: the outer glass walls of the left and right wings sit within ~4% of the left and right frame edges, the engineering bridge roofline sits ~6% below the top edge, and the illuminated maturity walkway sits ~3% above the bottom edge. No wide bands of out-of-focus city on either side — only a sliver of bokeh past the glass. Make the wings physically wider and the rooms broader and shallower (wide-format rooms, wall displays spanning most of each room's back wall) so the building reads as a wide, low, cinematic cutaway rather than a tall narrow one. The atrium stays centered; the boardroom stays in the foreground center.
+
+Render the master wide shot of 3HUE's Governance Acceleration headquarters: a symmetrical three-storey glass-and-steel building seen straight on at dusk, cut away so every room is visible. Match the reference image (tools/reference-inside-3hue.png) for style: cinematic photoreal render, dark navy surfaces, brushed silver details, cyan (#1FB6FF) architectural illumination for program signal, warm amber light for executive decisions. People are diverse professionals in business attire, actively working. Keep technology visually subordinate to the architecture and the people.
+
+LEFT WING, top to bottom: a policy and control room (a governance lead with client IT, security, and process owners; a wall display titled "Policy & Control Framework"); an incident response room (a tabletop exercise; a wall display titled "Incident Response Readiness" with Prepare → Detect → Contain → Investigate → Recover); an executive advisory office (a virtual CISO with the client CIO; a display titled "Strategic Security Leadership").
+
+RIGHT WING, top to bottom: a risk room (a risk advisor and business owners; a display titled "Enterprise Risk Management" with a qualitative risk matrix); a compliance room (assurance specialists tracing requirements to controls and evidence; a display titled "Controls & Evidence"); a third-party risk room (a specialist with procurement and legal; a display titled "Third-Party Risk Management" showing a supplier network).
+
+TOP CENTER: an elevated glass engineering bridge connecting the wings, with security architects and cloud engineers at a design review; a display titled "Secure Engineering & Architecture" with Architecture, Build, Secure, Operate.
+
+CENTER: a transparent cylindrical atrium spanning the floors. Inside floats a luminous connected globe of fine cyan and amber lines, labeled "AiVRIC Risk Intelligence Fabric" on the structure. Six thin cyan light paths flow from the six program rooms into the atrium. Below the globe, a portal band reads "CLIENT VISION" with four clean panels: Posture, Priorities, Progress, Decisions.
+
+FOREGROUND: an open executive boardroom with a substantial curved wood table; a 3HUE advisor presents to eight diverse client executives; a plaque on the table front reads "Executive Alignment & Decisions". One thick amber light path flows from the atrium down into the table, and a subtle return path carries approved direction back toward the program rooms.
+
+BASE: a wide illuminated walkway along the bottom edge with five evenly spaced glowing waypoints connected by a thin cyan line rising left to right (the maturity pathway); no labels on it.
+
+No numbered badges, no side captions, no header or footer text, no logo lockup, no URL, no floating titles. Short legible headings on in-scene wall displays are fine.

@@ -68,6 +68,24 @@
   </button>
 </div>
 
+<!-- Opening film -->
+<div id="intro" hidden>
+  <video id="intro-video" playsinline muted preload="auto" poster="media/film/poster.jpg">
+    <source src="media/film/inside-3hue.mp4" type="video/mp4">
+  </video>
+  <div class="veil"></div>
+  <button class="btn outline sound" id="intro-sound" type="button" aria-pressed="false" hidden>Unmute</button>
+  <div class="copy">
+    <div class="eyebrow">3HUE Information Security Group</div>
+    <h1>Step inside the ISG building.</h1>
+    <p>Six managed programs in the wings, Secure Engineering above, the AiVRIC fabric feeding Client Vision, and the boardroom where executives set priorities and approve action. Walk the building and see how each program works.</p>
+    <div class="actions">
+      <button class="btn primary" id="intro-enter" type="button">Enter the building</button>
+      <button class="btn" id="intro-skip" type="button">Skip opening</button>
+    </div>
+  </div>
+</div>
+
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

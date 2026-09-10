@@ -32,6 +32,11 @@ export function initHud(roomList, h) {
   exit.addEventListener('click', () => handlers.onExit());
   navEl.appendChild(exit);
 
+  const film = document.createElement('button');
+  film.className = 'btn icon'; film.id = 'btn-film'; film.type = 'button'; film.title = 'Replay the opening'; film.setAttribute('aria-label', 'Replay the opening');
+  film.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>';
+  film.addEventListener('click', () => handlers.onFilm && handlers.onFilm());
+  navEl.appendChild(film);
 }
 
 export function updateHud({ view, room, station }) {

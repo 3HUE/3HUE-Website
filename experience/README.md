@@ -18,6 +18,8 @@ python -m http.server 8000
 # open http://localhost:8000/experience/
 ```
 
+Opening film: `media/film/inside-3hue.mp4` (11.8 s, built from the room renders with `tools/build-film.py`) plays once per session; `?skipintro=1` or any deep link skips it, and the play button in the HUD replays it.
+
 Deep links: `#/room/<id>` and `#/station/<id>` — for example `#/room/boardroom`, `#/station/for-cfo`,
 `#/station/get-started`. Room ids: vciso, isp, cirp, rmp, scs, vcp, sea, vision, boardroom, pathway.
 

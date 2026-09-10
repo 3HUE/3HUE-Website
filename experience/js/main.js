@@ -5,6 +5,7 @@ import { buildStreams, revealStreams } from './streams.js';
 import { onRoute, go, parse } from './router.js';
 import { initHud, updateHud } from './ui/hud.js';
 import { initPanel, showRoom } from './ui/panel.js';
+import { runIntro } from './ui/intro.js';
 import { isLightboxOpen, closeLightbox } from './ui/lightbox.js';
 
 const boot = document.getElementById('boot');
@@ -24,6 +25,7 @@ async function main() {
   initHud(rooms, {
     onRoom: (room) => go({ view: 'room', id: room.id }),
     onExit: () => go({ view: 'building' }),
+    onFilm: async () => { await runIntro(); },
   });
   initPanel({ onSelectStation: (s) => go({ view: 'station', id: s.id }) });
 
@@ -43,7 +45,10 @@ async function main() {
 
   // First reveal (with or without film)
   const first = parse();
+  const skipIntro = params.get('skipintro') === '1' || first.view !== 'building' || sessionStorage.getItem('threehue-intro') === '1';
   boot.classList.add('out');
+  if (!skipIntro) { await runIntro(); }
+  try { sessionStorage.setItem('threehue-intro', '1'); } catch (e) {}
   stage.style.opacity = '1';
 
   let revealed = false;
