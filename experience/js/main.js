@@ -19,7 +19,7 @@ async function main() {
   const findStation = (id) => { for (const r of rooms) { const s = r.stations.find((x) => x.id === id); if (s) return { room: r, station: s }; } return null; };
 
   stage.style.opacity = '0'; stage.style.transition = 'opacity 700ms var(--ease)';
-  const st = await loadMaster(manifest.scene.master);
+  const st = await loadMaster(manifest.scene.master, null, manifest.scene.safe);
   buildStreams(manifest.streams, st.W, st.H);
   buildPins(rooms, (room) => go({ view: 'room', id: room.id }));
   initHud(rooms, {
@@ -60,7 +60,7 @@ async function main() {
 
   onRoute((route) => {
     if (route.view === 'building') {
-      current = null; setCurrentRoom(null);
+      current = null; setCurrentRoom(null); lastCard = null; if (card) { card.classList.remove('show'); clearTimeout(cardT); }
       goBuilding(true);
       updateHud({ view: 'building' });
       revealBuilding();
@@ -75,10 +75,21 @@ async function main() {
     current = room; setCurrentRoom(zoomRoom);
     goRoom(zoomRoom, true);
     const station = showRoom(room, stationId);
+    titleCard(room);
     updateHud({ view: route.view, room, station });
     prevBtn.textContent = '← ' + neighbor(-1).name; nextBtn.textContent = neighbor(1).name + ' →';
   });
 }
+
+const card = document.getElementById('room-title');
+let cardT = 0, lastCard = null;
+function titleCard(room) {
+  if (!card || lastCard === room.id) return; lastCard = room.id;
+  card.innerHTML = `<i>${String(room.order || '').padStart(2, '0')}</i><b>${room.name}</b><span>${room.tagline || ''}</span>`;
+  card.classList.remove('show'); void card.offsetWidth; card.classList.add('show');
+  clearTimeout(cardT); cardT = setTimeout(() => card.classList.remove('show'), 3200);
+}
+document.addEventListener('route:building', () => { lastCard = null; });
 
 main().catch((err) => {
   console.error(err);

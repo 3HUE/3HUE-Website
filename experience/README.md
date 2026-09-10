@@ -56,6 +56,11 @@ baked into the render would appear twice. The master used here is the concept re
 side captions, header, and footer removed; `tools/render-prompts/p_master.txt` describes a from-scratch master
 without annotations if you want to regenerate it at full resolution.
 
+`scene.safe` is the building's safe area (normalized): on desktop the engine frames it fully between the HUD and the
+bottom band and uses the free margins beside it for the numbered labels with leader lines (`order` numbers the
+room, `label.side` picks the column, `bounds` is the room rectangle that glows on hover). With less than ~220px of
+margin (or under 1024px wide) labels fall back to in-scene chips; phones cover-fit the plate.
+
 `hotspot` places the pin (normalized 0–1 on the master). `zoomTo` and `zoom` control where the camera goes when a
 room is entered. `streams` are SVG paths in master pixels (2304×1536): blue = program signal into the fabric,
 gold = executive decisions. Use `tools/hotspot-tool.html` to read coordinates and trace paths.

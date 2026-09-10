@@ -3,7 +3,13 @@
     "master": "media/scene/master.jpg",
     "width": 2304,
     "height": 1536,
-    "credit": "Master scene: the 'Inside 3HUE' concept render with its annotation layer removed (tools/reference-inside-3hue-clean.png), 2304×1536. Room close-ups in media/scene/rooms are generated from tools/render-prompts. Coordinates are normalized 0–1 against the master; stream paths are in master pixels."
+    "credit": "Master scene: the 'Inside 3HUE' concept render with its annotation layer removed (tools/reference-inside-3hue-clean.png), 2304×1536. Room close-ups in media/scene/rooms are generated from tools/render-prompts. Coordinates are normalized 0–1 against the master; stream paths are in master pixels.",
+    "safe": {
+      "x": 0.13,
+      "y": 0.055,
+      "w": 0.74,
+      "h": 0.905
+    }
   },
   "streams": [
     {
@@ -162,6 +168,16 @@
       "focus": {
         "x": 0.5,
         "y": 0.45
+      },
+      "order": 3,
+      "label": {
+        "side": "left"
+      },
+      "bounds": {
+        "x": 0.15,
+        "y": 0.5,
+        "w": 0.215,
+        "h": 0.19
       }
     },
     {
@@ -262,6 +278,16 @@
       "focus": {
         "x": 0.58,
         "y": 0.42
+      },
+      "order": 1,
+      "label": {
+        "side": "left"
+      },
+      "bounds": {
+        "x": 0.15,
+        "y": 0.1,
+        "w": 0.215,
+        "h": 0.2
       }
     },
     {
@@ -352,6 +378,16 @@
       "focus": {
         "x": 0.55,
         "y": 0.42
+      },
+      "order": 2,
+      "label": {
+        "side": "left"
+      },
+      "bounds": {
+        "x": 0.15,
+        "y": 0.31,
+        "w": 0.215,
+        "h": 0.185
       }
     },
     {
@@ -447,6 +483,16 @@
       "focus": {
         "x": 0.55,
         "y": 0.42
+      },
+      "order": 4,
+      "label": {
+        "side": "right"
+      },
+      "bounds": {
+        "x": 0.635,
+        "y": 0.1,
+        "w": 0.215,
+        "h": 0.2
       }
     },
     {
@@ -542,6 +588,16 @@
       "focus": {
         "x": 0.55,
         "y": 0.42
+      },
+      "order": 5,
+      "label": {
+        "side": "right"
+      },
+      "bounds": {
+        "x": 0.635,
+        "y": 0.31,
+        "w": 0.215,
+        "h": 0.185
       }
     },
     {
@@ -599,6 +655,16 @@
       "focus": {
         "x": 0.6,
         "y": 0.42
+      },
+      "order": 6,
+      "label": {
+        "side": "right"
+      },
+      "bounds": {
+        "x": 0.635,
+        "y": 0.5,
+        "w": 0.215,
+        "h": 0.19
       }
     },
     {
@@ -609,7 +675,7 @@
       "streamColor": "blue",
       "hotspot": {
         "x": 0.5,
-        "y": 0.105,
+        "y": 0.075,
         "side": "right"
       },
       "zoomTo": {
@@ -711,6 +777,16 @@
       "focus": {
         "x": 0.55,
         "y": 0.42
+      },
+      "order": 7,
+      "label": {
+        "side": "left"
+      },
+      "bounds": {
+        "x": 0.375,
+        "y": 0.075,
+        "w": 0.25,
+        "h": 0.1
       }
     },
     {
@@ -720,8 +796,8 @@
       "tagline": "Posture · Priorities · Progress · Decisions",
       "streamColor": "gold",
       "hotspot": {
-        "x": 0.5,
-        "y": 0.455,
+        "x": 0.627,
+        "y": 0.5,
         "side": "right"
       },
       "zoomTo": {
@@ -814,6 +890,16 @@
       "focus": {
         "x": 0.5,
         "y": 0.45
+      },
+      "order": 8,
+      "label": {
+        "side": "right"
+      },
+      "bounds": {
+        "x": 0.38,
+        "y": 0.18,
+        "w": 0.24,
+        "h": 0.37
       }
     },
     {
@@ -823,8 +909,8 @@
       "tagline": "Set priorities · Assign accountability · Approve action",
       "streamColor": "gold",
       "hotspot": {
-        "x": 0.5,
-        "y": 0.8,
+        "x": 0.35,
+        "y": 0.78,
         "side": "right"
       },
       "zoomTo": {
@@ -983,6 +1069,16 @@
       "focus": {
         "x": 0.5,
         "y": 0.48
+      },
+      "order": 9,
+      "label": {
+        "side": "left"
+      },
+      "bounds": {
+        "x": 0.17,
+        "y": 0.56,
+        "w": 0.66,
+        "h": 0.27
       }
     },
     {
@@ -993,7 +1089,7 @@
       "streamColor": "gold",
       "hotspot": {
         "x": 0.5,
-        "y": 0.905,
+        "y": 0.895,
         "side": "right"
       },
       "zoomTo": {
@@ -1106,7 +1202,17 @@
             }
           ]
         }
-      ]
+      ],
+      "order": 10,
+      "label": {
+        "side": "right"
+      },
+      "bounds": {
+        "x": 0.05,
+        "y": 0.845,
+        "w": 0.9,
+        "h": 0.1
+      }
     }
   ]
 }

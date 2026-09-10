@@ -44,15 +44,34 @@ function applyMaster(s, ox, oy, animate) {
   overlaysEl.style.transform = t;
 }
 
+// Base framing. Phones: cover-fit (the building fills the screen, edges crop). Larger screens: frame the
+// building's safe area (scene.safe) fully between the HUD and the bottom band, never smaller than the
+// plate's own contain-fit; the plate's soft margins and the blurred backdrop fill whatever is left.
 function computeBase() {
   const { vw, vh } = viewport();
-  const s0 = Math.max(vw / state.W, vh / state.H);
+  const cover = Math.max(vw / state.W, vh / state.H);
+  const safe = state.safe;
+  if (!safe || vw < 768) {
+    state.s0 = cover; state.ox0 = (vw - state.W * cover) / 2; state.oy0 = (vh - state.H * cover) / 2; return;
+  }
+  const css = getComputedStyle(document.documentElement);
+  const hudH = parseFloat(css.getPropertyValue('--hud-h')) || 56;
+  const botH = parseFloat(css.getPropertyValue('--bottom-h')) || 48;
+  const bandTop = hudH + 8, bandH = vh - hudH - botH - 16;
+  const fit = Math.min(vw / (safe.w * state.W), bandH / (safe.h * state.H));
+  const s0 = Math.min(cover, fit);
   state.s0 = s0;
-  state.ox0 = (vw - state.W * s0) / 2;
-  state.oy0 = (vh - state.H * s0) / 2;
+  // center the safe area horizontally and inside the band vertically
+  state.ox0 = vw / 2 - (safe.x + safe.w / 2) * state.W * s0;
+  state.oy0 = bandTop + bandH / 2 - (safe.y + safe.h / 2) * state.H * s0;
+  // keep the plate covering the viewport when it can
+  if (state.W * s0 >= vw) state.ox0 = Math.min(0, Math.max(vw - state.W * s0, state.ox0));
+  if (state.H * s0 >= vh) state.oy0 = Math.min(0, Math.max(vh - state.H * s0, state.oy0));
 }
 
-export async function loadMaster(src, fallback) {
+export async function loadMaster(src, fallback, safe) {
+  state.safe = safe || null;
+  const backdrop = document.getElementById('backdrop-img'); if (backdrop) backdrop.src = src;
   await new Promise((res, rej) => {
     masterImg.onload = res; masterImg.onerror = () => {
       if (fallback && masterImg.src.indexOf(fallback) === -1) { masterImg.src = fallback; } else rej(new Error('master failed'));
@@ -142,9 +161,8 @@ let px = 0, py = 0, tx = 0, ty = 0, raf = 0;
 function tick() {
   px += (tx - px) * 0.08; py += (ty - py) * 0.08;
   const active = !state.inRoom && !state.reduced;
-  const dx = active ? px * 14 : 0, dy = active ? py * 10 : 0, sc = active ? 1.015 : 1;
+  const dx = active ? px * 6 : 0, dy = active ? py * 4 : 0, sc = active ? 1.006 : 1;
   parallaxEl.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${sc})`;
-  pinsEl.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${sc})`;
   if (Math.abs(tx - px) > 0.001 || Math.abs(ty - py) > 0.001 || !active) raf = requestAnimationFrame(tick); else raf = 0;
 }
 if (matchMedia('(pointer: fine)').matches) {
@@ -155,7 +173,6 @@ if (matchMedia('(pointer: fine)').matches) {
   }, { passive: true });
 }
 parallaxEl.style.transformOrigin = '50% 50%';
-pinsEl.style.transformOrigin = '50% 50%';
 pinsEl.style.position = 'fixed'; pinsEl.style.inset = '0'; pinsEl.style.zIndex = '20'; pinsEl.style.pointerEvents = 'none';
 
 // ---- Resize ----
