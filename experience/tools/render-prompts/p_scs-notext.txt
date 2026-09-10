@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Security Compliance Services room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Show 3HUE assurance specialists working with client control owners to review evidence, validate control operation, and resolve readiness gaps. One specialist traces a requirement to its supporting control and evidence while a client owner reviews an outstanding action.
+
+The main wall display is titled “Controls & Evidence” and shows the relationship “Requirements → Controls → Evidence → Validation.” A secondary panel contains “Evidence Current,” “Review Required,” and “Remediation Open,” with restrained status indicators. Include an evidence index and assessment checklist on the table.”
+
+Connect the room to the shared intelligence atrium with a subtle cyan light path. Show continuous assurance as an organized, recurring business practice.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.

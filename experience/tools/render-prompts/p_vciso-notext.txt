@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Virtual CISO room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Create an executive advisory workspace with a 3HUE virtual CISO collaborating directly with the client’s CIO or internal security leader. Show a practical working discussion around program priorities, leadership responsibilities, resource needs, and the maturity roadmap.
+
+The main display is titled “Strategic Security Leadership” and contains “Business Priorities,” “Program Roadmap,” “Leadership Support,” and “Resource Alignment.” A secondary display presents “Current State,” “Target State,” and “Next Actions.” Include a concise executive briefing and an annotated roadmap on the table.”
+
+Use a subtle cyan connection to the shared intelligence atrium and an amber connection toward the executive boardroom. Convey experienced guidance, mentorship, and accountable program leadership.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.

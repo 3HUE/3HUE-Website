@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Risk Management Program room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Show a 3HUE risk advisor, technical analyst, and client business owners evaluating an organizational risk scenario. One person presents the business impact while another reviews treatment options.
+
+The main display is titled “Enterprise Risk Management.” Present a clean qualitative risk matrix beside a readable progression: “Findings → Risk Scenarios → Business Impact → Treatment.” A secondary panel contains “Risk Owner,” “Treatment Plan,” “Residual Risk,” and “Decision Required.” Use restrained amber accents to identify matters requiring leadership attention.”
+
+A subtle cyan connection links the room to the shared AiVRIC intelligence atrium. Convey disciplined analysis, accountable treatment, and informed business decisions.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.

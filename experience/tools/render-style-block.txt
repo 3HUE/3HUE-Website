@@ -1,0 +1,3 @@
+Match the reference image (tools/reference-inside-3hue.png): cinematic photoreal render, glass-and-steel headquarters at dusk, dark navy surfaces, brushed silver details, cyan (#1FB6FF) architectural illumination for program signal, warm amber light for executive decisions, city lights softly out of focus behind the glass. Landscape 16:9. People are diverse professionals in business attire, actively working. Keep technology visually subordinate to the architecture and the people.
+
+Output sizes: master 2560×1440 (or 2304×1536 to match the current build); room close-ups 2048×1152. Renders must contain no floating titles, captions, badges, numbers, or annotation text; the interface draws those in HTML. Short legible headings on in-scene wall displays are fine.

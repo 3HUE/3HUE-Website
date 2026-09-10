@@ -1,0 +1,9 @@
+Render a detailed standalone view of the executive boardroom inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, brushed silver details, cyan architectural accents, and warm amber lighting. Use a landscape 16:9 composition at a slightly elevated three-quarter angle.
+
+Show a 3HUE virtual CISO presenting to a diverse group of client executives around a substantial curved wood conference table. Include business, technology, finance, and operational leaders actively discussing priorities and assigning responsibility.
+
+The main display is titled “Executive Alignment & Decisions.” Present four clear sections: “Business Impact,” “Priority Risks,” “Maturity Progress,” and “Decisions Required.” A secondary action panel reads “Decision,” “Accountable Owner,” and “Target Date.” Include a concise board briefing on the table.”
+
+An amber intelligence connection enters from Client Vision, while a subtle return path carries approved direction toward the program rooms. Convey that 3HUE provides analysis and guidance while client leadership sets priorities, commits resources, and retains executive accountability.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.

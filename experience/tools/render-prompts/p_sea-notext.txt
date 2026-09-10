@@ -1,0 +1,11 @@
+Render a detailed standalone view of the Secure Engineering & Architecture bridge inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition.
+
+Create a long, elevated glass collaboration space that visibly connects the headquarters’ two program wings. Show security architects, cloud and infrastructure engineers, and a client technical owner translating governance requirements and risk findings into practical technical improvements.
+
+The main display is titled “Secure Engineering & Architecture (SEA).” Show a clear working sequence: “Requirements → Design → Implement → Validate.” Supporting displays contain a simplified enterprise architecture and a remediation workboard labeled “Control Gap,” “Technical Owner,” and “Validation Evidence.”
+
+Include architecture drawings, laptops, and a collaborative design review.”
+
+Cyan connections extend toward the program rooms and intelligence atrium. Convey hands-on engineering, secure design, and verified closure of control gaps.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.

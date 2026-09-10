@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Vendor Compliance Program room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Show a 3HUE third-party risk specialist collaborating with client procurement, legal, and business relationship owners. They are reviewing a vendor assessment, contractual obligations, and the actions needed to address identified gaps.
+
+The main display is titled “Third-Party Risk Management.” Show a clear supplier network grouped by business criticality. A secondary display contains the readable stages “Due Diligence,” “Risk Assessment,” “Contract Review,” “Ongoing Monitoring,” and “Offboarding.” A small action panel shows “Vendor Owner,” “Open Obligations,” and “Next Review.”
+
+Place the room title “Vendor Compliance Program (VCP)” prominently above the workspace. Add the caption “Assess vendors & monitor obligations.”
+
+A subtle cyan connection links the room to the shared AiVRIC intelligence atrium. Convey oversight across the vendor lifecycle and clear accountability for follow-up.

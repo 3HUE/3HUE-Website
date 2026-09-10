@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Information Security Program room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Show a 3HUE governance lead collaborating with client IT, security, and business process owners around a working table. Their activity should communicate establishing clear ownership and maintaining an operational security program.
+
+The main wall display is titled “Policy & Control Framework,” with four readable sections: “Policies,” “Standards,” “Control Baseline,” and “Asset Inventory.” A secondary display shows “Owner,” “Evidence,” and “Review Status.” Include organized policy documents and a control review on the table.
+
+Place the room title “Information Security Program (ISP)” prominently above the workspace. Add the caption “Policies, standards, controls & ownership.”
+
+A subtle cyan connection exits toward the shared AiVRIC intelligence atrium. Keep screen content illustrative, typography legible, and people actively engaged in the work.

@@ -1,0 +1,9 @@
+Render a detailed standalone view of the Cybersecurity Incident Response Program room inside 3HUE’s Governance Acceleration headquarters. Match the reference image’s cinematic realism, glass-and-steel architecture, dark navy surfaces, cyan illumination, brushed silver details, and warm lighting. Use a landscape 16:9 composition viewed through the open front of the room.
+
+Show a structured incident tabletop exercise involving a 3HUE incident coordinator, client IT leadership, a security operations representative, and legal or communications personnel. The atmosphere is focused, calm, and professional.
+
+The main display is titled “Incident Response Readiness” and shows “Prepare,” “Detect,” “Contain,” “Investigate,” and “Recover.” A second display presents “Roles & Escalation,” “Decision Log,” “Communications,” and “Recovery Priorities.” Include an incident playbook and exercise notes on the table.””
+
+A subtle cyan connection links the room to the shared intelligence atrium. Emphasize readiness, coordinated decisions, and continuity of business operations.
+
+Do not render any floating room title, caption, badge, number, or annotation text anywhere in the image; the interface draws those in HTML. The only text allowed is short, legible headings on the in-scene wall displays and panels described above. No watermark, no logo lockup.
