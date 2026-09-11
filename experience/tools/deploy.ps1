@@ -53,5 +53,15 @@ if ($NoPush) { Write-Host 'Committed (no push).' -ForegroundColor Green; exit 0 
 
 Step 'Push'
 $branch = git rev-parse --abbrev-ref HEAD
-git push origin $branch | Out-Host
+git push origin $branch 2>&1 | Out-Host
+if ($LASTEXITCODE -ne 0) {
+  $who = (git config user.name)
+  Write-Host "`nPush failed (git exit $LASTEXITCODE). The commit is saved locally; nothing was published." -ForegroundColor Red
+  Write-Host "If GitHub answered 403 'Permission denied to <account>', Windows is signed in to GitHub as an account without write access to 3HUE/3HUE-Website." -ForegroundColor Yellow
+  Write-Host "Fix once, then re-run:  git push origin $branch" -ForegroundColor Yellow
+  Write-Host "  - either add that account as a collaborator on github.com/3HUE/3HUE-Website (Settings > Collaborators), or" -ForegroundColor Yellow
+  Write-Host "  - switch the stored credential: Control Panel > Credential Manager > Windows Credentials > remove 'git:https://github.com', then push again and sign in as the 3HUE account, or" -ForegroundColor Yellow
+  Write-Host "  - push from GitHub Desktop, which keeps its own sign-in." -ForegroundColor Yellow
+  exit $LASTEXITCODE
+}
 Write-Host "`nPushed to origin/$branch. GitHub Pages will publish https://3hue.net/experience/ in a minute or two (hard-refresh: Ctrl+F5)." -ForegroundColor Green
