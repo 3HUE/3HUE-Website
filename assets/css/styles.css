@@ -5491,3 +5491,157 @@ ul.list-clean li::before {
   color: #a8d4ed;
   border-color: rgba(68, 168, 217, 0.28);
 }
+
+/* ---------- Inside the ISG Building (guided experience) ---------- */
+.nav-link-experience {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(68, 168, 217, 0.45);
+  background: linear-gradient(120deg, rgba(68, 168, 217, 0.16), rgba(68, 168, 217, 0.04));
+  color: var(--ink-strong);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-link-experience:hover {
+  color: var(--ink-strong);
+  border-color: var(--brand-primary);
+  background: linear-gradient(120deg, rgba(68, 168, 217, 0.28), rgba(68, 168, 217, 0.08));
+  box-shadow: var(--btn-glow);
+  transform: translateY(-1px);
+}
+.nav-link-experience[aria-current="page"]::after { display: none; }
+.nav-experience-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  color: var(--brand-primary);
+  flex: none;
+}
+.nav-experience-icon svg { width: 100%; height: 100%; }
+.nav-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  color: #fff;
+  line-height: 1.4;
+}
+.mobile-link-experience { gap: 10px; border-color: rgba(68, 168, 217, 0.5); background: linear-gradient(120deg, rgba(68, 168, 217, 0.18), rgba(68, 168, 217, 0.05)); text-decoration: none; }
+.mega-link-icon-play { color: var(--brand-primary); }
+.mega-link-icon-play svg { width: 22px; height: 22px; }
+.mega-link-experience { background: linear-gradient(120deg, rgba(68, 168, 217, 0.10), transparent); border-radius: var(--radius-sm); }
+
+.btn-tour {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(68, 168, 217, 0.55);
+  background: rgba(15, 23, 42, 0.35);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-tour:hover { background: rgba(68, 168, 217, 0.35); transform: translateY(-1px); box-shadow: var(--btn-glow); color: #fff; }
+.btn-tour-icon { display: inline-flex; width: 20px; height: 20px; color: var(--brand-primary); }
+.btn-tour-icon svg { width: 100%; height: 100%; }
+
+.experience-feature {
+  background: linear-gradient(180deg, var(--surface-2), transparent 60%);
+}
+.experience-feature-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+.experience-feature-media {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-subtle);
+  background: #05090f;
+  aspect-ratio: 16 / 9;
+}
+.experience-feature-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.experience-feature-media:hover img { transform: scale(1.03); }
+.experience-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(68, 168, 217, 0.85);
+  box-shadow: 0 0 0 14px rgba(68, 168, 217, 0.22), var(--shadow-brand);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.experience-play svg { width: 44px; height: 44px; }
+.experience-feature-media:hover .experience-play { transform: scale(1.06); background: var(--brand-primary); }
+.experience-chip {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(5, 9, 15, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+.experience-points { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: grid; gap: 10px; color: var(--ink-muted); }
+.experience-points li { padding-left: 22px; position: relative; }
+.experience-points li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; border-radius: 50%; background: var(--brand-primary); box-shadow: 0 0 0 4px rgba(68, 168, 217, 0.18); }
+.experience-points strong { color: var(--ink-strong); }
+.experience-meta { font-size: 13px; color: var(--ink-subtle); align-self: center; }
+
+.experience-band {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--hero-card-bg);
+  color: var(--hero-card-text);
+  border: 1px solid rgba(68, 168, 217, 0.35);
+  box-shadow: var(--shadow);
+}
+.experience-band h2 { color: #fff; margin: 6px 0 10px; }
+.experience-band p { color: var(--hero-card-muted); }
+.experience-band .eyebrow { color: var(--brand-primary); }
+.experience-band .experience-meta { color: var(--hero-card-muted); }
+.experience-band-media { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(255, 255, 255, 0.12); }
+.experience-band-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.experience-band-media .experience-play { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+.experience-band-media .experience-play svg { width: 34px; height: 34px; }
+
+.nav-experience-short { display: none; }
+@media (max-width: 1500px) {
+  .nav-experience-long { display: none; }
+  .nav-experience-short { display: inline; }
+}
+@media (max-width: 960px) {
+  .experience-feature-grid, .experience-band { grid-template-columns: 1fr; }
+}
+[data-theme="dark"] .nav-link-experience { color: #fff; }
+[data-theme="dark"] .experience-feature { background: linear-gradient(180deg, rgba(68, 168, 217, 0.08), transparent 60%); }
