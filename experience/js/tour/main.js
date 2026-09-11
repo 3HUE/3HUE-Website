@@ -184,4 +184,4 @@ function buildSummary() {
   return { text: lines.join('\n'), visited: state.visited.slice(), answers: { ...A } };
 }
 
-main().catch((err) => { console.error(err); boot.textContent = 'Could not load the tour. Check the console.'; boot.classList.remove('out'); });
+main().catch((err) => { console.error(err); boot.innerHTML = 'Could not load the tour.<br><small style="letter-spacing:0;text-transform:none;opacity:.7">' + String(err && err.message || err).replace(/[<>]/g, '') + ' — try a hard refresh (Ctrl+F5).</small>'; boot.classList.remove('out'); });
