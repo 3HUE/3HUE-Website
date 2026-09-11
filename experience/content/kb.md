@@ -1,4 +1,4 @@
-# 3HUE knowledge base (for Ava, the 3HUE tour guide)
+# 3HUE knowledge base (for Ava and Huey, the 3HUE tour guides)
 
 Sources: ISG Framework Justification packet v2025.1; "The Future of Managed Security Services" boardroom deck (Spring 2025); Inside 3HUE experience content.
 

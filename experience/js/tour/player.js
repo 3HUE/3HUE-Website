@@ -9,8 +9,11 @@ export const settings = { muted: false, captions: true };
 
 function setState(s) { stateEl.textContent = s; stateEl.dataset.state = s; }
 
-async function timings(id) {
-  try { const r = await fetch(`media/voice/${id}.json`, { cache: 'force-cache' }); if (!r.ok) return null; return (await r.json()).words; } catch (e) { return null; }
+let guideId = 'ava';
+export function setGuide(id) { guideId = id; }
+export function clipUrl(id, who) { return `media/voice/${who || guideId}/${id}.mp3`; }
+async function timings(id, who) {
+  try { const r = await fetch(`media/voice/${who || guideId}/${id}.json`, { cache: 'force-cache' }); if (!r.ok) return null; return (await r.json()).words; } catch (e) { return null; }
 }
 function layoutWords(text, words) {
   // Map the spoken word list onto the text tokens (edge-tts splits on spaces; punctuation stays attached).
@@ -25,14 +28,17 @@ function layoutWords(text, words) {
   return { spans, starts };
 }
 
-export function preload(id) { const a = new Audio(); a.preload = 'auto'; a.src = `media/voice/${id}.mp3`; fetch(`media/voice/${id}.json`, { cache: 'force-cache' }).catch(() => {}); }
+export function preload(id, who) { const a = new Audio(); a.preload = 'auto'; a.src = clipUrl(id, who); fetch(`media/voice/${who || guideId}/${id}.json`, { cache: 'force-cache' }).catch(() => {}); }
 
-/** Speak one line. Returns a promise that resolves {skipped:boolean}. */
-export function speak(line) {
+/** Speak one line. opts: { who: speaker id, text: display text override, url: audio override (live-personalised) }.
+ *  Returns a promise that resolves {skipped:boolean}. */
+export function speak(line, opts = {}) {
   cancel();
   return new Promise(async (resolve) => {
-    const words = await timings(line.id);
-    const { spans, starts } = layoutWords(line.text, words);
+    const who = opts.who || line.who || guideId;
+    const text = opts.text || line.plain || line.text;
+    const words = opts.url ? null : await timings(line.id, who);
+    const { spans, starts } = layoutWords(text, words);
     const me = { resolve, raf: 0, done: false };
     current = me;
     const finish = (skipped) => {
@@ -44,7 +50,7 @@ export function speak(line) {
       resolve({ skipped });
     };
     me.finish = finish;
-    audio.src = `media/voice/${line.id}.mp3`;
+    audio.src = opts.url || clipUrl(line.id, who);
     audio.muted = settings.muted;
     setMode('speaking'); setState('speaking');
     let fallbackTimer = 0;
@@ -52,8 +58,9 @@ export function speak(line) {
       if (me.done) return;
       const tcur = audio.currentTime;
       let last = -1;
+      const dur = (!starts.length && isFinite(audio.duration) && audio.duration > 0) ? audio.duration : 0;
       for (let i = 0; i < spans.length; i++) {
-        const on = starts.length ? tcur >= starts[i] - 0.05 : true;
+        const on = starts.length ? tcur >= starts[i] - 0.05 : (dur ? tcur >= (i / spans.length) * dur * 0.96 : true);
         spans[i].classList.toggle('on', on); if (on) last = i;
       }
       spans.forEach((s, i) => s.classList.toggle('now', i === last && !audio.paused));

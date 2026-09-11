@@ -4,6 +4,20 @@
   "title": "Your 3HUE guide",
   "voice": "en-US-AvaNeural"
  },
+ "guides": {
+  "ava": {
+   "name": "Ava",
+   "title": "Your 3HUE guide",
+   "voice": "en-US-AvaNeural",
+   "tone": "blue"
+  },
+  "huey": {
+   "name": "Huey",
+   "title": "Your 3HUE guide",
+   "voice": "en-US-AndrewNeural",
+   "tone": "teal"
+  }
+ },
  "start": "arrive",
  "chapters": [
   "arrive",
@@ -57,17 +71,200 @@
     {
      "id": "arrive-1",
      "text": "Welcome to 3HUE. I'm Ava, and I'll be your guide through the building today.",
-     "show": null
+     "show": null,
+     "who": "ava",
+     "plain": null
     },
     {
      "id": "arrive-2",
      "text": "Everything you're about to see is real: six managed security programs, an engineering team, a boardroom, and the pathway that connects them. It's how 3HUE turns governance into decisions executives can act on.",
-     "show": null
+     "show": null,
+     "who": "ava",
+     "plain": null
     },
     {
      "id": "arrive-3",
-     "text": "Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you.",
-     "show": null
+     "text": "One quick thing before we walk — what should I call you? Say it or type it. Or skip it, and we'll just get going.",
+     "show": null,
+     "who": "ava",
+     "plain": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "type": "name",
+    "prompt": "What should I call you?",
+    "next": "meet",
+    "remember": "name"
+   },
+   "guide": null
+  },
+  "meet": {
+   "type": "scene",
+   "chapter": "Arrival",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.08
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "meet-1",
+     "text": "Great to meet you, {name}. Before we set off — this is Huey, my co-worker. He's walked more visitors through this building than anyone here.",
+     "show": null,
+     "who": "ava",
+     "plain": "Great. Before we set off — this is Huey, my co-worker. He's walked more visitors through this building than anyone here."
+    },
+    {
+     "id": "meet-2",
+     "text": "Hi {name} — good to have you here.",
+     "show": null,
+     "who": "huey",
+     "plain": "Hi — good to have you here."
+    },
+    {
+     "id": "meet-3",
+     "text": "So — would you like Huey to lead the tour today? Otherwise you're stuck with me, and I promise I'm good company.",
+     "show": null,
+     "who": "ava",
+     "plain": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Would you like Huey to lead the tour?",
+    "remember": "guide",
+    "options": [
+     {
+      "label": "Yes — let Huey take it from here",
+      "next": "handoff",
+      "tag": "huey",
+      "sub": null
+     },
+     {
+      "label": "No thanks, Ava — let's go",
+      "next": "stay",
+      "tag": "ava",
+      "sub": null
+     }
+    ]
+   },
+   "guide": null
+  },
+  "handoff": {
+   "type": "scene",
+   "chapter": "Arrival",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.08
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "handoff-1",
+     "text": "All yours, Huey. Don't let them skip the boardroom.",
+     "show": null,
+     "who": "ava",
+     "plain": null
+    },
+    {
+     "id": "handoff-2",
+     "text": "I never do. Thanks, Ava — I'll take good care of them.",
+     "show": null,
+     "who": "huey",
+     "plain": null
+    },
+    {
+     "id": "handoff-3",
+     "text": "Alright, {name}. Let's walk.",
+     "show": null,
+     "who": "huey",
+     "plain": "Alright. Let's walk."
+    }
+   ],
+   "next": "audience",
+   "choice": null,
+   "guide": "huey"
+  },
+  "stay": {
+   "type": "scene",
+   "chapter": "Arrival",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.08
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "stay-1",
+     "text": "Then it's you and me. Huey, I'll send them your way if they have the hard questions.",
+     "show": null,
+     "who": "ava",
+     "plain": null
+    },
+    {
+     "id": "stay-2",
+     "text": "Any time. Enjoy the building.",
+     "show": null,
+     "who": "huey",
+     "plain": null
+    }
+   ],
+   "next": "audience",
+   "choice": null,
+   "guide": "ava"
+  },
+  "audience": {
+   "type": "scene",
+   "chapter": "Arrival",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.08
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "audience-1",
+     "text": "Before we walk, tell me who I'm walking with, {name}. I'll shape the tour around what matters to you.",
+     "show": null,
+     "who": null,
+     "plain": "Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you."
     }
    ],
    "next": null,
@@ -100,7 +297,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "why": {
    "type": "scene",
@@ -123,7 +321,9 @@
     {
      "id": "why-1",
      "text": "Let's start where most security conversations end — in the boardroom. The reason 3HUE built this model is simple: the adversary got faster than the traditional way of defending.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "why-2",
@@ -144,7 +344,9 @@
         "l": "rise in deepfake fraud"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "why-3",
@@ -165,16 +367,21 @@
         "l": "consumer abandonment after data misuse"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "why-4",
      "text": "Tools alone can't close that gap. What closes it is a program: governance that sets direction, engineering that closes the gaps, and operations that watch around the clock — all feeding one picture the executives at this table can trust.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "model",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "model": {
    "type": "scene",
@@ -205,17 +412,23 @@
        "02 · Secure Engineering & Architecture",
        "03 · Security Operations — 24/7 SOC"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "model-2",
      "text": "The wings are the GRC management layer — six managed programs that set policy, manage risk, respond to incidents, validate vendors, and keep you audit-ready. Above them, the engineering bridge turns those findings into architecture and hands-on fixes. And underneath everything, a managed security operations center watches in real time.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "model-3",
-     "text": "Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, and I'll take you there first.",
-     "show": null
+     "text": "Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, {name}, and I'll take you there first.",
+     "show": null,
+     "who": null,
+     "plain": "Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, and I'll take you there first."
     }
    ],
    "next": null,
@@ -260,7 +473,8 @@
       "sub": "Virtual CISO"
      }
     ]
-   }
+   },
+   "guide": null
   },
   "isp": {
    "type": "scene",
@@ -283,7 +497,9 @@
     {
      "id": "isp-1",
      "text": "This is the Information Security Program room — where a formal program is built and kept alive. Policies, standards, a control baseline, and clear ownership, aligned to frameworks like SCF, NIST, or ISO.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "isp-2",
@@ -297,7 +513,9 @@
        "Consistent governance across operations",
        "Scales with regulatory & customer demands"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "isp-3",
@@ -318,12 +536,14 @@
         "l": "to a mature compliant program"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -369,7 +589,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "cirp": {
    "type": "scene",
@@ -392,7 +613,9 @@
     {
      "id": "cirp-1",
      "text": "The incident response room. When something goes wrong at two in the morning, this is the program that decides who does what, in what order, and who gets told.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "cirp-2",
@@ -406,7 +629,9 @@
        "Annual simulations and tabletop exercises",
        "Lessons learned flow back into the risk register"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "cirp-3",
@@ -427,12 +652,14 @@
         "l": "incident coordination"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -478,7 +705,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "vciso": {
    "type": "scene",
@@ -501,7 +729,9 @@
     {
      "id": "vciso-1",
      "text": "The executive advisory office. A Virtual CISO is a former CISO who sits with your leadership — shaping strategy, driving decisions, and owning the security conversation with the board.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "vciso-2",
@@ -514,7 +744,9 @@
        "Option 2 · CISO Support — build internal capability",
        "Option 3 · Fractional CISO — staff augmentation"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "vciso-3",
@@ -535,12 +767,14 @@
         "l": "risk & compliance reporting"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -586,7 +820,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "rmp": {
    "type": "scene",
@@ -609,7 +844,9 @@
     {
      "id": "rmp-1",
      "text": "The risk room. The Risk Management Program establishes a real risk function: identify, prioritize, and mitigate — and then keep doing it, so leadership sees risk posture as a living picture, not an annual report.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "rmp-2",
@@ -623,7 +860,9 @@
        "Investment prioritized on real risk",
        "Ready for regulators and partner due diligence"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "rmp-3",
@@ -644,12 +883,14 @@
         "l": "risk monitoring & advisory"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -695,7 +936,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "scs": {
    "type": "scene",
@@ -718,7 +960,9 @@
     {
      "id": "scs-1",
      "text": "The compliance room — Security Compliance Services. The job here is continuous audit-readiness: never scrambling before an audit, because evidence is being collected and controls are being validated all year.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "scs-2",
@@ -732,7 +976,9 @@
        "Audit stakeholder preparation",
        "SOC 2, PCI-DSS, HIPAA, HITRUST, CMMC — one control framework"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "scs-3",
@@ -753,12 +999,14 @@
         "l": "control framework for every regulation"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -804,7 +1052,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "vcp": {
    "type": "scene",
@@ -827,7 +1076,9 @@
     {
      "id": "vcp-1",
      "text": "The third-party risk room. Your risk doesn't stop at your firewall — it lives in every supplier with access to your data. The Vendor Compliance Program manages that exposure continuously.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "vcp-2",
@@ -841,7 +1092,9 @@
        "Attack-surface posture validation",
        "Audit-ready vendor assurance records"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "vcp-3",
@@ -862,12 +1115,14 @@
         "l": "third-party assurance"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": null,
    "choice": {
-    "prompt": "Where next?",
+    "prompt": "Where next, {name}?",
     "remember": null,
     "options": [
      {
@@ -913,7 +1168,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   },
   "sea": {
    "type": "scene",
@@ -945,12 +1201,16 @@
        "Secure",
        "Operate"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "sea-2",
      "text": "This is what makes the model different from a report. A finding in a risk room becomes a design change, a hardened configuration, or an identity control — and it's tracked back to the risk register when it's done.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "sea-3",
@@ -960,11 +1220,14 @@
       "title": "On your platform",
       "body": "M365 GRC deployment for smaller estates, or configuration and maintenance of your existing enterprise GRC system.",
       "img": "media/systems/m365-grc.jpg"
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": "fabric",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "fabric": {
    "type": "scene",
@@ -987,7 +1250,9 @@
     {
      "id": "fabric-1",
      "text": "This is the heart of the building: the AiVRIC Risk Intelligence Fabric. AiVRIC is the platform 3HUE runs to monitor your estate and to power Client Vision — and it's where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "fabric-2",
@@ -1001,7 +1266,9 @@
        "Progress",
        "Decisions"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "fabric-3",
@@ -1011,7 +1278,9 @@
       "title": "Continuous change detection",
       "body": "Real-time detection of unauthorized changes and misconfigurations, with risk-posture notifications tied to your GRC runbooks.",
       "img": "media/systems/change-detection.png"
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "fabric-4",
@@ -1032,11 +1301,14 @@
         "l": "commercial & open-source tools"
        }
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     }
    ],
    "next": "exec",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "exec": {
    "type": "scene",
@@ -1059,12 +1331,16 @@
     {
      "id": "exec-1",
      "text": "Back at the table. This is where every stream ends — 3HUE advisors sit with your executives to translate findings into business impact, set priorities, assign accountability, and approve action.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     },
     {
      "id": "exec-2",
-     "text": "The business case sounds different depending on who's asking. Tell me whose lens to use, and I'll make the case the way they'd want to hear it.",
-     "show": null
+     "text": "The business case sounds different depending on who's asking. Tell me whose lens to use, {name}, and I'll make the case the way they'd want to hear it.",
+     "show": null,
+     "who": null,
+     "plain": "The business case sounds different depending on who's asking. Tell me whose lens to use, and I'll make the case the way they'd want to hear it."
     }
    ],
    "next": null,
@@ -1097,7 +1373,8 @@
       "sub": "Enterprise value, oversight"
      }
     ]
-   }
+   },
+   "guide": null
   },
   "exec-ceo": {
    "type": "scene",
@@ -1128,16 +1405,21 @@
        "Revenue growth through secure innovation",
        "No high-impact incident stalling strategic initiatives"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "exec-ceo-2",
      "text": "And the managed SOC protects uptime and customer trust in real time. The argument to make: quantify avoided costs — breach recovery, lost deals, delayed M&A — and frame security as what lets the company move faster, not slower.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "engage",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "exec-cfo": {
    "type": "scene",
@@ -1168,16 +1450,21 @@
        "Lower total cost of maintaining compliance",
        "Predictable security spend aligned to goals"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "exec-cfo-2",
      "text": "The managed SOC delivers twenty-four-seven response at a predictable cost with no added headcount or tech licenses. Show the ROI as breach costs avoided, audit savings, and — critically — budget volatility removed.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "engage",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "exec-cio": {
    "type": "scene",
@@ -1208,16 +1495,21 @@
        "Security-aligned IT execution that scales",
        "Fewer disruptions from cyber incidents"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "exec-cio-2",
      "text": "The managed SOC watches infrastructure and workloads around the clock and takes load off internal teams. Map the investment to KPIs the CIO already reports: faster deployment, fewer audit findings, better SLA compliance.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "engage",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "exec-board": {
    "type": "scene",
@@ -1248,16 +1540,21 @@
        "Faster time-to-market through trusted transformation",
        "Reduced regulatory & reputational exposure"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "exec-board-2",
      "text": "The managed SOC gives twenty-four-seven visibility and board assurance on incident response. Tell fiduciary-aligned stories — governance lapses, disclosure risk, recovery leadership — and use peer benchmarks to show where similar companies invest to stay compliant and competitive.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "engage",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "engage": {
    "type": "scene",
@@ -1289,7 +1586,9 @@
        "Performance reporting",
        "Shared responsibility matrix"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "engage-2",
@@ -1303,7 +1602,9 @@
        "Client portal, risk register, vendor profiles",
        "Continuous change detection"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "engage-3",
@@ -1317,16 +1618,21 @@
        "Managed zero-trust network access",
        "Threat hunting & red-team testing"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "engage-4",
      "text": "Pricing follows the same shape: choose a leadership option, choose your managed programs, choose your core security services. Everything is scoped and committed for the year — no surprise headcount, no tech licenses to carry.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "pathway",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "pathway": {
    "type": "scene",
@@ -1359,12 +1665,16 @@
        "Integrate",
        "Optimize"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "pathway-2",
-     "text": "So — where are you today?",
-     "show": null
+     "text": "So, {name} — where are you today?",
+     "show": null,
+     "who": null,
+     "plain": "So — where are you today?"
     }
    ],
    "next": null,
@@ -1391,7 +1701,8 @@
       "sub": "SOC 2, HIPAA, CMMC, PCI"
      }
     ]
-   }
+   },
+   "guide": null
   },
   "start-none": {
    "type": "scene",
@@ -1424,16 +1735,21 @@
        "Plan of actions & milestones",
        "Cyber-risk advisory retainer"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "start-none-2",
      "text": "It starts with a meeting with Client Success for a deep-dive overview and initial discovery. From there you'll have a scorecard, a remediation plan, and a plan of actions and milestones to build the program on.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "close",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "start-partial": {
    "type": "scene",
@@ -1464,16 +1780,21 @@
        "Modernization opportunities",
        "Stakeholder recommendations session"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "start-partial-2",
      "text": "It starts with a discovery meeting with Client Success, followed by a second session with your stakeholders to walk through the recommendations — then you decide which managed programs to switch on.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "close",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "start-urgent": {
    "type": "scene",
@@ -1504,16 +1825,21 @@
        "Gap reports & remediation plans",
        "Engineering resources to close gaps"
       ]
-     }
+     },
+     "who": null,
+     "plain": null
     },
     {
      "id": "start-urgent-2",
      "text": "Discovery with Client Success, then a stakeholder session on the recommendations, and engineering resources standing by to close the gaps before the auditor does.",
-     "show": null
+     "show": null,
+     "who": null,
+     "plain": null
     }
    ],
    "next": "close",
-   "choice": null
+   "choice": null,
+   "guide": null
   },
   "close": {
    "type": "scene",
@@ -1535,13 +1861,17 @@
    "lines": [
     {
      "id": "close-1",
-     "text": "That's the building. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table.",
-     "show": null
+     "text": "That's the building, {name}. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table.",
+     "show": null,
+     "who": null,
+     "plain": "That's the building. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table."
     },
     {
      "id": "close-2",
-     "text": "I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?",
-     "show": null
+     "text": "It's been a pleasure walking it with you, {name}. I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?",
+     "show": null,
+     "who": null,
+     "plain": "It's been a pleasure walking it with you. I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?"
     }
    ],
    "next": null,
@@ -1574,7 +1904,8 @@
       "sub": null
      }
     ]
-   }
+   },
+   "guide": null
   }
  }
 }

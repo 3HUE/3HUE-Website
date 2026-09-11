@@ -94,7 +94,12 @@ export function open(prefill) {
   $('ask-stop').querySelector('span').textContent = ctx.chapterName || 'Inside 3HUE';
   $('paused').hidden = false; $('paused-pos').textContent = ctx.position || '';
   renderContext(ctx);
-  if (!thread.children.length) { const g = addAI("Hi — I'm Ava. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.", false, { audio: 'media/voice/console-greeting.mp3' }); speak(g); }
+  if (!thread.children.length) {
+    const G = guideNow(), nm = hooks.name ? hooks.name() : '';
+    const text = `Hi${nm ? ' ' + nm : ''} — I'm ${G.name}. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.`;
+    // with a name and a backend, the greeting is spoken live (personalised); otherwise the pre-rendered clip
+    const g = addAI(text, false, { audio: (nm && api.hasBackend()) ? null : clip('console-greeting') }); speak(g);
+  }
   showTab('conv');
   if (prefill) input.value = prefill;
   setTimeout(() => input.focus(), 60);
@@ -119,27 +124,34 @@ function renderTranscript() {
   $('ask-transcript').innerHTML = ids.length ? ids.map((id) => `<h5>${esc(T.nodes[id].chapter)}</h5>` + T.nodes[id].lines.map((l) => `<p class="${id === ctx.node ? 'now' : ''}">${esc(l.text)}</p>`).join('')).join('') : '<p>Nothing yet — the transcript fills in as the tour goes.</p>';
 }
 
+function guideNow() { return hooks.guide ? hooks.guide() : { id: 'ava', name: 'Ava', voice: 'en-US-AvaNeural' }; }
+function clip(id) { return id ? (/[\/.]/.test(id) ? id : `media/voice/${guideNow().id}/${id}.mp3`) : null; }
 function addYou(text) { const d = document.createElement('div'); d.className = 'msg you'; d.innerHTML = `<div class="meta"><b>You</b>${stamp()}</div><div class="t">${esc(text)}</div>`; thread.appendChild(d); scrollThread(); }
 function addAI(text, withActions = true, meta = {}) {
   const d = document.createElement('div'); d.className = 'msg ai';
-  d.innerHTML = `<span class="av"></span><div class="meta"><b>Ava</b>${stamp()}</div><div class="t">${esc(text)}</div>` +
+  d.innerHTML = `<span class="av"></span><div class="meta"><b>${esc(guideNow().name)}</b>${stamp()}</div><div class="t">${esc(text)}</div>` +
     `<button class="say" type="button" title="Play this answer" aria-label="Play this answer"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></button>` +
     (withActions ? `<div class="acts"><button class="btn" data-act="email" type="button">Email me this answer</button></div>` : '');
-  d._text = text; d._audio = meta.audio || null;
+  d._text = text; d._audio = clip(meta.audio);
   d.querySelector('.say').addEventListener('click', () => speak(d));
-  d.querySelectorAll('[data-act="email"]').forEach((b) => b.addEventListener('click', () => offerEmail({ subject: meta.question ? `Your question: ${meta.question}` : 'Your answer from Ava at 3HUE', text: `Q: ${meta.question || ''}\n\nA: ${text}`, kind: 'answer' })));
+  d.querySelectorAll('[data-act="email"]').forEach((b) => b.addEventListener('click', () => offerEmail({ subject: meta.question ? `Your question: ${meta.question}` : `Your answer from ${guideNow().name} at 3HUE`, text: `Q: ${meta.question || ''}\n\nA: ${text}`, kind: 'answer' })));
   thread.appendChild(d); scrollThread(); return d;
 }
 function scrollThread() { const pane = thread.parentElement; requestAnimationFrame(() => { pane.scrollTop = pane.scrollHeight; }); }
 
 async function askQuestion(q) {
   addYou(q); stopSpeech();
-  const th = document.createElement('div'); th.className = 'msg ai thinking'; th.innerHTML = `<span class="av"></span><div class="meta"><b>Ava</b></div><div class="t">Thinking</div>`; thread.appendChild(th); scrollThread();
+  const th = document.createElement('div'); th.className = 'msg ai thinking'; th.innerHTML = `<span class="av"></span><div class="meta"><b>${esc(guideNow().name)}</b></div><div class="t">Thinking</div>`; thread.appendChild(th); scrollThread();
   try {
     const res = await api.ask(q, history, hooks.context ? hooks.context() : null);
     th.remove();
     history.push({ role: 'user', content: q }, { role: 'assistant', content: res.answer });
-    const d = addAI(res.answer, true, { question: q, audio: res.audio || null });
+    const nm = hooks.name ? hooks.name() : '';
+    let answer = res.answer;
+    // demo mode: weave the visitor's name into the first local answer (text only; the clip stays generic)
+    if (res.source === 'faq' && nm && history.length <= 2 && !/\{guide\}/.test(answer)) answer = answer.replace(/^(Good question|Great question)/, `$1, ${nm}`);
+    answer = answer.replace(/\{guide\}/g, guideNow().name);
+    const d = addAI(answer, true, { question: q, audio: res.audio || null });
     speak(d);
   } catch (e) {
     th.remove(); addAI("I couldn't reach the knowledge base just now. You can reach 3HUE's Client Success team directly at 855-374-7129 or success@3hue.net — or try again in a moment.", false, {});
@@ -154,7 +166,7 @@ async function speak(msgEl) {
   if (document.body.classList.contains('voice-muted')) return;
   stopSpeech(); const run = ++speakRun; sayBtn = btn;
   let url = msgEl._audio;
-  if (!url) { btn.classList.add('wait'); url = await api.tts(spokenForm(text)); btn.classList.remove('wait'); if (run !== speakRun) return; if (url) msgEl._audio = url; }
+  if (!url) { btn.classList.add('wait'); url = await api.tts(spokenForm(text), guideNow().voice); btn.classList.remove('wait'); if (run !== speakRun) return; if (url) msgEl._audio = url; }
   if (url) {
     btn.classList.add('on');
     await player.playClip(url);
@@ -164,7 +176,8 @@ async function speak(msgEl) {
   if (!('speechSynthesis' in window)) return;
   utter = new SpeechSynthesisUtterance(spokenForm(text));
   const voices = speechSynthesis.getVoices();
-  const pick = voices.find((v) => /en-US/i.test(v.lang) && /Ava|Samantha|Aria|Jenny|Zira|Google US English/i.test(v.name)) || voices.find((v) => /en/i.test(v.lang));
+  const male = guideNow().id === 'huey';
+  const pick = voices.find((v) => /en-US/i.test(v.lang) && (male ? /Andrew|Guy|Daniel|Alex|David|Mark|Google US English/i : /Ava|Samantha|Aria|Jenny|Zira|Google US English/i).test(v.name)) || voices.find((v) => /en/i.test(v.lang));
   if (pick) utter.voice = pick; utter.rate = 1.02;
   utter.onstart = () => { setMode('speaking'); btn.classList.add('on'); };
   utter.onend = utter.onerror = () => { setMode('idle'); btn.classList.remove('on'); };
@@ -192,7 +205,8 @@ export function offerEmail(payload) {
   pendingEmail = payload; capNote.textContent = ''; capNote.className = 'note';
   capTitle.textContent = payload.kind === 'summary' ? 'Send my tour summary' : 'Send this answer to your inbox';
   capSub.textContent = 'Quick contact details — then we pick the tour back up.';
-  capture.hidden = false; showTab('conv'); capture.scrollIntoView({ behavior: 'smooth', block: 'end' }); capture.querySelector('[name=name]').focus();
+  const nmField = capture.querySelector('[name=name]'); if (!nmField.value && hooks.name && hooks.name()) nmField.value = hooks.name();
+  capture.hidden = false; showTab('conv'); capture.scrollIntoView({ behavior: 'smooth', block: 'end' }); (nmField.value ? capture.querySelector('[name=email]') : nmField).focus();
 }
 async function submitCapture(e) {
   e.preventDefault(); if (!pendingEmail) return;
@@ -209,6 +223,7 @@ async function submitCapture(e) {
 export function openSummaryEmail() {
   if (root.hidden) open();
   const s = hooks.summary ? hooks.summary() : { text: '' };
-  addAI("Here's the summary I'll send — the rooms we visited and the next step we discussed. Just add where to send it.", false, {});
+  const nm = hooks.name ? hooks.name() : '';
+  addAI(`Here's the summary I'll send${nm ? ', ' + nm : ''} — the rooms we visited and the next step we discussed. Just add where to send it.`, false, {});
   offerEmail({ subject: 'Your Inside 3HUE tour summary', text: s.text, kind: 'summary' });
 }

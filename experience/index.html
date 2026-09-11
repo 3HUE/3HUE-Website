@@ -40,7 +40,7 @@
     <button class="btn icon" id="c-mute" type="button" title="Mute voice" aria-label="Mute voice" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg><svg class="i-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="m17 9 4 6M21 9l-4 6"/></svg></button>
     <button class="btn icon" id="c-cc" type="button" title="Captions" aria-label="Captions" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 12h3M13 12h3M8 15h8"/></svg></button>
     <button class="btn" id="c-map" type="button" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h12"/></svg>Tour map</button>
-    <button class="btn primary" id="c-ask" type="button"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.4A8 8 0 1 1 21 12z"/></svg>Ask Ava</button>
+    <button class="btn primary" id="c-ask" type="button"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.4A8 8 0 1 1 21 12z"/></svg>Ask <span data-guide-name>Ava</span></button>
   </div>
 </header>
 
@@ -74,7 +74,7 @@
   <div class="console" role="dialog" aria-label="Ask the tour guide">
     <div class="head">
       <canvas id="ask-orb" width="120" height="120" aria-hidden="true"></canvas>
-      <div class="who"><b>Ava</b><span>Your 3HUE tour guide</span></div>
+      <div class="who"><b data-guide-name>Ava</b><span>Your 3HUE tour guide</span></div>
       <div class="win">
         <button class="btn icon ghost" id="ask-min" type="button" title="Minimize" aria-label="Minimize"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
         <button class="btn icon ghost" id="ask-close" type="button" title="Back to tour" aria-label="Back to tour"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -118,7 +118,7 @@
       <a class="talk" href="https://info.3hue.net/start-now" target="_blank" rel="noopener">Talk to 3HUE<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
     </div>
   </div>
-  <button class="pill" id="ask-pill" type="button" hidden><canvas width="60" height="60" aria-hidden="true"></canvas><b>Ava</b><span>Ask the tour guide</span></button>
+  <button class="pill" id="ask-pill" type="button" hidden><canvas width="60" height="60" aria-hidden="true"></canvas><b data-guide-name>Ava</b><span>Ask the tour guide</span></button>
 </div>
 <div id="paused" hidden><i></i><b>Tour paused</b><span id="paused-pos"></span><button class="btn primary" id="paused-resume" type="button"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>Resume tour</button></div>
 
@@ -158,7 +158,7 @@
     </svg><img src="media/brand/3hue-shield.png" alt=""></div>
     <div class="eyebrow">3HUE Information Security Group</div>
     <h1>A guided tour of the ISG building.</h1>
-    <p>Ava, your 3HUE guide, will walk you through six managed programs, the engineering bridge, the AiVRIC-powered fabric, and the boardroom — shaping the route around what matters to you. About ten minutes, with sound.</p>
+    <p>Ava — or her co-worker Huey, your choice — will walk you through six managed programs, the engineering bridge, the AiVRIC-powered fabric, and the boardroom — shaping the route around what matters to you. About ten minutes, with sound.</p>
     <div class="actions">
       <button class="btn primary" id="intro-enter" type="button"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>Begin the tour</button>
       <button class="btn" id="intro-skip" type="button">Skip the opening</button>

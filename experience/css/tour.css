@@ -311,3 +311,20 @@ body.ask-open #callout { opacity: 0; }
   #ask .capture .grid { grid-template-columns: 1fr; }
   #title-card { top: 18%; padding: 0 16px; width: 100%; }
 }
+
+/* ---------- name / alias capture ---------- */
+.choices.name .name-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+#dialogue .choices.name .btn { display: inline-flex; grid-template-columns: none; opacity: 1; transform: none; animation: none; padding: 10px 16px; text-align: center; }
+#dialogue .choices.name .btn.primary { background: var(--blue); border-color: var(--blue); color: #03111c; }
+#dialogue .choices.name .btn.primary:hover { background: #4cc6ff; transform: none; }
+#dialogue .choices.name .btn.icon { width: 42px; height: 42px; padding: 0; justify-content: center; }
+#dialogue .choices.name .btn:hover { transform: none; }
+.choices.name input { flex: 1 1 220px; min-width: 0; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(8,15,28,0.7); color: var(--text); font: inherit; font-size: 15px; }
+.choices.name input:focus { outline: 2px solid var(--blue); outline-offset: 1px; border-color: transparent; }
+.choices.name .btn.mic.on { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 0 4px rgba(31,182,255,0.18); }
+.choices.name .btn.ghost { border-color: transparent; color: var(--text-muted); }
+.choices.name .hint { flex-basis: 100%; color: var(--text-dim); font-size: 12px; }
+/* Huey's accent */
+body[data-guide="huey"] { --blue: #2ee59d; }
+body[data-guide="huey"] .btn.primary { background: #2ee59d; border-color: #2ee59d; }
+body[data-guide="huey"] .btn.primary:hover { background: #5cf0b6; }

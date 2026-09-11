@@ -5,6 +5,10 @@ import json, os
 
 R = 'media/scene/rooms/'
 G = {'name': 'Ava', 'title': 'Your 3HUE guide', 'voice': 'en-US-AvaNeural'}
+GUIDES = {   # two personas; every unpinned line is rendered in both voices (media/voice/<id>/)
+    'ava':  {'name': 'Ava',  'title': 'Your 3HUE guide', 'voice': 'en-US-AvaNeural',    'tone': 'blue'},
+    'huey': {'name': 'Huey', 'title': 'Your 3HUE guide', 'voice': 'en-US-AndrewNeural', 'tone': 'teal'},
+}
 
 def cam(x0=0.5, y0=0.5, z0=1.0, x1=0.5, y1=0.5, z1=1.08):
     return {'from': {'x': x0, 'y': y0, 'z': z0}, 'to': {'x': x1, 'y': y1, 'z': z1}}
@@ -15,21 +19,55 @@ def card(title, body, img=None): return {'type': 'card', 'title': title, 'body':
 def image(src, cap): return {'type': 'image', 'src': src, 'cap': cap}
 
 N = {}
-def scene(id, chapter, bg, lines, next=None, cam_=None, title=None, choice=None):
+def L(text, show=None, who=None, plain=None):
+    """A line. `who` pins the speaker (ava/huey) — otherwise the active guide speaks it.
+    `text` may contain {name}; then `plain` is the name-free version that gets pre-rendered."""
+    if '{name}' in text and plain is None: raise ValueError('plain form required: ' + text)
+    return {'text': text, 'show': show, 'who': who, 'plain': plain}
+def scene(id, chapter, bg, lines, next=None, cam_=None, title=None, choice=None, guide=None):
+    ls = []
+    for i, l in enumerate(lines):
+        if isinstance(l, tuple): l = L(*l)
+        ls.append({'id': f'{id}-{i+1}', **l})
     N[id] = {'type': 'scene', 'chapter': chapter, 'bg': bg, 'cam': cam_ or cam(), 'title': title,
-             'lines': [{'id': f'{id}-{i+1}', 'text': t, 'show': s} for i, (t, s) in enumerate(lines)],
-             'next': next, 'choice': choice}
+             'lines': ls, 'next': next, 'choice': choice, 'guide': guide}
 def choice(prompt, options, remember=None):
     return {'prompt': prompt, 'remember': remember, 'options': options}
 def opt(label, next, tag=None, sub=None): return {'label': label, 'next': next, 'tag': tag, 'sub': sub}
 
 # ---------------------------------------------------------------- 1. Arrival
 scene('arrive', 'Arrival', R + 'vision.jpg', [
-    ("Welcome to 3HUE. I'm Ava, and I'll be your guide through the building today.", None),
-    ("Everything you're about to see is real: six managed security programs, an engineering team, a boardroom, and the pathway that connects them. It's how 3HUE turns governance into decisions executives can act on.", None),
-    ("Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you.", None),
+    L("Welcome to 3HUE. I'm Ava, and I'll be your guide through the building today.", who='ava'),
+    L("Everything you're about to see is real: six managed security programs, an engineering team, a boardroom, and the pathway that connects them. It's how 3HUE turns governance into decisions executives can act on.", who='ava'),
+    L("One quick thing before we walk — what should I call you? Say it or type it. Or skip it, and we'll just get going.", who='ava'),
 ], cam_=cam(0.5, 0.55, 1.0, 0.5, 0.5, 1.10), title='Inside 3HUE',
-   choice=choice('Who am I walking with today?', [
+   choice={'type': 'name', 'prompt': 'What should I call you?', 'next': 'meet', 'remember': 'name'})
+
+scene('meet', 'Arrival', R + 'vision.jpg', [
+    L("Great to meet you, {name}. Before we set off — this is Huey, my co-worker. He's walked more visitors through this building than anyone here.", who='ava',
+      plain="Great. Before we set off — this is Huey, my co-worker. He's walked more visitors through this building than anyone here."),
+    L("Hi {name} — good to have you here.", who='huey', plain="Hi — good to have you here."),
+    L("So — would you like Huey to lead the tour today? Otherwise you're stuck with me, and I promise I'm good company.", who='ava'),
+], choice=choice('Would you like Huey to lead the tour?', [
+       opt('Yes — let Huey take it from here', 'handoff', 'huey'),
+       opt('No thanks, Ava — let\'s go', 'stay', 'ava'),
+   ], remember='guide'))
+
+scene('handoff', 'Arrival', R + 'vision.jpg', [
+    L("All yours, Huey. Don't let them skip the boardroom.", who='ava'),
+    L("I never do. Thanks, Ava — I'll take good care of them.", who='huey'),
+    L("Alright, {name}. Let's walk.", who='huey', plain="Alright. Let's walk."),
+], next='audience', guide='huey')
+
+scene('stay', 'Arrival', R + 'vision.jpg', [
+    L("Then it's you and me. Huey, I'll send them your way if they have the hard questions.", who='ava'),
+    L("Any time. Enjoy the building.", who='huey'),
+], next='audience', guide='ava')
+
+scene('audience', 'Arrival', R + 'vision.jpg', [
+    L("Before we walk, tell me who I'm walking with, {name}. I'll shape the tour around what matters to you.",
+      plain="Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you."),
+], choice=choice('Who am I walking with today?', [
        opt('An executive weighing the investment', 'why', 'exec', 'CEO, CFO, board member'),
        opt('A technology leader', 'why', 'tech', 'CIO, CISO, head of IT'),
        opt('A security or compliance practitioner', 'why', 'practitioner', 'GRC, audit, risk, IT security'),
@@ -51,7 +89,8 @@ scene('model', 'The model: three layers', 'media/scene/master.jpg', [
     ("Here's the whole building at once. 3HUE calls it Virtual CIO-as-a-Service, and it's built top-down in three layers.",
      chips('Three layers, one program', ['01 · GRC management layer — tone at the top', '02 · Secure Engineering & Architecture', '03 · Security Operations — 24/7 SOC'])),
     ("The wings are the GRC management layer — six managed programs that set policy, manage risk, respond to incidents, validate vendors, and keep you audit-ready. Above them, the engineering bridge turns those findings into architecture and hands-on fixes. And underneath everything, a managed security operations center watches in real time.", None),
-    ("Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, and I'll take you there first.", None),
+    L("Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, {name}, and I'll take you there first.",
+      plain="Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, and I'll take you there first."),
 ], cam_=cam(0.5, 0.45, 1.25, 0.5, 0.5, 1.0),
    choice=choice('Where is the pressure most acute right now?', [
        opt('Incidents and response readiness', 'cirp', 'cirp', 'Cyber-Incident Response Program'),
@@ -63,7 +102,7 @@ scene('model', 'The model: three layers', 'media/scene/master.jpg', [
    ], remember='pressure'))
 
 # ---------------------------------------------------------------- 4. Programs
-HUB = choice('Where next?', [
+HUB = choice('Where next, {name}?', [
     opt('Information Security Program', 'isp', 'isp'), opt('Cyber-Incident Response Program', 'cirp', 'cirp'),
     opt('Virtual CISO', 'vciso', 'vciso'), opt('Risk Management Program', 'rmp', 'rmp'),
     opt('Security Compliance Services', 'scs', 'scs'), opt('Vendor Compliance Program', 'vcp', 'vcp'),
@@ -135,7 +174,8 @@ scene('fabric', 'The fabric & Client Vision', R + 'vision.jpg', [
 # ---------------------------------------------------------------- 7. Executive alignment
 scene('exec', 'Executive Alignment & Decisions', R + 'boardroom.jpg', [
     ("Back at the table. This is where every stream ends — 3HUE advisors sit with your executives to translate findings into business impact, set priorities, assign accountability, and approve action.", None),
-    ("The business case sounds different depending on who's asking. Tell me whose lens to use, and I'll make the case the way they'd want to hear it.", None),
+    L("The business case sounds different depending on who's asking. Tell me whose lens to use, {name}, and I'll make the case the way they'd want to hear it.",
+      plain="The business case sounds different depending on who's asking. Tell me whose lens to use, and I'll make the case the way they'd want to hear it."),
 ], cam_=cam(0.5, 0.5, 1.0, 0.5, 0.52, 1.1),
    choice=choice('Whose lens should I use for the business case?', [
        opt('The CEO', 'exec-ceo', 'ceo', 'Trust, growth, continuity'),
@@ -179,7 +219,7 @@ scene('engage', 'How 3HUE engages', R + 'plan.jpg', [
 scene('pathway', 'Enterprise Maturity Pathway', 'media/scene/master.jpg', [
     ("Last stop: the pathway along the base of the building. Baseline, Establish, Operationalize, Integrate, Optimize — every client is somewhere on it, and the first step depends on where you are today.",
      chips('Enterprise Maturity Pathway', ['Baseline', 'Establish', 'Operationalize', 'Integrate', 'Optimize'])),
-    ("So — where are you today?", None),
+    L("So, {name} — where are you today?", plain="So — where are you today?"),
 ], cam_=cam(0.5, 0.9, 1.6, 0.5, 0.85, 1.35),
    choice=choice('Where is your organization today?', [
        opt('No formal program in place', 'start-none', 'none', 'Or no enterprise-wide evaluation recently'),
@@ -204,8 +244,10 @@ scene('start-urgent', 'Getting started', R + 'hallway-2.jpg', [
 
 # ---------------------------------------------------------------- 10. Close
 scene('close', 'Before you go', R + 'vision.jpg', [
-    ("That's the building. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table.", None),
-    ("I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?", None),
+    L("That's the building, {name}. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table.",
+      plain="That's the building. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table."),
+    L("It's been a pleasure walking it with you, {name}. I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?",
+      plain="It's been a pleasure walking it with you. I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?"),
 ], cam_=cam(0.5, 0.5, 1.1, 0.5, 0.5, 1.0),
    choice=choice('What would you like to do?', [
        opt('Email me a summary of my tour', 'action:email-summary', 'email'),
@@ -215,7 +257,7 @@ scene('close', 'Before you go', R + 'vision.jpg', [
    ]))
 
 TOUR = {
-    'guide': G,
+    'guide': G, 'guides': GUIDES,
     'start': 'arrive',
     'chapters': ['arrive', 'why', 'model', 'isp', 'cirp', 'vciso', 'rmp', 'scs', 'vcp', 'sea', 'fabric', 'exec', 'engage', 'pathway', 'close'],
     'programs': ['isp', 'cirp', 'vciso', 'rmp', 'scs', 'vcp'],

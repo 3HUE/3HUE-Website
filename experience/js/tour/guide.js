@@ -12,6 +12,10 @@ for (let i = 0; i < N; i++) {
   pts.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r, gold: i % 9 === 0 });
 }
 let mode = 'idle', level = 0, t = 0, raf = 0;
+// persona tint: Ava = 3HUE blue, Huey = teal-green
+const TINTS = { blue: { a: '31,182,255', b: '255,214,58', c: '210,240,255' }, teal: { a: '46,229,157', b: '255,214,58', c: '215,255,240' } };
+let tint = TINTS.blue;
+export function setPersona(tone) { tint = TINTS[tone] || TINTS.blue; }
 let analyser = null, data = null;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -45,7 +49,7 @@ function frame() {
   const R = W * (0.30 + 0.05 * level + (mode === 'listening' ? 0.02 : 0)) * (1 + 0.012 * Math.sin(t * 2));
   // glow
   const g = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 1.55);
-  g.addColorStop(0, `rgba(31,182,255,${0.20 + 0.35 * level})`); g.addColorStop(0.55, `rgba(31,182,255,${0.06 + 0.12 * level})`); g.addColorStop(1, 'rgba(31,182,255,0)');
+  g.addColorStop(0, `rgba(${tint.a},${0.20 + 0.35 * level})`); g.addColorStop(0.55, `rgba(${tint.a},${0.06 + 0.12 * level})`); g.addColorStop(1, `rgba(${tint.a},0)`);
   ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.55, 0, Math.PI * 2); ctx.fill();
   // rotate
   const ay = t * 0.9, ax = Math.sin(t * 0.5) * 0.35, ca = Math.cos(ay), sa = Math.sin(ay), cb = Math.cos(ax), sb = Math.sin(ax);
@@ -61,19 +65,19 @@ function frame() {
     const a = P[i], b = P[j], dx = a.x - b.x, dy = a.y - b.y, d = dx * dx + dy * dy;
     if (d < R * R * 0.22) {
       const depth = (a.z + b.z) / 2 + 1, al = (0.10 + 0.35 * depth / 2) * (0.6 + 0.8 * level);
-      ctx.strokeStyle = (a.gold && b.gold) ? `rgba(255,214,58,${al})` : `rgba(31,182,255,${al})`;
+      ctx.strokeStyle = (a.gold && b.gold) ? `rgba(${tint.b},${al})` : `rgba(${tint.a},${al})`;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
   }
   // nodes
   for (const p of P) {
     const depth = (p.z + 1) / 2, r = 1.2 + depth * 1.8 + level * 1.2;
-    ctx.fillStyle = p.gold ? `rgba(255,214,58,${0.5 + 0.5 * depth})` : `rgba(210,240,255,${0.35 + 0.65 * depth})`;
+    ctx.fillStyle = p.gold ? `rgba(${tint.b},${0.5 + 0.5 * depth})` : `rgba(${tint.c},${0.35 + 0.65 * depth})`;
     ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
   }
   // listening ring
   if (mode === 'listening') {
-    ctx.strokeStyle = `rgba(31,182,255,${0.5 + 0.3 * Math.sin(t * 8)})`; ctx.lineWidth = 2;
+    ctx.strokeStyle = `rgba(${tint.a},${0.5 + 0.3 * Math.sin(t * 8)})`; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(cx, cy, R * 1.28 + 3 * Math.sin(t * 8), 0, Math.PI * 2); ctx.stroke();
   }
   // core
