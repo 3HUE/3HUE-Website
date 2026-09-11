@@ -1,5 +1,6 @@
 // Inside 3HUE — guided tour runner. Boot → opening → walk the node graph (scenes, lines, decisions) → close.
 import { setScene, showTitle, hideTitle } from './scene.js';
+import { initFx } from './fx.js';
 import { attachAudio, startGuide, setMode, guide } from './guide.js';
 import * as player from './player.js';
 import * as callouts from './callouts.js';
@@ -18,6 +19,7 @@ const state = { node: null, lineIndex: 0, visited: [], answers: {}, run: 0, paus
 async function main() {
   T = await (await fetch('content/tour.json', { cache: 'no-cache' })).json();
   await api.init();
+  await initFx();
   $('g-name').textContent = T.guide.name; $('g-title').textContent = T.guide.title;
   buildProgress(); buildMap(); bindControls();
   ask.initAsk({

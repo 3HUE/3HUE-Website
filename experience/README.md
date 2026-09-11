@@ -54,3 +54,6 @@ tools/build-voice.py       python tools/build-voice.py → renders only changed 
 ## Going live with real answers and email
 Deploy the Worker (`worker/README.md`), then set `apiBase` in `content/config.json`. Until then the tour runs in
 demo mode (FAQ answers, mail-draft fallback) so nothing is broken for visitors.
+
+## Living scenes (`js/tour/fx.js` + `content/fx.json`)
+A canvas overlay rides each backdrop's camera move and animates the wall displays (refresh sweeps, scan shimmer, breathing brightness, live status blips, progress line), pulses the fabric glow, sends signal packets along the streams on the master plate, and drifts dust motes through the light. Display regions are normalized image rects in `content/fx.json` — edit those if a backdrop is re-rendered. Honors `prefers-reduced-motion` (overlay stays static).

@@ -1,4 +1,5 @@
 // Cinematic backdrop: two layers cross-fade; a slow camera move (position + zoom) runs across each scene.
+import { bindLayer } from './fx.js';
 const layers = [document.getElementById('bg-a'), document.getElementById('bg-b')];
 const card = document.getElementById('title-card');
 let cur = 0, lastSrc = null, cardT = 0;
@@ -20,11 +21,11 @@ export async function setScene(src, cam, durMs) {
   const img = layer.querySelector('img');
   await load(img, src);
   const from = cam ? cam.from : { x: 0.5, y: 0.5, z: 1 }, to = cam ? cam.to : { x: 0.5, y: 0.5, z: 1.06 };
-  img.style.transition = 'none';
-  if (!same) img.style.transform = transformFor(from);
+  const fx = bindLayer(layer, img, src);   // living-scene overlay rides the same camera move
+  const els = [img, fx];
+  for (const el of els) { el.style.transition = 'none'; if (!same) el.style.transform = transformFor(from); }
   void img.offsetWidth;
-  img.style.transition = reduced ? 'none' : `transform ${Math.max(4000, durMs || 12000)}ms linear`;
-  img.style.transform = transformFor(to);
+  for (const el of els) { el.style.transition = reduced ? 'none' : `transform ${Math.max(4000, durMs || 12000)}ms linear`; el.style.transform = transformFor(to); }
   if (!same) {
     layer.classList.add('on');
     layers[cur].classList.remove('on');
