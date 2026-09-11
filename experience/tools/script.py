@@ -165,7 +165,7 @@ scene('exec-board', 'For the Board', R + 'boardroom.jpg', [
 ], next='engage', cam_=cam(0.5, 0.5, 1.12, 0.5, 0.5, 1.0))
 
 # ---------------------------------------------------------------- 8. How we engage
-scene('engage', 'How 3HUE engages', 'media/photos/plan.jpg', [
+scene('engage', 'How 3HUE engages', R + 'plan.jpg', [
     ("So how does an engagement actually run? Three steps. Step one, govern and plan: we align on deliverables in a client operating plan, set operational workload retainers, define performance reporting, and publish a shared responsibility matrix so nothing falls between the cracks.",
      chips('Step 1 · Govern & plan', ['Client operating plan', 'Workload retainers in 12-month sprints', 'Performance reporting', 'Shared responsibility matrix'])),
     ("Step two, GRC operations: deploy the GRC system on your M365 tenant or your enterprise platform, define the control baseline, and operationalize the managed programs — secure share, request workflows, client portal, risk register, vendor profiles, action plans, and BI.",
@@ -186,17 +186,17 @@ scene('pathway', 'Enterprise Maturity Pathway', 'media/scene/master.jpg', [
        opt('A program exists, but needs a strategic review', 'start-partial', 'partial'),
        opt('Urgent audit deadline or compliance gap', 'start-urgent', 'urgent', 'SOC 2, HIPAA, CMMC, PCI'),
    ], remember='state'))
-scene('start-none', 'Getting started', 'media/photos/walking.jpg', [
+scene('start-none', 'Getting started', R + 'hallway-1.jpg', [
     ("With no program in place, the right first step is a Holistic Risk and Control Posture Assessment — especially if it's been more than eighteen months since an enterprise-wide evaluation.",
      chips('What you get', ['Formal risk assessment report', 'NIST CSF 2.0 maturity scorecard', 'Security architecture remediation plan', 'Plan of actions & milestones', 'Cyber-risk advisory retainer'])),
     ("It starts with a meeting with Client Success for a deep-dive overview and initial discovery. From there you'll have a scorecard, a remediation plan, and a plan of actions and milestones to build the program on.", None),
 ], next='close', cam_=cam(0.5, 0.5, 1.0, 0.5, 0.5, 1.1))
-scene('start-partial', 'Getting started', 'media/photos/project-plan.jpg', [
+scene('start-partial', 'Getting started', R + 'hallway-3.jpg', [
     ("With a program already in place, the first step is a strategic review: 3HUE reviews your existing plans, policies, and controls for modernization opportunities.",
      chips('What you get', ['Review of existing plans, policies & controls', 'Modernization opportunities', 'Stakeholder recommendations session'])),
     ("It starts with a discovery meeting with Client Success, followed by a second session with your stakeholders to walk through the recommendations — then you decide which managed programs to switch on.", None),
 ], next='close', cam_=cam(0.5, 0.5, 1.0, 0.5, 0.5, 1.1))
-scene('start-urgent', 'Getting started', 'media/photos/analyst.jpg', [
+scene('start-urgent', 'Getting started', R + 'hallway-2.jpg', [
     ("When the deadline is real, the first step is a Controls Gap Assessment aligned to your framework — SOC 2, HIPAA, CMMC, or PCI — delivered fast.",
      chips('What you get', ['Controls gap assessment aligned to your framework', 'Gap reports & remediation plans', 'Engineering resources to close gaps'])),
     ("Discovery with Client Success, then a stakeholder session on the recommendations, and engineering resources standing by to close the gaps before the auditor does.", None),

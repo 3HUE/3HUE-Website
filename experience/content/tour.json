@@ -1262,7 +1262,7 @@
   "engage": {
    "type": "scene",
    "chapter": "How 3HUE engages",
-   "bg": "media/photos/plan.jpg",
+   "bg": "media/scene/rooms/plan.jpg",
    "cam": {
     "from": {
      "x": 0.5,
@@ -1396,7 +1396,7 @@
   "start-none": {
    "type": "scene",
    "chapter": "Getting started",
-   "bg": "media/photos/walking.jpg",
+   "bg": "media/scene/rooms/hallway-1.jpg",
    "cam": {
     "from": {
      "x": 0.5,
@@ -1438,7 +1438,7 @@
   "start-partial": {
    "type": "scene",
    "chapter": "Getting started",
-   "bg": "media/photos/project-plan.jpg",
+   "bg": "media/scene/rooms/hallway-3.jpg",
    "cam": {
     "from": {
      "x": 0.5,
@@ -1478,7 +1478,7 @@
   "start-urgent": {
    "type": "scene",
    "chapter": "Getting started",
-   "bg": "media/photos/analyst.jpg",
+   "bg": "media/scene/rooms/hallway-2.jpg",
    "cam": {
     "from": {
      "x": 0.5,
