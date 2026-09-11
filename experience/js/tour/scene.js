@@ -3,7 +3,8 @@ const layers = [document.getElementById('bg-a'), document.getElementById('bg-b')
 const card = document.getElementById('title-card');
 let cur = 0, lastSrc = null, cardT = 0;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const MOTION = 'still';   // 'still' | 'drift'
+const MOTION = 'still';        // 'still' | 'drift'  — camera move
+const LIVE_SCREENS = false;    // true → play media/scene/anim/*.mp4 loops over the stills (off: rooms are still images)
 
 const animOk = new Map();   // anim url -> boolean (exists)
 const probe = document.createElement('video');
@@ -16,7 +17,7 @@ async function hasAnim(url) {
 }
 /** Swap the still for its baked-motion loop (media/scene/anim/*.mp4) when one exists. */
 async function attachAnim(layer, src) {
-  const v = layer.querySelector('video'); if (!v || reduced) return;
+  const v = layer.querySelector('video'); if (!v || reduced || !LIVE_SCREENS) { if (v) { v.pause(); v.removeAttribute('src'); } layer.classList.remove('live'); return; }
   const url = animFor(src);
   if (!url || !(await hasAnim(url))) { v.removeAttribute('src'); layer.classList.remove('live'); return; }
   if (!v.src.endsWith(url)) { v.src = url; v.load(); }
