@@ -220,5 +220,61 @@
    "company",
    "who"
   ]
+ },
+ {
+  "q": "What happens after a gap assessment?",
+  "a": "The findings become a prioritized remediation plan with named owners and timelines, and 3HUE's Secure Engineering & Architecture team can provide the hands-on engineering to close the gaps. Progress, evidence, and audit readiness are then tracked in Client Vision so nothing stalls before the auditor arrives.",
+  "k": [
+   "after",
+   "gap",
+   "assessment",
+   "findings",
+   "remediation",
+   "next",
+   "then",
+   "results"
+  ]
+ },
+ {
+  "q": "What should we prepare for an assessment?",
+  "a": "Very little up front: a discovery meeting with Client Success sets scope, and 3HUE's analysts work from your existing policies, controls, system inventories, and any prior audit reports. Having stakeholders from IT, security, and compliance available for short interviews is the main thing that speeds it up.",
+  "k": [
+   "prepare",
+   "preparation",
+   "need",
+   "bring",
+   "before",
+   "ready",
+   "documents",
+   "inventory"
+  ]
+ },
+ {
+  "q": "Who owns remediation?",
+  "a": "Accountability stays with your organization \u2014 each gap gets a named owner in the plan of actions and milestones \u2014 but 3HUE does the heavy lifting: the managed programs track and drive the actions, and the engineering team can execute fixes directly. Your vCISO or the GRC team reports progress to leadership.",
+  "k": [
+   "owns",
+   "owner",
+   "ownership",
+   "responsible",
+   "remediation",
+   "accountability",
+   "who",
+   "fix",
+   "fixes"
+  ]
+ },
+ {
+  "q": "How is risk prioritized?",
+  "a": "By business impact, not just technical severity. The Risk Management Program scores risks against your risk appetite and regulatory obligations, records them in the risk register, and Client Vision ranks findings so leadership sees what matters first and where investment should go.",
+  "k": [
+   "prioritized",
+   "prioritize",
+   "priority",
+   "ranked",
+   "severity",
+   "impact",
+   "score"
+  ]
  }
 ]

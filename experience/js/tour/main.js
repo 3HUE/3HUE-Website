@@ -20,7 +20,10 @@ async function main() {
   await api.init();
   $('g-name').textContent = T.guide.name; $('g-title').textContent = T.guide.title;
   buildProgress(); buildMap(); bindControls();
-  ask.initAsk({ onCloseTour: resumeAfterAsk, context: () => ({ node: state.node, chapter: state.chapter, answers: state.answers, visited: state.visited }), summary: buildSummary });
+  ask.initAsk({
+    tour: T, onCloseTour: resumeAfterAsk, summary: buildSummary, jump: (id) => play(id),
+    context: () => ({ node: state.node, chapter: state.chapter, chapterName: T.nodes[state.node] ? T.nodes[state.node].chapter : '', answers: state.answers, visited: state.visited, position: positionLabel() }),
+  });
   attachAudio(player.audio); startGuide();
 
   // Preload the first scene behind the opening
@@ -65,6 +68,11 @@ async function play(id, opts = {}) {
   continueBtn.hidden = false; continueBtn.onclick = () => play('close');
 }
 
+function positionLabel() {
+  const chapterOf = (id) => { if (T.chapters.includes(id)) return id; if (id.startsWith('exec-')) return 'exec'; if (id.startsWith('start-')) return 'pathway'; return id; };
+  const i = T.chapters.indexOf(chapterOf(state.node || T.start));
+  return i >= 0 ? `Stop ${i + 1} of ${T.chapters.length}` : '';
+}
 function chapterLabel(node) {
   const i = T.chapters.indexOf(state.node);
   const idx = i >= 0 ? i : T.chapters.findIndex((c) => T.nodes[c].chapter === node.chapter);

@@ -2,6 +2,8 @@
 // pulses with the voice while speaking, and tightens into a listening ring when the visitor talks.
 const canvas = document.getElementById('guide');
 const ctx = canvas.getContext('2d');
+const mirrors = [];   // other canvases that show the same presence (console header, minimized pill)
+export function drawOrbInto(c) { if (c && !mirrors.includes(c)) mirrors.push(c); }
 const N = 96;
 const pts = [];
 for (let i = 0; i < N; i++) {
@@ -78,5 +80,6 @@ function frame() {
   const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.42);
   core.addColorStop(0, `rgba(255,255,255,${0.55 + 0.4 * level})`); core.addColorStop(0.5, `rgba(255,214,58,${0.18 + 0.3 * level})`); core.addColorStop(1, 'rgba(255,214,58,0)');
   ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, R * 0.42, 0, Math.PI * 2); ctx.fill();
+  for (const m of mirrors) { if (!m.isConnected || m.offsetParent === null) continue; const mc = m.getContext('2d'); mc.clearRect(0, 0, m.width, m.height); mc.drawImage(canvas, 0, 0, m.width, m.height); }
 }
 export function startGuide() { if (!raf) frame(); }
