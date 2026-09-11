@@ -55,5 +55,6 @@ tools/build-voice.py       python tools/build-voice.py → renders only changed 
 Deploy the Worker (`worker/README.md`), then set `apiBase` in `content/config.json`. Until then the tour runs in
 demo mode (FAQ answers, mail-draft fallback) so nothing is broken for visitors.
 
-## Living scenes (`js/tour/fx.js` + `content/fx.json`)
+## Living scenes (`js/tour/fx.js`, `js/tour/slides.js`, `content/fx.json`)
+The camera holds still (`MOTION = 'still'` in `scene.js`; whole-frame drift made visitors uncomfortable). Instead the main wall display in each room runs a presentation that advances with Ava's lines: `slides.js` maps an HTML slide onto the display's four corners (`slide.q` in `fx.json`, normalized image coords, TL/TR/BR/BL) with a CSS `matrix3d` homography. Slides are built from each line's callout (chips → bullets, stats → tiles, card → title + body) or, with no callout, the line's opening phrase.
 A canvas overlay rides each backdrop's camera move and animates the wall displays (refresh sweeps, scan shimmer, breathing brightness, live status blips, progress line), pulses the fabric glow, sends signal packets along the streams on the master plate, and drifts dust motes through the light. Display regions are normalized image rects in `content/fx.json` — edit those if a backdrop is re-rendered. Honors `prefers-reduced-motion` (overlay stays static).

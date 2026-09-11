@@ -10,6 +10,7 @@ let raf = 0, t0 = performance.now();
 export async function initFx() {
   try { SPEC = await (await fetch('content/fx.json', { cache: 'no-cache' })).json(); } catch (e) { SPEC = {}; }
   if (!reduced && !raf) raf = requestAnimationFrame(frame);
+  return SPEC;
 }
 
 /** Bind (or rebind) a backdrop layer: the canvas is created once and reused; spec follows the image src. */

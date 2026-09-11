@@ -1,6 +1,7 @@
 // Inside 3HUE — guided tour runner. Boot → opening → walk the node graph (scenes, lines, decisions) → close.
 import { setScene, showTitle, hideTitle } from './scene.js';
 import { initFx } from './fx.js';
+import { initSlides, setSlideScene, showSlide } from './slides.js';
 import { attachAudio, startGuide, setMode, guide } from './guide.js';
 import * as player from './player.js';
 import * as callouts from './callouts.js';
@@ -19,7 +20,7 @@ const state = { node: null, lineIndex: 0, visited: [], answers: {}, run: 0, paus
 async function main() {
   T = await (await fetch('content/tour.json', { cache: 'no-cache' })).json();
   await api.init();
-  await initFx();
+  initSlides(await initFx());
   $('g-name').textContent = T.guide.name; $('g-title').textContent = T.guide.title;
   buildProgress(); buildMap(); bindControls();
   ask.initAsk({
@@ -50,6 +51,7 @@ async function play(id, opts = {}) {
   const totalMs = node.lines.reduce((s, l) => s + Math.max(2500, l.text.split(' ').length * 330), 0) + 2000;
   await setScene(node.bg, node.cam, totalMs);
   if (run !== state.run) return;
+  setSlideScene(node);
   if (chapterChanged && !opts.quiet) { showTitle(chapterLabel(node), node.chapter); await wait(1300); if (run !== state.run) return; }
   // preload voices
   node.lines.forEach((l) => player.preload(l.id));
@@ -58,6 +60,7 @@ async function play(id, opts = {}) {
     state.lineIndex = i;
     const line = node.lines[i];
     if (line.show) callouts.show(line.show); else callouts.clear(600);
+    showSlide(node, i);
     while (state.paused && run === state.run) await wait(120);
     if (run !== state.run) return;
     await player.speak(line);
