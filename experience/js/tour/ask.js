@@ -149,7 +149,8 @@ let utter = null, sayBtn = null;
 function speakText(text, btn) {
   if (!('speechSynthesis' in window) || document.body.classList.contains('voice-muted')) return;
   stopSpeech();
-  utter = new SpeechSynthesisUtterance(text); sayBtn = btn;
+  const spoken = text.replace(/3HUE/gi, 'three hue').replace(/AiVRIC/gi, 'Avaric').replace(/\bvCISO\b/g, 'virtual CISO').replace(/\bSOC 2\b/g, 'sock two').replace(/\bSOC\b/g, 'sock');
+  utter = new SpeechSynthesisUtterance(spoken); sayBtn = btn;
   const voices = speechSynthesis.getVoices();
   const pick = voices.find((v) => /en-US/i.test(v.lang) && /Ava|Samantha|Aria|Jenny|Zira|Google US English/i.test(v.name)) || voices.find((v) => /en/i.test(v.lang));
   if (pick) utter.voice = pick; utter.rate = 1.02;
