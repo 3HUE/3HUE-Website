@@ -1,0 +1,16 @@
+name = "inside-3hue-tour"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+# Text imports: the knowledge base is bundled from ../content/kb.md at deploy time.
+rules = [{ type = "Text", globs = ["**/*.md"], fallthrough = true }]
+
+[vars]
+MODEL = "claude-sonnet-4-5"
+FROM_EMAIL = "AiVRIC at 3HUE <tour@3hue.net>"        # must be a verified Resend sender/domain
+NOTIFY_EMAIL = "success@3hue.net"                    # where leads + copies go
+ALLOWED_ORIGINS = "https://3hue.net,https://www.3hue.net,http://localhost:8000"
+
+# Secrets (never in this file):
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put RESEND_API_KEY

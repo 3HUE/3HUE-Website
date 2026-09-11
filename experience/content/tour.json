@@ -1,0 +1,1580 @@
+{
+ "guide": {
+  "name": "AiVRIC",
+  "title": "Your 3HUE guide",
+  "voice": "en-US-AvaNeural"
+ },
+ "start": "arrive",
+ "chapters": [
+  "arrive",
+  "why",
+  "model",
+  "isp",
+  "cirp",
+  "vciso",
+  "rmp",
+  "scs",
+  "vcp",
+  "sea",
+  "fabric",
+  "exec",
+  "engage",
+  "pathway",
+  "close"
+ ],
+ "programs": [
+  "isp",
+  "cirp",
+  "vciso",
+  "rmp",
+  "scs",
+  "vcp"
+ ],
+ "contact": {
+  "phone": "855-374-7129",
+  "web": "https://info.3hue.net/start-now",
+  "email": "success@3hue.net"
+ },
+ "nodes": {
+  "arrive": {
+   "type": "scene",
+   "chapter": "Arrival",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.55,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": "Inside 3HUE",
+   "lines": [
+    {
+     "id": "arrive-1",
+     "text": "Welcome to 3HUE. I'm AiVRIC — the risk intelligence fabric that runs through this building, and I'll be your guide today.",
+     "show": null
+    },
+    {
+     "id": "arrive-2",
+     "text": "Everything you're about to see is real: six managed security programs, an engineering team, a boardroom, and the pathway that connects them. It's how 3HUE turns governance into decisions executives can act on.",
+     "show": null
+    },
+    {
+     "id": "arrive-3",
+     "text": "Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you.",
+     "show": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Who am I walking with today?",
+    "remember": "audience",
+    "options": [
+     {
+      "label": "An executive weighing the investment",
+      "next": "why",
+      "tag": "exec",
+      "sub": "CEO, CFO, board member"
+     },
+     {
+      "label": "A technology leader",
+      "next": "why",
+      "tag": "tech",
+      "sub": "CIO, CISO, head of IT"
+     },
+     {
+      "label": "A security or compliance practitioner",
+      "next": "why",
+      "tag": "practitioner",
+      "sub": "GRC, audit, risk, IT security"
+     },
+     {
+      "label": "Just show me everything",
+      "next": "why",
+      "tag": "all",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "why": {
+   "type": "scene",
+   "chapter": "Why this building exists",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.12
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.48,
+     "z": 1.0
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "why-1",
+     "text": "Let's start where most security conversations end — in the boardroom. The reason 3HUE built this model is simple: the adversary got faster than the traditional way of defending.",
+     "show": null
+    },
+    {
+     "id": "why-2",
+     "text": "A zero-day can become a breach in under thirty minutes. Seventy-one percent of breaches are only detected after the data has already left. And deepfake-driven fraud rose nine hundred percent in a single year.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "<30 min",
+        "l": "zero-day to breach"
+       },
+       {
+        "n": "71%",
+        "l": "breaches detected after exfiltration"
+       },
+       {
+        "n": "900%",
+        "l": "rise in deepfake fraud"
+       }
+      ]
+     }
+    },
+    {
+     "id": "why-3",
+     "text": "At the same time, the pressure from the other direction is rising. Seventy-two new privacy laws were proposed in one year, ninety-two percent of boards now expect reporting on cyber and compliance posture, and sixty percent of consumers walk away after a data misuse event.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "72",
+        "l": "new privacy laws proposed in a year"
+       },
+       {
+        "n": "92%",
+        "l": "of boards expect cyber posture reporting"
+       },
+       {
+        "n": "60%",
+        "l": "consumer abandonment after data misuse"
+       }
+      ]
+     }
+    },
+    {
+     "id": "why-4",
+     "text": "Tools alone can't close that gap. What closes it is a program: governance that sets direction, engineering that closes the gaps, and operations that watch around the clock — all feeding one picture the executives at this table can trust.",
+     "show": null
+    }
+   ],
+   "next": "model",
+   "choice": null
+  },
+  "model": {
+   "type": "scene",
+   "chapter": "The model: three layers",
+   "bg": "media/scene/master.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.45,
+     "z": 1.25
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "model-1",
+     "text": "Here's the whole building at once. 3HUE calls it Virtual CIO-as-a-Service, and it's built top-down in three layers.",
+     "show": {
+      "type": "chips",
+      "title": "Three layers, one program",
+      "items": [
+       "01 · GRC management layer — tone at the top",
+       "02 · Secure Engineering & Architecture",
+       "03 · Security Operations — 24/7 SOC"
+      ]
+     }
+    },
+    {
+     "id": "model-2",
+     "text": "The wings are the GRC management layer — six managed programs that set policy, manage risk, respond to incidents, validate vendors, and keep you audit-ready. Above them, the engineering bridge turns those findings into architecture and hands-on fixes. And underneath everything, a managed security operations center watches in real time.",
+     "show": null
+    },
+    {
+     "id": "model-3",
+     "text": "Each program is a room. We won't visit every one unless you want to — so tell me where the pressure is right now, and I'll take you there first.",
+     "show": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where is the pressure most acute right now?",
+    "remember": "pressure",
+    "options": [
+     {
+      "label": "Incidents and response readiness",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": "Cyber-Incident Response Program"
+     },
+     {
+      "label": "Audits and compliance deadlines",
+      "next": "scs",
+      "tag": "scs",
+      "sub": "Security Compliance Services"
+     },
+     {
+      "label": "Risk visibility for leadership",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": "Risk Management Program"
+     },
+     {
+      "label": "Third-party and vendor risk",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": "Vendor Compliance Program"
+     },
+     {
+      "label": "We need to build the program itself",
+      "next": "isp",
+      "tag": "isp",
+      "sub": "Information Security Program"
+     },
+     {
+      "label": "We lack senior security leadership",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": "Virtual CISO"
+     }
+    ]
+   }
+  },
+  "isp": {
+   "type": "scene",
+   "chapter": "Information Security Program",
+   "bg": "media/scene/rooms/isp.jpg",
+   "cam": {
+    "from": {
+     "x": 0.58,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "isp-1",
+     "text": "This is the Information Security Program room — where a formal program is built and kept alive. Policies, standards, a control baseline, and clear ownership, aligned to frameworks like SCF, NIST, or ISO.",
+     "show": null
+    },
+    {
+     "id": "isp-2",
+     "text": "The program formalizes roles and responsibilities, drives consistency across security operations and governance, and scales as regulatory or customer demands grow. Most clients see a mature SOC 2, PCI-DSS, or CMMC-aligned program stood up in under six months.",
+     "show": {
+      "type": "chips",
+      "title": "What the ISP delivers",
+      "items": [
+       "Policies, standards & control baseline",
+       "Roles, responsibilities & ownership",
+       "Consistent governance across operations",
+       "Scales with regulatory & customer demands"
+      ]
+     }
+    },
+    {
+     "id": "isp-3",
+     "text": "It runs as a managed program in twelve-month sprints — typically ninety-six to two hundred and forty-four hours a year, with about one hundred and twenty of those keeping SOC 2 evidence current.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "96–244 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "~120 h",
+        "l": "annual SOC 2 maintenance"
+       },
+       {
+        "n": "< 6 mo",
+        "l": "to a mature compliant program"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "cirp": {
+   "type": "scene",
+   "chapter": "Cyber-Incident Response Program",
+   "bg": "media/scene/rooms/cirp.jpg",
+   "cam": {
+    "from": {
+     "x": 0.55,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "cirp-1",
+     "text": "The incident response room. When something goes wrong at two in the morning, this is the program that decides who does what, in what order, and who gets told.",
+     "show": null
+    },
+    {
+     "id": "cirp-2",
+     "text": "CIRP delivers structured response planning and incident command: clear roles and escalation paths for crisis scenarios, coordinated containment and recovery, and tabletop exercises so the first real incident isn't the first rehearsal.",
+     "show": {
+      "type": "chips",
+      "title": "Prepare → Detect → Contain → Investigate → Recover",
+      "items": [
+       "Response planning & playbooks",
+       "Incident command & escalation paths",
+       "Annual simulations and tabletop exercises",
+       "Lessons learned flow back into the risk register"
+      ]
+     }
+    },
+    {
+     "id": "cirp-3",
+     "text": "3HUE's teams have led clients through ransomware, data breaches, and insider threats — calm in crisis, clarity through chaos. As a managed program it's seventy to one hundred and twenty hours a year.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "70–120 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "15 min",
+        "l": "detection to client notification with the SOC"
+       },
+       {
+        "n": "24/7",
+        "l": "incident coordination"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "vciso": {
+   "type": "scene",
+   "chapter": "Virtual CISO",
+   "bg": "media/scene/rooms/vciso.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.45,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "vciso-1",
+     "text": "The executive advisory office. A Virtual CISO is a former CISO who sits with your leadership — shaping strategy, driving decisions, and owning the security conversation with the board.",
+     "show": null
+    },
+    {
+     "id": "vciso-2",
+     "text": "There are three leadership options: no vCISO if you already have one, CISO Support to build an internal capability, or a Fractional CISO as staff augmentation. Either way, you get board-facing expertise without the cost of a full-time executive hire.",
+     "show": {
+      "type": "chips",
+      "title": "Leadership options",
+      "items": [
+       "Option 1 · No vCISO — you have a security leader",
+       "Option 2 · CISO Support — build internal capability",
+       "Option 3 · Fractional CISO — staff augmentation"
+      ]
+     }
+    },
+    {
+     "id": "vciso-3",
+     "text": "A vCISO engagement runs sixty-eight to one hundred and sixty-four hours a year, and it's the resource that can capably carry M&A due diligence, audits, and the questions a board asks after a peer gets breached.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "68–164 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "3",
+        "l": "engagement models"
+       },
+       {
+        "n": "Board-ready",
+        "l": "risk & compliance reporting"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "rmp": {
+   "type": "scene",
+   "chapter": "Risk Management Program",
+   "bg": "media/scene/rooms/rmp.jpg",
+   "cam": {
+    "from": {
+     "x": 0.55,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "rmp-1",
+     "text": "The risk room. The Risk Management Program establishes a real risk function: identify, prioritize, and mitigate — and then keep doing it, so leadership sees risk posture as a living picture, not an annual report.",
+     "show": null
+    },
+    {
+     "id": "rmp-2",
+     "text": "It prioritizes security investments on actual risk instead of fear, supports risk registers, assessments, and remediation tracking, and builds a culture where decisions are risk-informed. It also makes you ready for regulatory reviews and partner due diligence.",
+     "show": {
+      "type": "chips",
+      "title": "What the RMP delivers",
+      "items": [
+       "Enterprise risk strategy & oversight",
+       "Risk register, assessments & treatment tracking",
+       "Investment prioritized on real risk",
+       "Ready for regulators and partner due diligence"
+      ]
+     }
+    },
+    {
+     "id": "rmp-3",
+     "text": "Effort scales with your risk landscape — sixty to four hundred and seventy-two hours a year, with about one hundred and forty-four for SOC 2 risk activities.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "60–472 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "~144 h",
+        "l": "annual SOC 2 maintenance"
+       },
+       {
+        "n": "Continuous",
+        "l": "risk monitoring & advisory"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "scs": {
+   "type": "scene",
+   "chapter": "Security Compliance Services",
+   "bg": "media/scene/rooms/scs.jpg",
+   "cam": {
+    "from": {
+     "x": 0.55,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "scs-1",
+     "text": "The compliance room — Security Compliance Services. The job here is continuous audit-readiness: never scrambling before an audit, because evidence is being collected and controls are being validated all year.",
+     "show": null
+    },
+    {
+     "id": "scs-2",
+     "text": "Continuous change detection watches your systems for unauthorized changes and misconfigurations; policy compliance tracking maps requirements to controls and evidence; and audit stakeholders are prepared before the auditor arrives. Clients see up to a sixty percent reduction in audit preparation time.",
+     "show": {
+      "type": "chips",
+      "title": "What SCS delivers",
+      "items": [
+       "Continuous change detection & exception resolution",
+       "Requirements → controls → evidence traceability",
+       "Audit stakeholder preparation",
+       "SOC 2, PCI-DSS, HIPAA, HITRUST, CMMC — one control framework"
+      ]
+     }
+    },
+    {
+     "id": "scs-3",
+     "text": "As a managed program it's sixty to one hundred and twenty hours a year — about sixty of those maintaining SOC 2 across Security, Confidentiality, and Availability.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "60–120 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "−60%",
+        "l": "audit preparation time"
+       },
+       {
+        "n": "1",
+        "l": "control framework for every regulation"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "vcp": {
+   "type": "scene",
+   "chapter": "Vendor Compliance Program",
+   "bg": "media/scene/rooms/vcp.jpg",
+   "cam": {
+    "from": {
+     "x": 0.6,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "vcp-1",
+     "text": "The third-party risk room. Your risk doesn't stop at your firewall — it lives in every supplier with access to your data. The Vendor Compliance Program manages that exposure continuously.",
+     "show": null
+    },
+    {
+     "id": "vcp-2",
+     "text": "It aligns vendor practices with your risk tolerance, contractual controls, and regulatory expectations; keeps audit-ready documentation of vendor assurance; and validates the attack surface of high-risk vendors proactively rather than after an incident.",
+     "show": {
+      "type": "chips",
+      "title": "What the VCP delivers",
+      "items": [
+       "Vendor profiles, tiers & minimum requirements",
+       "Contract review & ongoing monitoring",
+       "Attack-surface posture validation",
+       "Audit-ready vendor assurance records"
+      ]
+     }
+    },
+    {
+     "id": "vcp-3",
+     "text": "Effort follows the size of your vendor estate — one hundred and twenty to three hundred and sixty-five hours a year, with about two hundred and forty of those tied to SOC 2 vendor management.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "120–365 h",
+        "l": "annual commit"
+       },
+       {
+        "n": "~240 h",
+        "l": "annual SOC 2 maintenance"
+       },
+       {
+        "n": "Continuous",
+        "l": "third-party assurance"
+       }
+      ]
+     }
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where next?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Information Security Program",
+      "next": "isp",
+      "tag": "isp",
+      "sub": null
+     },
+     {
+      "label": "Cyber-Incident Response Program",
+      "next": "cirp",
+      "tag": "cirp",
+      "sub": null
+     },
+     {
+      "label": "Virtual CISO",
+      "next": "vciso",
+      "tag": "vciso",
+      "sub": null
+     },
+     {
+      "label": "Risk Management Program",
+      "next": "rmp",
+      "tag": "rmp",
+      "sub": null
+     },
+     {
+      "label": "Security Compliance Services",
+      "next": "scs",
+      "tag": "scs",
+      "sub": null
+     },
+     {
+      "label": "Vendor Compliance Program",
+      "next": "vcp",
+      "tag": "vcp",
+      "sub": null
+     },
+     {
+      "label": "Continue to the engineering bridge",
+      "next": "sea",
+      "tag": "continue",
+      "sub": null
+     }
+    ]
+   }
+  },
+  "sea": {
+   "type": "scene",
+   "chapter": "Secure Engineering & Architecture",
+   "bg": "media/scene/rooms/sea.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.42,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "sea-1",
+     "text": "Up on the bridge: Secure Engineering and Architecture. Governance finds the gaps — this team closes them. Advisory, design, and hands-on engineering across Architecture, Build, Secure, and Operate.",
+     "show": {
+      "type": "chips",
+      "title": "ISG-SEA",
+      "items": [
+       "Architecture",
+       "Build",
+       "Secure",
+       "Operate"
+      ]
+     }
+    },
+    {
+     "id": "sea-2",
+     "text": "This is what makes the model different from a report. A finding in a risk room becomes a design change, a hardened configuration, or an identity control — and it's tracked back to the risk register when it's done.",
+     "show": null
+    },
+    {
+     "id": "sea-3",
+     "text": "Everything here is delivered on your platform. For organizations under about five thousand information assets, 3HUE deploys its GRC system on your Microsoft 365 tenant; if you already run an enterprise GRC platform, the team configures and maintains that instead.",
+     "show": {
+      "type": "card",
+      "title": "On your platform",
+      "body": "M365 GRC deployment for smaller estates, or configuration and maintenance of your existing enterprise GRC system.",
+      "img": "media/systems/m365-grc.jpg"
+     }
+    }
+   ],
+   "next": "fabric",
+   "choice": null
+  },
+  "fabric": {
+   "type": "scene",
+   "chapter": "AiVRIC & Client Vision",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.15
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "fabric-1",
+     "text": "And this is me. The AiVRIC Risk Intelligence Fabric is where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.",
+     "show": null
+    },
+    {
+     "id": "fabric-2",
+     "text": "What executives see is Client Vision: four panels. Posture — your unified cloud, AI, and control posture across the estate. Priorities — findings ranked by business impact, not just severity. Progress — treatments, SLAs, and audit readiness tracked in one place. And Decisions — board-ready readouts.",
+     "show": {
+      "type": "chips",
+      "title": "Client Vision",
+      "items": [
+       "Posture",
+       "Priorities",
+       "Progress",
+       "Decisions"
+      ]
+     }
+    },
+    {
+     "id": "fabric-3",
+     "text": "Continuous change detection feeds it in real time — inspectors for Azure, AWS, Microsoft 365, and endpoint agents across on-premises and cloud — with actionable indicators of risk defined in your runbooks.",
+     "show": {
+      "type": "card",
+      "title": "Continuous change detection",
+      "body": "Real-time detection of unauthorized changes and misconfigurations, with risk-posture notifications tied to your GRC runbooks.",
+      "img": "media/systems/change-detection.png"
+     }
+    },
+    {
+     "id": "fabric-4",
+     "text": "Underneath, the managed SOC — operated with 3HUE's partner Whitedog — provides twenty-four-seven detection and response, threat hunting, and red-team testing, with client notification within fifteen minutes of detection.",
+     "show": {
+      "type": "stats",
+      "items": [
+       {
+        "n": "24/7",
+        "l": "managed detection & response"
+       },
+       {
+        "n": "15 min",
+        "l": "detection to notification"
+       },
+       {
+        "n": "50+",
+        "l": "commercial & open-source tools"
+       }
+      ]
+     }
+    }
+   ],
+   "next": "exec",
+   "choice": null
+  },
+  "exec": {
+   "type": "scene",
+   "chapter": "Executive Alignment & Decisions",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.52,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "exec-1",
+     "text": "Back at the table. This is where every stream ends — 3HUE advisors sit with your executives to translate findings into business impact, set priorities, assign accountability, and approve action.",
+     "show": null
+    },
+    {
+     "id": "exec-2",
+     "text": "The business case sounds different depending on who's asking. Tell me whose lens to use, and I'll make the case the way they'd want to hear it.",
+     "show": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Whose lens should I use for the business case?",
+    "remember": "lens",
+    "options": [
+     {
+      "label": "The CEO",
+      "next": "exec-ceo",
+      "tag": "ceo",
+      "sub": "Trust, growth, continuity"
+     },
+     {
+      "label": "The CFO",
+      "next": "exec-cfo",
+      "tag": "cfo",
+      "sub": "Cost, predictability, exposure"
+     },
+     {
+      "label": "The CIO",
+      "next": "exec-cio",
+      "tag": "cio",
+      "sub": "Roadmap velocity, uptime"
+     },
+     {
+      "label": "The Board",
+      "next": "exec-board",
+      "tag": "board",
+      "sub": "Enterprise value, oversight"
+     }
+    ]
+   }
+  },
+  "exec-ceo": {
+   "type": "scene",
+   "chapter": "For the CEO",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.45,
+     "y": 0.5,
+     "z": 1.05
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.12
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "exec-ceo-1",
+     "text": "For the CEO, security is about trust, brand, and momentum. A Virtual CISO delivers board-level cybersecurity leadership that connects risk to innovation and growth. Managed GRC programs integrate governance into daily operations so regulatory exposure shrinks and the company keeps its agility.",
+     "show": {
+      "type": "chips",
+      "title": "CEO outcomes",
+      "items": [
+       "Stronger customer trust & brand loyalty",
+       "Revenue growth through secure innovation",
+       "No high-impact incident stalling strategic initiatives"
+      ]
+     }
+    },
+    {
+     "id": "exec-ceo-2",
+     "text": "And the managed SOC protects uptime and customer trust in real time. The argument to make: quantify avoided costs — breach recovery, lost deals, delayed M&A — and frame security as what lets the company move faster, not slower.",
+     "show": null
+    }
+   ],
+   "next": "engage",
+   "choice": null
+  },
+  "exec-cfo": {
+   "type": "scene",
+   "chapter": "For the CFO",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.55,
+     "y": 0.5,
+     "z": 1.05
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.12
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "exec-cfo-1",
+     "text": "For the CFO, the case is financial risk management. A Virtual CISO aligns cybersecurity with enterprise risk to improve cost control. Managed GRC programs reduce compliance costs and audit effort by embedding controls into daily operations — audit prep stops being a fire drill.",
+     "show": {
+      "type": "chips",
+      "title": "CFO outcomes",
+      "items": [
+       "Reduced financial & reputational exposure",
+       "Lower total cost of maintaining compliance",
+       "Predictable security spend aligned to goals"
+      ]
+     }
+    },
+    {
+     "id": "exec-cfo-2",
+     "text": "The managed SOC delivers twenty-four-seven response at a predictable cost with no added headcount or tech licenses. Show the ROI as breach costs avoided, audit savings, and — critically — budget volatility removed.",
+     "show": null
+    }
+   ],
+   "next": "engage",
+   "choice": null
+  },
+  "exec-cio": {
+   "type": "scene",
+   "chapter": "For the CIO",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.45,
+     "z": 1.05
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.12
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "exec-cio-1",
+     "text": "For the CIO, security has to be a delivery enabler. A Virtual CISO integrates security strategy into IT planning and architecture so modernization is risk-aligned from the start. Managed GRC embeds controls into delivery pipelines, which improves roadmap velocity and audit readiness at the same time.",
+     "show": {
+      "type": "chips",
+      "title": "CIO outcomes",
+      "items": [
+       "Faster delivery of digital initiatives with less risk",
+       "Security-aligned IT execution that scales",
+       "Fewer disruptions from cyber incidents"
+      ]
+     }
+    },
+    {
+     "id": "exec-cio-2",
+     "text": "The managed SOC watches infrastructure and workloads around the clock and takes load off internal teams. Map the investment to KPIs the CIO already reports: faster deployment, fewer audit findings, better SLA compliance.",
+     "show": null
+    }
+   ],
+   "next": "engage",
+   "choice": null
+  },
+  "exec-board": {
+   "type": "scene",
+   "chapter": "For the Board",
+   "bg": "media/scene/rooms/boardroom.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.12
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "exec-board-1",
+     "text": "For the Board, it's about enterprise value and oversight. A Virtual CISO aligns cybersecurity with strategy and board risk oversight — enabling secure execution of growth, M&A, and innovation. Managed GRC reinforces governance with embedded controls that lower audit risk and improve the board's reporting posture.",
+     "show": {
+      "type": "chips",
+      "title": "Board outcomes",
+      "items": [
+       "Stakeholder confidence through governance transparency",
+       "Faster time-to-market through trusted transformation",
+       "Reduced regulatory & reputational exposure"
+      ]
+     }
+    },
+    {
+     "id": "exec-board-2",
+     "text": "The managed SOC gives twenty-four-seven visibility and board assurance on incident response. Tell fiduciary-aligned stories — governance lapses, disclosure risk, recovery leadership — and use peer benchmarks to show where similar companies invest to stay compliant and competitive.",
+     "show": null
+    }
+   ],
+   "next": "engage",
+   "choice": null
+  },
+  "engage": {
+   "type": "scene",
+   "chapter": "How 3HUE engages",
+   "bg": "media/photos/plan.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "engage-1",
+     "text": "So how does an engagement actually run? Three steps. Step one, govern and plan: we align on deliverables in a client operating plan, set operational workload retainers, define performance reporting, and publish a shared responsibility matrix so nothing falls between the cracks.",
+     "show": {
+      "type": "chips",
+      "title": "Step 1 · Govern & plan",
+      "items": [
+       "Client operating plan",
+       "Workload retainers in 12-month sprints",
+       "Performance reporting",
+       "Shared responsibility matrix"
+      ]
+     }
+    },
+    {
+     "id": "engage-2",
+     "text": "Step two, GRC operations: deploy the GRC system on your M365 tenant or your enterprise platform, define the control baseline, and operationalize the managed programs — secure share, request workflows, client portal, risk register, vendor profiles, action plans, and BI.",
+     "show": {
+      "type": "chips",
+      "title": "Step 2 · Deploy GRC operations",
+      "items": [
+       "GRC system on M365 or your platform",
+       "Control baseline tailored to your risk",
+       "Client portal, risk register, vendor profiles",
+       "Continuous change detection"
+      ]
+     }
+    },
+    {
+     "id": "engage-3",
+     "text": "Step three, security operations: the managed SOC — detection and response, internet threat protection, zero-trust network access, threat hunting and red-team testing — with continuous oversight by your vCISO and GRC team, so incident response never creates a compliance problem.",
+     "show": {
+      "type": "chips",
+      "title": "Step 3 · Managed SOC",
+      "items": [
+       "MDR across endpoints, servers & cloud",
+       "Internet threat protection",
+       "Managed zero-trust network access",
+       "Threat hunting & red-team testing"
+      ]
+     }
+    },
+    {
+     "id": "engage-4",
+     "text": "Pricing follows the same shape: choose a leadership option, choose your managed programs, choose your core security services. Everything is scoped and committed for the year — no surprise headcount, no tech licenses to carry.",
+     "show": null
+    }
+   ],
+   "next": "pathway",
+   "choice": null
+  },
+  "pathway": {
+   "type": "scene",
+   "chapter": "Enterprise Maturity Pathway",
+   "bg": "media/scene/master.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.9,
+     "z": 1.6
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.85,
+     "z": 1.35
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "pathway-1",
+     "text": "Last stop: the pathway along the base of the building. Baseline, Establish, Operationalize, Integrate, Optimize — every client is somewhere on it, and the first step depends on where you are today.",
+     "show": {
+      "type": "chips",
+      "title": "Enterprise Maturity Pathway",
+      "items": [
+       "Baseline",
+       "Establish",
+       "Operationalize",
+       "Integrate",
+       "Optimize"
+      ]
+     }
+    },
+    {
+     "id": "pathway-2",
+     "text": "So — where are you today?",
+     "show": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "Where is your organization today?",
+    "remember": "state",
+    "options": [
+     {
+      "label": "No formal program in place",
+      "next": "start-none",
+      "tag": "none",
+      "sub": "Or no enterprise-wide evaluation recently"
+     },
+     {
+      "label": "A program exists, but needs a strategic review",
+      "next": "start-partial",
+      "tag": "partial",
+      "sub": null
+     },
+     {
+      "label": "Urgent audit deadline or compliance gap",
+      "next": "start-urgent",
+      "tag": "urgent",
+      "sub": "SOC 2, HIPAA, CMMC, PCI"
+     }
+    ]
+   }
+  },
+  "start-none": {
+   "type": "scene",
+   "chapter": "Getting started",
+   "bg": "media/photos/walking.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "start-none-1",
+     "text": "With no program in place, the right first step is a Holistic Risk and Control Posture Assessment — especially if it's been more than eighteen months since an enterprise-wide evaluation.",
+     "show": {
+      "type": "chips",
+      "title": "What you get",
+      "items": [
+       "Formal risk assessment report",
+       "NIST CSF 2.0 maturity scorecard",
+       "Security architecture remediation plan",
+       "Plan of actions & milestones",
+       "Cyber-risk advisory retainer"
+      ]
+     }
+    },
+    {
+     "id": "start-none-2",
+     "text": "It starts with a meeting with Client Success for a deep-dive overview and initial discovery. From there you'll have a scorecard, a remediation plan, and a plan of actions and milestones to build the program on.",
+     "show": null
+    }
+   ],
+   "next": "close",
+   "choice": null
+  },
+  "start-partial": {
+   "type": "scene",
+   "chapter": "Getting started",
+   "bg": "media/photos/project-plan.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "start-partial-1",
+     "text": "With a program already in place, the first step is a strategic review: 3HUE reviews your existing plans, policies, and controls for modernization opportunities.",
+     "show": {
+      "type": "chips",
+      "title": "What you get",
+      "items": [
+       "Review of existing plans, policies & controls",
+       "Modernization opportunities",
+       "Stakeholder recommendations session"
+      ]
+     }
+    },
+    {
+     "id": "start-partial-2",
+     "text": "It starts with a discovery meeting with Client Success, followed by a second session with your stakeholders to walk through the recommendations — then you decide which managed programs to switch on.",
+     "show": null
+    }
+   ],
+   "next": "close",
+   "choice": null
+  },
+  "start-urgent": {
+   "type": "scene",
+   "chapter": "Getting started",
+   "bg": "media/photos/analyst.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "start-urgent-1",
+     "text": "When the deadline is real, the first step is a Controls Gap Assessment aligned to your framework — SOC 2, HIPAA, CMMC, or PCI — delivered fast.",
+     "show": {
+      "type": "chips",
+      "title": "What you get",
+      "items": [
+       "Controls gap assessment aligned to your framework",
+       "Gap reports & remediation plans",
+       "Engineering resources to close gaps"
+      ]
+     }
+    },
+    {
+     "id": "start-urgent-2",
+     "text": "Discovery with Client Success, then a stakeholder session on the recommendations, and engineering resources standing by to close the gaps before the auditor does.",
+     "show": null
+    }
+   ],
+   "next": "close",
+   "choice": null
+  },
+  "close": {
+   "type": "scene",
+   "chapter": "Before you go",
+   "bg": "media/scene/rooms/vision.jpg",
+   "cam": {
+    "from": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.1
+    },
+    "to": {
+     "x": 0.5,
+     "y": 0.5,
+     "z": 1.0
+    }
+   },
+   "title": null,
+   "lines": [
+    {
+     "id": "close-1",
+     "text": "That's the building. Governance that sets direction, engineering that closes gaps, operations that never sleep — and one fabric feeding the decisions at the table.",
+     "show": null
+    },
+    {
+     "id": "close-2",
+     "text": "I can send you a summary of the rooms you visited, answer a specific question, or connect you with 3HUE's Client Success team. What would you like?",
+     "show": null
+    }
+   ],
+   "next": null,
+   "choice": {
+    "prompt": "What would you like to do?",
+    "remember": null,
+    "options": [
+     {
+      "label": "Email me a summary of my tour",
+      "next": "action:email-summary",
+      "tag": "email",
+      "sub": null
+     },
+     {
+      "label": "I have a question",
+      "next": "action:ask",
+      "tag": "ask",
+      "sub": null
+     },
+     {
+      "label": "Book a conversation with Client Success",
+      "next": "action:book",
+      "tag": "book",
+      "sub": "info.3hue.net/start-now · 855-374-7129"
+     },
+     {
+      "label": "Replay the tour",
+      "next": "arrive",
+      "tag": "replay",
+      "sub": null
+     }
+    ]
+   }
+  }
+ }
+}

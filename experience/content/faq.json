@@ -1,0 +1,224 @@
+[
+ {
+  "q": "What if we already have a CISO or CIO?",
+  "a": "That's common. 3HUE's programs are operated by senior information security analysts and architects, and the Virtual CIO or Virtual CISO is an optional component \u2014 you can run the managed programs alongside your own leadership, or use a vCISO flexibly to mentor an incumbent CISO or absorb overflow.",
+  "k": [
+   "ciso",
+   "cio",
+   "already",
+   "have",
+   "leader",
+   "existing"
+  ]
+ },
+ {
+  "q": "What does a Virtual CISO do?",
+  "a": "3HUE's Virtual CISOs are former CISO and CIO professionals who integrate with your leadership to shape security strategy, drive decisions, and oversee compliance \u2014 board-facing expertise without the cost of a full-time executive. There are three leadership options: no vCISO, CISO Support to build an internal capability, or a Fractional CISO as staff augmentation. Typical effort is 68\u2013164 hours a year.",
+  "k": [
+   "vciso",
+   "virtual",
+   "ciso",
+   "role",
+   "leadership",
+   "fractional"
+  ]
+ },
+ {
+  "q": "What is the difference between a Virtual CIO and a Virtual CISO?",
+  "a": "The Virtual CIO aligns your IT strategy with business goals and makes sure infrastructure supports growth. The Virtual CISO focuses on cybersecurity: managing risk, shaping security strategy, and regulatory compliance. You can select either or both.",
+  "k": [
+   "difference",
+   "vcio",
+   "vciso",
+   "cio",
+   "ciso"
+  ]
+ },
+ {
+  "q": "Which compliance frameworks do you support?",
+  "a": "SOC 2, PCI-DSS, HIPAA, HITRUST, CMMC, NIST, and ISO \u2014 using a single control framework so one set of controls satisfies multiple regulations. Security Compliance Services keeps you continuously audit-ready with policy compliance tracking, risk assessments, and change detection; clients see up to a 60% reduction in audit preparation time.",
+  "k": [
+   "soc",
+   "soc2",
+   "hipaa",
+   "cmmc",
+   "pci",
+   "nist",
+   "iso",
+   "hitrust",
+   "compliance",
+   "framework",
+   "audit",
+   "frameworks"
+  ]
+ },
+ {
+  "q": "How does pricing work?",
+  "a": "3HUE doesn't publish list prices; pricing is determined by scope and commitment. You choose a leadership option (no vCISO, CISO Support, or Fractional CISO), the managed programs you need (ISP, RMP, CIRP, VCP, SCS), and core security services (MDR, managed zero-trust access, managed internet protection). Everything is scoped for a 12-month sprint with no added headcount or tech licenses, and offshore or nearshore options can be as low as 50% of the standard rate. Client Success can build a scoped estimate \u2014 855-374-7129 or info.3hue.net/start-now.",
+  "k": [
+   "price",
+   "pricing",
+   "cost",
+   "how",
+   "much",
+   "budget",
+   "rates",
+   "expensive",
+   "fees"
+  ]
+ },
+ {
+  "q": "How long does it take to get a program in place?",
+  "a": "3HUE is built for speed: organizations modernize risk and compliance in as fast as 90 days, and a mature SOC 2, PCI-DSS, or CMMC-compliant program can be implemented in under 6 months. Programs run in 12-month sprints with planned workloads.",
+  "k": [
+   "long",
+   "time",
+   "fast",
+   "quickly",
+   "timeline",
+   "months",
+   "days",
+   "weeks",
+   "speed"
+  ]
+ },
+ {
+  "q": "How do you work with our existing MSP or security team?",
+  "a": "3HUE uses a seamless integration model: the managed programs complement and enhance your current operations, filling gaps in compliance, incident response, and strategic security management without disruption.",
+  "k": [
+   "msp",
+   "existing",
+   "team",
+   "integrate",
+   "integration",
+   "provider",
+   "partner",
+   "work",
+   "with"
+  ]
+ },
+ {
+  "q": "What happens during a security incident?",
+  "a": "The Cyber-Incident Response Program gives you structured response planning and incident command: clear roles and escalation paths, coordinated containment and recovery, and annual tabletop exercises. With the managed SOC, detection to client notification happens within 15 minutes, and 3HUE's teams have led clients through ransomware, breaches, and insider threats.",
+  "k": [
+   "incident",
+   "breach",
+   "ransomware",
+   "response",
+   "attack",
+   "hacked",
+   "emergency"
+  ]
+ },
+ {
+  "q": "What does the managed SOC include?",
+  "a": "24/7 managed detection and response operated with 3HUE's partner Whitedog, internet threat protection against phishing and spoofing, managed zero-trust network access, and threat hunting plus red-team testing included without additional fees \u2014 across Windows, macOS, Linux, Kubernetes, and virtual platforms, using 50+ commercial and open-source tools.",
+  "k": [
+   "soc",
+   "mdr",
+   "monitoring",
+   "24/7",
+   "detection",
+   "whitedog",
+   "operations",
+   "zero",
+   "trust"
+  ]
+ },
+ {
+  "q": "What is the Risk Management Program?",
+  "a": "The RMP establishes a risk management function that identifies, prioritizes, and mitigates security risk continuously. It prioritizes investment on actual risk, supports risk registers, assessments, and remediation tracking, and prepares you for regulatory reviews and partner due diligence. Effort is 60\u2013472 hours a year depending on your risk landscape.",
+  "k": [
+   "risk",
+   "management",
+   "register",
+   "rmp",
+   "assessment"
+  ]
+ },
+ {
+  "q": "How do you manage vendor and third-party risk?",
+  "a": "The Vendor Compliance Program aligns vendor practices with your risk tolerance, contractual controls, and regulatory expectations; maintains audit-ready vendor assurance documentation; and proactively validates the attack surface of high-risk vendors. Effort is 120\u2013365 hours a year.",
+  "k": [
+   "vendor",
+   "third",
+   "party",
+   "supplier",
+   "vcp",
+   "supply",
+   "chain"
+  ]
+ },
+ {
+  "q": "Where does the GRC system run?",
+  "a": "On your platform. For organizations managing fewer than about 5,000 information assets, 3HUE deploys its GRC system on your Microsoft 365 tenant; if you already have an enterprise GRC platform, 3HUE configures and maintains it. It includes a client portal, risk register, vendor profiles, action plans, request workflows, and continuous change detection with inspectors for Azure, AWS, and M365.",
+  "k": [
+   "grc",
+   "system",
+   "platform",
+   "m365",
+   "microsoft",
+   "tool",
+   "software",
+   "where",
+   "hosted",
+   "portal"
+  ]
+ },
+ {
+  "q": "How does an engagement start?",
+  "a": "Schedule a meeting with Client Success for a deep-dive overview and discovery. If you have no program (or no enterprise-wide evaluation in 18+ months), 3HUE recommends a Holistic Risk & Control Posture Assessment first \u2014 you get a risk assessment report, a NIST CSF 2.0 maturity scorecard, a remediation plan, and a plan of actions and milestones. If a program exists, it's a strategic review; if you have an urgent audit deadline, it's a controls gap assessment aligned to your framework. Contact: 855-374-7129, info.3hue.net/start-now, success@3hue.net.",
+  "k": [
+   "start",
+   "started",
+   "begin",
+   "first",
+   "step",
+   "engage",
+   "contact",
+   "meeting",
+   "next",
+   "how"
+  ]
+ },
+ {
+  "q": "What is AiVRIC?",
+  "a": "AiVRIC is the risk intelligence fabric under every 3HUE program: findings from the GRC programs, continuous change detection, and the SOC converge into one data layer. Executives see it as Client Vision \u2014 Posture, Priorities, Progress, and Decisions \u2014 with findings ranked by business impact and board-ready readouts. It's a 3HUE platform; more at aivric.com.",
+  "k": [
+   "aivric",
+   "fabric",
+   "client",
+   "vision",
+   "platform",
+   "ai",
+   "data"
+  ]
+ },
+ {
+  "q": "What is the Get-Well methodology?",
+  "a": "Get-Well is 3HUE's structured approach to GRC management with three service levels: Essentials for regulatory compliance, Enhanced for high-risk environments, and Data-Driven for continuous security improvement. It integrates with SCF, NIST, and CIS, and operational workloads are sized to your regulatory requirements and risk appetite.",
+  "k": [
+   "get-well",
+   "getwell",
+   "methodology",
+   "levels",
+   "essentials",
+   "enhanced",
+   "data-driven"
+  ]
+ },
+ {
+  "q": "Why 3HUE?",
+  "a": "Built for the mid-market and engineered for speed \u2014 modernize risk and compliance in as fast as 90 days. Trusted when it matters most \u2014 teams that have led clients through ransomware, breaches, and insider threats. Proven across regulated industries with a single control framework for SOC 2, PCI-DSS, HIPAA, HITRUST, and CMMC. 3HUE doesn't sell technology; it sells outcomes.",
+  "k": [
+   "why",
+   "3hue",
+   "different",
+   "choose",
+   "better",
+   "about",
+   "company",
+   "who"
+  ]
+ }
+]
