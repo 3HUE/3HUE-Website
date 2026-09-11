@@ -70,6 +70,19 @@ export function speak(line) {
     tick();
   });
 }
+/** Speak an already-rendered clip (console answers) through the same element/voice pipeline. */
+export function playClip(url) {
+  cancel();
+  return new Promise((resolve) => {
+    const me = { done: false };
+    current = me;
+    const finish = (skipped) => { if (me.done) return; me.done = true; audio.onended = null; audio.onerror = null; setMode('idle'); if (current === me) current = null; resolve({ skipped }); };
+    me.finish = finish;
+    audio.src = url; audio.muted = settings.muted; setMode('speaking');
+    audio.onended = () => finish(false); audio.onerror = () => finish(true);
+    const pr = audio.play(); if (pr && pr.catch) pr.catch(() => finish(true));
+  });
+}
 export function cancel() { if (current) { audio.pause(); current.finish(true); } }
 export function skip() { if (current) { audio.pause(); current.finish(true); } }
 export function pause() { audio.pause(); setState('paused'); setMode('idle'); }

@@ -9,7 +9,8 @@
    "have",
    "leader",
    "existing"
-  ]
+  ],
+  "audio": "media/voice/faq-00.mp3"
  },
  {
   "q": "What does a Virtual CISO do?",
@@ -21,7 +22,8 @@
    "role",
    "leadership",
    "fractional"
-  ]
+  ],
+  "audio": "media/voice/faq-01.mp3"
  },
  {
   "q": "What is the difference between a Virtual CIO and a Virtual CISO?",
@@ -32,7 +34,8 @@
    "vciso",
    "cio",
    "ciso"
-  ]
+  ],
+  "audio": "media/voice/faq-02.mp3"
  },
  {
   "q": "Which compliance frameworks do you support?",
@@ -50,7 +53,8 @@
    "framework",
    "audit",
    "frameworks"
-  ]
+  ],
+  "audio": "media/voice/faq-03.mp3"
  },
  {
   "q": "How does pricing work?",
@@ -65,7 +69,8 @@
    "rates",
    "expensive",
    "fees"
-  ]
+  ],
+  "audio": "media/voice/faq-04.mp3"
  },
  {
   "q": "How long does it take to get a program in place?",
@@ -80,7 +85,8 @@
    "days",
    "weeks",
    "speed"
-  ]
+  ],
+  "audio": "media/voice/faq-05.mp3"
  },
  {
   "q": "How do you work with our existing MSP or security team?",
@@ -95,7 +101,8 @@
    "partner",
    "work",
    "with"
-  ]
+  ],
+  "audio": "media/voice/faq-06.mp3"
  },
  {
   "q": "What happens during a security incident?",
@@ -108,7 +115,8 @@
    "attack",
    "hacked",
    "emergency"
-  ]
+  ],
+  "audio": "media/voice/faq-07.mp3"
  },
  {
   "q": "What does the managed SOC include?",
@@ -123,7 +131,8 @@
    "operations",
    "zero",
    "trust"
-  ]
+  ],
+  "audio": "media/voice/faq-08.mp3"
  },
  {
   "q": "What is the Risk Management Program?",
@@ -134,7 +143,8 @@
    "register",
    "rmp",
    "assessment"
-  ]
+  ],
+  "audio": "media/voice/faq-09.mp3"
  },
  {
   "q": "How do you manage vendor and third-party risk?",
@@ -147,7 +157,8 @@
    "vcp",
    "supply",
    "chain"
-  ]
+  ],
+  "audio": "media/voice/faq-10.mp3"
  },
  {
   "q": "Where does the GRC system run?",
@@ -163,7 +174,8 @@
    "where",
    "hosted",
    "portal"
-  ]
+  ],
+  "audio": "media/voice/faq-11.mp3"
  },
  {
   "q": "How does an engagement start?",
@@ -179,7 +191,8 @@
    "meeting",
    "next",
    "how"
-  ]
+  ],
+  "audio": "media/voice/faq-12.mp3"
  },
  {
   "q": "What is AiVRIC?",
@@ -192,7 +205,8 @@
    "platform",
    "ai",
    "data"
-  ]
+  ],
+  "audio": "media/voice/faq-13.mp3"
  },
  {
   "q": "What is the Get-Well methodology?",
@@ -205,7 +219,8 @@
    "essentials",
    "enhanced",
    "data-driven"
-  ]
+  ],
+  "audio": "media/voice/faq-14.mp3"
  },
  {
   "q": "Why 3HUE?",
@@ -219,7 +234,8 @@
    "about",
    "company",
    "who"
-  ]
+  ],
+  "audio": "media/voice/faq-15.mp3"
  },
  {
   "q": "What happens after a gap assessment?",
@@ -233,7 +249,8 @@
    "next",
    "then",
    "results"
-  ]
+  ],
+  "audio": "media/voice/faq-16.mp3"
  },
  {
   "q": "What should we prepare for an assessment?",
@@ -247,7 +264,8 @@
    "ready",
    "documents",
    "inventory"
-  ]
+  ],
+  "audio": "media/voice/faq-17.mp3"
  },
  {
   "q": "Who owns remediation?",
@@ -262,7 +280,8 @@
    "who",
    "fix",
    "fixes"
-  ]
+  ],
+  "audio": "media/voice/faq-18.mp3"
  },
  {
   "q": "How is risk prioritized?",
@@ -275,6 +294,7 @@
    "severity",
    "impact",
    "score"
-  ]
+  ],
+  "audio": "media/voice/faq-19.mp3"
  }
 ]

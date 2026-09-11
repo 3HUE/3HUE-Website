@@ -2,6 +2,7 @@
 // in-flow email capture), Explore (jump anywhere), Transcript (everything the guide has said so far).
 import * as api from './api.js';
 import { setMode, drawOrbInto } from './guide.js';
+import * as player from './player.js';
 
 const $ = (id) => document.getElementById(id);
 const root = $('ask'), thread = $('ask-thread'), suggest = $('ask-suggest'), cards = $('ask-cards');
@@ -93,7 +94,7 @@ export function open(prefill) {
   $('ask-stop').querySelector('span').textContent = ctx.chapterName || 'Inside 3HUE';
   $('paused').hidden = false; $('paused-pos').textContent = ctx.position || '';
   renderContext(ctx);
-  if (!thread.children.length) addAI("Hi — I'm AiVRIC. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.", false, {});
+  if (!thread.children.length) { const g = addAI("Hi — I'm AiVRIC. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.", false, { audio: 'media/voice/console-greeting.mp3' }); speak(g); }
   showTab('conv');
   if (prefill) input.value = prefill;
   setTimeout(() => input.focus(), 60);
@@ -124,7 +125,8 @@ function addAI(text, withActions = true, meta = {}) {
   d.innerHTML = `<span class="av"></span><div class="meta"><b>AiVRIC</b>${stamp()}</div><div class="t">${esc(text)}</div>` +
     `<button class="say" type="button" title="Play this answer" aria-label="Play this answer"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></button>` +
     (withActions ? `<div class="acts"><button class="btn" data-act="email" type="button">Email me this answer</button></div>` : '');
-  d.querySelector('.say').addEventListener('click', () => speakText(text, d.querySelector('.say')));
+  d._text = text; d._audio = meta.audio || null;
+  d.querySelector('.say').addEventListener('click', () => speak(d));
   d.querySelectorAll('[data-act="email"]').forEach((b) => b.addEventListener('click', () => offerEmail({ subject: meta.question ? `Your question: ${meta.question}` : 'Your answer from AiVRIC', text: `Q: ${meta.question || ''}\n\nA: ${text}`, kind: 'answer' })));
   thread.appendChild(d); scrollThread(); return d;
 }
@@ -137,28 +139,39 @@ async function askQuestion(q) {
     const res = await api.ask(q, history, hooks.context ? hooks.context() : null);
     th.remove();
     history.push({ role: 'user', content: q }, { role: 'assistant', content: res.answer });
-    const d = addAI(res.answer, true, { question: q });
-    speakText(res.answer, d.querySelector('.say'));
+    const d = addAI(res.answer, true, { question: q, audio: res.audio || null });
+    speak(d);
   } catch (e) {
     th.remove(); addAI("I couldn't reach the knowledge base just now. You can reach 3HUE's Client Success team directly at 855-374-7129 or success@3hue.net — or try again in a moment.", false, {});
   }
 }
 
-// ---- spoken replies (browser voice; the tour's own lines are pre-rendered) ----
-let utter = null, sayBtn = null;
-function speakText(text, btn) {
-  if (!('speechSynthesis' in window) || document.body.classList.contains('voice-muted')) return;
-  stopSpeech();
-  const spoken = text.replace(/3HUE/gi, 'three hue').replace(/AiVRIC/gi, 'Avaric').replace(/\bvCISO\b/g, 'virtual CISO').replace(/\bSOC 2\b/g, 'sock two').replace(/\bSOC\b/g, 'sock');
-  utter = new SpeechSynthesisUtterance(spoken); sayBtn = btn;
+// ---- spoken replies: the tour guide's own voice wherever possible ----
+// 1) pre-rendered clip (FAQ / greeting)  2) Worker /tts in the same neural voice  3) browser voice (last resort)
+let utter = null, sayBtn = null, speakRun = 0;
+async function speak(msgEl) {
+  const text = msgEl._text, btn = msgEl.querySelector('.say');
+  if (document.body.classList.contains('voice-muted')) return;
+  stopSpeech(); const run = ++speakRun; sayBtn = btn;
+  let url = msgEl._audio;
+  if (!url) { btn.classList.add('wait'); url = await api.tts(spokenForm(text)); btn.classList.remove('wait'); if (run !== speakRun) return; if (url) msgEl._audio = url; }
+  if (url) {
+    btn.classList.add('on');
+    await player.playClip(url);
+    if (run === speakRun) btn.classList.remove('on');
+    return;
+  }
+  if (!('speechSynthesis' in window)) return;
+  utter = new SpeechSynthesisUtterance(spokenForm(text));
   const voices = speechSynthesis.getVoices();
   const pick = voices.find((v) => /en-US/i.test(v.lang) && /Ava|Samantha|Aria|Jenny|Zira|Google US English/i.test(v.name)) || voices.find((v) => /en/i.test(v.lang));
   if (pick) utter.voice = pick; utter.rate = 1.02;
-  utter.onstart = () => { setMode('speaking'); if (btn) btn.classList.add('on'); };
-  utter.onend = utter.onerror = () => { setMode('idle'); if (btn) btn.classList.remove('on'); };
+  utter.onstart = () => { setMode('speaking'); btn.classList.add('on'); };
+  utter.onend = utter.onerror = () => { setMode('idle'); btn.classList.remove('on'); };
   speechSynthesis.speak(utter);
 }
-function stopSpeech() { if ('speechSynthesis' in window) speechSynthesis.cancel(); if (sayBtn) sayBtn.classList.remove('on'); setMode('idle'); }
+function spokenForm(text) { return text.replace(/3HUE/gi, 'three hue').replace(/AiVRIC/gi, 'Avaric').replace(/\bvCISO\b/g, 'virtual CISO').replace(/\bSOC 2\b/g, 'sock two').replace(/\bSOC\b/g, 'sock'); }
+function stopSpeech() { speakRun++; player.cancel(); if ('speechSynthesis' in window) speechSynthesis.cancel(); if (sayBtn) sayBtn.classList.remove('on'); setMode('idle'); }
 
 // ---- voice input ----
 let rec = null, listening = false;

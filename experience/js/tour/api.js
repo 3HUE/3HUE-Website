@@ -27,12 +27,22 @@ export function localAnswer(question) {
 export async function ask(question, history, context) {
   if (!hasBackend()) {
     const f = localAnswer(question);
-    if (f) return { answer: f.a, source: 'faq', matched: f.q };
-    return { answer: "I don't have that in the tour materials yet. The fastest way to get an exact answer is 3HUE's Client Success team: 855-374-7129, success@3hue.net, or info.3hue.net/start-now. Would you like me to send that to your inbox, or is there something else about the programs I can help with?", source: 'none' };
+    if (f) return { answer: f.a, source: 'faq', matched: f.q, audio: f.audio };
+    return { audio: 'media/voice/console-nokb.mp3', answer: "I don't have that in the tour materials yet. The fastest way to get an exact answer is 3HUE's Client Success team: 855-374-7129, success@3hue.net, or info.3hue.net/start-now. Would you like me to send that to your inbox, or is there something else about the programs I can help with?", source: 'none' };
   }
   const r = await fetch(cfg.apiBase.replace(/\/$/, '') + '/ask', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question, history: (history || []).slice(-8), context }) });
   if (!r.ok) throw new Error('ask failed ' + r.status);
   return await r.json();
+}
+
+/** Same neural voice as the tour, rendered by the Worker. Returns an object URL or null. */
+export async function tts(text) {
+  if (!hasBackend()) return null;
+  try {
+    const r = await fetch(cfg.apiBase.replace(/\/$/, '') + '/tts', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text }) });
+    if (!r.ok) return null;
+    return URL.createObjectURL(await r.blob());
+  } catch (e) { return null; }
 }
 
 export async function sendEmail(payload) {

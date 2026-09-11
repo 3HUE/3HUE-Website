@@ -2,6 +2,7 @@
 //   POST /ask    { question, history[], context } → { answer, source:'claude' }
 //   POST /email  { name, email, company, consent, subject, text, kind, tour } → { ok }
 //   POST /lead   { name, email, company, note } → { ok }
+//   POST /tts    { text } → audio/mpeg in the tour guide's voice (Azure Speech, en-US-AvaNeural), cached by text hash
 // Secrets (wrangler secret put): ANTHROPIC_API_KEY, RESEND_API_KEY. Vars in wrangler.toml: FROM_EMAIL, NOTIFY_EMAIL, ALLOWED_ORIGINS, MODEL.
 import KB from '../../content/kb.md';
 
@@ -56,6 +57,24 @@ async function resend(env, to, subject, html, text, replyTo) {
   if (!r.ok) throw new Error('resend ' + r.status + ' ' + (await r.text()).slice(0, 200));
   return r.json();
 }
+// ---- text-to-speech in the guide's own voice (Azure AI Speech; the tour's lines use the same neural voice) ----
+const SPOKEN = [[/3HUE/gi, 'three hue'], [/AiVRIC/gi, 'Avaric'], [/\bvCISO\b/g, 'virtual CISO'], [/\bSOC 2\b/g, 'sock two'], [/\bSOC\b/g, 'sock'], [/\bM365\b/g, 'M three sixty-five']];
+const escXml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
+async function tts(env, text) {
+  if (!env.AZURE_SPEECH_KEY) throw new Error('AZURE_SPEECH_KEY not set');
+  let say = text.slice(0, 1200); for (const [p, r] of SPOKEN) say = say.replace(p, r);
+  const voice = env.TTS_VOICE || 'en-US-AvaNeural';
+  const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US"><voice name="${voice}">${escXml(say)}</voice></speak>`;
+  const r = await fetch(`https://${env.AZURE_SPEECH_REGION || 'eastus'}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+    method: 'POST',
+    headers: { 'Ocp-Apim-Subscription-Key': env.AZURE_SPEECH_KEY, 'content-type': 'application/ssml+xml', 'x-microsoft-outputformat': 'audio-24khz-48kbitrate-mono-mp3', 'user-agent': 'inside-3hue-tour' },
+    body: ssml,
+  });
+  if (!r.ok) throw new Error('azure tts ' + r.status + ' ' + (await r.text()).slice(0, 200));
+  return r.arrayBuffer();
+}
+async function sha(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, '0')).join('').slice(0, 32); }
+
 const validEmail = (e) => typeof e === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length < 200;
 
 // very small per-IP rate limit (in-memory per isolate; good enough to stop casual abuse)
@@ -90,6 +109,16 @@ export default {
         const lead = `New tour lead\n\nName: ${name}\nEmail: ${body.email}\nCompany: ${company || '-'}\nFollow-up OK: ${body.consent ? 'yes' : 'no'}\nKind: ${body.kind || '-'}\n\nTour answers: ${JSON.stringify(body.tour && body.tour.answers || {})}\nVisited: ${(body.tour && body.tour.visited || []).join(', ')}\n\n--- sent to visitor ---\n${subject}\n\n${text}`;
         if (env.NOTIFY_EMAIL) await resend(env, env.NOTIFY_EMAIL, `[Inside 3HUE] ${name || body.email} — ${body.kind || 'email'}`, `<pre style="font-family:monospace;white-space:pre-wrap">${escHtml(lead)}</pre>`, lead, body.email).catch(() => {});
         return json({ ok: true }, 200, h);
+      }
+      if (url.pathname.endsWith('/tts')) {
+        const text = String(body.text || '').trim(); if (!text) return json({ error: 'text required' }, 400, h);
+        const key = new Request(`https://tts-cache.invalid/${await sha((env.TTS_VOICE || 'ava') + text)}`);
+        const cache = caches.default; const hit = await cache.match(key);
+        if (hit) { const res = new Response(hit.body, hit); for (const [k, v] of Object.entries(h)) res.headers.set(k, v); return res; }
+        const buf = await tts(env, text);
+        const res = new Response(buf, { headers: { 'content-type': 'audio/mpeg', 'cache-control': 'public, max-age=2592000', ...h } });
+        await cache.put(key, res.clone());
+        return res;
       }
       if (url.pathname.endsWith('/lead')) {
         if (!validEmail(body.email)) return json({ error: 'valid email required' }, 400, h);

@@ -181,6 +181,8 @@ body.ask-open #callout { opacity: 0; }
 #ask .msg.ai .say { grid-column: 3; grid-row: 1 / span 2; align-self: start; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--text-muted); }
 #ask .msg.ai .say:hover, #ask .msg.ai .say.on { color: var(--blue); border-color: var(--blue); }
 #ask .msg.ai .say svg { width: 16px; height: 16px; }
+#ask .msg.ai .say.wait { animation: say-wait 1s ease-in-out infinite; }
+@keyframes say-wait { 50% { opacity: 0.35; } }
 #ask .msg.ai .acts { grid-column: 2; display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
 #ask .msg.ai .acts .btn { font-size: 13px; padding: 6px 10px; }
 #ask .msg.ai.thinking .t { color: var(--text-muted); }

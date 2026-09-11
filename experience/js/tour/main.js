@@ -52,7 +52,7 @@ async function play(id, opts = {}) {
   // preload voices
   node.lines.forEach((l) => player.preload(l.id));
 
-  for (let i = 0; i < node.lines.length; i++) {
+  for (let i = opts.from || 0; i < node.lines.length; i++) {
     state.lineIndex = i;
     const line = node.lines[i];
     if (line.show) callouts.show(line.show); else callouts.clear(600);
@@ -106,8 +106,8 @@ function choose(node, o) {
   play(o.next);
 }
 function doAction(action) {
-  if (action === 'email-summary') { pauseTour(true); ask.openSummaryEmail(); return; }
-  if (action === 'ask') { pauseTour(true); ask.open(); return; }
+  if (action === 'email-summary') { offerChoice(T.nodes[state.node]); pauseTour(true); ask.openSummaryEmail(); return; }
+  if (action === 'ask') { offerChoice(T.nodes[state.node]); pauseTour(true); ask.open(); return; }
   if (action === 'book') {
     window.open(T.contact.web, '_blank', 'noopener');
     callouts.show({ type: 'card', title: 'Client Success', body: `${T.contact.phone} · ${T.contact.email} · ${T.contact.web.replace('https://', '')}` });
@@ -137,9 +137,14 @@ function bindControls() {
     else if (/^[1-7]$/.test(e.key) && state.waiting) { const b = choicesEl.querySelectorAll('button')[+e.key - 1]; if (b) b.click(); }
   });
 }
-function pauseTour(silent) { state.paused = true; player.pause(); $('c-pause').setAttribute('aria-pressed', 'true'); if (!silent) $('g-state').textContent = 'paused'; }
+function pauseTour(silent) { if (!state.paused) state.askFrom = state.lineIndex; state.paused = true; player.pause(); $('c-pause').setAttribute('aria-pressed', 'true'); if (!silent) $('g-state').textContent = 'paused'; }
 function resumeTour() { state.paused = false; player.resume(); $('c-pause').setAttribute('aria-pressed', 'false'); }
-function resumeAfterAsk() { resumeTour(); if (state.waiting) { $('g-state').textContent = 'your call'; } }
+function resumeAfterAsk() {
+  if (state.waiting) { resumeTour(); $('g-state').textContent = 'your call'; return; }
+  // the console spoke over the current line — pick the tour back up from the start of that line
+  state.paused = false; $('c-pause').setAttribute('aria-pressed', 'false');
+  play(state.node, { quiet: true, from: state.askFrom ?? state.lineIndex });
+}
 
 // ---------------------------------------------------------------- progress + map
 function buildProgress() {

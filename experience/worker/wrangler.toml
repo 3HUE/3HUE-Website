@@ -10,7 +10,10 @@ MODEL = "claude-sonnet-4-5"
 FROM_EMAIL = "AiVRIC at 3HUE <tour@3hue.net>"        # must be a verified Resend sender/domain
 NOTIFY_EMAIL = "success@3hue.net"                    # where leads + copies go
 ALLOWED_ORIGINS = "https://3hue.net,https://www.3hue.net,http://localhost:8000"
+TTS_VOICE = "en-US-AvaNeural"       # the tour guide's voice (must match guide.voice in tools/script.py)
+AZURE_SPEECH_REGION = "eastus"      # region of your Azure AI Speech resource
 
 # Secrets (never in this file):
 #   npx wrangler secret put ANTHROPIC_API_KEY
 #   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put AZURE_SPEECH_KEY     (Azure AI Speech resource key — gives chat answers the guide's own voice)
