@@ -1,4 +1,4 @@
-# 3HUE knowledge base (for the AiVRIC tour guide)
+# 3HUE knowledge base (for Ava, the 3HUE tour guide)
 
 Sources: ISG Framework Justification packet v2025.1; "The Future of Managed Security Services" boardroom deck (Spring 2025); Inside 3HUE experience content.
 
@@ -59,5 +59,5 @@ Contact: 855-374-7129 · info.3hue.net/start-now · success@3hue.net
 ## Threat and regulatory context (from the boardroom deck)
 Zero-day to breach in under 30 minutes; 71% of breaches detected after data exfiltration; 9% year-over-year increase in ransomware attacks on U.S. critical infrastructure (2024); deepfake-related fraud up 900% from 2023 to 2024; AI, deepfakes, and multi-vector attacks; no industry left untouched. 72 new privacy laws proposed in 2024; 92% of boards expect reporting on cyber and compliance posture; 60% consumer abandonment rate after a data misuse event; trust is now a differentiator; security + compliance = business enabler. Modern approach: paradigm shift from reactive support to proactive, risk-aligned protection integrating governance, compliance, and resilience.
 
-## AiVRIC (the risk intelligence fabric) and Client Vision
-AiVRIC is the shared data layer under every 3HUE program: findings from every program and from the SOC converge into one posture, one set of priorities, visible progress, and decisions executives can act on. Client Vision has four panels: Posture (unified cloud, AI, and control posture across the estate), Priorities (findings ranked by business impact, not just severity), Progress (treatments, SLAs, and audit readiness tracked in one place), Decisions (board-ready readouts and AI-generated narratives). AiVRIC is a 3HUE platform; see aivric.com.
+## AiVRIC (the risk intelligence platform) and Client Vision
+AiVRIC is a risk intelligence platform made by AiVRIC (aivric.com). 3HUE uses AiVRIC to monitor client estates and to power Client Vision, the customer interface; other consultancies can use AiVRIC to run their own service models. Inside 3HUE's delivery, AiVRIC is the shared data layer under every program: findings from every program and from the SOC converge into one posture, one set of priorities, visible progress, and decisions executives can act on. Client Vision has four panels: Posture (unified cloud, AI, and control posture across the estate), Priorities (findings ranked by business impact, not just severity), Progress (treatments, SLAs, and audit readiness tracked in one place), Decisions (board-ready readouts and AI-generated narratives). 

@@ -18,7 +18,7 @@ faq = json.load(open(FAQ_PATH))
 for i, f in enumerate(faq):
     f['audio'] = f'media/voice/faq-{i:02d}.mp3'
     lines.append({'id': f'faq-{i:02d}', 'text': f['a']})
-GREETING = "Hi — I'm AiVRIC. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk."
+GREETING = "Hi — I'm Ava. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk."
 lines.append({'id': 'console-greeting', 'text': GREETING})
 NOKB = "I don't have that in the tour materials yet. The fastest way to get an exact answer is 3HUE's Client Success team: 855-374-7129, success@3hue.net, or info.3hue.net/start-now. Would you like me to send that to your inbox, or is there something else about the programs I can help with?"
 lines.append({'id': 'console-nokb', 'text': NOKB})

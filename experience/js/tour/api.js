@@ -19,6 +19,7 @@ export function localAnswer(question) {
   for (const f of faq) {
     const keys = new Set([...f.k, ...tokens(f.q)]);
     let s = 0; for (const w of q) { if (keys.has(w)) s += 2; else for (const k of keys) if (k.length > 4 && (w.startsWith(k) || k.startsWith(w))) { s += 1; break; } }
+    const fq = tokens(f.q); if (fq.length && fq.every((w) => q.includes(w)) && q.every((w) => fq.includes(w))) s += 6; // near-verbatim question
     if (s > bs) { bs = s; best = f; }
   }
   return bs >= 2 ? best : null;

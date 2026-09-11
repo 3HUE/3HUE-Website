@@ -1,4 +1,4 @@
-// The AiVRIC presence: a luminous connected sphere of nodes and threads that breathes when idle,
+// The guide's presence (Ava): a luminous connected sphere of nodes and threads that breathes when idle,
 // pulses with the voice while speaking, and tightens into a listening ring when the visitor talks.
 const canvas = document.getElementById('guide');
 const ctx = canvas.getContext('2d');

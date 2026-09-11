@@ -28,7 +28,7 @@ const CARDS = {
   rmp: [{ t: 'Client Vision', s: 'Where risk becomes decisions', go: 'fabric', i: 'radar' }, { t: 'Compliance services', s: 'Evidence & audit readiness', go: 'scs', i: 'check' }],
   scs: [{ t: 'Show the workflow', s: 'Assessment to remediation', go: 'engage', i: 'flow' }, { t: 'Visit Engineering', s: 'See how gaps get closed', go: 'sea', i: 'gear' }],
   vcp: [{ t: 'Compliance services', s: 'Vendor evidence, audit-ready', go: 'scs', i: 'check' }, { t: 'Client Vision', s: 'Third-party risk in one view', go: 'fabric', i: 'radar' }],
-  sea: [{ t: 'The fabric', s: 'AiVRIC & Client Vision', go: 'fabric', i: 'radar' }, { t: 'How engagements run', s: 'Step 2: GRC operations', go: 'engage', i: 'flow' }],
+  sea: [{ t: 'The fabric', s: 'AiVRIC-powered Client Vision', go: 'fabric', i: 'radar' }, { t: 'How engagements run', s: 'Step 2: GRC operations', go: 'engage', i: 'flow' }],
   fabric: [{ t: 'The business case', s: 'Executive alignment', go: 'exec', i: 'chart' }, { t: 'Getting started', s: 'Where are you today?', go: 'pathway', i: 'flag' }],
   exec: [{ t: 'How engagements run', s: 'Three steps, 12-month sprints', go: 'engage', i: 'flow' }, { t: 'Getting started', s: 'Your first step', go: 'pathway', i: 'flag' }],
   engage: [{ t: 'Getting started', s: 'Pick your scenario', go: 'pathway', i: 'flag' }, { t: 'Visit Engineering', s: 'See how gaps get closed', go: 'sea', i: 'gear' }],
@@ -94,7 +94,7 @@ export function open(prefill) {
   $('ask-stop').querySelector('span').textContent = ctx.chapterName || 'Inside 3HUE';
   $('paused').hidden = false; $('paused-pos').textContent = ctx.position || '';
   renderContext(ctx);
-  if (!thread.children.length) { const g = addAI("Hi — I'm AiVRIC. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.", false, { audio: 'media/voice/console-greeting.mp3' }); speak(g); }
+  if (!thread.children.length) { const g = addAI("Hi — I'm Ava. Ask me anything about this room, the programs, pricing, or your next step. You can type, or start voice and just talk.", false, { audio: 'media/voice/console-greeting.mp3' }); speak(g); }
   showTab('conv');
   if (prefill) input.value = prefill;
   setTimeout(() => input.focus(), 60);
@@ -122,19 +122,19 @@ function renderTranscript() {
 function addYou(text) { const d = document.createElement('div'); d.className = 'msg you'; d.innerHTML = `<div class="meta"><b>You</b>${stamp()}</div><div class="t">${esc(text)}</div>`; thread.appendChild(d); scrollThread(); }
 function addAI(text, withActions = true, meta = {}) {
   const d = document.createElement('div'); d.className = 'msg ai';
-  d.innerHTML = `<span class="av"></span><div class="meta"><b>AiVRIC</b>${stamp()}</div><div class="t">${esc(text)}</div>` +
+  d.innerHTML = `<span class="av"></span><div class="meta"><b>Ava</b>${stamp()}</div><div class="t">${esc(text)}</div>` +
     `<button class="say" type="button" title="Play this answer" aria-label="Play this answer"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg></button>` +
     (withActions ? `<div class="acts"><button class="btn" data-act="email" type="button">Email me this answer</button></div>` : '');
   d._text = text; d._audio = meta.audio || null;
   d.querySelector('.say').addEventListener('click', () => speak(d));
-  d.querySelectorAll('[data-act="email"]').forEach((b) => b.addEventListener('click', () => offerEmail({ subject: meta.question ? `Your question: ${meta.question}` : 'Your answer from AiVRIC', text: `Q: ${meta.question || ''}\n\nA: ${text}`, kind: 'answer' })));
+  d.querySelectorAll('[data-act="email"]').forEach((b) => b.addEventListener('click', () => offerEmail({ subject: meta.question ? `Your question: ${meta.question}` : 'Your answer from Ava at 3HUE', text: `Q: ${meta.question || ''}\n\nA: ${text}`, kind: 'answer' })));
   thread.appendChild(d); scrollThread(); return d;
 }
 function scrollThread() { const pane = thread.parentElement; requestAnimationFrame(() => { pane.scrollTop = pane.scrollHeight; }); }
 
 async function askQuestion(q) {
   addYou(q); stopSpeech();
-  const th = document.createElement('div'); th.className = 'msg ai thinking'; th.innerHTML = `<span class="av"></span><div class="meta"><b>AiVRIC</b></div><div class="t">Thinking</div>`; thread.appendChild(th); scrollThread();
+  const th = document.createElement('div'); th.className = 'msg ai thinking'; th.innerHTML = `<span class="av"></span><div class="meta"><b>Ava</b></div><div class="t">Thinking</div>`; thread.appendChild(th); scrollThread();
   try {
     const res = await api.ask(q, history, hooks.context ? hooks.context() : null);
     th.remove();
@@ -209,6 +209,6 @@ async function submitCapture(e) {
 export function openSummaryEmail() {
   if (root.hidden) open();
   const s = hooks.summary ? hooks.summary() : { text: '' };
-  addAI("Here's the summary I'll send — the rooms you visited and the next step we discussed. Just add where to send it.", false, {});
+  addAI("Here's the summary I'll send — the rooms we visited and the next step we discussed. Just add where to send it.", false, {});
   offerEmail({ subject: 'Your Inside 3HUE tour summary', text: s.text, kind: 'summary' });
 }

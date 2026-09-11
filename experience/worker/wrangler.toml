@@ -7,7 +7,7 @@ rules = [{ type = "Text", globs = ["**/*.md"], fallthrough = true }]
 
 [vars]
 MODEL = "claude-sonnet-4-5"
-FROM_EMAIL = "AiVRIC at 3HUE <tour@3hue.net>"        # must be a verified Resend sender/domain
+FROM_EMAIL = "Ava at 3HUE <tour@3hue.net>"        # must be a verified Resend sender/domain
 NOTIFY_EMAIL = "success@3hue.net"                    # where leads + copies go
 ALLOWED_ORIGINS = "https://3hue.net,https://www.3hue.net,http://localhost:8000"
 TTS_VOICE = "en-US-AvaNeural"       # the tour guide's voice (must match guide.voice in tools/script.py)

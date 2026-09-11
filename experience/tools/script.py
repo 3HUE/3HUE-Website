@@ -4,7 +4,7 @@ Every guide line gets an id = "<node>-<n>"; tools/build-voice.py renders media/v
 import json, os
 
 R = 'media/scene/rooms/'
-G = {'name': 'AiVRIC', 'title': 'Your 3HUE guide', 'voice': 'en-US-AvaNeural'}
+G = {'name': 'Ava', 'title': 'Your 3HUE guide', 'voice': 'en-US-AvaNeural'}
 
 def cam(x0=0.5, y0=0.5, z0=1.0, x1=0.5, y1=0.5, z1=1.08):
     return {'from': {'x': x0, 'y': y0, 'z': z0}, 'to': {'x': x1, 'y': y1, 'z': z1}}
@@ -25,7 +25,7 @@ def opt(label, next, tag=None, sub=None): return {'label': label, 'next': next, 
 
 # ---------------------------------------------------------------- 1. Arrival
 scene('arrive', 'Arrival', R + 'vision.jpg', [
-    ("Welcome to 3HUE. I'm AiVRIC — the risk intelligence fabric that runs through this building, and I'll be your guide today.", None),
+    ("Welcome to 3HUE. I'm Ava, and I'll be your guide through the building today.", None),
     ("Everything you're about to see is real: six managed security programs, an engineering team, a boardroom, and the pathway that connects them. It's how 3HUE turns governance into decisions executives can act on.", None),
     ("Before we walk, tell me who I'm walking with. I'll shape the tour around what matters to you.", None),
 ], cam_=cam(0.5, 0.55, 1.0, 0.5, 0.5, 1.10), title='Inside 3HUE',
@@ -122,8 +122,8 @@ scene('sea', 'Secure Engineering & Architecture', R + 'sea.jpg', [
 ], next='fabric', cam_=cam(0.5, 0.42, 1.0, 0.5, 0.5, 1.1))
 
 # ---------------------------------------------------------------- 6. The fabric & Client Vision
-scene('fabric', 'AiVRIC & Client Vision', R + 'vision.jpg', [
-    ("And this is me. The AiVRIC Risk Intelligence Fabric is where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.", None),
+scene('fabric', 'The fabric & Client Vision', R + 'vision.jpg', [
+    ("This is the heart of the building: the AiVRIC Risk Intelligence Fabric. AiVRIC is the platform 3HUE runs to monitor your estate and to power Client Vision — and it's where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.", None),
     ("What executives see is Client Vision: four panels. Posture — your unified cloud, AI, and control posture across the estate. Priorities — findings ranked by business impact, not just severity. Progress — treatments, SLAs, and audit readiness tracked in one place. And Decisions — board-ready readouts.",
      chips('Client Vision', ['Posture', 'Priorities', 'Progress', 'Decisions'])),
     ("Continuous change detection feeds it in real time — inspectors for Azure, AWS, Microsoft 365, and endpoint agents across on-premises and cloud — with actionable indicators of risk defined in your runbooks.",

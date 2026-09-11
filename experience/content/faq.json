@@ -196,7 +196,7 @@
  },
  {
   "q": "What is AiVRIC?",
-  "a": "AiVRIC is the risk intelligence fabric under every 3HUE program: findings from the GRC programs, continuous change detection, and the SOC converge into one data layer. Executives see it as Client Vision \u2014 Posture, Priorities, Progress, and Decisions \u2014 with findings ranked by business impact and board-ready readouts. It's a 3HUE platform; more at aivric.com.",
+  "a": "AiVRIC is the risk intelligence platform 3HUE uses to monitor your estate and to power Client Vision. Findings from the GRC programs, continuous change detection, and the SOC converge into one data layer, and executives see it as Client Vision \u2014 Posture, Priorities, Progress, and Decisions \u2014 with findings ranked by business impact and board-ready readouts. AiVRIC is made by AiVRIC and used by 3HUE to deliver its service model; you can learn more at aivric.com.",
   "k": [
    "aivric",
    "fabric",
@@ -232,8 +232,7 @@
    "choose",
    "better",
    "about",
-   "company",
-   "who"
+   "company"
   ],
   "audio": "media/voice/faq-15.mp3"
  },
@@ -296,5 +295,18 @@
    "score"
   ],
   "audio": "media/voice/faq-19.mp3"
+ },
+ {
+  "q": "Who are you?",
+  "a": "I'm Ava, your guide for 3HUE's Information Security Group tour. I walk you through the programs, the engineering bridge, the AiVRIC-powered fabric, and the boardroom, and I can answer questions about how 3HUE works or connect you with Client Success.",
+  "k": [
+   "who",
+   "ava",
+   "name",
+   "guide",
+   "yourself",
+   "introduce"
+  ],
+  "audio": "media/voice/faq-20.mp3"
  }
 ]

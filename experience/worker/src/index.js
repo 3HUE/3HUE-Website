@@ -15,8 +15,8 @@ function cors(req, env) {
   return { 'access-control-allow-origin': ok ? (origin || '*') : 'null', 'access-control-allow-methods': 'POST, OPTIONS', 'access-control-allow-headers': 'content-type', 'vary': 'origin' };
 }
 
-const SYSTEM = `You are AiVRIC, the guide inside 3HUE's "Inside the ISG building" tour. Answer visitor questions about 3HUE's Information Security Group, its managed programs, engagement model, pricing approach, compliance coverage, and how to get started.
-Rules: answer ONLY from the knowledge base below. If something isn't covered, say so plainly and point to Client Success (855-374-7129, success@3hue.net, info.3hue.net/start-now). Never invent prices, client names, certifications, or guarantees. Keep answers conversational and tight: 2–5 sentences, spoken-word friendly (they are read aloud), no markdown, no bullet lists, no headings. If the question is about a specific executive audience (CEO, CFO, CIO, board), use that audience's justification points. If asked who you are: you are AiVRIC, the risk intelligence fabric — a 3HUE platform — acting as the tour guide.
+const SYSTEM = `You are Ava, the friendly human-voiced guide inside 3HUE's "Inside the ISG building" tour. Answer visitor questions about 3HUE's Information Security Group, its managed programs, engagement model, pricing approach, compliance coverage, and how to get started.
+Rules: answer ONLY from the knowledge base below. If something isn't covered, say so plainly and point to Client Success (855-374-7129, success@3hue.net, info.3hue.net/start-now). Never invent prices, client names, certifications, or guarantees. Keep answers conversational and tight: 2–5 sentences, spoken-word friendly (they are read aloud), no markdown, no bullet lists, no headings. If the question is about a specific executive audience (CEO, CFO, CIO, board), use that audience's justification points. If asked who you are: you are Ava, 3HUE's tour guide. Keep the narrative straight: AiVRIC is a risk intelligence platform made by AiVRIC that 3HUE uses for estate monitoring and to power Client Vision; it is not you and it is not a 3HUE product.
 
 KNOWLEDGE BASE:
 ${KB}`;
@@ -43,7 +43,7 @@ function emailHtml(title, text, name) {
   <div style="max-width:640px;margin:0 auto;padding:32px 24px">
     <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#1fb6ff;margin-bottom:8px">Inside 3HUE</div>
     <h1 style="font-size:22px;font-weight:500;margin:0 0 18px">${escHtml(title)}</h1>
-    <p style="color:#9fb0c4;margin:0 0 18px">Hi ${escHtml(name || 'there')}, here's what AiVRIC put together for you during the tour.</p>
+    <p style="color:#9fb0c4;margin:0 0 18px">Hi ${escHtml(name || 'there')}, here's what Ava put together for you during the tour.</p>
     <div style="background:#0e1a2b;border:1px solid rgba(226,232,240,.14);border-radius:12px;padding:18px;line-height:1.6;font-size:15px">${body}</div>
     <p style="margin:24px 0 0;color:#9fb0c4;font-size:14px">Ready to talk? 3HUE Client Success · <a style="color:#1fb6ff" href="tel:8553747129">855-374-7129</a> · <a style="color:#1fb6ff" href="mailto:success@3hue.net">success@3hue.net</a> · <a style="color:#1fb6ff" href="https://info.3hue.net/start-now">info.3hue.net/start-now</a></p>
     <p style="margin:24px 0 0;color:#64748b;font-size:12px">You received this because you asked for it inside the 3HUE tour. 3HUE Executive Consulting · 3hue.net</p>
@@ -52,7 +52,7 @@ function emailHtml(title, text, name) {
 async function resend(env, to, subject, html, text, replyTo) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${env.RESEND_API_KEY}` },
-    body: JSON.stringify({ from: env.FROM_EMAIL || 'AiVRIC at 3HUE <tour@3hue.net>', to: [to], subject, html, text, reply_to: replyTo || env.NOTIFY_EMAIL }),
+    body: JSON.stringify({ from: env.FROM_EMAIL || 'Ava at 3HUE <tour@3hue.net>', to: [to], subject, html, text, reply_to: replyTo || env.NOTIFY_EMAIL }),
   });
   if (!r.ok) throw new Error('resend ' + r.status + ' ' + (await r.text()).slice(0, 200));
   return r.json();

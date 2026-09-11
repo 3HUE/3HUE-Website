@@ -1,16 +1,16 @@
 # Inside 3HUE — the guided tour
 
-A voiced, branching, cinematic tour of 3HUE's Information Security Group, led by AiVRIC (the risk intelligence
-fabric) as the guide. Plain HTML/CSS/ES modules — no build step. Lives at `experience/` in the website repo →
+A voiced, branching, cinematic tour of 3HUE's Information Security Group, led by Ava, a friendly 3HUE guide (AiVRIC is the
+platform 3HUE runs for estate monitoring and Client Vision — it appears in the story as a platform, not as the guide). Plain HTML/CSS/ES modules — no build step. Lives at `experience/` in the website repo →
 `https://3hue.net/experience/`.
 
 ## What happens
 1. Opening film + the welded 3HUE mark → **Begin the tour** (that click also unlocks audio).
-2. AiVRIC speaks each scene (pre-rendered neural voice, word-synced captions, callouts of facts/chips/cards).
+2. Ava speaks each scene (pre-rendered neural voice, word-synced captions, callouts of facts/chips/cards).
 3. Decision points shape the route: who you are → where the pressure is (six program rooms, a hub to visit more) →
    the engineering bridge → the fabric & Client Vision → executive business case by lens (CEO/CFO/CIO/Board) →
    how engagements run → where you are on the maturity pathway → tailored first step → close.
-4. **Ask AiVRIC** at any time (typed or by voice): answers grounded on `content/kb.md` (via the Worker) or
+4. **Ask Ava** at any time (typed or by voice): answers grounded on `content/kb.md` (via the Worker) or
    `content/faq.json` (demo mode), spoken back, with "Email me this answer" → quick contact capture → back to the tour.
 5. Close: email a summary of the rooms visited, ask a question, book with Client Success, or replay.
 
@@ -24,7 +24,7 @@ css/tour.css               styles
 js/tour/main.js            walks the node graph, choices, controls, map, summary
 js/tour/player.js          voice playback + word-synced captions
 js/tour/scene.js           backdrop cross-fades and camera moves; chapter title cards
-js/tour/guide.js           the AiVRIC presence (audio-reactive canvas)
+js/tour/guide.js           the guide's presence (audio-reactive canvas)
 js/tour/callouts.js        facts / chips / cards beside the scene
 js/tour/ask.js             chat, speech recognition, spoken replies, email capture
 js/tour/api.js             Worker bridge with demo-mode fallbacks

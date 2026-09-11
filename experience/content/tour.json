@@ -1,6 +1,6 @@
 {
  "guide": {
-  "name": "AiVRIC",
+  "name": "Ava",
   "title": "Your 3HUE guide",
   "voice": "en-US-AvaNeural"
  },
@@ -56,7 +56,7 @@
    "lines": [
     {
      "id": "arrive-1",
-     "text": "Welcome to 3HUE. I'm AiVRIC — the risk intelligence fabric that runs through this building, and I'll be your guide today.",
+     "text": "Welcome to 3HUE. I'm Ava, and I'll be your guide through the building today.",
      "show": null
     },
     {
@@ -968,7 +968,7 @@
   },
   "fabric": {
    "type": "scene",
-   "chapter": "AiVRIC & Client Vision",
+   "chapter": "The fabric & Client Vision",
    "bg": "media/scene/rooms/vision.jpg",
    "cam": {
     "from": {
@@ -986,7 +986,7 @@
    "lines": [
     {
      "id": "fabric-1",
-     "text": "And this is me. The AiVRIC Risk Intelligence Fabric is where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.",
+     "text": "This is the heart of the building: the AiVRIC Risk Intelligence Fabric. AiVRIC is the platform 3HUE runs to monitor your estate and to power Client Vision — and it's where every program's signal converges: findings from the GRC rooms, changes detected across your cloud and endpoints, and events from the SOC — one data layer under every decision.",
      "show": null
     },
     {
