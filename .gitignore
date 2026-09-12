@@ -5,3 +5,8 @@ _archive/services/index.html
 3hue-new/assets/css/styles.css
 node_modules/
 builder/
+
+# Client-confidential engagement material. This repo is public — see
+# engagements/.gitignore for why nothing under here may ever be committed.
+engagements/
+

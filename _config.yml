@@ -24,3 +24,8 @@ exclude:
   - "package.json"
   - "package-lock.json"
   - __pycache__/
+  # Client-confidential engagement material — never published to the site.
+  # This is the second of two guards; the first is /engagements/.gitignore,
+  # which keeps it out of the repository in the first place.
+  - engagements/
+
