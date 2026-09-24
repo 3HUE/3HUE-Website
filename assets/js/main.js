@@ -832,7 +832,6 @@
 })();
 const storageKey = "3hue-theme";
 const themeToggles = document.querySelectorAll(".theme-toggle");
-const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 const applyTheme = (theme) => {
   if (theme === "dark") {
@@ -845,12 +844,9 @@ const applyTheme = (theme) => {
   });
 };
 
+// Always start in light mode unless the visitor has chosen dark via the toggle.
 const storedTheme = localStorage.getItem(storageKey);
-if (storedTheme) {
-  applyTheme(storedTheme);
-} else if (prefersDark) {
-  applyTheme("dark");
-}
+applyTheme(storedTheme === "dark" ? "dark" : "light");
 
 themeToggles.forEach((btn) => {
   btn.addEventListener("click", () => {

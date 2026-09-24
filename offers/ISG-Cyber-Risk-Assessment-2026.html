@@ -2129,8 +2129,7 @@
         const toggle = document.getElementById("theme-toggle");
         if (!toggle) return;
         const savedTheme = localStorage.getItem("insider-theme");
-        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-        const initialTheme = savedTheme || (prefersLight ? "light" : "dark");
+        const initialTheme = savedTheme || "light";
 
         document.body.setAttribute("data-theme", initialTheme);
         toggle.checked = initialTheme === "dark";

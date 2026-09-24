@@ -949,8 +949,7 @@
 
       const themeToggle = document.getElementById("theme-toggle");
       const savedTheme = localStorage.getItem("offers-theme");
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+      const initialTheme = savedTheme || "light";
 
       document.body.setAttribute("data-theme", initialTheme);
       if (themeToggle) {
