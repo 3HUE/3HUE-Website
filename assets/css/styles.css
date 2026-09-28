@@ -1583,7 +1583,8 @@ html:not([data-theme="dark"]) .home-hero-copy .eyebrow {
   text-shadow: none;
 }
 
-html:not([data-theme="dark"]) .home-hero .urgency-badge {
+html:not([data-theme="dark"]) .home-hero .urgency-badge,
+html:not([data-theme="dark"]) .cta-band .urgency-badge {
   color: var(--ink-strong);
   background: rgba(68, 168, 217, 0.14);
 }
