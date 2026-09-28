@@ -28,4 +28,7 @@ exclude:
   # This is the second of two guards; the first is /engagements/.gitignore,
   # which keeps it out of the repository in the first place.
   - engagements/
+  # Internal-only material, deployed separately — never published to the site.
+  # First guard: /.gitignore keeps it out of the repository.
+  - assessor-playbook/
 

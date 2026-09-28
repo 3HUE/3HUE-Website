@@ -10,3 +10,6 @@ builder/
 # engagements/.gitignore for why nothing under here may ever be committed.
 engagements/
 
+# Internal-only material, built and deployed separately. This repo is public —
+# nothing under here may ever be committed (second guard: _config.yml exclude).
+assessor-playbook/
