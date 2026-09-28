@@ -5232,6 +5232,7 @@ ul.list-clean li::before {
   border: 1px solid rgba(68, 168, 217, 0.42);
   backdrop-filter: blur(8px);
   margin-bottom: var(--space-4);
+  justify-self: start;
 }
 
 .urgency-dot {
