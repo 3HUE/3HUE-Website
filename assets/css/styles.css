@@ -1228,6 +1228,20 @@ p {
   background: var(--brand-primary-100);
 }
 
+.dropdown .mega-cta a.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  border-color: rgba(68, 168, 217, 0.5);
+  color: var(--brand-primary-700);
+}
+
+[data-theme="dark"] .dropdown .mega-cta a.btn-outline {
+  color: var(--brand-primary);
+}
+
 .nav-item.is-open .dropdown:not(.mega-menu),
 .nav-item:focus-within .dropdown:not(.mega-menu) {
   opacity: 1;
