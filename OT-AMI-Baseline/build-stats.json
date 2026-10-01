@@ -1,0 +1,61 @@
+{
+ "total": 809,
+ "by_tier": {
+  "1": 559,
+  "2": 108,
+  "4": 76,
+  "3": 66
+ },
+ "by_family": {
+  "GOV": 25,
+  "AST": 29,
+  "BCD": 41,
+  "CAP": 6,
+  "CHG": 15,
+  "CLD": 7,
+  "CPL": 10,
+  "CFG": 20,
+  "MON": 46,
+  "CRY": 15,
+  "DCH": 45,
+  "EMB": 19,
+  "END": 27,
+  "HRS": 28,
+  "IAC": 78,
+  "IRO": 33,
+  "IAO": 13,
+  "MNT": 16,
+  "MDM": 7,
+  "NET": 55,
+  "PES": 36,
+  "PRI": 47,
+  "PRM": 9,
+  "RSK": 28,
+  "SEA": 29,
+  "OPS": 5,
+  "SAT": 13,
+  "TDA": 46,
+  "TPM": 26,
+  "THR": 11,
+  "VPM": 24
+ },
+ "by_cat": {
+  "OT Core": 414,
+  "Converged IT/OT Enterprise": 121,
+  "Privacy (Customer Energy Usage Data)": 76,
+  "AMI Endpoint / Field Device; OT Core": 126,
+  "AMI Endpoint / Field Device": 51,
+  "OT Core; Privacy (Customer Energy Usage Data)": 19,
+  "Privacy (Customer Energy Usage Data); Converged IT/OT Enterprise": 1,
+  "AMI Endpoint / Field Device; Privacy (Customer Energy Usage Data)": 1
+ },
+ "by_app": {
+  "Basic": 559,
+  "Enhanced": 250
+ },
+ "master": {
+  "In 3HUE master catalog": 491,
+  "New for OT/AMI engagement": 318
+ },
+ "privacy_yes": 520
+}
