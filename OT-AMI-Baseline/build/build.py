@@ -101,6 +101,25 @@ print("single-trigger controls:", dict(only))
 print(Counter(cid.split("-")[0] for cid in SCOPE))
 
 # ---------------------------------------------------------------- text helpers
+US_WORDS = [("modelled", "modeled"), ("modelling", "modeling"), ("amongst", "among"), ("whilst", "while"), ("towards", "toward"),
+            ("organisation", "organization"), ("organise", "organize"), ("authorise", "authorize"), ("authorisation", "authorization"),
+            ("prioritise", "prioritize"), ("prioritisation", "prioritization"), ("centre", "center"), ("defence", "defense"),
+            ("behaviour", "behavior"), ("licence", "license"), ("programme", "program"), ("catalogue", "catalog"),
+            ("utilise", "utilize"), ("minimise", "minimize"), ("optimise", "optimize"), ("recognise", "recognize"),
+            ("standardise", "standardize"), ("categorise", "categorize"), ("characterise", "characterize"),
+            ("labelled", "labeled"), ("labelling", "labeling"), ("cancelled", "canceled"), ("judgement", "judgment"),
+            ("analyse", "analyze"), ("analysed", "analyzed"), ("analysing", "analyzing"), ("synchronise", "synchronize"),
+            ("artefact", "artifact"), ("enrolment", "enrollment"), ("fulfil", "fulfill"), ("learnt", "learned"), ("grey", "gray")]
+
+def us_english(text):
+    """Normalize authored/derived text to US English spelling (case-preserving for a leading capital)."""
+    if not isinstance(text, str):
+        return text
+    for uk, us in US_WORDS:
+        text = re.sub(r"\b%s\b" % uk, us, text)
+        text = re.sub(r"\b%s\b" % uk.capitalize(), us.capitalize(), text)
+    return text
+
 def split_desc(desc):
     d = re.sub(r"\s+", " ", desc.strip())
     m = re.match(r"^(.*?)\b[Mm]echanisms exist to\s+(.*)$", d, re.S)
@@ -322,8 +341,8 @@ for cid in SCOPE:
         master_status=("In 3HUE master catalog (%s)" % m["lifecycle"]) if m else "New for OT/AMI engagement",
         accountability=accountability, owner_corp=C.OWNERS[dom][0], owner_plat=C.OWNERS[dom][1],
         audience=audience, freq=FREQ.get(cadence, 365), third=C.THIRD_PARTIES[dom],
-        intent=gen_intent(cid, dom), objective=gen_objective(cid, r, dom),
-        standard=gen_standard(cid, r, dom, accountability), guideline=gen_guideline(cid, r, dom),
+        intent=us_english(gen_intent(cid, dom)), objective=us_english(gen_objective(cid, r, dom)),
+        standard=us_english(gen_standard(cid, r, dom, accountability)), guideline=us_english(gen_guideline(cid, r, dom)),
         tsc=tsc, pof=pof, cobit=clean_map(r[41]), iso27001=clean_map(r[60]), iso27002=clean_map(r[61]),
         n53mod=clean_map(r[81]), pci_a=clean_map(r[108]), pci_d=clean_map(r[115]), cmmc2=clean_map(r[135]),
         hipaa=clean_map(r[159]), fedramp=clean_map(r[149]), gdpr=clean_map(r[200]), scf_b=clean_map(r[32]),
@@ -406,6 +425,7 @@ readme = [
     ("NISTIR 7628 R1 family is derived from the NIST SP 800-53 R5 family of each mapped control (e.g., AC -> SG.AC); it is a family-level crosswalk, not a requirement-level mapping.", False),
     ("SCF-I (Cyber Insurance) and SCF-R (Ransomware) flags are carried forward from the 3HUE master catalog where the control exists there; SCF 2026.2 no longer publishes those baselines.", False),
     ("Zero Trust Architecture combines NIST SP 800-207 tenets and DoD Zero Trust Reference Architecture 2.0 references, consistent with the 3HUE master catalog convention.", False),
+    ("All authored and derived text uses US English spelling and conventions; SCF control descriptions are reproduced verbatim from SCF 2026.2.", False),
     ("No client-specific or prior-engagement content is used in any authored text.", False),
 ]
 for i, (txt, bold) in enumerate(readme, 1):

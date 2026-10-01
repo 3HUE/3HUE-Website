@@ -51,6 +51,12 @@
 | Aggregated Maturity Score | Formula over the two Implementation Status columns (same weighting as the 3HUE master) |
 | Privacy Crosswalk | 26 privacy frameworks from SCF 2026.2; Framework Count and Privacy Relevance computed |
 
+## Language conventions
+
+* All authored and derived text (Policy Statement, Control Objectives, Standard Content, Implementation Notes, owners, third parties, crosswalk rationale) uses US English spelling and conventions; the generator applies a US-English normalization pass (`us_english()` in `build.py`).
+* IEC 62443 terminology and identifiers are preserved exactly as the standards write them: zone, conduit, system under consideration (SUC), SL-T / SL-C / SL-A, countermeasure, IACS, asset owner, and the SR/RE, CR/EDR/HDR/NDR, ORG/NET/CM/COMP and ZCR references. The ZCR crosswalk titles use the ANSI/ISA-62443-3-2:2020 requirement titles verbatim.
+* SCF control descriptions and control questions are reproduced verbatim from SCF 2026.2 for traceability (two cells retain SCF's own "amongst" / "modelling").
+
 ## Notes and limitations
 
 * NISTIR 7628 R1 is not in the SCF. A family-level crosswalk (derived from the NIST 800-53 family of each mapping) is provided in the Rosetta Stone; it is not a requirement-level mapping.

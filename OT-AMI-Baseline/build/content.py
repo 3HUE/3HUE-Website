@@ -71,7 +71,7 @@ ZCR_CROSSWALK = [
      "Worst-case, unmitigated risk to health, safety, environment, reliability and service delivery is assessed using the corporate risk matrix and safety assessments."),
     ("ZCR 3.1", "Establish zones and conduits",
      ["NET-06", "NET-06.3", "SEA-03", "SEA-03.1", "AST-04.1"],
-     "Assets sharing common security requirements are grouped into zones; communications between zones are modelled as conduits."),
+     "Assets sharing common security requirements are grouped into zones; communications between zones are modeled as conduits."),
     ("ZCR 3.2", "Separate business and IACS assets",
      ["NET-06", "NET-06.4", "NET-06.9", "SEA-03.1"],
      "Enterprise IT and OT/AMI assets are placed in logically or physically separated zones (Purdue-aligned segmentation)."),
@@ -83,10 +83,10 @@ ZCR_CROSSWALK = [
      "Portable engineering laptops, handheld meter-programming devices and removable media are treated as separate, higher-risk zones."),
     ("ZCR 3.5", "Separate wireless devices",
      ["NET-15", "NET-15.1", "NET-15.4", "NET-06.9", "CRY-07"],
-     "AMI RF mesh, cellular backhaul and plant Wi-Fi are modelled as separate wireless zones with access points as conduits."),
+     "AMI RF mesh, cellular backhaul and plant Wi-Fi are modeled as separate wireless zones with access points as conduits."),
     ("ZCR 3.6", "Separate devices connected via external networks",
      ["NET-14", "NET-14.3", "NET-14.6", "NET-03", "MNT-05"],
-     "Vendor, integrator and remote-operator access is modelled as an external zone with its own conduit controls (DMZ, jump host, MFA, session recording)."),
+     "Vendor, integrator and remote-operator access is modeled as an external zone with its own conduit controls (DMZ, jump host, MFA, session recording)."),
     ("ZCR 4.1", "Compare initial risk to tolerable risk",
      ["RSK-01.3", "RSK-01.4", "RSK-05"],
      "Initial risk is compared with documented risk tolerance and thresholds to decide whether a detailed assessment is required."),
@@ -498,7 +498,7 @@ DOMAIN["NET"] = dict(
     std_items=[
         "Partitioning OT and AMI networks into zones and conduits based on risk assessment, with enterprise IT, OT, safety-related and AMI field networks in separate zones and all inter-zone traffic routed through monitored, deny-by-default conduits",
         "Maintaining an OT demilitarized zone (DMZ) for all data exchange between enterprise IT (including hosted services) and OT or AMI head-end systems, with no direct enterprise-to-OT connectivity",
-        "Protecting AMI RF mesh, cellular and other wireless or backhaul communications with authentication and encryption and modelling them as separate zones",
+        "Protecting AMI RF mesh, cellular and other wireless or backhaul communications with authentication and encryption and modeling them as separate zones",
     ],
     guide="Document zone/conduit drawings and characteristics (ZCR 6.3/6.4). Implement firewalls or data diodes at zone boundaries, deny-by-default rules with documented business justification, and passive monitoring of conduits. Align with IEC 62443-3-3 SR 5.x, NIST SP 800-82 R3 SC-7 and NERC CIP-005 Electronic Security Perimeter requirements where applicable.",
 )
@@ -678,7 +678,7 @@ CTRL["NET-03"] = dict(
 CTRL["NET-06"] = dict(
     ot_context="implements ISA/IEC 62443-3-2 zone and conduit partitioning (ZCR 3.1 through 3.6), separating enterprise IT, OT, safety-related, wireless, temporarily connected and externally connected assets",
     std_items=[
-        "Grouping OT and AMI assets into zones based on risk assessment, criticality, function and required access, and modelling communications between zones as conduits",
+        "Grouping OT and AMI assets into zones based on risk assessment, criticality, function and required access, and modeling communications between zones as conduits",
         "Placing enterprise IT, OT control, safety-related, AMI head-end, AMI field/wireless, temporarily connected and externally connected assets in separate zones",
         "Documenting zone and conduit characteristics, including target security level, for each zone and conduit",
     ],
@@ -694,7 +694,7 @@ CTRL["NET-14"] = dict(
 )
 CTRL["NET-15"] = dict(
     std_items=[
-        "Modelling AMI RF mesh, cellular backhaul and plant wireless networks as separate zones with access points or gateways as conduits",
+        "Modeling AMI RF mesh, cellular backhaul and plant wireless networks as separate zones with access points or gateways as conduits",
         "Enforcing authentication and encryption for wireless communications and detecting rogue or unauthorized wireless devices in OT and AMI environments",
     ],
     guide="Apply ISA/IEC 62443-3-2 ZCR 3.5; align with IEC 62443-3-3 SR 1.6 and NIST SP 800-82 R3 AC-18.",
