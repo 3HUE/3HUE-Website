@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import worker from "../index.js";
 import { clearJwksCache } from "../access.js";
 import { makeIssuer, segment } from "./helpers.js";
+import { HUB_BUILD } from "../../public/build.js";
 
 const TEAM = "3hue.cloudflareaccess.com";
 const AUD = "aud-tag";
@@ -115,6 +116,7 @@ test("/api/me reports the verified identity", async () => {
     local: false,
     aiEnabled: false,
     catalogStorage: false,
+    build: HUB_BUILD,
   });
 });
 
@@ -141,6 +143,7 @@ test("local bypass applies on loopback hosts only", async () => {
       local: true,
       aiEnabled: false,
       catalogStorage: false,
+      build: HUB_BUILD,
     });
   }
   const prod = await get(`${PROD}/api/me`, { env });

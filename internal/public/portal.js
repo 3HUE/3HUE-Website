@@ -7,6 +7,7 @@
  * No framework, no build step. */
 import { HUB_CONFIG as CONFIG } from "./config.js";
 import { HUB_CATALOG as CATALOG } from "./catalog.js";
+import { HUB_BUILD } from "./build.js";
 import {
   AGENTS,
   STATUS as AGENT_STATUS,
@@ -237,6 +238,7 @@ const state = {
   account: null,
   role: "member",
   roleChecked: false,
+  serverBuild: null,
   catalog: {
     source: "static",
     version: 0,
@@ -846,7 +848,20 @@ const buildTile = (app, index = 0) => {
     event.stopPropagation();
     openTileMenu(app, tile, more);
   });
-  tile.append(main, h("div", { class: "tile-actions" }, fav, more));
+  const edit = isAdmin()
+    ? h("button", {
+        type: "button",
+        class: "icon-btn tile-edit",
+        "aria-label": `Edit ${app.name}`,
+        title: "Edit tile",
+        html: I.edit,
+        onClick: (event) => {
+          event.stopPropagation();
+          openEditor(app);
+        },
+      })
+    : null;
+  tile.append(main, h("div", { class: "tile-actions" }, edit, fav, more));
   return tile;
 };
 
@@ -906,11 +921,39 @@ const renderView = () => {
   if (!main) return;
   main.textContent = "";
   const r = state.route;
+  if (state.serverBuild && state.serverBuild !== HUB_BUILD) {
+    // The Worker runs a newer build than the files this tab loaded: offer a reload.
+    main.append(
+      h(
+        "div",
+        { class: "notice", role: "status" },
+        h("strong", { text: "A newer version of the hub is available" }),
+        h("span", {
+          text: `This tab loaded build ${HUB_BUILD}; the server is on ${state.serverBuild}.`,
+        }),
+        h(
+          "span",
+          { class: "notice-actions" },
+          h("button", {
+            type: "button",
+            class: "btn btn-primary btn-sm",
+            text: "Reload now",
+            onClick: () => window.location.reload(),
+          })
+        )
+      )
+    );
+  }
   if (r.view === "home") renderHome(main);
   else if (r.view === "team") renderTeam(main);
   else if (r.view === "documents") renderDocuments(main);
   else if (r.view === "admin") renderAdmin(main);
   else renderSection(main, r.section);
+  const buildSlot = $("[data-build]");
+  if (buildSlot)
+    buildSlot.textContent = `Build ${HUB_BUILD}${
+      state.serverBuild && state.serverBuild !== HUB_BUILD ? ` (server ${state.serverBuild})` : ""
+    }`;
   const banner = $("[data-banner]");
   if (banner) banner.hidden = liveMode || r.view !== "documents";
 };
@@ -3939,6 +3982,7 @@ const loadIdentity = async () => {
         ai: Boolean(data && data.aiEnabled),
         role: (data && data.role) || "member",
         storage: Boolean(data && data.catalogStorage),
+        build: (data && data.build) || null,
       }),
     ],
     [
@@ -3977,6 +4021,7 @@ const loadIdentity = async () => {
         state.ai = { enabled: Boolean(mapped.ai), checked: true };
         state.role = mapped.role;
         state.catalog = { ...state.catalog, storage: mapped.storage };
+        state.serverBuild = mapped.build;
         if (mapped.email)
           state.identity = {
             ...(state.identity || {}),

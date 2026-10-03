@@ -908,6 +908,21 @@ body.rail .shell {
   color: var(--gold-500);
 }
 
+/* Admins: the pencil stays visible so editing is discoverable without hovering. */
+.tile-actions:has(.tile-edit) {
+  opacity: 1;
+}
+
+.tile-actions .tile-edit {
+  color: var(--brand-ink);
+  background: var(--brand-soft);
+}
+
+.tile-actions .tile-edit:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
 .tile-actions .icon-btn[aria-pressed="true"] svg {
   fill: currentColor;
 }

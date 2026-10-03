@@ -8,6 +8,7 @@ import { verifyAccessJwt, AccessError } from "./access.js";
 import { answerQuestion, AskError, mapAnthropicError } from "./ask.js";
 import { adminRoute, getCatalog, resolveRole, HttpError, ROLES } from "./admin.js";
 import { HUB_CATALOG } from "../public/catalog.js";
+import { HUB_BUILD } from "../public/build.js";
 
 const CSP = [
   "default-src 'self'",
@@ -179,6 +180,7 @@ export default {
         local: localBypass,
         aiEnabled: Boolean(env.ANTHROPIC_API_KEY),
         catalogStorage: Boolean(env.HUB_KV),
+        build: HUB_BUILD,
       });
     }
 
