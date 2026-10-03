@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{html,css,js,json,md}\"",
-    "lint:html": "html-validate \"*.html\" \"services/**/*.html\" \"frameworks/**/*.html\" \"industries/**/*.html\" \"insights/**/*.html\" \"partner-portal/**/*.html\" \"trust/**/*.html\" \"customer-stories/**/*.html\" \"isg/**/*.html\" \"web3-dmf/**/*.html\"",
+    "lint:html": "html-validate \"*.html\" \"services/**/*.html\" \"frameworks/**/*.html\" \"industries/**/*.html\" \"insights/**/*.html\" \"partner-portal/**/*.html\" \"trust/**/*.html\" \"customer-stories/**/*.html\" \"isg/**/*.html\" \"web3-dmf/**/*.html\" \"internal/**/*.html\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

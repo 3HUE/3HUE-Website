@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Internal portal: no marketing tags (GTM / HubSpot) and a tighter CSP than the public site.
+         Microsoft hosts are allowed only for the SharePoint inventory feed (MSAL + Graph). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://graph.microsoft.com https://login.microsoftonline.com; frame-src https://login.microsoftonline.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>3HUE Enterprise Hub | Internal Portal</title>
+    <meta
+      name="description"
+      content="Internal 3HUE resource portal: launch core, business, infrastructure and customer-acquisition systems and find documents and artifacts."
+    />
+    <link rel="icon" href="../assets/img/logos/Logo-FULL-v1.avif" type="image/avif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body class="hub-body">
+    <a class="skip-link" href="#hub-panel">Skip to content</a>
+
+    <header class="hub-header">
+      <div class="hub-header-inner">
+        <a class="hub-brand" href="../index.html" aria-label="3HUE public website">
+          <img src="../assets/img/logos/Logo-FULL-v1.avif" alt="3HUE" />
+        </a>
+        <span class="hub-divider" aria-hidden="true"></span>
+        <a class="hub-title" href="#overview">
+          <span class="hub-title-text">Enterprise Hub</span>
+          <span class="hub-pill">Internal</span>
+        </a>
+
+        <label class="hub-search">
+          <span class="hub-sr">Search apps, systems and documents</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
+          <input
+            type="search"
+            data-search
+            placeholder="Search apps, systems, documents…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd aria-hidden="true">/</kbd>
+        </label>
+
+        <div class="hub-actions">
+          <label class="hub-select">
+            <span class="hub-sr">View the hub as a role</span>
+            <select data-audience></select>
+          </label>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Toggle dark mode"
+          >
+            <span class="theme-toggle-label">Dark mode</span
+            ><span class="theme-toggle-track" aria-hidden="true"
+              ><span class="theme-toggle-thumb"></span
+            ></span>
+          </button>
+          <div class="hub-account" data-account></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="hub-main">
+      <section class="hub-hero" aria-label="Welcome">
+        <div class="hub-hero-inner">
+          <div class="hub-greeting">
+            <div class="eyebrow">3HUE Enterprise Hub</div>
+            <h1 data-greeting>Welcome.</h1>
+            <p>
+              Launch 3HUE systems, find documents and templates, and request access — all in one
+              place. Pin what you use most; press <kbd>/</kbd> to search.
+            </p>
+            <div class="hub-stats" data-stats></div>
+          </div>
+          <aside class="hub-announce" aria-label="Announcements">
+            <div class="eyebrow">Announcements</div>
+            <div data-announcements></div>
+          </aside>
+        </div>
+      </section>
+
+      <nav class="hub-tabs" aria-label="Portal sections">
+        <div class="hub-tablist" role="tablist" data-tabs></div>
+      </nav>
+
+      <div class="hub-shell">
+        <div class="hub-banner" data-banner hidden></div>
+        <section id="hub-panel" class="hub-panel" role="tabpanel" tabindex="-1"></section>
+      </div>
+
+      <noscript>
+        <div class="hub-noscript">
+          The Enterprise Hub needs JavaScript to render the app catalog. Until it is enabled, open
+          the
+          <a href="https://3hue.sharepoint.com/sites/InternalAssets">Internal Assets site</a>
+          directly.
+        </div>
+      </noscript>
+    </main>
+
+    <footer class="hub-footer">
+      <div class="hub-footer-inner">
+        <span
+          >&copy; <span data-year>2026</span> 3HUE EXECUTIVE CONSULTING LLC &middot; Internal use
+          only.</span
+        >
+        <span>
+          Catalog maintained in
+          <a href="https://github.com/3HUE/3HUE-Website/tree/main/internal">internal/catalog.js</a>
+          &middot; Inventory managed by Teriah in
+          <a href="https://3hue.sharepoint.com/sites/InternalAssets">SharePoint</a>
+          &middot; <a href="mailto:info@3hue.net?subject=Enterprise%20Hub">Feedback</a>
+        </span>
+      </div>
+    </footer>
+
+    <div class="hub-toast" data-toast role="status" aria-live="polite" hidden></div>
+
+    <script defer src="config.js"></script>
+    <script defer src="catalog.js"></script>
+    <script defer src="portal.js"></script>
+  </body>
+</html>

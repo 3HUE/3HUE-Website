@@ -1,0 +1,7 @@
+# 3hue.net
+# The /internal/ Enterprise Hub is an employee portal: keep it out of search engines.
+# (This is hygiene, not access control — see internal/README.md → Access control.)
+User-agent: *
+Disallow: /internal/
+
+Sitemap: https://3hue.net/sitemap.xml
