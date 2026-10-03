@@ -20,9 +20,9 @@ import {
 const SP = CONFIG.sharepoint || {};
 const TABS = (CATALOG.tabs || []).filter((tab) => tab.id !== "overview");
 const GROUPS = CATALOG.groups || [];
-const APPS = CATALOG.apps || [];
+let APPS = CATALOG.apps || [];
 const AUDIENCES = CATALOG.audiences || [{ id: "all", label: "Everyone" }];
-const ANNOUNCEMENTS = CATALOG.announcements || [];
+let ANNOUNCEMENTS = CATALOG.announcements || [];
 const CONCIERGE = agentById("huey") || AGENTS[0];
 const SUPPORT_EMAIL = CONFIG.requestAccessEmail || "info@3hue.net";
 
@@ -108,6 +108,15 @@ const I = {
     '<path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 0-3 3z"/><path d="M4 4v16a3 3 0 0 1 3-3h12"/>'
   ),
   panelLeft: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>'),
+  edit: svg('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
+  trash: svg('<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/>'),
+  plus: svg('<path d="M12 5v14M5 12h14"/>'),
+  sliders: svg(
+    '<path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/>'
+  ),
+  userPlus: svg(
+    '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/>'
+  ),
 };
 
 const SECTION_ICON = {
@@ -214,7 +223,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 /* ───────────────────────── state ───────────────────────── */
 const tabById = new Map(TABS.map((tab) => [tab.id, tab]));
 const groupById = new Map(GROUPS.map((group) => [group.id, group]));
-const appById = new Map(APPS.map((app) => [app.id, app]));
+let appById = new Map(APPS.map((app) => [app.id, app]));
 
 const state = {
   route: { view: "home" },
@@ -226,6 +235,15 @@ const state = {
   sectionFilter: {},
   identity: null,
   account: null,
+  role: "member",
+  catalog: {
+    source: "static",
+    version: 0,
+    updatedAt: null,
+    updatedBy: null,
+    storage: false,
+    loaded: false,
+  },
   ai: { enabled: false, checked: false },
   chat: storage.get(KEYS.chat, []),
   chatBusy: false,
@@ -241,6 +259,7 @@ const parseHash = () => {
   if (raw.startsWith("team/")) return { view: "team", agent: raw.slice(5) };
   if (raw === "ask") return { ...state.route, ask: true };
   if (raw === "documents") return { view: "documents" };
+  if (raw === "admin") return { view: "admin" };
   if (tabById.has(raw)) return { view: "section", section: raw };
   return { view: "home" };
 };
@@ -249,6 +268,7 @@ const routeHash = (route) => {
   if (route.view === "home") return "#home";
   if (route.view === "team") return route.agent ? `#team/${route.agent}` : "#team";
   if (route.view === "documents") return "#documents";
+  if (route.view === "admin") return "#admin";
   if (route.view === "section") return `#${route.section}`;
   return "#home";
 };
@@ -433,6 +453,7 @@ const closeEverything = () => {
   closeSheet();
   closeAgent();
   closeAsk();
+  closeEditor();
   closePalette();
   closeMenu();
 };
@@ -510,7 +531,17 @@ const renderNav = () => {
               : "",
           })
         )
-      )
+      ),
+      isAdmin()
+        ? h(
+            "div",
+            { class: "nav-group" },
+            h("div", { class: "eyebrow", text: "Manage" }),
+            navItem({ view: "admin" }, I.sliders, "Administration", {
+              current: isCurrent({ view: "admin" }),
+            })
+          )
+        : null
     );
   }
 
@@ -524,7 +555,9 @@ const renderNav = () => {
           ? "Digital Workforce"
           : r.view === "documents"
             ? "Documents & Artifacts"
-            : (tabById.get(r.section) || {}).label || "";
+            : r.view === "admin"
+              ? "Administration"
+              : (tabById.get(r.section) || {}).label || "";
     title.textContent = "";
     title.append(
       h("span", { class: "eyebrow", text: "Enterprise Hub" }),
@@ -564,7 +597,12 @@ const renderSheet = () => {
     navItem({ view: "team" }, I.sparkles, "Digital Workforce", {
       count: AGENTS.length,
       current: isCurrent({ view: "team" }),
-    })
+    }),
+    isAdmin()
+      ? navItem({ view: "admin" }, I.sliders, "Administration", {
+          current: isCurrent({ view: "admin" }),
+        })
+      : null
   );
 };
 
@@ -582,7 +620,13 @@ const renderIdentity = () => {
         "span",
         { class: "identity-text" },
         h("strong", { text: who.name || who.email }),
-        h("span", { text: who.email || "" })
+        who.name ? h("span", { text: who.email || "" }) : null,
+        state.role !== "member"
+          ? h("span", {
+              class: `chip chip-caps role-chip ${state.role === "super" ? "chip-brand" : "chip-info"}`,
+              text: roleLabel(state.role),
+            })
+          : null
       ),
       who.source === "access" || who.source === "worker"
         ? h("a", {
@@ -687,7 +731,39 @@ const openTileMenu = (app, tile, button) => {
       },
       h("span", { html: I.flag }),
       "Report a problem"
-    )
+    ),
+    isAdmin() ? h("div", { class: "menu-sep", role: "separator" }) : null,
+    isAdmin()
+      ? h(
+          "button",
+          {
+            type: "button",
+            role: "menuitem",
+            onClick: () => {
+              closeMenu();
+              openEditor(app);
+            },
+          },
+          h("span", { html: I.edit }),
+          "Edit tile"
+        )
+      : null,
+    isAdmin()
+      ? h(
+          "button",
+          {
+            type: "button",
+            role: "menuitem",
+            class: "is-danger",
+            onClick: () => {
+              closeMenu();
+              removeTile(app);
+            },
+          },
+          h("span", { html: I.trash }),
+          "Remove tile"
+        )
+      : null
   );
   tile.append(menu);
   tile.classList.add("is-menu-open");
@@ -831,6 +907,7 @@ const renderView = () => {
   if (r.view === "home") renderHome(main);
   else if (r.view === "team") renderTeam(main);
   else if (r.view === "documents") renderDocuments(main);
+  else if (r.view === "admin") renderAdmin(main);
   else renderSection(main, r.section);
   const banner = $("[data-banner]");
   if (banner) banner.hidden = liveMode || r.view !== "documents";
@@ -1148,7 +1225,19 @@ const renderSection = (main, sectionId) => {
         "div",
         { class: "view-meta" },
         tab.suggested ? h("span", { class: "chip chip-info", text: "Suggested tab" }) : null,
-        h("span", { class: "chip", text: `${apps.length} tiles` })
+        h("span", { class: "chip", text: `${apps.length} tiles` }),
+        isAdmin()
+          ? h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary btn-sm",
+                onClick: () => openEditor(null, { tab: sectionId }),
+              },
+              h("span", { html: I.plus }),
+              "Add tile"
+            )
+          : null
       )
     )
   );
@@ -2588,6 +2677,27 @@ const buildIndex = () => {
       icon: I.folder,
       run: () => window.open(SP.libraryUrl, "_blank", "noopener"),
     });
+  if (isAdmin()) {
+    items.push({
+      kind: "action",
+      label: "Administration",
+      sub: "Catalog, announcements, admins, audit log",
+      text: "admin administration manage edit catalog roles audit settings",
+      icon: I.sliders,
+      run: () => navigate({ view: "admin" }),
+    });
+    items.push({
+      kind: "action",
+      label: "Add a tile",
+      sub: "New app, system or link",
+      text: "add new tile app link create",
+      icon: I.plus,
+      run: () => {
+        const r = state.route;
+        openEditor(null, { tab: r.view === "section" ? r.section : undefined });
+      },
+    });
+  }
   if (state.identity)
     items.push({
       kind: "action",
@@ -2751,6 +2861,1070 @@ const closePalette = () => {
 };
 
 /* ───────────────────────── identity & inventory (SharePoint via Graph) ───────────────────────── */
+/* ───────────────────────── catalog + administration ─────────────────────────
+ * The effective catalog comes from the Worker (/api/catalog): the repository seed until an admin
+ * edits something, then the KV document. Admins edit tiles and announcements in place; only Super
+ * Admins (HUB_SUPER_ADMINS in wrangler.toml) appoint other admins. */
+const isAdmin = () => state.role === "admin" || state.role === "super";
+const isSuper = () => state.role === "super";
+const roleLabel = (role) =>
+  role === "super" ? "Super Admin" : role === "admin" ? "Admin" : "Member";
+
+const api = async (path, { method = "GET", body } = {}) => {
+  const headers = { Accept: "application/json" };
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+  const res = await fetch(path, {
+    method,
+    credentials: "same-origin",
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  let data = null;
+  try {
+    data = await res.json();
+  } catch (error) {
+    data = null;
+  }
+  if (!res.ok) {
+    const err = new Error((data && data.error) || `The hub returned ${res.status}.`);
+    err.status = res.status;
+    err.details = data && data.details;
+    throw err;
+  }
+  return data;
+};
+
+const applyCatalog = (doc) => {
+  APPS = Array.isArray(doc.apps) ? doc.apps : [];
+  ANNOUNCEMENTS = Array.isArray(doc.announcements) ? doc.announcements : [];
+  appById = new Map(APPS.map((app) => [app.id, app]));
+  state.catalog = {
+    ...state.catalog,
+    source: doc.source || "kv",
+    version: Number(doc.version) || 0,
+    updatedAt: doc.updatedAt || null,
+    updatedBy: doc.updatedBy || null,
+    loaded: true,
+  };
+};
+
+const loadCatalog = async () => {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), 4000);
+  try {
+    const res = await fetch("/api/catalog", {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    if (!res.ok) return false;
+    applyCatalog(await res.json());
+    return true;
+  } catch (error) {
+    return false; // static preview without the Worker keeps the repository catalog
+  } finally {
+    window.clearTimeout(timer);
+  }
+};
+
+const refreshAll = () => {
+  renderNav();
+  renderView();
+};
+
+/* ───── tile editor ───── */
+const AUTH_OPTIONS = [
+  ["microsoft", "Microsoft SSO"],
+  ["google", "Google sign-in"],
+  ["sso", "SSO"],
+  ["separate", "Separate login"],
+  ["public", "No login"],
+];
+const CLASS_OPTIONS = ["", "Public", "Internal", "Confidential", "Restricted"];
+
+let editorRef = null;
+
+const formField = (label, control, hint) =>
+  h(
+    "label",
+    { class: "form-field" },
+    h("span", { class: "form-label", text: label }),
+    control,
+    hint ? h("span", { class: "form-hint", text: hint }) : null
+  );
+
+const selectField = (options, value, onChange, props = {}) => {
+  const select = h(
+    "select",
+    { class: "field", ...props, onChange: (event) => onChange(event.target.value) },
+    ...options.map(([val, label]) => h("option", { value: val, text: label }))
+  );
+  select.value = value;
+  return select;
+};
+
+const textField = (key, props = {}) => {
+  const { draft } = editorRef;
+  const el = h("input", {
+    class: "field",
+    type: "text",
+    ...props,
+    onInput: (event) => {
+      draft[key] = event.target.value;
+      refreshPreview();
+    },
+  });
+  el.value = draft[key] || "";
+  return el;
+};
+
+const previewTile = (draft) => {
+  const app = {
+    ...draft,
+    name: draft.name || "Tile name",
+    tags: [],
+    monogram:
+      draft.monogram ||
+      (draft.name || "T")
+        .split(/\s+/)
+        .map((w) => w[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase(),
+  };
+  const tile = buildTile(app, 0);
+  tile.querySelector(".tile-actions")?.remove();
+  return h("div", { class: "editor-preview", "aria-hidden": "true" }, tile);
+};
+
+const refreshPreview = () => {
+  const slot = $("[data-editor-preview]");
+  if (slot && editorRef) {
+    slot.textContent = "";
+    slot.append(previewTile(editorRef.draft));
+  }
+};
+
+const showEditorError = (error) => {
+  const slot = $("[data-editor-error]");
+  if (!slot) return;
+  slot.textContent = "";
+  if (!error) {
+    slot.hidden = true;
+    return;
+  }
+  slot.hidden = false;
+  const lines =
+    Array.isArray(error.details) && error.details.length ? error.details : [error.message];
+  slot.append(...lines.map((line) => h("div", { text: line })));
+};
+
+const setEditorBusy = (busy) => {
+  $$("[data-editor-panel] .form-actions .btn").forEach((btn) => {
+    btn.disabled = busy;
+  });
+};
+
+const openEditor = (app = null, { tab } = {}) => {
+  if (!isAdmin()) return;
+  const panel = $("[data-editor-panel]");
+  if (!panel) return;
+  closeAgent();
+  closeAsk();
+  closeMenu();
+  const firstTab = (TABS[0] || {}).id || "core";
+  const draft = app
+    ? {
+        ...app,
+        tags: (app.tags || []).join(", "),
+        audience: (app.audience || []).filter((aud) => aud !== "all"),
+        featured: Boolean(app.featured),
+        verify: Boolean(app.verify),
+      }
+    : {
+        name: "",
+        subtitle: "",
+        description: "",
+        url: "https://",
+        tab: tab && tabById.has(tab) ? tab : firstTab,
+        group: "",
+        monogram: "",
+        color: "#44a8d9",
+        icon: "",
+        auth: "sso",
+        classification: "",
+        owner: "",
+        ownerEmail: "",
+        tags: "",
+        audience: [],
+        featured: false,
+        verify: false,
+      };
+  if (!draft.group || (groupById.get(draft.group) || {}).tab !== draft.tab)
+    draft.group = (GROUPS.find((group) => group.tab === draft.tab) || {}).id || "";
+  editorRef = { app, draft };
+  renderEditor(panel);
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+  syncOverlay();
+  panel.querySelector("input")?.focus();
+};
+
+const closeEditor = () => {
+  const panel = $("[data-editor-panel]");
+  if (!panel) return;
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
+  editorRef = null;
+  syncOverlay();
+  // Drop the form (and its preview tile) once the slide-out has finished.
+  window.setTimeout(() => {
+    if (!panel.classList.contains("is-open")) panel.textContent = "";
+  }, 400);
+};
+
+const renderEditor = (panel) => {
+  const { app, draft } = editorRef;
+  panel.textContent = "";
+
+  const groupSelect = () => {
+    const options = GROUPS.filter((group) => group.tab === draft.tab).map((group) => [
+      group.id,
+      group.label,
+    ]);
+    if (!options.some(([id]) => id === draft.group)) draft.group = (options[0] || [""])[0];
+    return selectField(options, draft.group, (value) => {
+      draft.group = value;
+    });
+  };
+  let groupEl = groupSelect();
+  const groupWrap = formField("Group", groupEl);
+
+  const tabEl = selectField(
+    TABS.map((t) => [t.id, t.label]),
+    draft.tab,
+    (value) => {
+      draft.tab = value;
+      const next = groupSelect();
+      groupEl.replaceWith(next);
+      groupEl = next;
+    }
+  );
+
+  const colorText = textField("color", {
+    maxlength: 7,
+    placeholder: "#44a8d9",
+    spellcheck: "false",
+  });
+  const colorPick = h("input", {
+    type: "color",
+    "aria-label": "Icon tint",
+    onInput: (event) => {
+      draft.color = event.target.value;
+      colorText.value = draft.color;
+      refreshPreview();
+    },
+  });
+  colorPick.value = /^#[0-9a-f]{6}$/i.test(draft.color || "") ? draft.color : "#44a8d9";
+  colorText.addEventListener("input", () => {
+    if (/^#[0-9a-f]{6}$/i.test(colorText.value)) colorPick.value = colorText.value;
+  });
+
+  const description = h("textarea", {
+    class: "field",
+    maxlength: 240,
+    rows: 3,
+    placeholder: "One or two lines shown on the tile.",
+    onInput: (event) => {
+      draft.description = event.target.value;
+      refreshPreview();
+    },
+  });
+  description.value = draft.description || "";
+
+  const audienceChips = h(
+    "div",
+    { class: "check-list" },
+    ...AUDIENCES.filter((aud) => aud.id !== "all").map((aud) => {
+      const box = h("input", {
+        type: "checkbox",
+        value: aud.id,
+        onChange: (event) => {
+          const set = new Set(draft.audience);
+          if (event.target.checked) set.add(aud.id);
+          else set.delete(aud.id);
+          draft.audience = Array.from(set);
+        },
+      });
+      box.checked = draft.audience.includes(aud.id);
+      return h("label", { class: "check-chip" }, box, aud.label);
+    })
+  );
+  const toggle = (key, label, hint) => {
+    const box = h("input", {
+      type: "checkbox",
+      onChange: (event) => {
+        draft[key] = event.target.checked;
+        refreshPreview();
+      },
+    });
+    box.checked = Boolean(draft[key]);
+    return h(
+      "label",
+      { class: "check-chip" },
+      box,
+      label,
+      hint ? h("span", { class: "sub", text: hint }) : null
+    );
+  };
+
+  const save = h(
+    "button",
+    { type: "button", class: "btn btn-primary", onClick: () => saveEditor() },
+    h("span", { html: I.check }),
+    app ? "Save changes" : "Add tile"
+  );
+  const cancel = h("button", {
+    type: "button",
+    class: "btn btn-ghost",
+    text: "Cancel",
+    onClick: closeEditor,
+  });
+  const remove = app
+    ? h(
+        "button",
+        { type: "button", class: "btn btn-danger", onClick: () => removeTile(app) },
+        h("span", { html: I.trash }),
+        "Remove"
+      )
+    : null;
+
+  const form = h(
+    "form",
+    {
+      class: "form-grid",
+      onSubmit: (event) => {
+        event.preventDefault();
+        saveEditor();
+      },
+    },
+    formField(
+      "Name",
+      textField("name", { maxlength: 80, required: true, placeholder: "e.g. Deal Builder" })
+    ),
+    formField(
+      "Subtitle",
+      textField("subtitle", { maxlength: 100, placeholder: "Optional second line" })
+    ),
+    formField("Description", description),
+    formField(
+      "Link",
+      textField("url", {
+        type: "url",
+        maxlength: 500,
+        required: true,
+        inputmode: "url",
+        spellcheck: "false",
+      }),
+      "https://, mailto: or tel:"
+    ),
+    h("div", { class: "form-row" }, formField("Section", tabEl), groupWrap),
+    h(
+      "div",
+      { class: "form-row" },
+      formField(
+        "Monogram",
+        textField("monogram", { maxlength: 3, placeholder: "Auto" }),
+        "1–3 characters on the icon"
+      ),
+      formField("Icon tint", h("div", { class: "color-field" }, colorPick, colorText))
+    ),
+    formField(
+      "Icon image",
+      textField("icon", {
+        type: "url",
+        maxlength: 500,
+        placeholder: "https://… (optional)",
+        spellcheck: "false",
+      }),
+      "Replaces the monogram. Host must be allowed by the CSP."
+    ),
+    h(
+      "div",
+      { class: "form-row" },
+      formField(
+        "Login type",
+        selectField(AUTH_OPTIONS, draft.auth || "sso", (value) => {
+          draft.auth = value;
+          refreshPreview();
+        })
+      ),
+      formField(
+        "Classification",
+        selectField(
+          CLASS_OPTIONS.map((c) => [c, c || "—"]),
+          draft.classification || "",
+          (value) => {
+            draft.classification = value;
+            refreshPreview();
+          }
+        )
+      )
+    ),
+    h(
+      "div",
+      { class: "form-row" },
+      formField("Owner", textField("owner", { maxlength: 60, placeholder: "Team or person" })),
+      formField(
+        "Owner email",
+        textField("ownerEmail", {
+          type: "email",
+          maxlength: 120,
+          placeholder: "Access requests go here",
+        })
+      )
+    ),
+    formField("Search tags", textField("tags", { placeholder: "comma, separated, words" })),
+    formField("Visible to", audienceChips, "Leave empty for everyone."),
+    h(
+      "div",
+      { class: "check-list" },
+      toggle("featured", "Featured on Home"),
+      toggle("verify", "Needs URL verification")
+    ),
+    h("div", { class: "form-error", "data-editor-error": "", hidden: true }),
+    h(
+      "div",
+      { class: "form-actions" },
+      save,
+      cancel,
+      remove ? h("span", { class: "spacer" }) : null,
+      remove
+    )
+  );
+
+  panel.append(
+    h(
+      "div",
+      { class: "panel-head" },
+      h("span", { class: "panel-glyph", html: app ? I.edit : I.plus }),
+      h(
+        "div",
+        { class: "who" },
+        h("strong", { text: app ? `Edit ${app.name}` : "New tile" }),
+        h("span", null, app ? `id ${app.id}` : (tabById.get(draft.tab) || {}).label || "")
+      ),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": "Close editor",
+        html: I.x,
+        onClick: closeEditor,
+      })
+    ),
+    h(
+      "div",
+      { class: "panel-body" },
+      h("div", { "data-editor-preview": "" }, previewTile(draft)),
+      form
+    )
+  );
+};
+
+const saveEditor = async () => {
+  if (!editorRef) return;
+  const { app, draft } = editorRef;
+  const tile = {
+    ...draft,
+    tags: String(draft.tags || "")
+      .split(/[,;]/)
+      .map((tag) => tag.trim())
+      .filter(Boolean),
+    featured: Boolean(draft.featured),
+    verify: Boolean(draft.verify),
+  };
+  delete tile.id;
+  showEditorError(null);
+  setEditorBusy(true);
+  try {
+    const result = app
+      ? await api(`/api/admin/apps/${encodeURIComponent(app.id)}`, {
+          method: "PUT",
+          body: { ifVersion: state.catalog.version, tile },
+        })
+      : await api("/api/admin/apps", {
+          method: "POST",
+          body: { ifVersion: state.catalog.version, tile },
+        });
+    await loadCatalog();
+    closeEditor();
+    refreshAll();
+    toast(app ? `${result.tile.name} updated` : `${result.tile.name} added`);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    showEditorError(error);
+  } finally {
+    setEditorBusy(false);
+  }
+};
+
+const removeTile = async (app) => {
+  if (!isAdmin()) return;
+  const ok = window.confirm(`Remove “${app.name}” from the hub for everyone?`);
+  if (!ok) return;
+  try {
+    await api(
+      `/api/admin/apps/${encodeURIComponent(app.id)}?ifVersion=${encodeURIComponent(state.catalog.version)}`,
+      { method: "DELETE" }
+    );
+    await loadCatalog();
+    closeEditor();
+    refreshAll();
+    toast(`${app.name} removed`);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    toast(error.message);
+  }
+};
+
+/* ───── administration view ───── */
+const exportCatalog = () => {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    source: state.catalog.source,
+    version: state.catalog.version,
+    apps: APPS,
+    announcements: ANNOUNCEMENTS,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = h("a", { href: url, download: `hub-catalog-v${state.catalog.version}.json` });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
+const adminCard = (title, lead, { actions = null, span = false } = {}, ...content) =>
+  h(
+    "section",
+    { class: `card admin-card${span ? " span-2" : ""}` },
+    h(
+      "div",
+      { class: "admin-card-head" },
+      h("h2", { text: title }),
+      actions ? h("div", { class: "admin-actions" }, ...[].concat(actions)) : null,
+      lead ? h("p", { text: lead }) : null
+    ),
+    ...content
+  );
+
+const kvRow = (...children) => h("div", { class: "kv-row" }, ...children);
+
+const renderAdmin = (main) => {
+  main.append(
+    h(
+      "div",
+      { class: "view-head" },
+      h(
+        "div",
+        null,
+        h("span", { class: "eyebrow eyebrow-brand", text: "Manage" }),
+        h("h1", { text: "Administration" }),
+        h("p", {
+          text: "Edit tiles and announcements in place. Changes go live for everyone immediately; the repository catalog stays as the seed and the reset target.",
+        })
+      ),
+      h(
+        "div",
+        { class: "view-meta" },
+        h("span", {
+          class: `chip chip-caps ${state.role === "super" ? "chip-brand" : "chip-info"}`,
+          text: roleLabel(state.role),
+        })
+      )
+    )
+  );
+  if (!isAdmin()) {
+    main.append(
+      emptyState(
+        "Admin role required",
+        "Ask a Super Admin to add you as an admin. Super Admins are set in the Worker configuration (HUB_SUPER_ADMINS).",
+        h(
+          "a",
+          {
+            class: "btn btn-soft btn-sm",
+            href: mailto(
+              SUPPORT_EMAIL,
+              "Enterprise Hub admin access",
+              "Please add me as a hub admin."
+            ),
+          },
+          "Request admin access"
+        )
+      )
+    );
+    return;
+  }
+  const grid = h("div", { class: "admin-grid" });
+  main.append(grid);
+  if (!state.catalog.storage)
+    grid.append(
+      h(
+        "div",
+        { class: "notice span-2" },
+        h("strong", { text: "Storage not configured" }),
+        h("span", {
+          text: "The HUB_KV binding is missing on this Worker, so saves will fail. Bind the KV namespace in wrangler.toml and redeploy.",
+        })
+      )
+    );
+  grid.append(catalogCard(), announcementsCard(), rolesCard(), auditCard());
+};
+
+const catalogCard = () => {
+  const c = state.catalog;
+  const live = c.source === "kv";
+  const reset = isSuper()
+    ? h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-danger btn-sm",
+          disabled: !live,
+          onClick: async () => {
+            if (
+              !window.confirm(
+                "Discard every edit made in the hub and go back to the repository catalog? This cannot be undone."
+              )
+            )
+              return;
+            try {
+              const doc = await api("/api/admin/reset", { method: "POST", body: {} });
+              applyCatalog(doc);
+              refreshAll();
+              toast("Catalog reset to the repository seed");
+            } catch (error) {
+              toast(error.message);
+            }
+          },
+        },
+        h("span", { html: I.refresh }),
+        "Reset to repository"
+      )
+    : null;
+  return adminCard(
+    "Catalog",
+    live
+      ? `Live edits, version ${c.version}. Export to carry them back into catalog.js.`
+      : "Serving the repository catalog. The first edit creates the live version.",
+    {
+      actions: [
+        h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => loadCatalog().then(refreshAll),
+          },
+          h("span", { html: I.refresh }),
+          "Reload"
+        ),
+        h(
+          "button",
+          { type: "button", class: "btn btn-soft btn-sm", onClick: exportCatalog },
+          h("span", { html: I.download }),
+          "Export JSON"
+        ),
+        reset,
+      ],
+    },
+    h(
+      "div",
+      { class: "kv-list" },
+      kvRow(
+        h("span", { class: `dot ${live ? "dot-ok dot-live" : ""}` }),
+        h(
+          "span",
+          { class: "grow" },
+          h("strong", { text: live ? "Live catalog" : "Repository seed" })
+        ),
+        h("span", { class: "sub", text: live ? `v${c.version}` : "v0" })
+      ),
+      kvRow(
+        h("span", { class: "grow", text: "Tiles" }),
+        h("strong", { text: String(APPS.length) })
+      ),
+      kvRow(
+        h("span", { class: "grow", text: "Announcements" }),
+        h("strong", { text: String(ANNOUNCEMENTS.length) })
+      ),
+      live
+        ? kvRow(
+            h("span", { class: "grow", text: "Last change" }),
+            h("span", {
+              class: "sub",
+              text: `${c.updatedBy || "unknown"} · ${c.updatedAt ? relativeTime(Date.parse(c.updatedAt)) : ""}`,
+            })
+          )
+        : null
+    ),
+    h("p", {
+      class: "form-hint",
+      text: "Tiles are edited from their ⋯ menu on any section, or with “Add tile” at the top of a section.",
+    })
+  );
+};
+
+const saveAnnouncements = async (list, message) => {
+  try {
+    await api("/api/admin/announcements", {
+      method: "PUT",
+      body: { ifVersion: state.catalog.version, announcements: list },
+    });
+    await loadCatalog();
+    refreshAll();
+    toast(message);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    toast(error.message);
+  }
+};
+
+let announcementDraft = null; // { index: number | -1, item }
+
+const announcementForm = () => {
+  const draft = announcementDraft;
+  const item = draft.item;
+  const bind = (key, el) => {
+    el.value = item[key] || "";
+    el.addEventListener("input", () => {
+      item[key] = el.value;
+    });
+    return el;
+  };
+  const authorSelect = selectField(
+    AGENTS.map((agent) => [agent.id, `${agent.name} · ${agent.role}`]),
+    item.author || CONCIERGE.id,
+    (value) => {
+      item.author = value;
+    }
+  );
+  return h(
+    "form",
+    {
+      class: "inline-form",
+      onSubmit: (event) => {
+        event.preventDefault();
+        const next = ANNOUNCEMENTS.slice();
+        const clean = { ...item, author: item.author || CONCIERGE.id };
+        if (!clean.href) delete clean.href;
+        if (draft.index === -1) next.unshift(clean);
+        else next[draft.index] = clean;
+        announcementDraft = null;
+        saveAnnouncements(
+          next,
+          draft.index === -1 ? "Announcement posted" : "Announcement updated"
+        );
+      },
+    },
+    h(
+      "div",
+      { class: "form-row" },
+      formField("Date", bind("date", h("input", { class: "field", type: "date", required: true }))),
+      formField("Posted by", authorSelect)
+    ),
+    formField(
+      "Title",
+      bind("title", h("input", { class: "field", type: "text", maxlength: 120, required: true }))
+    ),
+    formField(
+      "Body",
+      bind("body", h("textarea", { class: "field", rows: 3, maxlength: 600, required: true }))
+    ),
+    formField(
+      "Link",
+      bind(
+        "href",
+        h("input", {
+          class: "field",
+          type: "url",
+          maxlength: 500,
+          placeholder: "https://… (optional)",
+        })
+      )
+    ),
+    h(
+      "div",
+      { class: "form-actions" },
+      h("button", {
+        type: "submit",
+        class: "btn btn-primary btn-sm",
+        text: draft.index === -1 ? "Post" : "Save",
+      }),
+      h("button", {
+        type: "button",
+        class: "btn btn-ghost btn-sm",
+        text: "Cancel",
+        onClick: () => {
+          announcementDraft = null;
+          renderView();
+        },
+      })
+    )
+  );
+};
+
+const announcementsCard = () => {
+  const rows = ANNOUNCEMENTS.map((item, index) => {
+    const author = agentById(item.author) || CONCIERGE;
+    return kvRow(
+      h("span", { html: avatarSvg(author, { size: 28, decorative: true }) }),
+      h(
+        "span",
+        { class: "grow" },
+        h("strong", { text: item.title }),
+        h("span", { class: "sub", text: ` · ${formatDate(item.date)}` })
+      ),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": `Edit ${item.title}`,
+        html: I.edit,
+        onClick: () => {
+          announcementDraft = { index, item: { ...item } };
+          renderView();
+        },
+      }),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": `Remove ${item.title}`,
+        html: I.trash,
+        onClick: () => {
+          if (!window.confirm(`Remove the announcement “${item.title}”?`)) return;
+          saveAnnouncements(
+            ANNOUNCEMENTS.filter((_, i) => i !== index),
+            "Announcement removed"
+          );
+        },
+      })
+    );
+  });
+  return adminCard(
+    "Announcements",
+    "Shown on Home, newest first. Posted in the voice of a teammate.",
+    {
+      actions: h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary btn-sm",
+          disabled: announcementDraft !== null,
+          onClick: () => {
+            announcementDraft = {
+              index: -1,
+              item: { date: today(), title: "", body: "", author: CONCIERGE.id, href: "" },
+            };
+            renderView();
+          },
+        },
+        h("span", { html: I.plus }),
+        "New"
+      ),
+    },
+    announcementDraft ? announcementForm() : null,
+    rows.length
+      ? h("div", { class: "kv-list" }, ...rows)
+      : h("p", { class: "form-hint", text: "No announcements yet." })
+  );
+};
+
+const rolesCard = () => {
+  const body = h("div", { class: "kv-list" }, h("p", { class: "form-hint", text: "Loading…" }));
+  const fill = (data) => {
+    body.textContent = "";
+    (data.superAdmins || []).forEach((email) =>
+      body.append(
+        kvRow(
+          h("span", { class: "identity-avatar", text: initials(email) }),
+          h("span", { class: "grow" }, h("strong", { text: email })),
+          h("span", { class: "chip chip-brand chip-caps", text: "Super Admin" })
+        )
+      )
+    );
+    (data.admins || []).forEach((admin) =>
+      body.append(
+        kvRow(
+          h("span", { class: "identity-avatar", text: initials(admin.email) }),
+          h(
+            "span",
+            { class: "grow" },
+            h("strong", { text: admin.email }),
+            admin.addedBy ? h("span", { class: "sub", text: ` · added by ${admin.addedBy}` }) : null
+          ),
+          h("span", { class: "chip chip-info chip-caps", text: "Admin" }),
+          isSuper()
+            ? h("button", {
+                type: "button",
+                class: "icon-btn",
+                "aria-label": `Remove ${admin.email} as admin`,
+                html: I.trash,
+                onClick: async () => {
+                  if (!window.confirm(`Remove ${admin.email} as an admin?`)) return;
+                  try {
+                    const next = await api(`/api/admin/roles/${encodeURIComponent(admin.email)}`, {
+                      method: "DELETE",
+                    });
+                    fill({ ...data, admins: next.admins });
+                    toast(`${admin.email} is no longer an admin`);
+                  } catch (error) {
+                    toast(error.message);
+                  }
+                },
+              })
+            : null
+        )
+      )
+    );
+    if (!(data.admins || []).length)
+      body.append(h("p", { class: "form-hint", text: "No additional admins yet." }));
+    if (isSuper()) {
+      const email = h("input", {
+        class: "field",
+        type: "email",
+        placeholder: "colleague@3hue.net",
+        required: true,
+        autocomplete: "off",
+        "aria-label": "Email of the new admin",
+      });
+      body.append(
+        h(
+          "form",
+          {
+            class: "add-admin",
+            onSubmit: async (event) => {
+              event.preventDefault();
+              try {
+                const next = await api("/api/admin/roles", {
+                  method: "POST",
+                  body: { email: email.value.trim() },
+                });
+                fill({ ...data, admins: next.admins });
+                toast(`${email.value.trim().toLowerCase()} can now edit the hub`);
+              } catch (error) {
+                toast(error.message);
+              }
+            },
+          },
+          email,
+          h(
+            "button",
+            { type: "submit", class: "btn btn-primary" },
+            h("span", { html: I.userPlus }),
+            "Add admin"
+          )
+        )
+      );
+    }
+  };
+  api("/api/admin/roles")
+    .then(fill)
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Who can edit",
+    isSuper()
+      ? "Admins edit tiles and announcements. Only Super Admins add or remove admins."
+      : "Admins edit tiles and announcements. Only a Super Admin can add or remove admins.",
+    {},
+    body
+  );
+};
+
+const ACTION_LABEL = {
+  "tile.add": "Added tile",
+  "tile.update": "Edited tile",
+  "tile.delete": "Removed tile",
+  "announcements.update": "Updated announcements",
+  "catalog.reset": "Reset catalog",
+  "admin.add": "Added admin",
+  "admin.remove": "Removed admin",
+};
+
+const auditCard = () => {
+  const body = h("div", null, h("p", { class: "form-hint", text: "Loading…" }));
+  api("/api/admin/audit")
+    .then((data) => {
+      const entries = (data.entries || data || []).slice(0, 50);
+      body.textContent = "";
+      if (!entries.length) {
+        body.append(h("p", { class: "form-hint", text: "No changes recorded yet." }));
+        return;
+      }
+      body.append(
+        h(
+          "div",
+          { class: "doc-table-wrap" },
+          h(
+            "table",
+            { class: "audit-table" },
+            h(
+              "thead",
+              null,
+              h(
+                "tr",
+                null,
+                h("th", { text: "When" }),
+                h("th", { text: "Who" }),
+                h("th", { text: "Change" }),
+                h("th", { text: "Target" })
+              )
+            ),
+            h(
+              "tbody",
+              null,
+              ...entries.map((entry) =>
+                h(
+                  "tr",
+                  null,
+                  h("td", {
+                    class: "audit-when",
+                    text: entry.at ? relativeTime(Date.parse(entry.at)) : "",
+                  }),
+                  h("td", { text: entry.by || "" }),
+                  h("td", { text: ACTION_LABEL[entry.action] || entry.action || "" }),
+                  h("td", null, h("code", { text: entry.target || "" }))
+                )
+              )
+            )
+          )
+        )
+      );
+    })
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Recent changes",
+    "Every edit is recorded with who made it.",
+    { span: true },
+    body
+  );
+};
+
 const loadIdentity = async () => {
   const attempts = [
     [
@@ -2760,6 +3934,8 @@ const loadIdentity = async () => {
         name: "",
         source: "worker",
         ai: Boolean(data && data.aiEnabled),
+        role: (data && data.role) || "member",
+        storage: Boolean(data && data.catalogStorage),
       }),
     ],
     [
@@ -2780,6 +3956,8 @@ const loadIdentity = async () => {
       const mapped = map(await res.json());
       if (path === "/api/me") {
         state.ai = { enabled: Boolean(mapped.ai), checked: true };
+        state.role = mapped.role;
+        state.catalog = { ...state.catalog, storage: mapped.storage };
         if (mapped.email)
           state.identity = {
             ...(state.identity || {}),
@@ -3136,7 +4314,10 @@ const init = () => {
   renderView();
   if (initial.agent) openAgent(initial.agent);
   if (initial.ask) openAsk();
-  loadIdentity().finally(() => loadInventory());
+  Promise.allSettled([loadIdentity(), loadCatalog()]).then(() => {
+    refreshAll();
+    loadInventory();
+  });
 };
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

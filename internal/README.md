@@ -97,7 +97,8 @@ loopback client address, which wrangler dev provides and Cloudflare's edge never
 | **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                             |
 
 Cross-cutting: a **View as** role filter, favorites, recent launches, per-tile menu (Request
-access, Copy link, Ask Huey, Report a problem), SSO chips, "Verify URL" flags, Daylight/Midnight
+access, Copy link, Ask Huey, Report a problem — plus Edit and Remove for admins), SSO chips,
+"Verify URL" flags, Daylight/Midnight
 themes shared with the public site's toggle. No analytics run on this page on purpose.
 
 ### Ask Huey — turning on AI answers
@@ -123,9 +124,11 @@ catalog answers and says so.
 
 ```
 internal/
-  wrangler.toml              Worker config: assets, custom domain, Access vars, model (no secrets)
-  worker/index.js            edge entry: Access JWT check on every request, headers, /api/me, /api/ask
+  wrangler.toml              Worker config: assets, custom domain, Access vars, model, KV, super admins
+  worker/index.js            edge entry: Access JWT check on every request, headers, /api/me, /api/ask,
+                             role resolution and the /api/catalog + /api/admin/* routes
   worker/access.js           JWT verification (WebCrypto, dependency-free)
+  worker/admin.js            roles, the editable catalog in KV, validation, audit log
   worker/ask.js              Huey's AI brain: grounded prompt + Anthropic SDK call
   worker/test/               node:test suites (verifier, Worker routes, ask prompt/response handling)
   public/index.html          shell: sidebar, top bar, bottom bar, panels, palette
@@ -148,7 +151,44 @@ The hub's own design tokens live in `prism.css`; only the 3HUE logo is loaded fr
 
 ## Editing the catalog
 
-Everything visible is data in `public/catalog.js`. Save, commit, push to `main` — CI redeploys.
+There are two ways to change what the hub shows. Both end up in the same place for users.
+
+**In the hub (admins).** Every tile has **Edit tile** and **Remove tile** in its `⋯` menu, every
+section has an **Add tile** button, and **Administration** (sidebar → Manage, or `#admin`) holds
+the announcements editor, the admins list, a JSON export and the audit log. Edits save to the
+`HUB_KV` namespace and go live for everyone immediately; no deploy is needed. The repository file
+stays the seed: the first edit copies it into KV, and a Super Admin can **Reset to repository** at
+any time. To carry hub edits back into the code, use **Export JSON** and paste the `apps` /
+`announcements` arrays into `public/catalog.js`.
+
+**In the repository (engineers).** Everything is data in `public/catalog.js`. Save, commit, push to
+`main` — CI redeploys. Note that while a live KV version exists it takes precedence over the file;
+reset it from Administration (or `wrangler kv key delete --binding HUB_KV catalog:doc`) when you
+want the repository to be authoritative again. Sections, groups and audiences are still
+code-only.
+
+### Roles
+
+| Role            | Who                                                                             | Can                                                                                 |
+| --------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Super Admin** | Listed in `HUB_SUPER_ADMINS` in `wrangler.toml` (currently `aramirez@3hue.net`) | Everything an Admin can, plus add/remove Admins and reset the catalog to the seed   |
+| **Admin**       | Added by a Super Admin in Administration → _Who can edit_ (stored in KV)        | Add, edit and remove tiles; post, edit and remove announcements; view the audit log |
+| **Member**      | Everyone else who passes Cloudflare Access                                      | Use the hub                                                                         |
+
+Roles are enforced in the Worker (`worker/admin.js`), never only in the UI: every `/api/admin/*`
+call re-resolves the caller's role from the verified Access identity. Super Admins live in
+configuration on purpose, so nobody can promote themselves to the top role from the browser; add a
+second one by editing the variable and redeploying. Admins must have an `@3hue.net` address. Every
+write (who, when, what, before/after) lands in the audit log, which keeps the last 300 entries.
+
+Saves use optimistic concurrency: the UI sends the catalog version it loaded, and the Worker refuses
+with a clear message if someone saved in between. Validation (URL protocols, section/group
+consistency, lengths, hex colors, `https:` icons) happens on the Worker as well.
+
+Storage is the `enterprise-hub` KV namespace bound as `HUB_KV` in `wrangler.toml`. If the binding
+is missing, reads fall back to the repository file and writes answer 503, and Administration shows
+a "Storage not configured" notice. In local development (`npm run dev`) the developer acts as a
+Super Admin against wrangler's local KV, so the whole admin flow can be exercised offline.
 
 ### Catalog schema
 

@@ -6,6 +6,8 @@
  * Nothing here holds secrets: the AUD tag and team domain are public identifiers. */
 import { verifyAccessJwt, AccessError } from "./access.js";
 import { answerQuestion, AskError, mapAnthropicError } from "./ask.js";
+import { adminRoute, getCatalog, resolveRole, HttpError, ROLES } from "./admin.js";
+import { HUB_CATALOG } from "../public/catalog.js";
 
 const CSP = [
   "default-src 'self'",
@@ -163,13 +165,34 @@ export default {
       }
     }
 
+    // Who is acting, and with which role. In local dev (no Access) the developer acts as a Super
+    // Admin so the admin screens can be exercised; in production the role comes from configuration
+    // (HUB_SUPER_ADMINS) or from the admins list in KV.
+    const who = identity || (localBypass ? { email: "dev@localhost", local: true } : null);
+    const role = localBypass && !identity ? ROLES.SUPER : await resolveRole(env, who && who.email);
+
     if (url.pathname === "/api/me") {
       return json({
         authenticated: Boolean(identity),
-        email: identity ? identity.email : null,
+        email: who ? who.email : null,
+        role,
         local: localBypass,
         aiEnabled: Boolean(env.ANTHROPIC_API_KEY),
+        catalogStorage: Boolean(env.HUB_KV),
       });
+    }
+
+    if (url.pathname === "/api/catalog" || url.pathname.startsWith("/api/admin/")) {
+      try {
+        const handled = await adminRoute({ request, url, env, identity: who, role });
+        if (handled) return json(handled.body, { status: handled.status });
+        return json({ error: "Not found." }, { status: 404 });
+      } catch (error) {
+        if (error instanceof HttpError)
+          return json({ error: error.message, details: error.details }, { status: error.status });
+        console.error("admin route failed", error);
+        return json({ error: "The hub could not complete that change." }, { status: 500 });
+      }
     }
 
     if (url.pathname === "/api/ask") {
@@ -189,11 +212,18 @@ export default {
         return json({ error: "Body must be JSON." }, { status: 400 });
       }
       try {
+        const effective = await getCatalog(env);
+        const catalog = {
+          ...HUB_CATALOG,
+          apps: effective.apps,
+          announcements: effective.announcements,
+        };
         const result = await answerQuestion({
           question: body.question,
           history: body.history,
           context: body.context,
           env,
+          catalog,
         });
         return json(result);
       } catch (error) {
