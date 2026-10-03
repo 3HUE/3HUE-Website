@@ -1,0 +1,5 @@
+# Vendored third-party builds and tool output are not ours to reformat.
+public/lib/
+.wrangler/
+package-lock.json
+node_modules/

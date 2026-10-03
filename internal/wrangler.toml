@@ -1,0 +1,46 @@
+# 3HUE Enterprise Hub — Cloudflare Worker that serves the static portal behind Cloudflare Access.
+#
+#   npm install && npx wrangler deploy      (or push to main: .github/workflows/deploy-hub.yml)
+#
+# Access control lives in two places on purpose:
+#   1. A Cloudflare Access application on hub.3hue.net (policy: emails ending in @3hue.net) stops
+#      anonymous traffic before it reaches this Worker.
+#   2. worker/index.js re-verifies the Access JWT on EVERY request (run_worker_first), so a missing
+#      policy, a stray route or a direct hit never serves the portal to an unauthenticated caller.
+"$schema" = "node_modules/wrangler/config-schema.json"
+name = "enterprise-hub"
+account_id = "5fe8600ccf7382a44d568ae809876809" # 3HUE Executive Consulting (not a secret)
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"] # for the Anthropic SDK bundle
+
+# No *.workers.dev or preview URL: the only front door is the Access-protected custom domain.
+workers_dev = false
+preview_urls = false
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
+
+[[routes]]
+pattern = "hub.3hue.net"
+custom_domain = true
+
+[observability]
+enabled = true
+
+[vars]
+# Zero Trust team domain (team name "3hue", confirmed).
+ACCESS_TEAM_DOMAIN = "3hue.cloudflareaccess.com"
+# Application Audience (AUD) tag of the "Enterprise Hub" Access application
+# (Zero Trust → Access → Applications → Enterprise Hub → Overview). Empty would fail closed with a 503.
+ACCESS_AUD = "d37fba4c46f550e3b4ec871cd5c917abf891f1c0cf609de781b4ba38d9c0a425"
+# Identities outside these email domains are rejected even if the Access policy drifts.
+ALLOWED_EMAIL_DOMAINS = "3hue.net"
+# Model behind "Ask Huey". AI answers switch on when the ANTHROPIC_API_KEY secret exists:
+#   npx wrangler secret put ANTHROPIC_API_KEY      (console.anthropic.com → API keys)
+# Without it the hub still answers from the catalog deterministically.
+ANTHROPIC_MODEL = "claude-opus-5-5"
