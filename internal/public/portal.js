@@ -236,6 +236,7 @@ const state = {
   identity: null,
   account: null,
   role: "member",
+  roleChecked: false,
   catalog: {
     source: "static",
     version: 0,
@@ -621,12 +622,13 @@ const renderIdentity = () => {
         { class: "identity-text" },
         h("strong", { text: who.name || who.email }),
         who.name ? h("span", { text: who.email || "" }) : null,
-        state.role !== "member"
-          ? h("span", {
-              class: `chip chip-caps role-chip ${state.role === "super" ? "chip-brand" : "chip-info"}`,
-              text: roleLabel(state.role),
-            })
-          : null
+        h("span", {
+          class: `chip chip-caps role-chip ${
+            state.role === "super" ? "chip-brand" : state.role === "admin" ? "chip-info" : ""
+          }`,
+          text: roleLabel(state.role),
+          title: "Role resolved by the hub for this sign-in",
+        })
       ),
       who.source === "access" || who.source === "worker"
         ? h("a", {
@@ -3452,10 +3454,11 @@ const renderAdmin = (main) => {
     )
   );
   if (!isAdmin()) {
+    const email = (state.identity && state.identity.email) || "an unknown address";
     main.append(
       emptyState(
         "Admin role required",
-        "Ask a Super Admin to add you as an admin. Super Admins are set in the Worker configuration (HUB_SUPER_ADMINS).",
+        `The hub resolved this sign-in as ${email} with the ${roleLabel(state.role)} role. Admins are appointed by a Super Admin in this screen; Super Admins are listed in the Worker configuration (HUB_SUPER_ADMINS) and must match the sign-in email exactly.`,
         h(
           "a",
           {
@@ -3943,17 +3946,33 @@ const loadIdentity = async () => {
       (data) => ({ name: data.name || "", email: data.email || "", source: "access" }),
     ],
   ];
-  for (const [path, map] of attempts) {
+  const fetchJson = async (path, timeoutMs) => {
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 2500);
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
     try {
       const res = await fetch(path, {
         credentials: "same-origin",
         headers: { Accept: "application/json" },
         signal: controller.signal,
       });
-      if (!res.ok) continue;
-      const mapped = map(await res.json());
+      return res.ok ? await res.json() : null;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
+  for (const [path, map] of attempts) {
+    try {
+      // The role comes from /api/me, so give a cold Worker time and retry once rather than
+      // silently falling back to "member". The Access identity probe may hang locally; keep it short.
+      let data = null;
+      if (path === "/api/me") {
+        data = await fetchJson(path, 10000).catch(() => null);
+        if (!data) data = await fetchJson(path, 10000);
+      } else {
+        data = await fetchJson(path, 2500);
+      }
+      if (!data) continue;
+      const mapped = map(data);
       if (path === "/api/me") {
         state.ai = { enabled: Boolean(mapped.ai), checked: true };
         state.role = mapped.role;
@@ -3974,10 +3993,9 @@ const loadIdentity = async () => {
       }
     } catch (error) {
       /* not behind the Worker / Access (local preview) */
-    } finally {
-      window.clearTimeout(timer);
     }
   }
+  state.roleChecked = true;
   renderNav();
   renderView();
 };
