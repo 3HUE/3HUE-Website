@@ -398,7 +398,7 @@ export const HUB_CATALOG = {
       subtitle: "Enterprise Customer Acquisitions & Revenue Management",
       tab: "business",
       group: "platforms",
-      url: "https://go.3hue.net",
+      url: "https://emm.3hue.net",
       description:
         "Pipeline, attribution and revenue management across the acquisition funnel. Formerly EMM.",
       monogram: "EC",

@@ -262,7 +262,7 @@ export const AGENTS = [
       { text: "Brief the deal team ahead of a first call", live: true },
     ],
     systems: ["ecarm", "apollo", "hubspot"],
-    reach: [{ label: "ECARM", href: "https://go.3hue.net" }],
+    reach: [{ label: "ECARM", href: "https://emm.3hue.net" }],
     voice: {
       greeting: ["Who are we looking into?"],
       thinking: ["Reading up."],
@@ -299,7 +299,7 @@ export const AGENTS = [
       { text: "Keep campaign copy aligned with the playbooks", live: true },
     ],
     systems: ["ecarm", "apollo", "hubspot", "playbooks"],
-    reach: [{ label: "ECARM", href: "https://go.3hue.net" }],
+    reach: [{ label: "ECARM", href: "https://emm.3hue.net" }],
     voice: {
       greeting: ["Who's the reader, and what do we want them to do?"],
       thinking: ["Drafting."],
@@ -336,7 +336,7 @@ export const AGENTS = [
       { text: "Reconcile HubSpot, Apollo and BigQuery", live: true },
     ],
     systems: ["ecarm", "hubspot", "apollo", "bigquery", "repo-hubspot"],
-    reach: [{ label: "ECARM", href: "https://go.3hue.net" }],
+    reach: [{ label: "ECARM", href: "https://emm.3hue.net" }],
     voice: {
       greeting: ["Which records are we straightening out?"],
       thinking: ["Checking the data."],
@@ -374,7 +374,7 @@ export const AGENTS = [
     ],
     systems: ["ecarm", "deal-builder", "hubspot", "sharepoint-internal"],
     reach: [
-      { label: "ECARM", href: "https://go.3hue.net" },
+      { label: "ECARM", href: "https://emm.3hue.net" },
       { label: "Deal Builder", href: "https://builder.3hue.net" },
     ],
     voice: {
@@ -413,7 +413,7 @@ export const AGENTS = [
       { text: "Post the weekly pipeline pulse", live: true },
     ],
     systems: ["ecarm", "hubspot", "apollo", "ga4", "bigquery"],
-    reach: [{ label: "ECARM", href: "https://go.3hue.net" }],
+    reach: [{ label: "ECARM", href: "https://emm.3hue.net" }],
     voice: {
       greeting: ["Morning. Two deals went quiet this week — want the list?"],
       thinking: ["Scanning the pipeline."],
