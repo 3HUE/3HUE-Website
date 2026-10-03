@@ -31,7 +31,7 @@ custom_domain = true
 enabled = true
 
 [vars]
-# Zero Trust team domain: Zero Trust dashboard → Settings → Custom Pages shows "<team>.cloudflareaccess.com".
+# Zero Trust team domain (team name "3hue", confirmed).
 ACCESS_TEAM_DOMAIN = "3hue.cloudflareaccess.com"
 # Application Audience (AUD) tag of the "Enterprise Hub" Access application
 # (Zero Trust → Access → Applications → Enterprise Hub → Overview). Empty would fail closed with a 503.

@@ -50,8 +50,8 @@ One-time PIN works immediately with no identity-provider setup (a code is emaile
 `@3hue.net` address); add Entra ID under **Settings → Authentication → Login methods** when ready.
 
 After saving, open the application's **Overview** tab, copy the **Application Audience (AUD) Tag**
-into `wrangler.toml` → `ACCESS_AUD`, and confirm `ACCESS_TEAM_DOMAIN` is your team domain
-(**Settings → Custom Pages** shows `<team>.cloudflareaccess.com`). Redeploy.
+into `wrangler.toml` → `ACCESS_AUD` (already set for the current application). `ACCESS_TEAM_DOMAIN`
+is the `3hue` team: `3hue.cloudflareaccess.com`. Redeploy after any change.
 
 ## Deploying
 
@@ -228,7 +228,6 @@ permissions of its own and holds no secrets.
 | InfoSec Policy, CIRP, Onboarding, Brand Kit | Point at the actual files once filed in the Internal Assets library |
 | Report a security incident                  | Dedicated security inbox instead of `info@3hue.net`                 |
 | `config.requestAccessEmail`                 | IT/admin inbox for access requests                                  |
-| `ACCESS_TEAM_DOMAIN`                        | Your Zero Trust team name (`<team>.cloudflareaccess.com`)           |
 
 ## Suggestions for the next iteration
 
