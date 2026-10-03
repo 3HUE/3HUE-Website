@@ -1,14 +1,88 @@
 # 3HUE Enterprise Hub (internal portal)
 
 An Okta-style launcher for every 3HUE system, solution and secure data repository, plus the
-Document & Artifact Inventory fed from SharePoint. Plain HTML/CSS/JS, no build step, published with
-the rest of the site at **https://3hue.net/internal/**.
+Document & Artifact Inventory fed from SharePoint. Plain HTML/CSS/JS served by a **Cloudflare
+Worker** at **https://hub.3hue.net**, reachable only by `@3hue.net` accounts through
+**Cloudflare Access**.
 
-> **Internal use only.** The page is `noindex`, blocked in `robots.txt`, absent from `sitemap.xml`
-> and not linked from the public navigation — but that is hygiene, not security. Read
-> [Access control](#access-control) before sharing the URL widely.
+> The portal is **not** published through GitHub Pages: `internal/` is excluded in `_config.yml`.
+> The source does live in this public repository, so never put secrets, client names, pricing or
+> credentials into the catalog — link to the system that holds them.
 
-## What is in it
+## How access control works
+
+```
+browser ──▶ hub.3hue.net ──▶ Cloudflare Access ──▶ Worker (worker/index.js) ──▶ static portal (public/)
+                               policy: email ends     re-verifies the Access JWT on EVERY request,
+                               with @3hue.net          adds CSP / no-index / no-store headers
+```
+
+1. **Cloudflare Access** (Zero Trust) sits in front of `hub.3hue.net`. Anyone who is not signed
+   in is redirected to the 3HUE login page; the policy only allows identities whose email ends in
+   `@3hue.net`.
+2. **The Worker re-verifies** the signed JWT Access attaches to each request
+   (`Cf-Access-Jwt-Assertion`) against the team's published keys: issuer, audience (AUD tag),
+   expiry and the email domain. `run_worker_first = true` means this happens for static assets
+   too. If Access is misconfigured the Worker **fails closed** (503), and without a valid token it
+   returns 403 — nothing is ever served anonymously. `npm test` covers these paths.
+3. **No public URL exists**: `workers_dev = false` and `preview_urls = false`, so the only route to
+   the Worker is the Access-protected custom domain.
+4. Inside the page, the user's identity (`/cdn-cgi/access/get-identity`) drives the greeting, the
+   account chip and sign-out, and is passed to Microsoft sign-in as a login hint so the SharePoint
+   inventory can connect silently when Entra ID is the Access identity provider.
+
+### Create the Access application (one time, ~10 minutes)
+
+Zero Trust dashboard → **Access → Applications → Add an application → Self-hosted**:
+
+| Setting                 | Value                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| Application name        | `Enterprise Hub`                                                                            |
+| Session duration        | `24 hours` (or your standard)                                                               |
+| Application domain      | `hub.3hue.net` (path empty)                                                                 |
+| Identity providers      | **Microsoft Entra ID** (recommended — MFA/Conditional Access apply) and/or **One-time PIN** |
+| Policy name / action    | `3HUE staff` / **Allow**                                                                    |
+| Policy rule — Include   | **Emails ending in** `@3hue.net`                                                            |
+| Optional — Require      | Entra ID group, country, or device posture                                                  |
+| App Launcher visibility | On (staff see the hub in the Access app launcher)                                           |
+
+One-time PIN works immediately with no identity-provider setup (a code is emailed to the
+`@3hue.net` address); add Entra ID under **Settings → Authentication → Login methods** when ready.
+
+After saving, open the application's **Overview** tab, copy the **Application Audience (AUD) Tag**
+into `wrangler.toml` → `ACCESS_AUD`, and confirm `ACCESS_TEAM_DOMAIN` is your team domain
+(**Settings → Custom Pages** shows `<team>.cloudflareaccess.com`). Redeploy.
+
+## Deploying
+
+```bash
+cd internal
+npm install
+npm test                 # Access JWT verification + Worker behaviour tests
+npx wrangler login       # once per machine
+npx wrangler deploy      # creates the Worker and the hub.3hue.net custom domain + DNS record
+```
+
+Or let CI do it: `.github/workflows/deploy-hub.yml` runs the tests and deploys on every push to
+`main` that touches `internal/`. It needs two repository secrets: `CLOUDFLARE_API_TOKEN` (Workers
+Scripts: Edit, Workers Routes: Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+
+`wrangler.toml` declares the custom domain, so the DNS record for `hub.3hue.net` is created
+automatically in the 3hue.net zone on first deploy.
+
+### Local development
+
+```bash
+cd internal
+echo 'ALLOW_UNAUTHENTICATED_LOCAL=true' > .dev.vars   # git-ignored; bypasses Access on localhost only
+npm run dev                                           # http://localhost:8787
+```
+
+The bypass needs two things at once: that variable (only ever in the git-ignored `.dev.vars`) and a
+loopback client address, which wrangler dev provides and Cloudflare's edge never does (it overwrites
+`cf-connecting-ip` with the real client IP). It therefore cannot apply in production.
+
+## What is in the portal
 
 | Tab                       | Contents                                                                                                   |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -21,31 +95,36 @@ the rest of the site at **https://3hue.net/internal/**.
 | **People & Support**      | _Suggested._ Help desk, directory, calendar, pay & expenses, onboarding, brand kit                         |
 | **Documents & Artifacts** | Secure data repositories (with classification ceiling) + the SharePoint-fed inventory table                |
 
-Cross-cutting features: global search (`/`), a **View as** role filter, favorites, recent
-launches, per-tile **Request access / Copy link / Report a problem**, SSO chips, "Verify URL"
-flags, dark mode (shares the site's toggle), CSV export of the inventory, keyboard-navigable tabs.
+Cross-cutting: global search (`/`), a **View as** role filter, favorites, recent launches, per-tile
+**Request access / Copy link / Report a problem**, SSO chips, "Verify URL" flags, dark mode (shares
+the public site's toggle), CSV export of the inventory, keyboard-navigable tabs. No analytics run
+on this page on purpose.
 
 ## Files
 
 ```
 internal/
-  index.html                 shell (header, hero, tabs, panel, footer) — static, validated
-  portal.css                 portal styles on top of ../assets/css/styles.css tokens
-  portal.js                  rendering, search, favorites, documents table, SharePoint adapter
-  catalog.js                 THE CONTENT: tabs, groups, audiences, tiles, announcements
-  config.js                  runtime config: SharePoint site/list, Entra app ids, field map
-  data/inventory.sample.json preview records shown until the SharePoint list is connected
-  lib/msal-browser.min.js    Microsoft Authentication Library 2.39.0 (MIT) — vendored so the CSP
-                             can stay script-src 'self'
-  README.md                  this file (excluded from the published site via _config.yml)
+  wrangler.toml              Worker config: assets, custom domain, Access vars (no secrets)
+  worker/index.js            edge entry: Access JWT check on every request, headers, /api/me
+  worker/access.js           JWT verification (WebCrypto, dependency-free)
+  worker/test/               node:test suites for the verifier and the Worker
+  public/index.html          shell (header, hero, tabs, panel, footer)
+  public/portal.css          portal styles on top of https://3hue.net/assets/css/styles.css tokens
+  public/portal.js           rendering, search, favorites, documents table, SharePoint adapter
+  public/catalog.js          THE CONTENT: tabs, groups, audiences, tiles, announcements
+  public/config.js           runtime config: SharePoint site/list, Entra app ids, field map
+  public/data/inventory.sample.json  preview records shown until the SharePoint list is connected
+  public/lib/msal-browser.min.js     Microsoft Authentication Library 2.39.0 (MIT), vendored
+  public/404.html            not-found page
+  package.json               wrangler + test scripts
 ```
 
-No analytics run on this page on purpose: internal usage should not pollute GTM / HubSpot /
-Apollo marketing data, and the CSP only allows Microsoft hosts for the inventory feed.
+Brand CSS and logos are loaded from the public site (`https://3hue.net/assets/...`) so there is
+one source of truth for design tokens; the CSP allows exactly that host.
 
 ## Editing the catalog
 
-Everything visible is data in `catalog.js`. Save, commit, push — GitHub Pages redeploys.
+Everything visible is data in `public/catalog.js`. Save, commit, push to `main` — CI redeploys.
 
 ### Catalog schema
 
@@ -59,7 +138,7 @@ Everything visible is data in `catalog.js`. Save, commit, push — GitHub Pages 
   url: "https://builder.3hue.net",
   description: "One or two lines.",
   monogram: "DB",                  // 1–3 characters on the icon …
-  icon: "../assets/img/x.avif",    // … or an image path instead
+  icon: "https://…/logo.avif",     // … or an image URL instead (host must be allowed by the CSP)
   color: "#44a8d9",                // icon tint
   auth: "sso",                     // microsoft | google | sso | separate | public → SSO chip
   owner: "Sales Operations",       // shown as a chip and in the tile menu
@@ -78,14 +157,13 @@ Everything visible is data in `catalog.js`. Save, commit, push — GitHub Pages 
 - **Add a role**: push to `catalog.audiences`; reference its id in tiles' `audience`.
 - **Announcements**: `catalog.announcements` (`date`, `title`, `body`, optional `href`).
 
-Run `npm run lint:html` and `npx prettier --check internal/` before pushing.
+Before pushing: `npm run lint:html` (repo root) and `npx prettier --check internal/`.
 
 ## Document & Artifact Inventory
 
 The Documents tab reads a SharePoint **list** on the Internal Assets team site
 (`https://3hue.sharepoint.com/sites/InternalAssets`). Until `config.sharepoint.clientId` is set the
-portal stays in **preview mode** and shows `data/inventory.sample.json` (seeded from documents that
-already live in this repository).
+portal stays in **preview mode** and shows `public/data/inventory.sample.json`.
 
 ### List specification (for Teriah)
 
@@ -111,53 +189,32 @@ name freely — Graph reads internal names. If a different internal name is used
 | `Tags`           | Single line or multi   | Comma/semicolon separated, searched                                                                                                                                                                                                      |
 | `Description`    | Multiple lines (plain) | One or two sentences                                                                                                                                                                                                                     |
 
-Alternative: instead of a separate list, add the same columns to the **Shared Documents**
-library itself and set `listName: "Documents"` — a library is a list, and each row then links to
-the file automatically.
+Alternative: add the same columns to the **Shared Documents** library itself and set
+`listName: "Documents"` — a library is a list, and each row then links to the file automatically.
 
-### Connecting SharePoint (one-time, ~10 minutes, Entra admin)
+### Connecting SharePoint (one time, ~10 minutes, Entra admin)
 
 1. **Entra admin center → App registrations → New registration**
    - Name: `3HUE Enterprise Hub`
    - Supported account types: _Accounts in this organizational directory only_
-   - Redirect URI: platform **Single-page application**, value `https://3hue.net/internal/`
-     (add `http://localhost:8000/internal/` for local testing).
+   - Redirect URI: platform **Single-page application**, value `https://hub.3hue.net/`
+     (add `http://localhost:8787/` for local testing).
 2. **API permissions → Add → Microsoft Graph → Delegated → `Sites.Read.All`** → _Grant admin
    consent_. (Tighter option: `Sites.Selected` plus a one-time grant on the Internal Assets site.)
-3. Copy the **Application (client) ID** and **Directory (tenant) ID** into `config.js`:
+3. Copy the **Application (client) ID** and **Directory (tenant) ID** into `public/config.js`:
    ```js
    tenantId: "<directory id>",
    clientId: "<application id>",
    ```
 4. Optionally paste the list GUID into `listId` (List settings → the `List=` value in the URL);
    otherwise the list is resolved by `listName`.
-5. Commit and push. The header shows **Sign in with Microsoft**; after sign-in the Documents tab
-   shows `Live · n records`. Tokens live in sessionStorage; results are cached for
+5. Commit and push. When Entra ID is also the Access identity provider the Graph sign-in is
+   silent (login hint from the Access identity); otherwise a **Connect SharePoint** button appears
+   in the header. The Documents tab then shows `Live · n records`; results are cached for
    `cacheMinutes` (10) with a Refresh button.
 
-How it works: `portal.js` loads the vendored MSAL, signs the user in with their own 3HUE account,
-calls `GET /sites/3hue.sharepoint.com:/sites/InternalAssets` then
-`GET /sites/{id}/lists/{list}/items?$expand=fields(...)`, pages through `@odata.nextLink` and
-maps columns through `fieldMap`. Every user only sees the rows **their** SharePoint permissions
-allow — the portal adds no permissions of its own and holds no secrets.
-
-## Access control
-
-GitHub Pages serves everything in this repository publicly, so the catalog (app names, URLs,
-owners) is readable by anyone who guesses the URL. The inventory data is safe (it requires a 3HUE
-Microsoft sign-in), but the shell is not hidden. Recommended steps, in order:
-
-1. **Cloudflare Access (Zero Trust) in front of the portal.** 3hue.net already uses Cloudflare.
-   Create an Access application for `3hue.net/internal/*` (or a dedicated `hub.3hue.net`), add
-   **Microsoft Entra ID** as the identity provider, and allow the `@3hue.net` domain (or a group).
-   Users then authenticate once with their 3HUE account before the page even loads. Free up to 50
-   users.
-2. Keep `noindex`, `robots.txt` and the missing sitemap entry (already done).
-3. Do **not** put secrets, client lists, pricing or credentials into `catalog.js` — link to the
-   system that holds them instead.
-
-Alternatives if Cloudflare Access is not wanted: Azure Static Web Apps with built-in Entra auth, or
-a Cloudflare Worker that validates an Entra token before serving `/internal/`.
+Every user only sees the rows **their** SharePoint permissions allow — the portal adds no
+permissions of its own and holds no secrets.
 
 ## Open items to confirm (tiles flagged `verify: true`)
 
@@ -171,33 +228,28 @@ a Cloudflare Worker that validates an Entra token before serving `/internal/`.
 | InfoSec Policy, CIRP, Onboarding, Brand Kit | Point at the actual files once filed in the Internal Assets library |
 | Report a security incident                  | Dedicated security inbox instead of `info@3hue.net`                 |
 | `config.requestAccessEmail`                 | IT/admin inbox for access requests                                  |
+| `ACCESS_TEAM_DOMAIN`                        | Your Zero Trust team name (`<team>.cloudflareaccess.com`)           |
 
 ## Suggestions for the next iteration
 
+- **Default role from Entra groups** — Access can forward group claims; map them to the "View as"
+  role so sales staff land on their view automatically.
 - **Announcements from SharePoint** — a second list (`Title`, `Body`, `Date`, `Link`) read by the
   same adapter so leadership can post without a commit.
-- **Policy acknowledgements** — a Microsoft Form or list that records "I have read the InfoSec
+- **Policy acknowledgements** — a Microsoft Form or list recording "I have read the InfoSec
   Policy / CIRP" per employee; surface the user's outstanding items on Overview.
-- **Service health strip** — poll the public status feeds (Microsoft 365, Cloudflare, GitHub,
-  HubSpot) and show a green/amber dot on the Infrastructure tab.
-- **Owner directory** — a small "Who owns what" table (system → owner → backup → vendor contract
-  renewal date) for leadership and audits.
-- **Access review export** — the CSV export already exists for documents; add one for tiles
-  (system, owner, auth type, audience) as the SOC 2 "system inventory" evidence.
+- **Service health strip** — poll the public status feeds and show a green/amber dot on the
+  Infrastructure tab.
+- **Owner directory** — system → owner → backup → vendor contract renewal date, for leadership
+  and audits.
+- **Access review export** — a CSV of tiles (system, owner, auth type, audience) as SOC 2 system
+  inventory evidence, alongside the existing document export.
 - **Password manager tile** (1Password / Bitwarden) and **MFA enrollment** guide under Security.
-- **Per-user tiles via Entra groups** — once Cloudflare Access or MSAL sign-in is on, the user's
-  groups can select the default "View as" role automatically.
-- **Edge-hosted catalog** — move `catalog.js` into Cloudflare KV with a tiny admin form if
-  non-engineers should edit tiles without Git.
+- **Private repository** — move `internal/` to a private repo once it carries anything beyond
+  app names and URLs.
 
-## Local development
-
-```bash
-python3 -m http.server 8000           # from the repo root
-# open http://localhost:8000/internal/
-npm run lint:html
-npx prettier --check internal/
-```
+## Maintenance
 
 To update MSAL: `npm pack @azure/msal-browser@<version>`, copy `lib/msal-browser.min.js` and the
-`LICENSE` over the files in `internal/lib/`, and smoke-test sign-in.
+`LICENSE` over the files in `public/lib/`, and smoke-test the Graph sign-in. To update wrangler:
+`npm install -D wrangler@latest` in `internal/`.

@@ -22,8 +22,9 @@ window.HUB_CONFIG = {
     listName: "Document & Artifact Inventory",
     listId: "",
 
-    /* Microsoft Entra app registration (single-page application).
-     * Leave clientId empty to keep the portal in preview mode (sample data, no sign-in). */
+    /* Microsoft Entra app registration (single-page application) with redirect URI
+     * https://hub.3hue.net/ (plus http://localhost:8787/ for wrangler dev).
+     * Leave clientId empty to keep the portal in preview mode (sample data, no Graph sign-in). */
     tenantId: "",
     clientId: "",
     scopes: ["Sites.Read.All"],

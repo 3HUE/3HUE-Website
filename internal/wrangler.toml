@@ -1,0 +1,40 @@
+# 3HUE Enterprise Hub — Cloudflare Worker that serves the static portal behind Cloudflare Access.
+#
+#   npm install && npx wrangler deploy      (or push to main: .github/workflows/deploy-hub.yml)
+#
+# Access control lives in two places on purpose:
+#   1. A Cloudflare Access application on hub.3hue.net (policy: emails ending in @3hue.net) stops
+#      anonymous traffic before it reaches this Worker.
+#   2. worker/index.js re-verifies the Access JWT on EVERY request (run_worker_first), so a missing
+#      policy, a stray route or a direct hit never serves the portal to an unauthenticated caller.
+"$schema" = "node_modules/wrangler/config-schema.json"
+name = "enterprise-hub"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+
+# No *.workers.dev or preview URL: the only front door is the Access-protected custom domain.
+workers_dev = false
+preview_urls = false
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
+
+[[routes]]
+pattern = "hub.3hue.net"
+custom_domain = true
+
+[observability]
+enabled = true
+
+[vars]
+# Zero Trust team domain: Zero Trust dashboard → Settings → Custom Pages shows "<team>.cloudflareaccess.com".
+ACCESS_TEAM_DOMAIN = "3hue.cloudflareaccess.com"
+# Application Audience (AUD) tag of the "Enterprise Hub" Access application
+# (Zero Trust → Access → Applications → Enterprise Hub → Overview). Empty = fail closed with a 503.
+ACCESS_AUD = ""
+# Identities outside these email domains are rejected even if the Access policy drifts.
+ALLOWED_EMAIL_DOMAINS = "3hue.net"

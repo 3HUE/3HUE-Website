@@ -1,2 +1,4 @@
-# Vendored third-party builds are not ours to reformat.
-internal/lib/
+# Vendored third-party builds and tool output are not ours to reformat.
+internal/public/lib/
+internal/.wrangler/
+internal/package-lock.json

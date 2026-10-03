@@ -152,6 +152,7 @@
     inventory: { status: "idle", source: null, items: [], syncedAt: null, error: null },
     docs: { query: "", category: "", classification: "", system: "", sort: "title", dir: 1 },
     account: null,
+    identity: null,
   };
 
   if (!AUDIENCES.some((aud) => aud.id === state.audience)) state.audience = "all";
@@ -162,6 +163,47 @@
   const audienceLabel = (id) => (AUDIENCES.find((aud) => aud.id === id) || {}).label || "";
 
   const liveMode = Boolean(SP.clientId);
+
+  /* Who is signed in through Cloudflare Access? get-identity is answered by Access itself on the
+   * protected hostname; /api/me by this hub's Worker. Neither exists on a plain static preview, so
+   * every failure here is silent. */
+  const loadIdentity = async () => {
+    const attempts = [
+      [
+        "/cdn-cgi/access/get-identity",
+        (data) => ({ name: data.name || "", email: data.email || "", source: "access" }),
+      ],
+      [
+        "/api/me",
+        (data) => (data && data.email ? { name: "", email: data.email, source: "worker" } : null),
+      ],
+    ];
+    for (const [path, map] of attempts) {
+      const controller = new AbortController();
+      const timer = window.setTimeout(() => controller.abort(), 2500);
+      try {
+        const res = await fetch(path, {
+          credentials: "same-origin",
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+        if (!res.ok) continue;
+        const identity = map(await res.json());
+        if (identity && identity.email) {
+          state.identity = identity;
+          render();
+          return;
+        }
+      } catch (error) {
+        /* not behind Access (local preview), or the lookup timed out */
+      } finally {
+        window.clearTimeout(timer);
+      }
+    }
+  };
+
+  const displayName = () =>
+    (state.identity && state.identity.name) || (state.account && state.account.name) || "";
 
   /* ───────────────────────── filtering ───────────────────────── */
   const appVisible = (app) => {
@@ -467,6 +509,33 @@
     const slot = $("[data-account]");
     if (!slot) return;
     slot.textContent = "";
+    if (state.identity) {
+      const label = state.identity.name || state.identity.email;
+      slot.append(
+        h(
+          "a",
+          {
+            class: "hub-account-btn",
+            href: "/cdn-cgi/access/logout",
+            title: `${state.identity.email} — signed in through Cloudflare Access. Click to sign out.`,
+          },
+          h("span", { class: "hub-avatar", text: initials(label) }),
+          h("span", { class: "hub-account-name", text: label })
+        )
+      );
+      if (liveMode && !state.account) {
+        slot.append(
+          h("button", {
+            type: "button",
+            class: "btn btn-outline btn-sm",
+            text: "Connect SharePoint",
+            title: "Sign in to Microsoft Graph to load the live document inventory",
+            onClick: () => loadInventory({ interactive: true, force: true }),
+          })
+        );
+      }
+      return;
+    }
     if (!liveMode) {
       slot.append(
         h("span", {
@@ -626,9 +695,8 @@
   const renderHero = () => {
     const greeting = $("[data-greeting]");
     if (greeting) {
-      const name =
-        state.account && state.account.name ? `, ${state.account.name.split(" ")[0]}` : "";
-      greeting.textContent = `${greetingWord()}${name}.`;
+      const first = displayName().trim().split(/\s+/)[0];
+      greeting.textContent = `${greetingWord()}${first ? `, ${first}` : ""}.`;
     }
     const stats = $("[data-stats]");
     if (stats) {
@@ -834,7 +902,15 @@
         },
         h("span", { html: ICONS.help }),
         "How to add or edit a tile"
-      )
+      ),
+      state.identity && state.identity.source === "access"
+        ? h(
+            "a",
+            { href: "/cdn-cgi/access/logout" },
+            h("span", { html: ICONS.key }),
+            "Sign out of the hub"
+          )
+        : null
     );
     aside.append(h("div", { class: "hub-card" }, h("h3", { text: "Quick actions" }), quick));
 
@@ -1401,9 +1477,18 @@
     const app = await getMsal();
     const scopes = SP.scopes && SP.scopes.length ? SP.scopes : ["Sites.Read.All"];
     let account = app.getActiveAccount() || app.getAllAccounts()[0] || null;
+    const loginHint = state.identity && state.identity.email ? state.identity.email : undefined;
+    if (!account && loginHint) {
+      try {
+        account = (await app.ssoSilent({ scopes, loginHint })).account; // same Entra session as Access
+      } catch (error) {
+        account = null;
+      }
+    }
     if (!account) {
       if (!interactive) return null;
-      const result = await app.loginPopup({ scopes, prompt: "select_account" });
+      const request = loginHint ? { scopes, loginHint } : { scopes, prompt: "select_account" };
+      const result = await app.loginPopup(request);
       account = result.account;
     }
     app.setActiveAccount(account);
@@ -1631,7 +1716,7 @@
 
     render();
     if (tabFromHash() && state.tab !== "overview") revealTabs();
-    loadInventory();
+    loadIdentity().finally(() => loadInventory()); // identity first so Graph sign-in can be silent
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

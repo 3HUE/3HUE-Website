@@ -468,7 +468,7 @@ window.HUB_CATALOG = {
       group: "web",
       url: "https://3hue.net/",
       description: "Public website (GitHub Pages).",
-      icon: "../assets/img/logos/Logo-FULL-square-v1.avif",
+      icon: "https://3hue.net/assets/img/logos/Logo-FULL-square-v1.avif",
       color: "#44a8d9",
       auth: "public",
       owner: "Marketing",

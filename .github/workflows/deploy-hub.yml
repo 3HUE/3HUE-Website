@@ -1,0 +1,47 @@
+# Deploys the 3HUE Enterprise Hub (internal/) to Cloudflare Workers whenever it changes on main.
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   token with "Workers Scripts: Edit" (+ "Workers Routes: Edit" for the custom
+#                          domain) scoped to the 3HUE account — dash.cloudflare.com/profile/api-tokens
+#   CLOUDFLARE_ACCOUNT_ID  Workers & Pages → Overview → Account ID
+#
+# The public site is still published by GitHub Pages; this workflow only touches the Worker.
+name: Deploy Enterprise Hub (Cloudflare Worker)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "internal/**"
+      - ".github/workflows/deploy-hub.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-enterprise-hub
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Test and deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: internal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: internal/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: internal
+          command: deploy
