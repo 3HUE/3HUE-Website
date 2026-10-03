@@ -7,7 +7,9 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "tail": "wrangler tail",
-    "test": "node --test \"worker/test/**/*.test.js\""
+    "test": "node --test \"worker/test/**/*.test.js\"",
+    "roster": "node scripts/export-roster.mjs",
+    "portraits": "node scripts/render-portraits.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"

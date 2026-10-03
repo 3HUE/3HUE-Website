@@ -398,7 +398,7 @@ export const HUB_CATALOG = {
       subtitle: "Enterprise Customer Acquisitions & Revenue Management",
       tab: "business",
       group: "platforms",
-      url: "https://go.3hue.net",
+      url: "https://emm.3hue.net",
       description:
         "Pipeline, attribution and revenue management across the acquisition funnel. Formerly EMM.",
       monogram: "EC",
@@ -408,7 +408,6 @@ export const HUB_CATALOG = {
       tags: ["emm", "revenue", "pipeline", "attribution", "acquisition", "ecarm"],
       audience: ["sales", "leadership", "finance"],
       featured: true,
-      verify: true,
     },
     {
       id: "experience-tour",
@@ -617,21 +616,6 @@ export const HUB_CATALOG = {
       owner: "IT & Platform",
       tags: ["devices", "mdm", "endpoint"],
       audience: ["it"],
-      verify: true,
-    },
-    {
-      id: "okta",
-      name: "Okta",
-      tab: "infrastructure",
-      group: "identity",
-      url: "https://3hue.okta.com/",
-      description: "Okta end-user dashboard and admin console.",
-      monogram: "OK",
-      color: "#007dc1",
-      auth: "sso",
-      owner: "IT & Platform",
-      tags: ["okta", "identity", "sso", "mfa"],
-      audience: ["it", "leadership"],
       verify: true,
     },
     {

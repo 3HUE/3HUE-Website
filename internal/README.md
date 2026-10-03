@@ -86,15 +86,15 @@ loopback client address, which wrangler dev provides and Cloudflare's edge never
 
 ## What is in the hub
 
-| Area                      | What you get                                                                                                                                                                     |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Home**                  | Time-aware greeting, live stats, Huey's daily note, pinned tiles, recently launched, teammates, featured systems, field quick actions, announcements                             |
-| **Workspace sections**    | Core Systems · Business Systems (Deal Builder, Playbooks, Assessments, **ECARM**) · Infrastructure · Customer Acquisition · Security & Compliance · People & Support · Documents |
-| **Digital Workforce**     | The agent roster: Huey (concierge, on duty), Ava (client experience, on duty), Sage, Vesper, Quinn, Rio (in onboarding) — each with a full profile                               |
-| **Ask Huey**              | Slide-over chat. Always answers from the catalog (owners, access, documents, review dates); with an Anthropic key it answers open questions in plain language                    |
-| **Command palette**       | `⌘K` / `/` — apps, documents, teammates, sections and actions, keyboard navigable                                                                                                |
-| **Documents & Artifacts** | Secure repositories with classification ceilings + the SharePoint-fed inventory (filters, sort, overdue flags, CSV export)                                                       |
-| **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                |
+| Area                      | What you get                                                                                                                                                                                  |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Home**                  | Time-aware greeting, live stats, Huey's daily note, pinned tiles, recently launched, teammates, featured systems, field quick actions, announcements                                          |
+| **Workspace sections**    | Core Systems · Business Systems (Deal Builder, Playbooks, Assessments, **ECARM**) · Infrastructure · Customer Acquisition · Security & Compliance · People & Support · Documents              |
+| **Digital Workforce**     | The roster: Huey (concierge) and Ava (client experience) on duty; Marlowe, Aries, Vera, Theo and Trevor on duty inside ECARM; Sage, Vesper and Quinn in onboarding — each with a full profile |
+| **Ask Huey**              | Slide-over chat. Always answers from the catalog (owners, access, documents, review dates); with an Anthropic key it answers open questions in plain language                                 |
+| **Command palette**       | `⌘K` / `/` — apps, documents, teammates, sections and actions, keyboard navigable                                                                                                             |
+| **Documents & Artifacts** | Secure repositories with classification ceilings + the SharePoint-fed inventory (filters, sort, overdue flags, CSV export)                                                                    |
+| **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                             |
 
 Cross-cutting: a **View as** role filter, favorites, recent launches, per-tile menu (Request
 access, Copy link, Ask Huey, Report a problem), SSO chips, "Verify URL" flags, Daylight/Midnight
@@ -248,9 +248,7 @@ permissions of its own and holds no secrets.
 | Tile                                        | What to confirm                                                     |
 | ------------------------------------------- | ------------------------------------------------------------------- |
 | Teamwork Projects / Desk / Spaces / Chat    | Instance subdomain (assumed `3hue.teamwork.com`)                    |
-| ECARM                                       | Application URL (assumed `go.3hue.net`, which hosts the beacon)     |
 | AWS Console                                 | Use the IAM Identity Center start URL if one exists                 |
-| Okta                                        | Whether 3HUE runs Okta and its org URL                              |
 | Microsoft Intune                            | Whether Intune is licensed/used                                     |
 | InfoSec Policy, CIRP, Onboarding, Brand Kit | Point at the actual files once filed in the Internal Assets library |
 | Report a security incident                  | Dedicated security inbox instead of `info@3hue.net`                 |
