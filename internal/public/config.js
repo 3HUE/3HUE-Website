@@ -4,7 +4,7 @@
  * public identifiers — access to the inventory is enforced by Microsoft sign-in plus SharePoint
  * permissions, never by hiding these values. See internal/README.md → "Connecting SharePoint".
  */
-window.HUB_CONFIG = {
+export const HUB_CONFIG = {
   portalName: "3HUE Enterprise Hub",
 
   /* Where "Request access" mails go when a tile has no ownerEmail of its own. */
@@ -55,3 +55,5 @@ window.HUB_CONFIG = {
   /* Sample records used until the SharePoint list is connected. */
   sampleInventoryUrl: "data/inventory.sample.json",
 };
+
+export default HUB_CONFIG;

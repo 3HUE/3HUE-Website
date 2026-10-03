@@ -5,6 +5,7 @@
  * Access JWT, and only then serves the portal from the ASSETS binding with hardened headers.
  * Nothing here holds secrets: the AUD tag and team domain are public identifiers. */
 import { verifyAccessJwt, AccessError } from "./access.js";
+import { answerQuestion, AskError, mapAnthropicError } from "./ask.js";
 
 const CSP = [
   "default-src 'self'",
@@ -167,8 +168,42 @@ export default {
         authenticated: Boolean(identity),
         email: identity ? identity.email : null,
         local: localBypass,
+        aiEnabled: Boolean(env.ANTHROPIC_API_KEY),
       });
     }
+
+    if (url.pathname === "/api/ask") {
+      if (request.method !== "POST")
+        return problem(405, "Method not allowed", "Ask accepts POST only.");
+      if (!env.ANTHROPIC_API_KEY)
+        return json(
+          { error: "AI answers are not enabled. Set the ANTHROPIC_API_KEY secret on the Worker." },
+          { status: 503 }
+        );
+      let body;
+      try {
+        const raw = await request.text();
+        if (raw.length > 256 * 1024) return json({ error: "Request too large." }, { status: 413 });
+        body = JSON.parse(raw);
+      } catch (error) {
+        return json({ error: "Body must be JSON." }, { status: 400 });
+      }
+      try {
+        const result = await answerQuestion({
+          question: body.question,
+          history: body.history,
+          context: body.context,
+          env,
+        });
+        return json(result);
+      } catch (error) {
+        if (error instanceof AskError)
+          return json({ error: error.message }, { status: error.status });
+        const mapped = mapAnthropicError(error);
+        return json({ error: mapped.message }, { status: mapped.status });
+      }
+    }
+
     if (request.method !== "GET" && request.method !== "HEAD") {
       return problem(405, "Method not allowed", "The hub only serves GET requests.");
     }

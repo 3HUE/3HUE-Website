@@ -1,9 +1,11 @@
 # 3HUE Enterprise Hub (internal portal)
 
-An Okta-style launcher for every 3HUE system, solution and secure data repository, plus the
-Document & Artifact Inventory fed from SharePoint. Plain HTML/CSS/JS served by a **Cloudflare
-Worker** at **https://hub.3hue.net**, reachable only by `@3hue.net` accounts through
-**Cloudflare Access**.
+The front door to 3HUE's systems: every app, solution, secure repository and document in one
+premium, keyboard-first launcher, plus the firm's **digital workforce** — AI agents with names,
+faces, roles and a concierge (Huey) you can talk to. Plain HTML/CSS/JS on the **Prism** design
+language (see `DESIGN.md`), served by a **Cloudflare Worker** at **https://hub.3hue.net** and
+reachable only by `@3hue.net` accounts through **Cloudflare Access**. Desktop is the flagship;
+phones get a dedicated layer and the hub is installable to a home screen.
 
 > The portal is **not** published through GitHub Pages: `internal/` is excluded in `_config.yml`.
 > The source does live in this public repository, so never put secrets, client names, pricing or
@@ -82,45 +84,67 @@ The bypass needs two things at once: that variable (only ever in the git-ignored
 loopback client address, which wrangler dev provides and Cloudflare's edge never does (it overwrites
 `cf-connecting-ip` with the real client IP). It therefore cannot apply in production.
 
-## What is in the portal
+## What is in the hub
 
-| Tab                       | Contents                                                                                                   |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Overview**              | Pinned tiles (per browser), recently launched, featured systems, announcements, quick actions              |
-| **Core Systems**          | Microsoft 365 (Office, Outlook, Teams, SharePoint, OneDrive), Teamwork suite, QuickBooks, Claude, Lucid…   |
-| **Business Systems**      | Deal Builder, Engagement Playbooks, Assessments Platform, **ECARM** (formerly EMM), tour, DMF, website     |
-| **Infrastructure**        | AWS, Azure, Google Cloud/BigQuery, Cloudflare, Entra, M365 admin, GitHub, status pages                     |
-| **Customer Acquisition**  | HubSpot, Apollo.io, GA4, Tag Manager, Search Console, Google Business Profile, Semrush, social channels    |
-| **Security & Compliance** | _Suggested._ Defender, Purview, Conditional Access, InfoSec policy, CIRP, incident reporting, Trust Center |
-| **People & Support**      | _Suggested._ Help desk, directory, calendar, pay & expenses, onboarding, brand kit                         |
-| **Documents & Artifacts** | Secure data repositories (with classification ceiling) + the SharePoint-fed inventory table                |
+| Area                      | What you get                                                                                                                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Home**                  | Time-aware greeting, live stats, Huey's daily note, pinned tiles, recently launched, teammates, featured systems, field quick actions, announcements                             |
+| **Workspace sections**    | Core Systems · Business Systems (Deal Builder, Playbooks, Assessments, **ECARM**) · Infrastructure · Customer Acquisition · Security & Compliance · People & Support · Documents |
+| **Digital Workforce**     | The agent roster: Huey (concierge, on duty), Ava (client experience, on duty), Sage, Vesper, Quinn, Rio (in onboarding) — each with a full profile                               |
+| **Ask Huey**              | Slide-over chat. Always answers from the catalog (owners, access, documents, review dates); with an Anthropic key it answers open questions in plain language                    |
+| **Command palette**       | `⌘K` / `/` — apps, documents, teammates, sections and actions, keyboard navigable                                                                                                |
+| **Documents & Artifacts** | Secure repositories with classification ceilings + the SharePoint-fed inventory (filters, sort, overdue flags, CSV export)                                                       |
+| **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                |
 
-Cross-cutting: global search (`/`), a **View as** role filter, favorites, recent launches, per-tile
-**Request access / Copy link / Report a problem**, SSO chips, "Verify URL" flags, dark mode (shares
-the public site's toggle), CSV export of the inventory, keyboard-navigable tabs. No analytics run
-on this page on purpose.
+Cross-cutting: a **View as** role filter, favorites, recent launches, per-tile menu (Request
+access, Copy link, Ask Huey, Report a problem), SSO chips, "Verify URL" flags, Daylight/Midnight
+themes shared with the public site's toggle. No analytics run on this page on purpose.
+
+### Ask Huey — turning on AI answers
+
+Huey always works: the browser-side engine answers from the catalog and inventory with no network
+call. To let him answer open questions ("how do Deal Builder and ECARM fit together?"), give the
+Worker an Anthropic API key:
+
+```bash
+cd internal
+npx wrangler secret put ANTHROPIC_API_KEY     # console.anthropic.com → API keys
+```
+
+`worker/ask.js` builds a grounded prompt (catalog, roster, the inventory rows the person can see)
+and calls `claude-opus-5-5` through the official SDK with low effort for fast, terse answers, a
+cached system prompt, and Anthropic's server-side `fallbacks: "default"` so a safety decline is
+re-routed rather than failing. Change the model with `ANTHROPIC_MODEL` in `wrangler.toml`.
+Requests go through `/api/ask`, behind the same Access check as everything else, so only
+signed-in staff can spend tokens. When the key is absent or a call fails, the hub falls back to
+catalog answers and says so.
 
 ## Files
 
 ```
 internal/
-  wrangler.toml              Worker config: assets, custom domain, Access vars (no secrets)
-  worker/index.js            edge entry: Access JWT check on every request, headers, /api/me
+  wrangler.toml              Worker config: assets, custom domain, Access vars, model (no secrets)
+  worker/index.js            edge entry: Access JWT check on every request, headers, /api/me, /api/ask
   worker/access.js           JWT verification (WebCrypto, dependency-free)
-  worker/test/               node:test suites for the verifier and the Worker
-  public/index.html          shell (header, hero, tabs, panel, footer)
-  public/portal.css          portal styles on top of https://3hue.net/assets/css/styles.css tokens
-  public/portal.js           rendering, search, favorites, documents table, SharePoint adapter
-  public/catalog.js          THE CONTENT: tabs, groups, audiences, tiles, announcements
+  worker/ask.js              Huey's AI brain: grounded prompt + Anthropic SDK call
+  worker/test/               node:test suites (verifier, Worker routes, ask prompt/response handling)
+  public/index.html          shell: sidebar, top bar, bottom bar, panels, palette
+  public/prism.css           the Prism design tokens and primitives (shared language — see DESIGN.md)
+  public/portal.css          hub layout and components on top of Prism
+  public/portal.js           the app: routing, views, tiles, palette, chat, inventory adapter
+  public/agents.js           the digital workforce: identities, voice, portrait generator
+  public/catalog.js          THE CONTENT: sections, groups, audiences, tiles, announcements
   public/config.js           runtime config: SharePoint site/list, Entra app ids, field map
   public/data/inventory.sample.json  preview records shown until the SharePoint list is connected
   public/lib/msal-browser.min.js     Microsoft Authentication Library 2.39.0 (MIT), vendored
+  public/icons/, manifest.webmanifest  installable web app
   public/404.html            not-found page
-  package.json               wrangler + test scripts
+  DESIGN.md                  Prism design language + agent identity system
+  package.json               wrangler, @anthropic-ai/sdk, test scripts
 ```
 
-Brand CSS and logos are loaded from the public site (`https://3hue.net/assets/...`) so there is
-one source of truth for design tokens; the CSP allows exactly that host.
+The hub's own design tokens live in `prism.css`; only the 3HUE logo is loaded from the public site
+(`https://3hue.net/assets/...`), which the CSP allows explicitly.
 
 ## Editing the catalog
 
@@ -155,7 +179,10 @@ Everything visible is data in `public/catalog.js`. Save, commit, push to `main` 
 - **Add a group**: push to `catalog.groups` with `tab`, `label`, optional `description` and
   `layout: "list"` for compact rows (used for status pages and social channels).
 - **Add a role**: push to `catalog.audiences`; reference its id in tiles' `audience`.
-- **Announcements**: `catalog.announcements` (`date`, `title`, `body`, optional `href`).
+- **Announcements**: `catalog.announcements` (`date`, `title`, `body`, optional `href`, optional
+  `author` agent id — defaults to Huey).
+- **Agents**: `public/agents.js` — identity first (name, role, team, manager, status, voice,
+  portrait), then capabilities marked live or planned. Guidelines in `DESIGN.md`.
 
 Before pushing: `npm run lint:html` (repo root) and `npx prettier --check internal/`.
 

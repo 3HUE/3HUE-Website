@@ -112,6 +112,7 @@ test("/api/me reports the verified identity", async () => {
     authenticated: true,
     email: "staff@3hue.net",
     local: false,
+    aiEnabled: false,
   });
 });
 
@@ -131,7 +132,12 @@ test("local bypass applies on loopback hosts only", async () => {
   for (const origin of ["http://localhost:8787", "http://127.0.0.1:8787", "http://[::1]:8787"]) {
     const res = await get(`${origin}/api/me`, { env });
     assert.equal(res.status, 200, origin);
-    assert.deepEqual(await res.json(), { authenticated: false, email: null, local: true });
+    assert.deepEqual(await res.json(), {
+      authenticated: false,
+      email: null,
+      local: true,
+      aiEnabled: false,
+    });
   }
   const prod = await get(`${PROD}/api/me`, { env });
   assert.equal(prod.status, 503, "bypass must never apply to the real hostname");
@@ -156,4 +162,49 @@ test("404s pass through from the asset store", async () => {
   });
   assert.equal(res.status, 404);
   assert.equal(res.headers.get("X-Robots-Tag"), "noindex, nofollow, noarchive");
+});
+
+test("/api/me says whether AI answers are on", async () => {
+  const issuer = await makeIssuer();
+  globalThis.fetch = issuer.fetcher;
+  const token = await issuer.sign(claims());
+  const withKey = await get(`${PROD}/api/me`, {
+    env: { ...ENV, ANTHROPIC_API_KEY: "k" },
+    headers: { "Cf-Access-Jwt-Assertion": token },
+  });
+  assert.equal((await withKey.json()).aiEnabled, true);
+});
+
+test("/api/ask is 503 without an API key, 405 for GET, 400 for a non-JSON body", async () => {
+  const issuer = await makeIssuer();
+  globalThis.fetch = issuer.fetcher;
+  const token = await issuer.sign(claims());
+  const noKey = await get(`${PROD}/api/ask`, {
+    method: "POST",
+    headers: { "Cf-Access-Jwt-Assertion": token, "Content-Type": "application/json" },
+    body: JSON.stringify({ question: "hi" }),
+  });
+  assert.equal(noKey.status, 503);
+  assert.match((await noKey.json()).error, /ANTHROPIC_API_KEY/);
+  const getReq = await get(`${PROD}/api/ask`, {
+    env: { ...ENV, ANTHROPIC_API_KEY: "k" },
+    headers: { "Cf-Access-Jwt-Assertion": token },
+  });
+  assert.equal(getReq.status, 405);
+  const badJson = await get(`${PROD}/api/ask`, {
+    method: "POST",
+    env: { ...ENV, ANTHROPIC_API_KEY: "k" },
+    headers: { "Cf-Access-Jwt-Assertion": token },
+    body: "not json",
+  });
+  assert.equal(badJson.status, 400);
+});
+
+test("/api/ask still requires a valid Access token", async () => {
+  const res = await get(`${PROD}/api/ask`, {
+    method: "POST",
+    env: { ...ENV, ANTHROPIC_API_KEY: "k" },
+    body: JSON.stringify({ question: "hi" }),
+  });
+  assert.equal(res.status, 403);
 });

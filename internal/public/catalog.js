@@ -12,9 +12,11 @@
  *               small "Verify URL" chip until the flag is removed.
  *  - `featured` true to surface on the Overview tab.
  *  - `monogram` 1–3 characters shown on the tile icon; `color` tints the icon.
- *  - `icon`     optional image path that replaces the monogram.
+ *  - `icon`     optional image URL that replaces the monogram (host must be allowed by the CSP).
+ *
+ * ES module: imported by public/portal.js (browser) and worker/ask.js (edge).
  */
-window.HUB_CATALOG = {
+export const HUB_CATALOG = {
   tabs: [
     {
       id: "overview",
@@ -1289,3 +1291,5 @@ window.HUB_CATALOG = {
     },
   ],
 };
+
+export default HUB_CATALOG;
