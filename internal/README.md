@@ -249,7 +249,6 @@ permissions of its own and holds no secrets.
 | ------------------------------------------- | ------------------------------------------------------------------- |
 | Teamwork Projects / Desk / Spaces / Chat    | Instance subdomain (assumed `3hue.teamwork.com`)                    |
 | AWS Console                                 | Use the IAM Identity Center start URL if one exists                 |
-| Okta                                        | Whether 3HUE runs Okta and its org URL                              |
 | Microsoft Intune                            | Whether Intune is licensed/used                                     |
 | InfoSec Policy, CIRP, Onboarding, Brand Kit | Point at the actual files once filed in the Internal Assets library |
 | Report a security incident                  | Dedicated security inbox instead of `info@3hue.net`                 |
