@@ -34,7 +34,7 @@ enabled = true
 # Zero Trust team domain: Zero Trust dashboard → Settings → Custom Pages shows "<team>.cloudflareaccess.com".
 ACCESS_TEAM_DOMAIN = "3hue.cloudflareaccess.com"
 # Application Audience (AUD) tag of the "Enterprise Hub" Access application
-# (Zero Trust → Access → Applications → Enterprise Hub → Overview). Empty = fail closed with a 503.
-ACCESS_AUD = ""
+# (Zero Trust → Access → Applications → Enterprise Hub → Overview). Empty would fail closed with a 503.
+ACCESS_AUD = "d37fba4c46f550e3b4ec871cd5c917abf891f1c0cf609de781b4ba38d9c0a425"
 # Identities outside these email domains are rejected even if the Access policy drifts.
 ALLOWED_EMAIL_DOMAINS = "3hue.net"
