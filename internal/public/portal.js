@@ -994,7 +994,14 @@ const renderHome = (main) => {
           h("span", { html: I.arrow })
         ),
       },
-      h("div", { class: "agent-strip" }, ...AGENTS.map((agent) => agentChip(agent)))
+      h(
+        "div",
+        { class: "agent-strip" },
+        ...[...AGENTS]
+          .sort((a, b) => (a.status === "active" ? 0 : 1) - (b.status === "active" ? 0 : 1))
+          .slice(0, 8)
+          .map((agent) => agentChip(agent))
+      )
     )
   );
 
@@ -1295,7 +1302,22 @@ const renderTeam = (main) => {
         )
       )
     ),
-    h("div", { class: "agent-grid" }, ...AGENTS.map((agent, index) => agentCard(agent, index)))
+    ...Array.from(new Set(AGENTS.map((agent) => agent.team))).map((team) => {
+      const members = AGENTS.filter((agent) => agent.team === team);
+      const onDuty = members.filter((agent) => agent.status === "active").length;
+      return h(
+        "section",
+        { class: "group" },
+        h(
+          "div",
+          { class: "group-head" },
+          h("h3", { text: team }),
+          h("span", { text: `${onDuty} on duty` }),
+          h("span", { class: "count", text: String(members.length) })
+        ),
+        h("div", { class: "agent-grid" }, ...members.map((agent, index) => agentCard(agent, index)))
+      );
+    })
   );
 };
 

@@ -100,8 +100,8 @@ Every AI agent 3HUE operates is designed as a colleague. `public/agents.js` is t
 
 **Portraits** are generated vectors (`avatarSvg`) in one visual family: rounded-square frame in
 the agent's tint, ivory face plate, expressive geometric eyes and brows, one accessory that says
-something about the job (Huey's headset, Sage's glasses, Vesper's hood, Quinn's visor, Rio's
-earpiece, Ava's halo from the tour). They blink idly, bob while thinking, and the mouth animates
+something about the job (Huey's headset, Sage's glasses, Vesper's hood, Quinn's visor, Marlowe's
+monocle, Aries's pen, Vera's badge, Theo's collar, Trevor's goggles, Ava's halo from the tour). They blink idly, bob while thinking, and the mouth animates
 while speaking, so an agent feels present without ever pretending to be human.
 
 **Voice & tone.** Warm, direct, brief. Dry humor in small doses, never at the user's expense. No
@@ -113,9 +113,17 @@ appear on the roster so the team can get to know them, but their cards and profi
 onboarding" and list what they _will_ do. When AI answers are off (no key), Huey's status reads
 "catalog answers" and the local engine responds.
 
-**Current roster.** Huey (concierge, on duty), Ava (client experience guide, on duty), Sage
-(knowledge librarian), Vesper (security operations), Quinn (engagement coordinator), Rio
-(revenue operations) — the last four in onboarding.
+**Current roster.** Operations: Huey (concierge, on duty). Marketing & Client Success: Ava
+(client experience guide, on duty). Revenue Operations (ECARM): Marlowe (research analyst), Aries
+(outbound writer), Vera (data steward), Theo (deal preparation), Trevor (pipeline scout), all on
+duty inside ECARM. Internal Assets: Sage (knowledge librarian, onboarding). ISG: Vesper (security
+operations, onboarding). Delivery Operations: Quinn (engagement coordinator, onboarding).
+
+**One roster, many systems.** `agents.js` is the identity record for every 3HUE agent, wherever
+it runs. ECARM, Deal Builder or any other product should import this module (or `data/roster.json`
+and `icons/agents/*.png`, exported from it) for names, pronouns, roles, tints, voices and
+portraits — bylines on deliverables, Teams cards and their own Team screens then match the hub.
+A product may add its own fields (skills, prompts, schedules) but never a second name or face.
 
 ## Adding Prism to another 3HUE product
 

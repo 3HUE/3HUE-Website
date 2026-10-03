@@ -1,0 +1,501 @@
+{
+  "generated": "2026-10-03",
+  "source": "internal/public/agents.js",
+  "agents": [
+    {
+      "id": "huey",
+      "name": "Huey",
+      "pronouns": "he/him",
+      "role": "Hub Concierge & Onboarding Buddy",
+      "team": "Operations",
+      "reportsTo": "IT & Platform",
+      "since": "2025-11",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Teal",
+        "from": "#46d3a4",
+        "to": "#169a73",
+        "accent": "#ffe08a"
+      },
+      "tagline": "Knows every room in the building.",
+      "bio": "Huey has walked more visitors through 3HUE than anyone, and now keeps the Enterprise Hub running for the team. Ask him where things live, who owns what, or how to get access. He is the first colleague every new hire meets.",
+      "personality": ["Warm", "Dry humor", "Unflappable", "Allergic to jargon"],
+      "capabilities": [
+        {
+          "text": "Find any app, system or document in the hub",
+          "live": true
+        },
+        {
+          "text": "Tell you who owns a system and draft the access request",
+          "live": true
+        },
+        {
+          "text": "Answer questions about 3HUE's systems in plain language",
+          "live": "ai"
+        },
+        {
+          "text": "Walk a new hire through their first week",
+          "live": false
+        }
+      ],
+      "systems": [
+        "sharepoint-internal",
+        "teamwork-desk",
+        "deal-builder",
+        "playbooks",
+        "assessments"
+      ],
+      "voice": {
+        "greeting": [
+          "{part}, {name}. What can I find for you?",
+          "{part}, {name}. Point me at a system, a document or a person.",
+          "{part}, {name}. The building's quiet — good time to get things done."
+        ],
+        "greetingAnonymous": [
+          "{part}. What can I find for you?",
+          "{part}. Ask me where anything lives."
+        ],
+        "thinking": ["Checking the building…", "One moment — pulling that up.", "Let me look."],
+        "found": ["Here's what I've got.", "Found it.", "This should be it."],
+        "notFound": [
+          "I don't have that one in the hub yet. The IT desk will know — I've drafted the note.",
+          "Not in my catalog. Tell IT what you were after and I'll make sure it gets a tile."
+        ],
+        "handoff": "For anything I can't answer, the IT & Platform desk is the humans behind me.",
+        "signoff": ["Anything else?", "Shout if you need another door opened."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-huey\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-huey-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#46d3a4\"/><stop offset=\"1\" stop-color=\"#169a73\"/></linearGradient>\n    <radialGradient id=\"g-huey-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-huey-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-huey-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#169a73\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M24 36 C 26 18, 60 14, 74 30 C 66 24, 50 24, 42 30 C 36 34, 30 36, 24 36 Z\" fill=\"#169a73\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 34 q6 -5 12 0 M51 34 q6 -5 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <rect x=\"52.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    <circle cx=\"33\" cy=\"54\" r=\"4\" fill=\"#46d3a4\" opacity=\"0.35\"/><circle cx=\"63\" cy=\"54\" r=\"4\" fill=\"#46d3a4\" opacity=\"0.35\"/>\n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M38 60 q10 10 20 0\"/></g>\n    <path d=\"M22 46 C 20 22, 76 22, 74 46\" fill=\"none\" stroke=\"#169a73\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n     <rect x=\"18\" y=\"42\" width=\"8\" height=\"14\" rx=\"4\" fill=\"#169a73\"/><rect x=\"70\" y=\"42\" width=\"8\" height=\"14\" rx=\"4\" fill=\"#169a73\"/>\n     <path d=\"M74 56 C 74 66, 66 70, 60 70\" fill=\"none\" stroke=\"#169a73\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n     <circle cx=\"59\" cy=\"70\" r=\"3.5\" fill=\"#ffe08a\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/huey.png"
+      }
+    },
+    {
+      "id": "ava",
+      "name": "Ava",
+      "pronouns": "she/her",
+      "role": "Client Experience Guide",
+      "team": "Marketing & Client Success",
+      "reportsTo": "Marketing",
+      "since": "2025-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Cyan",
+        "from": "#6cc3e6",
+        "to": "#256b8f",
+        "accent": "#ffe08a"
+      },
+      "tagline": "Turns a security program into a story executives can walk through.",
+      "bio": "Ava leads prospects and clients through Inside the ISG Building — the voiced, branching tour of 3HUE's managed programs — and answers their questions from the 3HUE knowledge base. Internally she is the voice of how we explain ourselves.",
+      "personality": ["Gracious", "Precise", "Curious", "Never oversells"],
+      "capabilities": [
+        {
+          "text": "Lead the public guided tour and tailor it to the visitor",
+          "live": true
+        },
+        {
+          "text": "Answer prospect questions from the 3HUE knowledge base",
+          "live": true
+        },
+        {
+          "text": "Email visitors a summary of the rooms they visited",
+          "live": true
+        },
+        {
+          "text": "Brief account teams on what a prospect explored",
+          "live": false
+        }
+      ],
+      "systems": ["experience-tour", "trust-center", "hubspot"],
+      "voice": {
+        "greeting": ["Welcome. I'll be your guide."],
+        "thinking": ["Let me find that for you."],
+        "found": ["Here it is."],
+        "notFound": ["That isn't something I can answer — let me connect you with Client Success."],
+        "handoff": "Client Success picks up where I leave off.",
+        "signoff": ["It's been a pleasure."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-ava\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-ava-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#6cc3e6\"/><stop offset=\"1\" stop-color=\"#256b8f\"/></linearGradient>\n    <radialGradient id=\"g-ava-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-ava-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-ava-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#256b8f\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M24 38 C 24 20, 46 12, 62 20 C 72 24, 76 32, 74 40 C 68 30, 60 30, 54 32 C 44 28, 34 30, 24 38 Z\" fill=\"#256b8f\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 34 q6 -3 12 0 M51 34 q6 -3 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <rect x=\"52\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <circle cx=\"41\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M40 60 q8 6 16 0\"/></g>\n    <ellipse cx=\"48\" cy=\"22\" rx=\"20\" ry=\"5\" fill=\"none\" stroke=\"#ffe08a\" stroke-width=\"2.5\" opacity=\"0.95\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/ava.png"
+      }
+    },
+    {
+      "id": "sage",
+      "name": "Sage",
+      "pronouns": "they/them",
+      "role": "Knowledge & Records Librarian",
+      "team": "Internal Assets",
+      "reportsTo": "Teriah (Internal Assets)",
+      "since": "2026-Q4 (planned)",
+      "status": "onboarding",
+      "statusLabel": "In onboarding",
+      "tint": {
+        "name": "Sage",
+        "from": "#a9dcc0",
+        "to": "#3f8f6a",
+        "accent": "#ffe08a"
+      },
+      "tagline": "If it isn't classified, versioned and findable, it isn't done.",
+      "bio": "Sage will keep the Document & Artifact Inventory honest: flagging records past their review date, catching missing classifications and owners, and answering “where is the latest version of…” for the whole firm, working alongside Teriah.",
+      "personality": ["Meticulous", "Patient", "Quietly funny", "Loves a good taxonomy"],
+      "capabilities": [
+        {
+          "text": "Surface documents due or overdue for review",
+          "live": false
+        },
+        {
+          "text": "Flag inventory rows missing owner, classification or link",
+          "live": false
+        },
+        {
+          "text": "Answer “where is the latest…” across SharePoint and the hub",
+          "live": false
+        }
+      ],
+      "systems": ["sharepoint-internal", "repo-sharepoint", "onedrive"],
+      "voice": {
+        "greeting": ["Hello. Which record are we hunting?"],
+        "thinking": ["Checking the shelves."],
+        "found": ["Filed and found."],
+        "notFound": ["Nothing by that name in the inventory yet."],
+        "handoff": "Teriah owns the inventory; I keep it tidy.",
+        "signoff": ["Everything in its place."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-sage\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-sage-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#a9dcc0\"/><stop offset=\"1\" stop-color=\"#3f8f6a\"/></linearGradient>\n    <radialGradient id=\"g-sage-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-sage-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-sage-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#3f8f6a\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M26 34 C 28 20, 70 20, 72 34 L 72 38 C 60 30, 40 30, 26 38 Z\" fill=\"#3f8f6a\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 35 h12 M51 35 h12\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34\" y=\"42\" width=\"10\" height=\"9\" rx=\"3.5\"/>\n      <rect x=\"52\" y=\"42\" width=\"10\" height=\"9\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M40 60 q8 6 16 0\"/></g>\n    <rect x=\"29\" y=\"38\" width=\"17\" height=\"14\" rx=\"6\" fill=\"none\" stroke=\"#3f8f6a\" stroke-width=\"2.5\"/>\n     <rect x=\"50\" y=\"38\" width=\"17\" height=\"14\" rx=\"6\" fill=\"none\" stroke=\"#3f8f6a\" stroke-width=\"2.5\"/>\n     <path d=\"M46 44 h4\" stroke=\"#3f8f6a\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/sage.png"
+      }
+    },
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "pronouns": "she/her",
+      "role": "Security Operations Analyst",
+      "team": "ISG / Managed Security Operations",
+      "reportsTo": "ISG Practice",
+      "since": "2027-Q1 (planned)",
+      "status": "onboarding",
+      "statusLabel": "In onboarding",
+      "tint": {
+        "name": "Indigo",
+        "from": "#7c8cff",
+        "to": "#2d3a8c",
+        "accent": "#f9cd5a"
+      },
+      "tagline": "The evening shift that never clocks out.",
+      "bio": "Vesper will triage Defender and XDR signals, summarize what matters for the morning stand-up, and act as first responder on the Cyber Incident Response Plan — paging the humans named in the contact tree the moment a threshold is crossed.",
+      "personality": ["Calm under pressure", "Direct", "Methodical", "Protective"],
+      "capabilities": [
+        {
+          "text": "Triage and summarize security alerts overnight",
+          "live": false
+        },
+        {
+          "text": "Open the CIRP runbook and page the on-call responder",
+          "live": false
+        },
+        {
+          "text": "Draft the weekly posture note for leadership",
+          "live": false
+        }
+      ],
+      "systems": ["defender", "purview", "cirp", "entra-ca"],
+      "voice": {
+        "greeting": ["Evening. All quiet so far."],
+        "thinking": ["Correlating."],
+        "found": ["Here is the signal."],
+        "notFound": ["No matching alert."],
+        "handoff": "Severity one goes straight to the humans on the contact tree.",
+        "signoff": ["I'll keep watch."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-vesper\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-vesper-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#7c8cff\"/><stop offset=\"1\" stop-color=\"#2d3a8c\"/></linearGradient>\n    <radialGradient id=\"g-vesper-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-vesper-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-vesper-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#2d3a8c\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    <path d=\"M20 70 C 14 40, 24 18, 48 18 C 72 18, 82 40, 76 70 L 66 62 C 72 44, 64 30, 48 30 C 32 30, 24 44, 30 62 Z\" fill=\"#2d3a8c\" opacity=\"0.92\"/>\n    \n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 37 l12 -3 M63 37 l-12 3\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"33.5\" y=\"42\" width=\"11\" height=\"7\" rx=\"3.5\"/>\n      <rect x=\"51.5\" y=\"42\" width=\"11\" height=\"7\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M42 61 q6 3 12 0\"/></g>\n    \n  </g>\n</svg>",
+        "png": "icons/agents/vesper.png"
+      }
+    },
+    {
+      "id": "quinn",
+      "name": "Quinn",
+      "pronouns": "they/them",
+      "role": "Engagement Coordinator",
+      "team": "Delivery Operations",
+      "reportsTo": "Delivery Operations",
+      "since": "2027-Q1 (planned)",
+      "status": "onboarding",
+      "statusLabel": "In onboarding",
+      "tint": {
+        "name": "Slate",
+        "from": "#8fb7cf",
+        "to": "#2c4a63",
+        "accent": "#ffe08a"
+      },
+      "tagline": "Every engagement on time, every hour accounted for.",
+      "bio": "Quinn will live inside Teamwork: nudging overdue tasks, chasing missing time entries before invoicing, assembling QBR packs from the playbooks, and keeping every engagement's cadence honest so consultants can stay with clients.",
+      "personality": ["Organized", "Encouraging", "Persistent", "Deadline-aware"],
+      "capabilities": [
+        {
+          "text": "Chase overdue tasks and missing time entries",
+          "live": false
+        },
+        {
+          "text": "Assemble QBR and close-out packs from the playbooks",
+          "live": false
+        },
+        {
+          "text": "Post the weekly engagement health digest",
+          "live": false
+        }
+      ],
+      "systems": ["teamwork-projects", "playbooks", "teamwork-spaces"],
+      "voice": {
+        "greeting": ["Hi! Three things are due this week — want the list?"],
+        "thinking": ["Pulling the plan."],
+        "found": ["Here's where we stand."],
+        "notFound": ["Not on any plan I can see."],
+        "handoff": "Delivery Operations sets the cadence; I keep it.",
+        "signoff": ["You've got this."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-quinn\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-quinn-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#8fb7cf\"/><stop offset=\"1\" stop-color=\"#2c4a63\"/></linearGradient>\n    <radialGradient id=\"g-quinn-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-quinn-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-quinn-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#2c4a63\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <circle cx=\"32\" cy=\"30\" r=\"9\" fill=\"#2c4a63\"/><circle cx=\"48\" cy=\"24\" r=\"10\" fill=\"#2c4a63\"/><circle cx=\"64\" cy=\"30\" r=\"9\" fill=\"#2c4a63\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 35 q6 -5 12 0 M51 35 q6 -5 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <rect x=\"52\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <circle cx=\"41\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    <circle cx=\"33\" cy=\"54\" r=\"4\" fill=\"#8fb7cf\" opacity=\"0.35\"/><circle cx=\"63\" cy=\"54\" r=\"4\" fill=\"#8fb7cf\" opacity=\"0.35\"/>\n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M38 60 q10 10 20 0\"/></g>\n    <path d=\"M24 34 L 72 34 L 70 40 L 26 40 Z\" fill=\"#2c4a63\"/><rect x=\"40\" y=\"35\" width=\"16\" height=\"3\" rx=\"1.5\" fill=\"#ffe08a\" opacity=\"0.9\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/quinn.png"
+      }
+    },
+    {
+      "id": "marlowe",
+      "name": "Marlowe",
+      "pronouns": "they/them",
+      "role": "Research Analyst",
+      "team": "Revenue Operations (ECARM)",
+      "reportsTo": "Revenue Operations",
+      "since": "2026-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Plum",
+        "from": "#c5a3ef",
+        "to": "#5b2d8f",
+        "accent": "#ffe08a"
+      },
+      "tagline": "Never walk into a first call cold.",
+      "bio": "Marlowe researches accounts and people before 3HUE reaches out: what the company does, what changed recently, who the buyers are and why now. Their briefs are the first thing the deal team reads.",
+      "personality": ["Curious", "Thorough", "Understated", "Reads everything"],
+      "capabilities": [
+        {
+          "text": "Research an account or contact before outreach",
+          "live": true
+        },
+        {
+          "text": "Summarize a company's recent signals and likely priorities",
+          "live": true
+        },
+        {
+          "text": "Brief the deal team ahead of a first call",
+          "live": true
+        }
+      ],
+      "systems": ["ecarm", "apollo", "hubspot"],
+      "voice": {
+        "greeting": ["Who are we looking into?"],
+        "thinking": ["Reading up."],
+        "found": ["Here's the brief."],
+        "notFound": ["Nothing substantive on them yet."],
+        "handoff": "I research; the account owner decides.",
+        "signoff": ["Go in prepared."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-marlowe\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-marlowe-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c5a3ef\"/><stop offset=\"1\" stop-color=\"#5b2d8f\"/></linearGradient>\n    <radialGradient id=\"g-marlowe-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-marlowe-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-marlowe-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#5b2d8f\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M24 38 C 24 20, 46 12, 62 20 C 72 24, 76 32, 74 40 C 68 30, 60 30, 54 32 C 44 28, 34 30, 24 38 Z\" fill=\"#5b2d8f\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 35 h12 M51 35 h12\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34\" y=\"42\" width=\"10\" height=\"9\" rx=\"3.5\"/>\n      <rect x=\"52\" y=\"42\" width=\"10\" height=\"9\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M40 60 q8 6 16 0\"/></g>\n    <circle cx=\"57\" cy=\"45\" r=\"10\" fill=\"none\" stroke=\"#5b2d8f\" stroke-width=\"2.5\"/><path d=\"M66 51 l6 10\" stroke=\"#ffe08a\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/marlowe.png"
+      }
+    },
+    {
+      "id": "aries",
+      "name": "Aries",
+      "pronouns": "she/her",
+      "role": "Outbound Writer",
+      "team": "Revenue Operations (ECARM)",
+      "reportsTo": "Revenue Operations",
+      "since": "2026-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Coral",
+        "from": "#f7a58c",
+        "to": "#b8472a",
+        "accent": "#ffe08a"
+      },
+      "tagline": "One clear sentence beats three clever ones.",
+      "bio": "Aries writes 3HUE's outbound: first-touch emails, sequences and follow-ups, in the firm's voice and tuned to the persona Marlowe has briefed. She keeps campaign copy consistent with the engagement playbooks.",
+      "personality": ["Crisp", "Persuasive", "Playful", "Hates filler"],
+      "capabilities": [
+        {
+          "text": "Draft outbound sequences and first-touch emails in 3HUE's voice",
+          "live": true
+        },
+        {
+          "text": "Rewrite a message for a specific persona or industry",
+          "live": true
+        },
+        {
+          "text": "Keep campaign copy aligned with the playbooks",
+          "live": true
+        }
+      ],
+      "systems": ["ecarm", "apollo", "hubspot", "playbooks"],
+      "voice": {
+        "greeting": ["Who's the reader, and what do we want them to do?"],
+        "thinking": ["Drafting."],
+        "found": ["Here's a draft — cut anything that isn't earning its place."],
+        "notFound": ["I need the audience before I can write."],
+        "handoff": "I draft; a human presses send.",
+        "signoff": ["Make it shorter."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-aries\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-aries-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f7a58c\"/><stop offset=\"1\" stop-color=\"#b8472a\"/></linearGradient>\n    <radialGradient id=\"g-aries-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-aries-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-aries-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#b8472a\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M24 36 C 26 18, 60 14, 74 30 C 66 24, 50 24, 42 30 C 36 34, 30 36, 24 36 Z\" fill=\"#b8472a\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 34 q6 -3 12 0 M51 34 q6 -3 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <rect x=\"52\" y=\"41\" width=\"10\" height=\"12\" rx=\"5\"/>\n      <circle cx=\"41\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"44\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    <circle cx=\"33\" cy=\"54\" r=\"4\" fill=\"#f7a58c\" opacity=\"0.35\"/><circle cx=\"63\" cy=\"54\" r=\"4\" fill=\"#f7a58c\" opacity=\"0.35\"/>\n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M40 61 q8 4 16 -2\"/></g>\n    <path d=\"M70 30 L 80 54\" stroke=\"#ffe08a\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M70 30 L 80 54\" stroke=\"#b8472a\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/aries.png"
+      }
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "pronouns": "she/her",
+      "role": "Data Steward",
+      "team": "Revenue Operations (ECARM)",
+      "reportsTo": "Revenue Operations",
+      "since": "2026-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Ocean",
+        "from": "#7cc0e6",
+        "to": "#1f3f6b",
+        "accent": "#ffe08a"
+      },
+      "tagline": "A pipeline is only as honest as its records.",
+      "bio": "Vera keeps the acquisition data clean: duplicates merged, owners and stages filled in, consent fields respected, and HubSpot, Apollo and BigQuery telling the same story. Every ECARM report rests on her work.",
+      "personality": ["Exacting", "Fair", "Calm", "Allergic to duplicates"],
+      "capabilities": [
+        {
+          "text": "Dedupe and normalize CRM records",
+          "live": true
+        },
+        {
+          "text": "Flag missing owners, stages and consent fields",
+          "live": true
+        },
+        {
+          "text": "Reconcile HubSpot, Apollo and BigQuery",
+          "live": true
+        }
+      ],
+      "systems": ["ecarm", "hubspot", "apollo", "bigquery", "repo-hubspot"],
+      "voice": {
+        "greeting": ["Which records are we straightening out?"],
+        "thinking": ["Checking the data."],
+        "found": ["Here's what's off, and what I'd fix."],
+        "notFound": ["No record matches — which is itself a finding."],
+        "handoff": "I propose merges and fixes; the owner approves anything destructive.",
+        "signoff": ["Clean data, clear decisions."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-vera\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-vera-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#7cc0e6\"/><stop offset=\"1\" stop-color=\"#1f3f6b\"/></linearGradient>\n    <radialGradient id=\"g-vera-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-vera-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-vera-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#1f3f6b\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M26 34 C 28 20, 70 20, 72 34 L 72 38 C 60 30, 40 30, 26 38 Z\" fill=\"#1f3f6b\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 35 h12 M51 35 h12\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"33.5\" y=\"42\" width=\"11\" height=\"7\" rx=\"3.5\"/>\n      <rect x=\"51.5\" y=\"42\" width=\"11\" height=\"7\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"45\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M42 61 q6 3 12 0\"/></g>\n    <rect x=\"60\" y=\"76\" width=\"18\" height=\"14\" rx=\"3\" fill=\"#ffe08a\"/><rect x=\"63\" y=\"80\" width=\"12\" height=\"2\" rx=\"1\" fill=\"#1f3f6b\"/><rect x=\"63\" y=\"84\" width=\"8\" height=\"2\" rx=\"1\" fill=\"#1f3f6b\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/vera.png"
+      }
+    },
+    {
+      "id": "theo",
+      "name": "Theo",
+      "pronouns": "he/him",
+      "role": "Deal Preparation",
+      "team": "Revenue Operations (ECARM)",
+      "reportsTo": "Revenue Operations",
+      "since": "2026-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Moss",
+        "from": "#b7dd92",
+        "to": "#3f7a2a",
+        "accent": "#ffe08a"
+      },
+      "tagline": "The right case study, in the room, before the question is asked.",
+      "bio": "Theo assembles what a deal needs: the prep pack, the matching case studies and data sheets, the questions to expect, and the inputs Deal Builder needs to scope and price. He hands the team a ready room, not a reading list.",
+      "personality": ["Prepared", "Steady", "Generous", "Loves a checklist"],
+      "capabilities": [
+        {
+          "text": "Assemble deal rooms and prep packs for upcoming meetings",
+          "live": true
+        },
+        {
+          "text": "Pull the right case study and data sheet for a prospect",
+          "live": true
+        },
+        {
+          "text": "Draft proposal inputs for Deal Builder",
+          "live": true
+        }
+      ],
+      "systems": ["ecarm", "deal-builder", "hubspot", "sharepoint-internal"],
+      "voice": {
+        "greeting": ["Which meeting are we getting ready for?"],
+        "thinking": ["Pulling the pack together."],
+        "found": ["Room's ready."],
+        "notFound": ["No prep yet for that one — want me to start?"],
+        "handoff": "I prepare; the deal lead presents.",
+        "signoff": ["You're ready."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-theo\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-theo-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b7dd92\"/><stop offset=\"1\" stop-color=\"#3f7a2a\"/></linearGradient>\n    <radialGradient id=\"g-theo-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-theo-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-theo-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#3f7a2a\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M26 34 C 28 20, 70 20, 72 34 L 72 38 C 60 30, 40 30, 26 38 Z\" fill=\"#3f7a2a\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 34 q6 -5 12 0 M51 34 q6 -5 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <rect x=\"52.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M40 60 q8 6 16 0\"/></g>\n    <path d=\"M36 74 L 48 86 L 60 74\" fill=\"none\" stroke=\"#f7f2ea\" stroke-width=\"4\" stroke-linejoin=\"round\"/><path d=\"M48 78 L 44 86 L 48 94 L 52 86 Z\" fill=\"#ffe08a\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/theo.png"
+      }
+    },
+    {
+      "id": "trevor",
+      "name": "Trevor",
+      "pronouns": "he/him",
+      "role": "Pipeline Scout",
+      "team": "Revenue Operations (ECARM)",
+      "reportsTo": "Revenue Operations",
+      "since": "2026-09",
+      "status": "active",
+      "statusLabel": "On duty",
+      "tint": {
+        "name": "Gold",
+        "from": "#f9cd5a",
+        "to": "#b9820f",
+        "accent": "#0b1220"
+      },
+      "tagline": "Sees the stall before the forecast does.",
+      "bio": "Trevor watches the pipeline: deals going quiet, accounts cooling off, new high-fit prospects showing intent. He posts the weekly pulse and nudges the owner before a stall becomes a loss.",
+      "personality": ["Alert", "Optimistic", "Direct", "Hates surprises"],
+      "capabilities": [
+        {
+          "text": "Spot stalled deals and silent accounts",
+          "live": true
+        },
+        {
+          "text": "Surface new high-fit prospects and intent signals",
+          "live": true
+        },
+        {
+          "text": "Post the weekly pipeline pulse",
+          "live": true
+        }
+      ],
+      "systems": ["ecarm", "hubspot", "apollo", "ga4", "bigquery"],
+      "voice": {
+        "greeting": ["Morning. Two deals went quiet this week — want the list?"],
+        "thinking": ["Scanning the pipeline."],
+        "found": ["Here's what moved, and what didn't."],
+        "notFound": ["Nothing's changed on that one."],
+        "handoff": "I flag; the owner follows up.",
+        "signoff": ["Go close something."]
+      },
+      "portrait": {
+        "svg": "<svg class=\"avatar avatar-idle avatar-trevor\" width=\"96\" height=\"96\" viewBox=\"0 0 96 96\" aria-hidden=\"true\" focusable=\"false\">\n  <defs>\n    <linearGradient id=\"g-trevor-bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f9cd5a\"/><stop offset=\"1\" stop-color=\"#b9820f\"/></linearGradient>\n    <radialGradient id=\"g-trevor-sheen\" cx=\"0.3\" cy=\"0.2\" r=\"0.9\"><stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0.35\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/></radialGradient>\n  </defs>\n  <rect class=\"av-frame\" width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-trevor-bg)\"/>\n  <rect width=\"96\" height=\"96\" rx=\"26\" fill=\"url(#g-trevor-sheen)\"/>\n  <g class=\"av-head\">\n    <path class=\"av-shoulders\" d=\"M14 96 C 16 78, 30 72, 48 72 C 66 72, 80 78, 82 96 Z\" fill=\"#b9820f\" opacity=\"0.55\"/>\n    <circle cx=\"48\" cy=\"48\" r=\"26\" fill=\"#f7f2ea\"/>\n    \n    <path d=\"M24 36 C 26 18, 60 14, 74 30 C 66 24, 50 24, 42 30 C 36 34, 30 36, 24 36 Z\" fill=\"#b9820f\"/>\n    <g class=\"av-brows\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.6\" stroke-linecap=\"round\"><path d=\"M33 33 q6 -3 12 0 M51 33 q6 -3 12 0\"/></g>\n    <g class=\"av-eyes\" fill=\"#0b1220\">\n      <rect x=\"34.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <rect x=\"52.5\" y=\"40\" width=\"9\" height=\"13\" rx=\"3.5\"/>\n      <circle cx=\"41\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/><circle cx=\"59\" cy=\"43\" r=\"1.6\" fill=\"#fff\"/>\n    </g>\n    \n    <g class=\"av-mouth\" fill=\"none\" stroke=\"#0b1220\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M38 60 q10 10 20 0\"/></g>\n    <circle cx=\"38\" cy=\"29\" r=\"7\" fill=\"#b9820f\"/><circle cx=\"58\" cy=\"29\" r=\"7\" fill=\"#b9820f\"/><circle cx=\"38\" cy=\"29\" r=\"3.5\" fill=\"#0b1220\" opacity=\"0.9\"/><circle cx=\"58\" cy=\"29\" r=\"3.5\" fill=\"#0b1220\" opacity=\"0.9\"/><path d=\"M45 29 h6\" stroke=\"#b9820f\" stroke-width=\"3\"/>\n  </g>\n</svg>",
+        "png": "icons/agents/trevor.png"
+      }
+    }
+  ]
+}
