@@ -9,6 +9,7 @@
 #      policy, a stray route or a direct hit never serves the portal to an unauthenticated caller.
 "$schema" = "node_modules/wrangler/config-schema.json"
 name = "enterprise-hub"
+account_id = "5fe8600ccf7382a44d568ae809876809" # 3HUE Executive Consulting (not a secret)
 main = "worker/index.js"
 compatibility_date = "2026-10-01"
 

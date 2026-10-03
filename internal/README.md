@@ -64,8 +64,8 @@ npx wrangler deploy      # creates the Worker and the hub.3hue.net custom domain
 ```
 
 Or let CI do it: `.github/workflows/deploy-hub.yml` runs the tests and deploys on every push to
-`main` that touches `internal/`. It needs two repository secrets: `CLOUDFLARE_API_TOKEN` (Workers
-Scripts: Edit, Workers Routes: Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+`main` that touches `internal/`. It needs one repository secret, `CLOUDFLARE_API_TOKEN` (Workers
+Scripts: Edit, Workers Routes: Edit); the account id is pinned in `wrangler.toml`.
 
 `wrangler.toml` declares the custom domain, so the DNS record for `hub.3hue.net` is created
 automatically in the 3hue.net zone on first deploy.
