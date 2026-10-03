@@ -408,7 +408,6 @@ export const HUB_CATALOG = {
       tags: ["emm", "revenue", "pipeline", "attribution", "acquisition", "ecarm"],
       audience: ["sales", "leadership", "finance"],
       featured: true,
-      verify: true,
     },
     {
       id: "experience-tour",

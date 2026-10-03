@@ -248,7 +248,6 @@ permissions of its own and holds no secrets.
 | Tile                                        | What to confirm                                                     |
 | ------------------------------------------- | ------------------------------------------------------------------- |
 | Teamwork Projects / Desk / Spaces / Chat    | Instance subdomain (assumed `3hue.teamwork.com`)                    |
-| ECARM                                       | Application URL (assumed `go.3hue.net`, which hosts the beacon)     |
 | AWS Console                                 | Use the IAM Identity Center start URL if one exists                 |
 | Okta                                        | Whether 3HUE runs Okta and its org URL                              |
 | Microsoft Intune                            | Whether Intune is licensed/used                                     |
