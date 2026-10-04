@@ -7,6 +7,24 @@
  * No framework, no build step. */
 import { HUB_CONFIG as CONFIG } from "./config.js";
 import { HUB_CATALOG as CATALOG } from "./catalog.js";
+import { HUB_BUILD } from "./build.js";
+import {
+  STEPS,
+  TRACKS,
+  ENGAGEMENTS,
+  TOUR_STOPS,
+  toolkitFor,
+  laterFor,
+  agentsFor,
+  tasksFor,
+  requiredTasks,
+  stepStatus,
+  progressOf,
+  nextStep,
+  managerMessage,
+  trackById,
+  engagementById,
+} from "./onboarding.js";
 import {
   AGENTS,
   STATUS as AGENT_STATUS,
@@ -20,9 +38,9 @@ import {
 const SP = CONFIG.sharepoint || {};
 const TABS = (CATALOG.tabs || []).filter((tab) => tab.id !== "overview");
 const GROUPS = CATALOG.groups || [];
-const APPS = CATALOG.apps || [];
+let APPS = CATALOG.apps || [];
 const AUDIENCES = CATALOG.audiences || [{ id: "all", label: "Everyone" }];
-const ANNOUNCEMENTS = CATALOG.announcements || [];
+let ANNOUNCEMENTS = CATALOG.announcements || [];
 const CONCIERGE = agentById("huey") || AGENTS[0];
 const SUPPORT_EMAIL = CONFIG.requestAccessEmail || "info@3hue.net";
 
@@ -34,6 +52,7 @@ const KEYS = {
   audience: "3hue-hub-audience",
   inventory: "3hue-hub-inventory",
   chat: "3hue-hub-chat",
+  onboarding: "3hue-hub-onboarding",
 };
 
 /* ───────────────────────── icons (static SVG, 24-grid, stroke) ───────────────────────── */
@@ -108,6 +127,17 @@ const I = {
     '<path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 0-3 3z"/><path d="M4 4v16a3 3 0 0 1 3-3h12"/>'
   ),
   panelLeft: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>'),
+  edit: svg('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
+  trash: svg('<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/>'),
+  plus: svg('<path d="M12 5v14M5 12h14"/>'),
+  sliders: svg(
+    '<path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/>'
+  ),
+  map: svg('<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>'),
+  user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  userPlus: svg(
+    '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/>'
+  ),
 };
 
 const SECTION_ICON = {
@@ -170,6 +200,13 @@ const storage = {
       /* storage unavailable — preferences simply won't persist */
     }
   },
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      /* ignore */
+    }
+  },
   session(key, value) {
     try {
       if (value === undefined) {
@@ -214,7 +251,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 /* ───────────────────────── state ───────────────────────── */
 const tabById = new Map(TABS.map((tab) => [tab.id, tab]));
 const groupById = new Map(GROUPS.map((group) => [group.id, group]));
-const appById = new Map(APPS.map((app) => [app.id, app]));
+let appById = new Map(APPS.map((app) => [app.id, app]));
 
 const state = {
   route: { view: "home" },
@@ -226,6 +263,28 @@ const state = {
   sectionFilter: {},
   identity: null,
   account: null,
+  role: "member",
+  roleChecked: false,
+  serverBuild: null,
+  onboarding: {
+    record: null,
+    loaded: false,
+    storage: false,
+    saving: false,
+    savedAt: null,
+    error: null,
+    step: null,
+    celebrate: false,
+    serverUpdatedAt: null,
+  },
+  catalog: {
+    source: "static",
+    version: 0,
+    updatedAt: null,
+    updatedBy: null,
+    storage: false,
+    loaded: false,
+  },
   ai: { enabled: false, checked: false },
   chat: storage.get(KEYS.chat, []),
   chatBusy: false,
@@ -241,6 +300,9 @@ const parseHash = () => {
   if (raw.startsWith("team/")) return { view: "team", agent: raw.slice(5) };
   if (raw === "ask") return { ...state.route, ask: true };
   if (raw === "documents") return { view: "documents" };
+  if (raw === "admin") return { view: "admin" };
+  if (raw === "onboarding") return { view: "onboarding" };
+  if (raw.startsWith("onboarding/")) return { view: "onboarding", step: raw.slice(11) };
   if (tabById.has(raw)) return { view: "section", section: raw };
   return { view: "home" };
 };
@@ -249,6 +311,8 @@ const routeHash = (route) => {
   if (route.view === "home") return "#home";
   if (route.view === "team") return route.agent ? `#team/${route.agent}` : "#team";
   if (route.view === "documents") return "#documents";
+  if (route.view === "admin") return "#admin";
+  if (route.view === "onboarding") return "#onboarding";
   if (route.view === "section") return `#${route.section}`;
   return "#home";
 };
@@ -276,6 +340,7 @@ window.addEventListener("popstate", () => {
     return;
   }
   state.route = route;
+  if (route.step) state.onboarding.step = route.step;
   renderView();
   renderNav();
   if (route.agent) openAgent(route.agent);
@@ -344,6 +409,10 @@ const toggleFavorite = (id) => {
 };
 
 const recordLaunch = (id) => {
+  if (id === "knowbe4") {
+    markOnboardingTask("security.launch");
+    logOnboardingEvent("knowbe4.launched", "tile");
+  }
   state.recent = [{ id, ts: Date.now() }, ...state.recent.filter((entry) => entry.id !== id)].slice(
     0,
     10
@@ -433,6 +502,7 @@ const closeEverything = () => {
   closeSheet();
   closeAgent();
   closeAsk();
+  closeEditor();
   closePalette();
   closeMenu();
 };
@@ -509,8 +579,22 @@ const renderNav = () => {
               ? '<span class="dot dot-ok dot-live" title="AI answers on"></span>'
               : "",
           })
-        )
-      )
+        ),
+        navItem({ view: "onboarding" }, I.map, "Onboarding", {
+          count: onboardingNavCount(),
+          current: isCurrent({ view: "onboarding" }),
+        })
+      ),
+      isAdmin()
+        ? h(
+            "div",
+            { class: "nav-group" },
+            h("div", { class: "eyebrow", text: "Manage" }),
+            navItem({ view: "admin" }, I.sliders, "Administration", {
+              current: isCurrent({ view: "admin" }),
+            })
+          )
+        : null
     );
   }
 
@@ -524,7 +608,11 @@ const renderNav = () => {
           ? "Digital Workforce"
           : r.view === "documents"
             ? "Documents & Artifacts"
-            : (tabById.get(r.section) || {}).label || "";
+            : r.view === "admin"
+              ? "Administration"
+              : r.view === "onboarding"
+                ? "Onboarding"
+                : (tabById.get(r.section) || {}).label || "";
     title.textContent = "";
     title.append(
       h("span", { class: "eyebrow", text: "Enterprise Hub" }),
@@ -564,7 +652,16 @@ const renderSheet = () => {
     navItem({ view: "team" }, I.sparkles, "Digital Workforce", {
       count: AGENTS.length,
       current: isCurrent({ view: "team" }),
-    })
+    }),
+    navItem({ view: "onboarding" }, I.map, "Onboarding", {
+      count: onboardingNavCount(),
+      current: isCurrent({ view: "onboarding" }),
+    }),
+    isAdmin()
+      ? navItem({ view: "admin" }, I.sliders, "Administration", {
+          current: isCurrent({ view: "admin" }),
+        })
+      : null
   );
 };
 
@@ -582,7 +679,14 @@ const renderIdentity = () => {
         "span",
         { class: "identity-text" },
         h("strong", { text: who.name || who.email }),
-        h("span", { text: who.email || "" })
+        who.name ? h("span", { text: who.email || "" }) : null,
+        h("span", {
+          class: `chip chip-caps role-chip ${
+            state.role === "super" ? "chip-brand" : state.role === "admin" ? "chip-info" : ""
+          }`,
+          text: roleLabel(state.role),
+          title: "Role resolved by the hub for this sign-in",
+        })
       ),
       who.source === "access" || who.source === "worker"
         ? h("a", {
@@ -687,7 +791,39 @@ const openTileMenu = (app, tile, button) => {
       },
       h("span", { html: I.flag }),
       "Report a problem"
-    )
+    ),
+    isAdmin() ? h("div", { class: "menu-sep", role: "separator" }) : null,
+    isAdmin()
+      ? h(
+          "button",
+          {
+            type: "button",
+            role: "menuitem",
+            onClick: () => {
+              closeMenu();
+              openEditor(app);
+            },
+          },
+          h("span", { html: I.edit }),
+          "Edit tile"
+        )
+      : null,
+    isAdmin()
+      ? h(
+          "button",
+          {
+            type: "button",
+            role: "menuitem",
+            class: "is-danger",
+            onClick: () => {
+              closeMenu();
+              removeTile(app);
+            },
+          },
+          h("span", { html: I.trash }),
+          "Remove tile"
+        )
+      : null
   );
   tile.append(menu);
   tile.classList.add("is-menu-open");
@@ -768,7 +904,20 @@ const buildTile = (app, index = 0) => {
     event.stopPropagation();
     openTileMenu(app, tile, more);
   });
-  tile.append(main, h("div", { class: "tile-actions" }, fav, more));
+  const edit = isAdmin()
+    ? h("button", {
+        type: "button",
+        class: "icon-btn tile-edit",
+        "aria-label": `Edit ${app.name}`,
+        title: "Edit tile",
+        html: I.edit,
+        onClick: (event) => {
+          event.stopPropagation();
+          openEditor(app);
+        },
+      })
+    : null;
+  tile.append(main, h("div", { class: "tile-actions" }, edit, fav, more));
   return tile;
 };
 
@@ -828,10 +977,40 @@ const renderView = () => {
   if (!main) return;
   main.textContent = "";
   const r = state.route;
+  if (state.serverBuild && state.serverBuild !== HUB_BUILD) {
+    // The Worker runs a newer build than the files this tab loaded: offer a reload.
+    main.append(
+      h(
+        "div",
+        { class: "notice", role: "status" },
+        h("strong", { text: "A newer version of the hub is available" }),
+        h("span", {
+          text: `This tab loaded build ${HUB_BUILD}; the server is on ${state.serverBuild}.`,
+        }),
+        h(
+          "span",
+          { class: "notice-actions" },
+          h("button", {
+            type: "button",
+            class: "btn btn-primary btn-sm",
+            text: "Reload now",
+            onClick: () => window.location.reload(),
+          })
+        )
+      )
+    );
+  }
   if (r.view === "home") renderHome(main);
   else if (r.view === "team") renderTeam(main);
   else if (r.view === "documents") renderDocuments(main);
+  else if (r.view === "admin") renderAdmin(main);
+  else if (r.view === "onboarding") renderOnboarding(main);
   else renderSection(main, r.section);
+  const buildSlot = $("[data-build]");
+  if (buildSlot)
+    buildSlot.textContent = `Build ${HUB_BUILD}${
+      state.serverBuild && state.serverBuild !== HUB_BUILD ? ` (server ${state.serverBuild})` : ""
+    }`;
   const banner = $("[data-banner]");
   if (banner) banner.hidden = liveMode || r.view !== "documents";
 };
@@ -952,6 +1131,8 @@ const renderHome = (main) => {
     )
   );
   main.append(hero);
+  const journeyCard = onboardingHomeCard();
+  if (journeyCard) main.append(journeyCard);
 
   const favorites = Array.from(state.favorites)
     .map((id) => appById.get(id))
@@ -1148,7 +1329,19 @@ const renderSection = (main, sectionId) => {
         "div",
         { class: "view-meta" },
         tab.suggested ? h("span", { class: "chip chip-info", text: "Suggested tab" }) : null,
-        h("span", { class: "chip", text: `${apps.length} tiles` })
+        h("span", { class: "chip", text: `${apps.length} tiles` }),
+        isAdmin()
+          ? h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary btn-sm",
+                onClick: () => openEditor(null, { tab: sectionId }),
+              },
+              h("span", { html: I.plus }),
+              "Add tile"
+            )
+          : null
       )
     )
   );
@@ -1386,6 +1579,7 @@ const agentCard = (agent, index) => {
 const openAgent = (id) => {
   const agent = agentById(id);
   if (!agent) return;
+  markOnboardingTask("team.profiles", { rerender: true });
   const panel = $("[data-agent-panel]");
   if (!panel) return;
   const status = AGENT_STATUS[agent.status] || AGENT_STATUS.planned;
@@ -2157,6 +2351,19 @@ const cardFromRef = (ref) => {
         )
       : null;
   }
+  if (ref.type === "route")
+    return h(
+      "button",
+      { type: "button", class: "msg-card", onClick: () => navigate(ref.route) },
+      h("span", { class: "tile-icon", style: { "--tile": "#1fbf8f" }, html: ref.icon || I.map }),
+      h(
+        "span",
+        { class: "msg-card-text" },
+        h("strong", { text: ref.label }),
+        ref.desc ? h("span", { text: ref.desc }) : null
+      ),
+      h("span", { html: I.arrow })
+    );
   if (ref.type === "link")
     return h(
       "a",
@@ -2229,6 +2436,7 @@ const renderInline = (el, text) => {
 };
 
 const ask = async (question) => {
+  markOnboardingTask("team.ask");
   state.chat.push({ role: "me", text: question, ts: Date.now() });
   state.chatBusy = true;
   saveChat();
@@ -2276,7 +2484,20 @@ const askRemote = async (question) => {
     body: JSON.stringify({
       question,
       history,
-      context: { inventory: compactInventory(), audience: state.audience, user: firstName() },
+      context: {
+        inventory: compactInventory(),
+        audience: state.audience,
+        user: firstName(),
+        onboarding: ob()
+          ? {
+              started: true,
+              completed: Boolean(ob().completedAt),
+              ...journeyProgress(),
+              current: (nextStep(ob()) || {}).title || "",
+              track: ob().profile.track,
+            }
+          : { started: false },
+      },
     }),
   });
   if (!res.ok) throw new Error(`ask ${res.status}`);
@@ -2331,6 +2552,38 @@ const answerLocally = (question, { aiFailed = false } = {}) => {
     return {
       text: `${greetingFor(CONCIERGE, firstName())} I can find apps and documents, tell you who owns a system, draft an access request, or introduce you to the team.`,
       cards: [],
+    };
+  }
+  if (
+    /onboard|new hire|first (day|week)|where (am|was) i|resume|continue|my checklist|knowbe4|training/.test(
+      q
+    )
+  ) {
+    const record = ob();
+    const progress = journeyProgress();
+    const next = record ? nextStep(record) : STEPS[0];
+    const text = !record
+      ? "You haven't started onboarding yet. It's a guided first week with me: the tour, your role's toolkit, security training in KnowBe4, your Microsoft 365 profile, day-one prep and a note to your manager. About an hour, in pieces, and it saves as you go."
+      : record.completedAt
+        ? `You've finished onboarding: ${progress.done} of ${progress.total} steps done. Your Later list and the tour are still on the Onboarding page whenever you want them.`
+        : `You're ${progress.done} of ${progress.total} steps in. Next up: **${next.title}** (about ${next.estimate}). Your place is saved on every device.`;
+    return {
+      text,
+      cards: [
+        {
+          type: "route",
+          route: { view: "onboarding" },
+          label: record
+            ? record.completedAt
+              ? "Open onboarding"
+              : "Continue onboarding"
+            : "Start onboarding",
+          desc:
+            record && next && !record.completedAt
+              ? `Step ${STEPS.indexOf(next) + 1} · ${next.title}`
+              : "With Huey",
+        },
+      ],
     };
   }
   if (/what can you (do|help)|^help\b|capabilit/.test(q)) {
@@ -2588,6 +2841,46 @@ const buildIndex = () => {
       icon: I.folder,
       run: () => window.open(SP.libraryUrl, "_blank", "noopener"),
     });
+  items.push({
+    kind: "action",
+    label: obDone() ? "Onboarding" : obStarted() ? "Continue onboarding" : "Start onboarding",
+    sub:
+      obStarted() && !obDone()
+        ? `${journeyProgress().done} of ${STEPS.length} steps`
+        : "Huey's guided first week",
+    text: "onboarding new hire first week checklist start continue huey journey",
+    icon: I.map,
+    run: startOnboarding,
+  });
+  items.push({
+    kind: "action",
+    label: "Take the hub tour",
+    sub: "Spotlight walk-through, 4 minutes",
+    text: "tour walkthrough spotlight guide show me around",
+    icon: I.sparkles,
+    run: () => startTour({ onDone: () => markOnboardingTask("tour.complete", { rerender: true }) }),
+  });
+  if (isAdmin()) {
+    items.push({
+      kind: "action",
+      label: "Administration",
+      sub: "Catalog, announcements, admins, audit log",
+      text: "admin administration manage edit catalog roles audit settings",
+      icon: I.sliders,
+      run: () => navigate({ view: "admin" }),
+    });
+    items.push({
+      kind: "action",
+      label: "Add a tile",
+      sub: "New app, system or link",
+      text: "add new tile app link create",
+      icon: I.plus,
+      run: () => {
+        const r = state.route;
+        openEditor(null, { tab: r.view === "section" ? r.section : undefined });
+      },
+    });
+  }
   if (state.identity)
     items.push({
       kind: "action",
@@ -2751,6 +3044,2580 @@ const closePalette = () => {
 };
 
 /* ───────────────────────── identity & inventory (SharePoint via Graph) ───────────────────────── */
+/* ───────────────────────── onboarding journey ─────────────────────────
+ * Huey's step-by-step walkthrough for new employees and contractors. The record lives in KV via
+ * /api/onboarding (one per person) with a localStorage mirror, so progress survives closing the app
+ * and follows the person between laptop and phone. Step content is data in onboarding.js. */
+const ob = () => state.onboarding.record;
+const obStarted = () => Boolean(ob());
+const obDone = () => Boolean(ob() && ob().completedAt);
+const nowIso = () => new Date().toISOString();
+
+const newOnboardingRecord = () => ({
+  version: 1,
+  email: (state.identity && state.identity.email) || "",
+  profile: {
+    preferredName: firstName(),
+    track:
+      state.audience !== "all" && TRACKS.some((t) => t.id === state.audience) ? state.audience : "",
+    engagement: "",
+    startDate: "",
+    managerName: "",
+    managerEmail: "",
+  },
+  steps: {},
+  tasks: {},
+  later: [],
+  events: [],
+  current: "welcome",
+  startedAt: nowIso(),
+  updatedAt: nowIso(),
+  completedAt: null,
+  dismissedAt: null,
+  managerNotifiedAt: null,
+});
+
+/** Union of two copies of the journey: nothing anyone ticked on either device is lost. */
+const mergeOnboarding = (server, local) => {
+  if (!local) return server;
+  if (!server) return local;
+  const profile = { ...server.profile };
+  Object.entries(local.profile || {}).forEach(([key, value]) => {
+    if (value) profile[key] = value;
+  });
+  const steps = { ...(server.steps || {}) };
+  Object.entries(local.steps || {}).forEach(([id, value]) => {
+    if (!steps[id] || (value.status === "done" && steps[id].status !== "done")) steps[id] = value;
+  });
+  const seen = new Set();
+  const events = [...(server.events || []), ...(local.events || [])]
+    .filter((event) => {
+      const key = `${event.at}|${event.type}|${event.detail || ""}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => String(a.at).localeCompare(String(b.at)))
+    .slice(-100);
+  const merged = {
+    ...server,
+    profile,
+    steps,
+    tasks: { ...(server.tasks || {}), ...(local.tasks || {}) },
+    later: Array.from(new Set([...(server.later || []), ...(local.later || [])])),
+    events,
+    completedAt: server.completedAt || local.completedAt || null,
+    dismissedAt: server.dismissedAt || local.dismissedAt || null,
+    managerNotifiedAt: server.managerNotifiedAt || local.managerNotifiedAt || null,
+    startedAt: [server.startedAt, local.startedAt].filter(Boolean).sort()[0] || nowIso(),
+  };
+  const next = nextStep(merged);
+  merged.current = next ? next.id : "";
+  if (!next && !merged.completedAt) merged.completedAt = nowIso();
+  return merged;
+};
+
+const mirrorOnboarding = () => {
+  const record = ob();
+  if (record) storage.set(KEYS.onboarding, record);
+  else storage.remove(KEYS.onboarding);
+};
+
+let onboardingSaveTimer = null;
+const saveOnboardingNow = async () => {
+  const record = ob();
+  if (!record) return;
+  state.onboarding.saving = true;
+  renderJourneySaveState();
+  try {
+    const data = await api("/api/onboarding", {
+      method: "PUT",
+      body: { ...record, ifUpdatedAt: state.onboarding.serverUpdatedAt || "" },
+    });
+    if (data && data.record) {
+      // Keep the server's copy (normalized, server timestamps) unless we changed things meanwhile.
+      if (!onboardingSaveTimer) state.onboarding.record = data.record;
+      state.onboarding.serverUpdatedAt = data.record.updatedAt;
+      mirrorOnboarding();
+    }
+    state.onboarding.savedAt = Date.now();
+    state.onboarding.error = null;
+  } catch (error) {
+    if (error.status === 409 && error.record) {
+      // Another device saved first: merge the two and save once more.
+      state.onboarding.record = mergeOnboarding(error.record, ob());
+      state.onboarding.serverUpdatedAt = error.record.updatedAt;
+      mirrorOnboarding();
+      state.onboarding.saving = false;
+      if (state.route.view === "onboarding") renderView();
+      toast("Merged progress from another device");
+      return saveOnboardingNow();
+    }
+    state.onboarding.error =
+      error.status === 503 || error.status === 401 || error.status === 404
+        ? "Saved on this device only"
+        : "Could not sync; saved on this device";
+  } finally {
+    state.onboarding.saving = false;
+    renderJourneySaveState();
+  }
+};
+const scheduleOnboardingSave = () => {
+  window.clearTimeout(onboardingSaveTimer);
+  onboardingSaveTimer = window.setTimeout(() => {
+    onboardingSaveTimer = null;
+    saveOnboardingNow();
+  }, 500);
+};
+
+/** Mutate the record, mirror it locally and schedule a sync. */
+const touchOnboarding = (mutate) => {
+  if (!state.onboarding.record) state.onboarding.record = newOnboardingRecord();
+  const record = state.onboarding.record;
+  mutate(record);
+  record.updatedAt = nowIso();
+  mirrorOnboarding();
+  scheduleOnboardingSave();
+  return record;
+};
+
+const logOnboardingEvent = (type, detail) =>
+  touchOnboarding((r) => {
+    r.events = [...(r.events || []), { at: nowIso(), type, ...(detail ? { detail } : {}) }].slice(
+      -100
+    );
+  });
+
+/** Tick a task if the journey is under way and the task is not already ticked. */
+const markOnboardingTask = (taskId, { rerender = false } = {}) => {
+  const record = ob();
+  if (!record || record.tasks[taskId]) return;
+  touchOnboarding((r) => {
+    r.tasks[taskId] = true;
+  });
+  if (rerender && state.route.view === "onboarding") renderView();
+};
+
+const loadOnboarding = async () => {
+  const email = (state.identity && state.identity.email) || "";
+  let server = null;
+  let storageOn = false;
+  try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 8000);
+    const res = await fetch("/api/onboarding", {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    window.clearTimeout(timer);
+    if (res.ok) {
+      const data = await res.json();
+      server = data.record || null;
+      storageOn = Boolean(data.storage);
+      state.onboarding.serverUpdatedAt = server ? server.updatedAt : null;
+    }
+  } catch (error) {
+    /* static preview or offline: fall back to the local mirror */
+  }
+  const local = storage.get(KEYS.onboarding, null);
+  const localUsable = local && (!email || !local.email || local.email === email) ? local : null;
+  let record = server;
+  if (localUsable) {
+    if (!storageOn) {
+      record = localUsable; // no server storage (preview / offline): this device is the record
+    } else if (server && String(localUsable.updatedAt) > String(server.updatedAt)) {
+      record = mergeOnboarding(server, localUsable); // this device was ahead: merge and push up
+      scheduleOnboardingSave();
+    }
+    // storage on and no server record: it was reset elsewhere, so the stale mirror is dropped.
+  }
+  state.onboarding = { ...state.onboarding, record, loaded: true, storage: storageOn };
+  mirrorOnboarding();
+};
+
+const journeyProgress = () => progressOf(ob() || {});
+const currentJourneyStep = () => {
+  const record = ob();
+  const wanted = state.onboarding.step || (record && record.current) || "welcome";
+  return STEPS.find((step) => step.id === wanted) || STEPS[0];
+};
+
+const stepIcon = (step) => I[step.icon] || I.check;
+
+const profileComplete = (record) => {
+  const p = (record && record.profile) || {};
+  return Boolean(
+    p.track && p.engagement && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.managerEmail || "")
+  );
+};
+
+/** Can this step be marked done right now? */
+const stepReady = (step) => {
+  const record = ob() || newOnboardingRecord();
+  if (step.kind === "profile") return profileComplete(record);
+  const required = requiredTasks(step, record.profile);
+  if (!required.every((task) => record.tasks[task.id])) return false;
+  if (step.attest && !record.tasks[step.attest.id]) return false;
+  return true;
+};
+
+const completeStep = (step, status = "done") => {
+  touchOnboarding((r) => {
+    r.steps[step.id] = { status, at: nowIso() };
+    const next = nextStep(r);
+    r.current = next ? next.id : "";
+    if (!next && !r.completedAt) r.completedAt = nowIso();
+  });
+  logOnboardingEvent(status === "done" ? "step.done" : "step.skipped", step.id);
+  const record = ob();
+  const next = nextStep(record);
+  state.onboarding.step = next ? next.id : null;
+  if (!next && record.completedAt) {
+    state.onboarding.celebrate = true;
+    toast(step.huey.done);
+  } else if (status === "done") toast(step.huey.done);
+  renderNav();
+  renderView();
+  const main = $("#main");
+  if (main) window.scrollTo({ top: Math.max(main.offsetTop - 80, 0), behavior: "smooth" });
+};
+
+const restartOnboarding = async () => {
+  if (!window.confirm("Start onboarding over? Your checklist progress will be cleared.")) return;
+  window.clearTimeout(onboardingSaveTimer);
+  onboardingSaveTimer = null;
+  state.onboarding.record = null;
+  state.onboarding.step = null;
+  state.onboarding.celebrate = false;
+  mirrorOnboarding();
+  try {
+    await api("/api/onboarding", { method: "DELETE" });
+  } catch (error) {
+    /* local only */
+  }
+  renderNav();
+  renderView();
+};
+
+const startOnboarding = () => {
+  if (!ob()) {
+    touchOnboarding(() => {});
+    logOnboardingEvent("journey.started");
+  }
+  state.onboarding.step = (ob() && ob().current) || "welcome";
+  navigate({ view: "onboarding" });
+};
+
+/* ───── Home card ───── */
+const progressRing = (percent, size = 64) => {
+  const r = (size - 8) / 2;
+  const c = 2 * Math.PI * r;
+  return h("span", {
+    class: "progress-ring",
+    style: { width: `${size}px`, height: `${size}px` },
+    "aria-hidden": "true",
+    html: `<svg viewBox="0 0 ${size} ${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="ring-track"/><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="ring-value" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - percent / 100)}"/></svg><strong>${percent}%</strong>`,
+  });
+};
+
+const onboardingHomeCard = () => {
+  const record = ob();
+  if (record && (record.completedAt || record.dismissedAt)) return null;
+  const progress = journeyProgress();
+  const next = record ? nextStep(record) : STEPS[0];
+  const name = firstName();
+  return h(
+    "section",
+    { class: "journey-card rise", style: { "animation-delay": "90ms" } },
+    h("span", { class: "journey-card-avatar", html: avatarSvg(CONCIERGE, { size: 64 }) }),
+    h(
+      "div",
+      { class: "journey-card-body" },
+      h("span", {
+        class: "eyebrow eyebrow-brand",
+        text: record ? "Onboarding · in progress" : "New here?",
+      }),
+      h("h2", {
+        text: record
+          ? `Pick up where you left off${name ? `, ${name}` : ""}.`
+          : `Welcome aboard${name ? `, ${name}` : ""}. Let me show you around.`,
+      }),
+      h("p", {
+        text: record
+          ? `Next: ${next ? `${next.title} · about ${next.estimate}` : "wrap up"}. Your place is saved on every device.`
+          : "A guided first week with Huey: the tour, your role's toolkit, security training, your profile and the note to your manager. About an hour, in pieces, and it saves as you go.",
+      }),
+      h(
+        "div",
+        { class: "journey-card-actions" },
+        h(
+          "button",
+          { type: "button", class: "btn btn-primary", onClick: startOnboarding },
+          h("span", { html: I.arrow }),
+          record ? "Continue" : "Start onboarding"
+        ),
+        record
+          ? h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-ghost",
+                onClick: () => {
+                  touchOnboarding((r) => {
+                    r.dismissedAt = nowIso();
+                  });
+                  renderView();
+                  toast("Hidden from Home. Onboarding stays in the sidebar.");
+                },
+              },
+              "Hide from Home"
+            )
+          : h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-ghost",
+                onClick: () => {
+                  touchOnboarding((r) => {
+                    r.dismissedAt = nowIso();
+                  });
+                  renderView();
+                  toast("No problem. Onboarding is in the sidebar if you change your mind.");
+                },
+              },
+              "I've been here a while"
+            )
+      )
+    ),
+    record ? progressRing(progress.percent) : null
+  );
+};
+
+/* ───── journey view ───── */
+let journeySaveSlot = null;
+const renderJourneySaveState = () => {
+  if (!journeySaveSlot || !journeySaveSlot.isConnected) return;
+  const o = state.onboarding;
+  journeySaveSlot.textContent = o.saving
+    ? "Saving…"
+    : o.error
+      ? o.error
+      : o.savedAt
+        ? `Saved · syncs across your devices`
+        : o.storage
+          ? "Progress saves automatically"
+          : "Progress saves on this device";
+};
+
+const hueyBubble = (lines) =>
+  h(
+    "div",
+    { class: "huey-bubble" },
+    h("span", {
+      class: "huey-bubble-avatar",
+      html: avatarSvg(CONCIERGE, { size: 44, state: "speaking" }),
+    }),
+    h("div", { class: "huey-bubble-text" }, ...lines.map((line) => h("p", { text: line })))
+  );
+
+const taskRow = (task, record, { onToggle } = {}) => {
+  const checked = Boolean(record.tasks[task.id]);
+  const box = h("input", {
+    type: "checkbox",
+    id: `task-${task.id}`,
+    onChange: (event) => {
+      touchOnboarding((r) => {
+        if (event.target.checked) r.tasks[task.id] = true;
+        else delete r.tasks[task.id];
+      });
+      if (onToggle) onToggle();
+    },
+  });
+  box.checked = checked;
+  const tile = task.tile ? appById.get(task.tile) : null;
+  const href = task.href || (tile ? tile.url : "");
+  return h(
+    "li",
+    { class: `task-row${checked ? " is-done" : ""}` },
+    box,
+    h(
+      "label",
+      { for: `task-${task.id}`, class: "task-label" },
+      h("span", { text: task.label }),
+      task.optional ? h("span", { class: "chip", text: "Optional" }) : null
+    ),
+    href
+      ? h(
+          "a",
+          {
+            class: "btn btn-soft btn-sm task-link",
+            href,
+            target: isHttp(href) ? "_blank" : null,
+            rel: isHttp(href) ? "noopener noreferrer" : null,
+            onClick: () => {
+              if (tile) recordLaunch(tile.id);
+            },
+          },
+          h("span", { html: I.external }),
+          tile ? tile.name : "Open"
+        )
+      : null
+  );
+};
+
+const stageActions = (step, { primary = [], allowSkip = true } = {}) => {
+  const record = ob();
+  const status = stepStatus(record, step.id);
+  const ready = stepReady(step);
+  const index = STEPS.findIndex((s) => s.id === step.id);
+  const prev = STEPS[index - 1];
+  const next = STEPS[index + 1];
+  return h(
+    "div",
+    { class: "stage-actions" },
+    ...primary,
+    status === "done"
+      ? h("span", { class: "chip chip-ok" }, h("span", { html: I.check }), "Completed")
+      : h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-primary",
+            disabled: !ready,
+            title: ready ? "" : "Finish the required items first",
+            onClick: () => completeStep(step, "done"),
+          },
+          h("span", { html: I.check }),
+          step.kind === "profile" ? "Save and continue" : "Mark step complete"
+        ),
+    status !== "done" && allowSkip && step.id !== "welcome"
+      ? h(
+          "button",
+          { type: "button", class: "btn btn-ghost", onClick: () => completeStep(step, "skipped") },
+          "Skip for now"
+        )
+      : null,
+    h("span", { class: "spacer" }),
+    prev
+      ? h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => {
+              state.onboarding.step = prev.id;
+              renderView();
+            },
+          },
+          h("span", { html: I.chevronLeft }),
+          prev.short
+        )
+      : null,
+    next
+      ? h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => {
+              state.onboarding.step = next.id;
+              renderView();
+            },
+          },
+          next.short,
+          h("span", { html: I.chevronRight })
+        )
+      : null
+  );
+};
+
+const choiceGrid = (options, value, onPick, { name }) =>
+  h(
+    "div",
+    { class: "choice-grid", role: "radiogroup", "aria-label": name },
+    ...options.map((opt) =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: `choice${value === opt.id ? " is-selected" : ""}`,
+          role: "radio",
+          "aria-checked": String(value === opt.id),
+          onClick: () => onPick(opt.id),
+        },
+        h("strong", { text: opt.label }),
+        h("span", { text: opt.blurb })
+      )
+    )
+  );
+
+const stageProfile = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const p = record.profile;
+  const bind = (key, el) => {
+    el.value = p[key] || "";
+    el.addEventListener("input", () => {
+      touchOnboarding((r) => {
+        r.profile[key] = el.value;
+      });
+      refreshPrimary();
+    });
+    return el;
+  };
+  let actions = stageActions(step, { allowSkip: false });
+  const refreshPrimary = () => {
+    const fresh = stageActions(step, { allowSkip: false });
+    actions.replaceWith(fresh);
+    actions = fresh;
+  };
+  const pick = (key) => (value) => {
+    touchOnboarding((r) => {
+      r.profile[key] = value;
+    });
+    renderView();
+  };
+  return [
+    h(
+      "div",
+      { class: "form-grid" },
+      formField(
+        "What should I call you?",
+        bind(
+          "preferredName",
+          h("input", { class: "field", type: "text", maxlength: 40, placeholder: "First name" })
+        )
+      ),
+      h(
+        "div",
+        { class: "form-field" },
+        h("span", { class: "form-label", text: "Your track" }),
+        choiceGrid(TRACKS, p.track, pick("track"), { name: "Track" })
+      ),
+      h(
+        "div",
+        { class: "form-field" },
+        h("span", { class: "form-label", text: "You are joining as" }),
+        choiceGrid(ENGAGEMENTS, p.engagement, pick("engagement"), { name: "Engagement type" })
+      ),
+      h(
+        "div",
+        { class: "form-row" },
+        formField("Start date", bind("startDate", h("input", { class: "field", type: "date" }))),
+        formField(
+          "Manager's name",
+          bind(
+            "managerName",
+            h("input", {
+              class: "field",
+              type: "text",
+              maxlength: 80,
+              placeholder: "Who you report to",
+            })
+          )
+        )
+      ),
+      formField(
+        "Manager's email",
+        bind(
+          "managerEmail",
+          h("input", {
+            class: "field",
+            type: "email",
+            maxlength: 120,
+            placeholder: "name@3hue.net",
+            inputmode: "email",
+          })
+        ),
+        "I'll write the ready-for-day-one note to this address at the end."
+      )
+    ),
+    actions,
+  ];
+};
+
+const stageTour = (step) => {
+  const record = ob();
+  const done = stepStatus(record, step.id) === "done";
+  return [
+    h(
+      "div",
+      { class: "stage-feature" },
+      h("span", { class: "stage-feature-icon", html: I.map }),
+      h(
+        "div",
+        null,
+        h("strong", { text: done ? "Tour complete" : "The spotlight tour" }),
+        h("p", {
+          text: "Nine stops, about four minutes: Home, the workspace sections, search, asking me, the Digital Workforce, how a tile works, View as, your identity card and Documents. Arrow keys or the buttons move you along; Esc leaves.",
+        })
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () =>
+            startTour({
+              onDone: () => {
+                markOnboardingTask("tour.complete");
+                logOnboardingEvent("tour.completed");
+                if (stepStatus(ob(), "tour") !== "done") {
+                  navigate({ view: "onboarding" });
+                  completeStep(step, "done");
+                } else {
+                  navigate({ view: "onboarding" });
+                }
+              },
+            }),
+        },
+        h("span", { html: I.sparkles }),
+        done ? "Run it again" : "Start the tour"
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageToolkit = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const track = record.profile.track;
+  if (!record.later.length && track) {
+    touchOnboarding((r) => {
+      r.later = laterFor(track);
+    });
+  }
+  if (state.favorites.size >= 3 && !record.tasks["toolkit.pin"]) markOnboardingTask("toolkit.pin");
+  const kit = toolkitFor(track)
+    .map((id) => appById.get(id))
+    .filter(Boolean);
+  const later = (record.later || []).map((id) => appById.get(id)).filter(Boolean);
+  const trackDef = trackById(track);
+  return [
+    !track
+      ? h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "Pick a track first" }),
+          h("span", { text: "Go back to Welcome and choose your track so I can tailor this list." })
+        )
+      : null,
+    h(
+      "div",
+      { class: "stage-section" },
+      h("h3", {
+        text: trackDef ? `${trackDef.label}: open these every week` : "Everyone opens these",
+      }),
+      h("p", {
+        class: "form-hint",
+        text: `Star the ones you'll use daily. Pinned tiles sit at the top of Home. ${state.favorites.size} pinned so far.`,
+      }),
+      tileSet(kit)
+    ),
+    later.length
+      ? h(
+          "div",
+          { class: "stage-section" },
+          h("h3", { text: "Later: deep dives I've parked for you" }),
+          h("p", {
+            class: "form-hint",
+            text: "Worth a proper sitting in week two or three. They stay on your Onboarding page.",
+          }),
+          tileSet(later, "list")
+        )
+      : null,
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const launchApp = (app, taskId, eventType) => {
+  if (!app) return;
+  recordLaunch(app.id);
+  window.open(app.url, "_blank", "noopener");
+  if (taskId) markOnboardingTask(taskId);
+  if (eventType) logOnboardingEvent(eventType, app.id);
+  renderView();
+};
+
+const stageSecurity = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const app = appById.get(step.tile);
+  const attestBox = h("input", {
+    type: "checkbox",
+    id: "attest-security",
+    onChange: (event) => {
+      touchOnboarding((r) => {
+        if (event.target.checked) {
+          r.tasks[step.attest.id] = true;
+          r.tasks["security.modules"] = true;
+        } else delete r.tasks[step.attest.id];
+      });
+      if (event.target.checked) logOnboardingEvent("training.attested", "knowbe4");
+      renderView();
+    },
+  });
+  attestBox.checked = Boolean(record.tasks[step.attest.id]);
+  return [
+    app
+      ? h(
+          "div",
+          { class: "stage-feature" },
+          h("div", { class: "stage-feature-tile" }, buildTile(app)),
+          h(
+            "div",
+            { class: "stage-feature-actions" },
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn",
+                onClick: () => spotlightTile(app.id, { view: "section", section: app.tab }, step),
+              },
+              h("span", { html: I.search }),
+              "Show me where it lives"
+            ),
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary",
+                onClick: () => launchApp(app, "security.launch", "knowbe4.launched"),
+              },
+              h("span", { html: I.external }),
+              "Launch KnowBe4 for me"
+            )
+          )
+        )
+      : h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "KnowBe4 tile missing" }),
+          h("span", { text: "An admin needs to add the KnowBe4 tile to Security & Compliance." })
+        ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    h(
+      "label",
+      { class: `attest${attestBox.checked ? " is-done" : ""}`, for: "attest-security" },
+      attestBox,
+      h(
+        "span",
+        null,
+        h("strong", { text: step.attest.label }),
+        h("span", {
+          class: "sub",
+          text: " Ticking this records the date on your onboarding record and in the note to your manager.",
+        })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageChecklist = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const app = step.tile ? appById.get(step.tile) : null;
+  const tasks = tasksFor(step, record.profile);
+  const done = tasks.filter((task) => record.tasks[task.id]).length;
+  return [
+    app
+      ? h(
+          "div",
+          { class: "stage-feature" },
+          h("div", { class: "stage-feature-tile" }, buildTile(app)),
+          h(
+            "div",
+            { class: "stage-feature-actions" },
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary",
+                onClick: () => launchApp(app, null, "profile.opened"),
+              },
+              h("span", { html: I.external }),
+              `Open ${app.name}`
+            )
+          )
+        )
+      : null,
+    h("p", {
+      class: "form-hint",
+      text: `${done} of ${tasks.length} ticked. Required items are those without an Optional chip.`,
+    }),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasks.map((task) => taskRow(task, record, { onToggle: renderView }))
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageTeam = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const agents = agentsFor(record.profile.track)
+    .map((id) => agentById(id))
+    .filter(Boolean);
+  return [
+    h("div", { class: "agent-strip" }, ...agents.map((agent) => agentChip(agent))),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () => {
+            markOnboardingTask("team.ask");
+            openAsk("Hi Huey, I'm new. What should I know in my first week?");
+          },
+        },
+        h("span", { html: I.message }),
+        "Say hi to Huey"
+      ),
+      h(
+        "button",
+        { type: "button", class: "btn", onClick: () => navigate({ view: "team" }) },
+        "See the whole roster"
+      )
+    ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageManager = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const who = state.identity || {};
+  const text = managerMessage({
+    name: who.name || record.profile.preferredName || who.email,
+    email: who.email,
+    record,
+    dateLabel: (iso) => formatDate(iso.slice(0, 10)),
+  });
+  const draft = h("textarea", {
+    class: "field manager-draft",
+    rows: 12,
+    "aria-label": "Message to your manager",
+  });
+  draft.value = text;
+  const to = record.profile.managerEmail || "";
+  const subject = `Ready for day one: ${who.name || record.profile.preferredName || who.email || "new hire"}`;
+  const sent = (channel) => {
+    markOnboardingTask("manager.sent");
+    touchOnboarding((r) => {
+      r.managerNotifiedAt = nowIso();
+    });
+    logOnboardingEvent("manager.notified", channel);
+    renderView();
+  };
+  return [
+    !to
+      ? h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "No manager email yet" }),
+          h("span", { text: "Add it in the Welcome step and I'll address the note for you." })
+        )
+      : null,
+    h(
+      "div",
+      { class: "form-field" },
+      h("span", { class: "form-label", text: `To ${to || "your manager"}` }),
+      draft,
+      h("span", { class: "form-hint", text: "Edit anything you like before sending." })
+    ),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "a",
+        {
+          class: "btn btn-primary",
+          href: mailto(to || SUPPORT_EMAIL, subject, text),
+          onClick: (event) => {
+            // open the mail client with whatever the draft says now
+            event.currentTarget.href = mailto(to || SUPPORT_EMAIL, subject, draft.value);
+            sent("email");
+          },
+        },
+        h("span", { html: I.mail }),
+        "Send by email"
+      ),
+      h(
+        "a",
+        {
+          class: "btn",
+          href: to
+            ? `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(to)}&message=${encodeURIComponent(text)}`
+            : "https://teams.microsoft.com/",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          onClick: (event) => {
+            if (to)
+              event.currentTarget.href = `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(to)}&message=${encodeURIComponent(draft.value)}`;
+            sent("teams");
+          },
+        },
+        h("span", { html: I.message }),
+        "Send in Teams"
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-ghost btn-sm",
+          onClick: async () => {
+            try {
+              await navigator.clipboard.writeText(draft.value);
+              toast("Copied");
+            } catch (error) {
+              toast("Copy failed");
+            }
+          },
+        },
+        h("span", { html: I.link }),
+        "Copy"
+      )
+    ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step, { allowSkip: false }),
+  ];
+};
+
+const stageBody = (step) => {
+  if (step.kind === "profile") return stageProfile(step);
+  if (step.kind === "tour") return stageTour(step);
+  if (step.kind === "toolkit") return stageToolkit(step);
+  if (step.kind === "security") return stageSecurity(step);
+  if (step.kind === "team") return stageTeam(step);
+  if (step.kind === "manager") return stageManager(step);
+  return stageChecklist(step);
+};
+
+const confetti = () =>
+  h(
+    "div",
+    { class: "confetti", "aria-hidden": "true" },
+    ...Array.from({ length: 28 }, (_, i) => h("i", { style: { "--i": String(i) } }))
+  );
+
+const celebration = () => {
+  const record = ob();
+  const progress = journeyProgress();
+  const later = (record.later || []).map((id) => appById.get(id)).filter(Boolean);
+  const started = record.startedAt ? new Date(record.startedAt) : null;
+  const finished = record.completedAt ? new Date(record.completedAt) : null;
+  const days =
+    started && finished ? Math.max(1, Math.round((finished - started) / 86400000)) : null;
+  return h(
+    "section",
+    { class: "celebration card" },
+    state.onboarding.celebrate ? confetti() : null,
+    h("span", {
+      class: "celebration-avatar",
+      html: avatarSvg(CONCIERGE, { size: 72, state: "speaking" }),
+    }),
+    h("span", { class: "eyebrow eyebrow-brand", text: "Onboarding complete" }),
+    h("h2", {
+      text: `Welcome to 3HUE, ${firstName() || record.profile.preferredName || "colleague"}. Properly, this time.`,
+    }),
+    h("p", {
+      text: `${progress.done} of ${progress.total} steps done${progress.skipped ? `, ${progress.skipped} skipped` : ""}${days ? `, over ${days} day${days === 1 ? "" : "s"}` : ""}. ${record.managerNotifiedAt ? "Your manager has the update." : "Your manager hasn't been sent the update yet; the Manager step has it ready."}`,
+    }),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () => startTour({ onDone: () => navigate({ view: "onboarding" }) }),
+        },
+        h("span", { html: I.map }),
+        "Run the tour again"
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn",
+          onClick: () => openAsk("What should I focus on in my second week?"),
+        },
+        h("span", { html: I.message }),
+        "Ask Huey what's next"
+      ),
+      h(
+        "button",
+        { type: "button", class: "btn btn-ghost", onClick: restartOnboarding },
+        "Start over"
+      )
+    ),
+    later.length
+      ? h(
+          "div",
+          { class: "stage-section" },
+          h("h3", { text: "Your Later list" }),
+          tileSet(later, "list")
+        )
+      : null
+  );
+};
+
+const renderOnboarding = (main) => {
+  const record = ob();
+  const progress = journeyProgress();
+  const step = currentJourneyStep();
+  const name = firstName() || (record && record.profile.preferredName) || "";
+
+  main.append(
+    h(
+      "div",
+      { class: "journey-head" },
+      h("span", { class: "journey-head-avatar", html: avatarSvg(CONCIERGE, { size: 64 }) }),
+      h(
+        "div",
+        { class: "journey-head-text" },
+        h("span", { class: "eyebrow eyebrow-brand", text: "Onboarding with Huey" }),
+        h("h1", {
+          text:
+            record && record.completedAt
+              ? "You're all set"
+              : record
+                ? `Your first week${name ? `, ${name}` : ""}`
+                : `Welcome aboard${name ? `, ${name}` : ""}`,
+        }),
+        h("p", {
+          text:
+            record && record.completedAt
+              ? "Everything below stays here for reference, and the Later list is yours to work through."
+              : "Step by step, in order, saved as you go. Close the laptop and pick it up on your phone; you'll land exactly here.",
+        }),
+        h("span", { class: "journey-save", "data-journey-save": "" })
+      ),
+      h(
+        "div",
+        { class: "journey-head-aside" },
+        progressRing(progress.percent, 72),
+        h("span", { class: "journey-count", text: `${progress.done} of ${progress.total} steps` }),
+        record
+          ? h("button", {
+              type: "button",
+              class: "btn btn-ghost btn-sm",
+              onClick: restartOnboarding,
+              text: "Start over",
+            })
+          : null
+      )
+    )
+  );
+  journeySaveSlot = $("[data-journey-save]", main);
+  renderJourneySaveState();
+
+  if (record && record.completedAt) {
+    main.append(celebration());
+    state.onboarding.celebrate = false;
+  }
+
+  const stepper = h(
+    "ol",
+    { class: "journey-steps", "aria-label": "Onboarding steps" },
+    ...STEPS.map((s, index) => {
+      const status = stepStatus(record, s.id);
+      const current = s.id === step.id;
+      return h(
+        "li",
+        null,
+        h(
+          "button",
+          {
+            type: "button",
+            class: `journey-step${current ? " is-current" : ""}${status ? ` is-${status}` : ""}`,
+            "aria-current": current ? "step" : null,
+            onClick: () => {
+              state.onboarding.step = s.id;
+              renderView();
+            },
+          },
+          h("span", {
+            class: "journey-step-mark",
+            html:
+              status === "done"
+                ? I.check
+                : status === "skipped"
+                  ? I.chevronRight
+                  : `<b>${index + 1}</b>`,
+          }),
+          h(
+            "span",
+            { class: "journey-step-text" },
+            h("strong", { text: s.title }),
+            h("span", {
+              text:
+                status === "done"
+                  ? "Completed"
+                  : status === "skipped"
+                    ? "Skipped"
+                    : `About ${s.estimate}`,
+            })
+          ),
+          s.optional ? h("span", { class: "chip", text: "Optional" }) : null
+        )
+      );
+    })
+  );
+
+  const stage = h(
+    "section",
+    { class: "journey-stage card", "aria-live": "polite" },
+    h(
+      "div",
+      { class: "stage-head" },
+      h("span", { class: "stage-icon", html: stepIcon(step) }),
+      h(
+        "div",
+        null,
+        h("span", {
+          class: "eyebrow",
+          text: `Step ${STEPS.indexOf(step) + 1} of ${STEPS.length} · about ${step.estimate}`,
+        }),
+        h("h2", { text: step.title })
+      )
+    ),
+    hueyBubble(step.huey.intro),
+    ...stageBody(step)
+  );
+
+  main.append(
+    h("div", { class: "journey" }, h("aside", { class: "journey-side" }, stepper), stage)
+  );
+};
+
+/* ───── spotlight tour ───── */
+let tour = null;
+
+const tourEl = () => $("[data-tour]");
+
+const endTour = (completed) => {
+  const el = tourEl();
+  if (el) {
+    el.hidden = true;
+    el.textContent = "";
+  }
+  document.body.classList.remove("tour-on");
+  const done = tour && tour.onDone;
+  tour = null;
+  if (completed && done) done();
+};
+
+const positionTour = () => {
+  if (!tour) return;
+  const el = tourEl();
+  const stop = tour.stops[tour.index];
+  if (!el || !stop) return;
+  const mobile = window.innerWidth < 1025;
+  const target = $(mobile && stop.mobile ? stop.mobile : stop.target);
+  const spot = $(".tour-spot", el);
+  const card = $(".tour-card", el);
+  if (!target || !spot || !card) return;
+  const rect = target.getBoundingClientRect();
+  const pad = 8;
+  spot.style.top = `${rect.top - pad}px`;
+  spot.style.left = `${rect.left - pad}px`;
+  spot.style.width = `${rect.width + pad * 2}px`;
+  spot.style.height = `${rect.height + pad * 2}px`;
+  if (mobile) {
+    card.style.top = "";
+    card.style.left = "";
+    card.classList.add("is-docked");
+    return;
+  }
+  card.classList.remove("is-docked");
+  const cw = card.offsetWidth || 360;
+  const ch = card.offsetHeight || 220;
+  const below = rect.bottom + pad + 12;
+  const top = below + ch < window.innerHeight - 16 ? below : Math.max(16, rect.top - pad - 12 - ch);
+  let left = rect.left + rect.width / 2 - cw / 2;
+  if (
+    rect.right + 12 + cw < window.innerWidth &&
+    rect.width < 240 &&
+    rect.left < window.innerWidth / 3
+  )
+    left = rect.right + pad + 12; // beside narrow sidebar targets
+  left = Math.min(Math.max(16, left), window.innerWidth - cw - 16);
+  card.style.top = `${top}px`;
+  card.style.left = `${left}px`;
+};
+
+const showTourStop = () => {
+  if (!tour) return;
+  const el = tourEl();
+  const stop = tour.stops[tour.index];
+  if (!el || !stop) {
+    endTour(true);
+    return;
+  }
+  const route = stop.route === "home" ? { view: "home" } : stop.route;
+  if (
+    route &&
+    (route.view !== state.route.view || (route.section && route.section !== state.route.section))
+  ) {
+    navigate(route);
+  }
+  const mobile = window.innerWidth < 1025;
+  const selector = mobile && stop.mobile ? stop.mobile : stop.target;
+  const target = $(selector);
+  if (!target || (mobile && !stop.mobile && target.closest(".sidebar"))) {
+    // Nothing to point at on this layout; move on.
+    tour.index += 1;
+    if (tour.index >= tour.stops.length) endTour(true);
+    else showTourStop();
+    return;
+  }
+  if (!target.closest(".sidebar, .topbar, .bottombar"))
+    target.scrollIntoView({ block: "center", behavior: "instant" });
+  const last = tour.index === tour.stops.length - 1;
+  el.textContent = "";
+  el.hidden = false;
+  document.body.classList.add("tour-on");
+  el.append(
+    h("div", { class: "tour-spot", "aria-hidden": "true" }),
+    h(
+      "div",
+      { class: "tour-card", role: "dialog", "aria-label": stop.title },
+      h(
+        "div",
+        { class: "tour-card-head" },
+        h("span", { html: avatarSvg(CONCIERGE, { size: 36, state: "speaking" }) }),
+        h(
+          "div",
+          null,
+          h("span", {
+            class: "eyebrow",
+            text: tour.label || `Tour · ${tour.index + 1} of ${tour.stops.length}`,
+          }),
+          h("strong", { text: stop.title })
+        ),
+        h("button", {
+          type: "button",
+          class: "icon-btn",
+          "aria-label": "End tour",
+          html: I.x,
+          onClick: () => endTour(false),
+        })
+      ),
+      h("p", { text: stop.text }),
+      h(
+        "div",
+        { class: "tour-card-actions" },
+        ...(stop.actions
+          ? stop.actions.map((action) =>
+              h("button", {
+                type: "button",
+                class: `btn btn-sm ${action.primary ? "btn-primary" : ""}`,
+                text: action.label,
+                onClick: action.run,
+              })
+            )
+          : [
+              tour.index > 0
+                ? h("button", {
+                    type: "button",
+                    class: "btn btn-ghost btn-sm",
+                    onClick: () => {
+                      tour.index -= 1;
+                      showTourStop();
+                    },
+                    text: "Back",
+                  })
+                : h("button", {
+                    type: "button",
+                    class: "btn btn-ghost btn-sm",
+                    onClick: () => endTour(false),
+                    text: "Skip tour",
+                  }),
+              h("span", {
+                class: "tour-dots",
+                html: tour.stops
+                  .map((_, i) => `<i class="${i === tour.index ? "is-on" : ""}"></i>`)
+                  .join(""),
+              }),
+              h(
+                "button",
+                {
+                  type: "button",
+                  class: "btn btn-primary btn-sm",
+                  onClick: () => {
+                    tour.index += 1;
+                    if (tour.index >= tour.stops.length) endTour(true);
+                    else showTourStop();
+                  },
+                },
+                last ? "Finish" : "Next",
+                h("span", { html: last ? I.check : I.arrow })
+              ),
+            ])
+      )
+    )
+  );
+  window.requestAnimationFrame(positionTour);
+  $(".tour-card .btn-primary", el)?.focus();
+};
+
+const startTour = ({ onDone } = {}) => {
+  closeEverything();
+  const mobile = window.innerWidth < 1025;
+  const stops = TOUR_STOPS.filter((stop) => !(mobile && stop.desktopOnly));
+  tour = { stops, index: 0, onDone };
+  showTourStop();
+};
+
+/** One-stop spotlight on a tile in its section, e.g. "here is KnowBe4". */
+const spotlightTile = (appId, route, step) => {
+  const app = appById.get(appId);
+  if (!app) return;
+  closeEverything();
+  tour = {
+    label: "Huey",
+    stops: [
+      {
+        route,
+        target: `#main .tile[data-app-id='${appId}']`,
+        title: `${app.name} lives here`,
+        text: `This is the tile. Launch it when you're ready and sign in with your @3hue.net account. Your onboarding place is saved; come back when the training is done.`,
+        actions: [
+          {
+            label: "Launch it",
+            primary: true,
+            run: () => {
+              launchApp(app, "security.launch", "knowbe4.launched");
+              endTour(false);
+              navigate({ view: "onboarding" });
+            },
+          },
+          {
+            label: "Back to onboarding",
+            run: () => {
+              endTour(false);
+              state.onboarding.step = step ? step.id : "security";
+              navigate({ view: "onboarding" });
+            },
+          },
+        ],
+      },
+    ],
+    index: 0,
+  };
+  showTourStop();
+};
+
+window.addEventListener("resize", () => positionTour());
+window.addEventListener("scroll", () => positionTour(), { passive: true });
+document.addEventListener("keydown", (event) => {
+  if (!tour) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    endTour(false);
+  } else if (event.key === "ArrowRight" || event.key === "Enter") {
+    if (tour.stops[tour.index] && tour.stops[tour.index].actions) return;
+    event.preventDefault();
+    tour.index += 1;
+    if (tour.index >= tour.stops.length) endTour(true);
+    else showTourStop();
+  } else if (event.key === "ArrowLeft" && tour.index > 0) {
+    event.preventDefault();
+    tour.index -= 1;
+    showTourStop();
+  }
+});
+
+/* ───── admin: onboarding overview ───── */
+const onboardingAdminCard = () => {
+  const body = h("div", null, h("p", { class: "form-hint", text: "Loading…" }));
+  api("/api/admin/onboarding")
+    .then((data) => {
+      const people = data.people || [];
+      body.textContent = "";
+      if (!people.length) {
+        body.append(h("p", { class: "form-hint", text: "Nobody has started onboarding yet." }));
+        return;
+      }
+      body.append(
+        h(
+          "div",
+          { class: "doc-table-wrap" },
+          h(
+            "table",
+            { class: "audit-table onboarding-table" },
+            h(
+              "thead",
+              null,
+              h(
+                "tr",
+                null,
+                h("th", { text: "Person" }),
+                h("th", { text: "Track" }),
+                h("th", { text: "Progress" }),
+                h("th", { text: "Current step" }),
+                h("th", { text: "Last activity" })
+              )
+            ),
+            h(
+              "tbody",
+              null,
+              ...people.map((p) => {
+                const track = trackById(p.track);
+                const eng = engagementById(p.engagement);
+                const current = STEPS.find((s) => s.id === p.current);
+                const pct = Math.round((p.done / (p.total || STEPS.length)) * 100);
+                return h(
+                  "tr",
+                  null,
+                  h(
+                    "td",
+                    null,
+                    h("strong", { text: p.preferredName || p.email }),
+                    h("div", { class: "sub", text: p.email })
+                  ),
+                  h("td", { text: `${track ? track.label : "—"}${eng ? ` · ${eng.label}` : ""}` }),
+                  h(
+                    "td",
+                    null,
+                    h(
+                      "span",
+                      { class: "mini-bar", "aria-hidden": "true" },
+                      h("i", { style: { width: `${pct}%` } })
+                    ),
+                    h("span", {
+                      class: "sub",
+                      text: ` ${p.done}/${p.total}${p.completedAt ? " · complete" : ""}${p.managerNotifiedAt ? " · manager told" : ""}`,
+                    })
+                  ),
+                  h("td", { text: p.completedAt ? "Done" : current ? current.title : "—" }),
+                  h("td", {
+                    class: "audit-when",
+                    text: p.updatedAt ? relativeTime(Date.parse(p.updatedAt)) : "",
+                  })
+                );
+              })
+            )
+          )
+        )
+      );
+    })
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Onboarding",
+    "Who is on the journey, how far they are, and whether their manager has the update.",
+    { span: true },
+    body
+  );
+};
+
+const onboardingNavCount = () => {
+  const record = ob();
+  if (!record) return "new";
+  if (record.completedAt) return "✓";
+  const progress = journeyProgress();
+  return `${progress.done}/${progress.total}`;
+};
+
+/* ───────────────────────── catalog + administration ─────────────────────────
+ * The effective catalog comes from the Worker (/api/catalog): the repository seed until an admin
+ * edits something, then the KV document. Admins edit tiles and announcements in place; only Super
+ * Admins (HUB_SUPER_ADMINS in wrangler.toml) appoint other admins. */
+const isAdmin = () => state.role === "admin" || state.role === "super";
+const isSuper = () => state.role === "super";
+const roleLabel = (role) =>
+  role === "super" ? "Super Admin" : role === "admin" ? "Admin" : "Member";
+
+const api = async (path, { method = "GET", body } = {}) => {
+  const headers = { Accept: "application/json" };
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+  const res = await fetch(path, {
+    method,
+    credentials: "same-origin",
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  let data = null;
+  try {
+    data = await res.json();
+  } catch (error) {
+    data = null;
+  }
+  if (!res.ok) {
+    const err = new Error((data && data.error) || `The hub returned ${res.status}.`);
+    err.status = res.status;
+    err.details = data && data.details;
+    if (data && data.record) err.record = data.record;
+    throw err;
+  }
+  return data;
+};
+
+const applyCatalog = (doc) => {
+  APPS = Array.isArray(doc.apps) ? doc.apps : [];
+  ANNOUNCEMENTS = Array.isArray(doc.announcements) ? doc.announcements : [];
+  appById = new Map(APPS.map((app) => [app.id, app]));
+  state.catalog = {
+    ...state.catalog,
+    source: doc.source || "kv",
+    version: Number(doc.version) || 0,
+    updatedAt: doc.updatedAt || null,
+    updatedBy: doc.updatedBy || null,
+    loaded: true,
+  };
+};
+
+const loadCatalog = async () => {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), 4000);
+  try {
+    const res = await fetch("/api/catalog", {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    if (!res.ok) return false;
+    applyCatalog(await res.json());
+    return true;
+  } catch (error) {
+    return false; // static preview without the Worker keeps the repository catalog
+  } finally {
+    window.clearTimeout(timer);
+  }
+};
+
+const refreshAll = () => {
+  renderNav();
+  renderView();
+};
+
+/* ───── tile editor ───── */
+const AUTH_OPTIONS = [
+  ["microsoft", "Microsoft SSO"],
+  ["google", "Google sign-in"],
+  ["sso", "SSO"],
+  ["separate", "Separate login"],
+  ["public", "No login"],
+];
+const CLASS_OPTIONS = ["", "Public", "Internal", "Confidential", "Restricted"];
+
+let editorRef = null;
+
+const formField = (label, control, hint) =>
+  h(
+    "label",
+    { class: "form-field" },
+    h("span", { class: "form-label", text: label }),
+    control,
+    hint ? h("span", { class: "form-hint", text: hint }) : null
+  );
+
+const selectField = (options, value, onChange, props = {}) => {
+  const select = h(
+    "select",
+    { class: "field", ...props, onChange: (event) => onChange(event.target.value) },
+    ...options.map(([val, label]) => h("option", { value: val, text: label }))
+  );
+  select.value = value;
+  return select;
+};
+
+const textField = (key, props = {}) => {
+  const { draft } = editorRef;
+  const el = h("input", {
+    class: "field",
+    type: "text",
+    ...props,
+    onInput: (event) => {
+      draft[key] = event.target.value;
+      refreshPreview();
+    },
+  });
+  el.value = draft[key] || "";
+  return el;
+};
+
+const previewTile = (draft) => {
+  const app = {
+    ...draft,
+    name: draft.name || "Tile name",
+    tags: [],
+    monogram:
+      draft.monogram ||
+      (draft.name || "T")
+        .split(/\s+/)
+        .map((w) => w[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase(),
+  };
+  const tile = buildTile(app, 0);
+  tile.querySelector(".tile-actions")?.remove();
+  return h("div", { class: "editor-preview", "aria-hidden": "true" }, tile);
+};
+
+const refreshPreview = () => {
+  const slot = $("[data-editor-preview]");
+  if (slot && editorRef) {
+    slot.textContent = "";
+    slot.append(previewTile(editorRef.draft));
+  }
+};
+
+const showEditorError = (error) => {
+  const slot = $("[data-editor-error]");
+  if (!slot) return;
+  slot.textContent = "";
+  if (!error) {
+    slot.hidden = true;
+    return;
+  }
+  slot.hidden = false;
+  const lines =
+    Array.isArray(error.details) && error.details.length ? error.details : [error.message];
+  slot.append(...lines.map((line) => h("div", { text: line })));
+};
+
+const setEditorBusy = (busy) => {
+  $$("[data-editor-panel] .form-actions .btn").forEach((btn) => {
+    btn.disabled = busy;
+  });
+};
+
+const openEditor = (app = null, { tab } = {}) => {
+  if (!isAdmin()) return;
+  const panel = $("[data-editor-panel]");
+  if (!panel) return;
+  closeAgent();
+  closeAsk();
+  closeMenu();
+  const firstTab = (TABS[0] || {}).id || "core";
+  const draft = app
+    ? {
+        ...app,
+        tags: (app.tags || []).join(", "),
+        audience: (app.audience || []).filter((aud) => aud !== "all"),
+        featured: Boolean(app.featured),
+        verify: Boolean(app.verify),
+      }
+    : {
+        name: "",
+        subtitle: "",
+        description: "",
+        url: "https://",
+        tab: tab && tabById.has(tab) ? tab : firstTab,
+        group: "",
+        monogram: "",
+        color: "#44a8d9",
+        icon: "",
+        auth: "sso",
+        classification: "",
+        owner: "",
+        ownerEmail: "",
+        tags: "",
+        audience: [],
+        featured: false,
+        verify: false,
+      };
+  if (!draft.group || (groupById.get(draft.group) || {}).tab !== draft.tab)
+    draft.group = (GROUPS.find((group) => group.tab === draft.tab) || {}).id || "";
+  editorRef = { app, draft };
+  renderEditor(panel);
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+  syncOverlay();
+  panel.querySelector("input")?.focus();
+};
+
+const closeEditor = () => {
+  const panel = $("[data-editor-panel]");
+  if (!panel) return;
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
+  editorRef = null;
+  syncOverlay();
+  // Drop the form (and its preview tile) once the slide-out has finished.
+  window.setTimeout(() => {
+    if (!panel.classList.contains("is-open")) panel.textContent = "";
+  }, 400);
+};
+
+const renderEditor = (panel) => {
+  const { app, draft } = editorRef;
+  panel.textContent = "";
+
+  const groupSelect = () => {
+    const options = GROUPS.filter((group) => group.tab === draft.tab).map((group) => [
+      group.id,
+      group.label,
+    ]);
+    if (!options.some(([id]) => id === draft.group)) draft.group = (options[0] || [""])[0];
+    return selectField(options, draft.group, (value) => {
+      draft.group = value;
+    });
+  };
+  let groupEl = groupSelect();
+  const groupWrap = formField("Group", groupEl);
+
+  const tabEl = selectField(
+    TABS.map((t) => [t.id, t.label]),
+    draft.tab,
+    (value) => {
+      draft.tab = value;
+      const next = groupSelect();
+      groupEl.replaceWith(next);
+      groupEl = next;
+    }
+  );
+
+  const colorText = textField("color", {
+    maxlength: 7,
+    placeholder: "#44a8d9",
+    spellcheck: "false",
+  });
+  const colorPick = h("input", {
+    type: "color",
+    "aria-label": "Icon tint",
+    onInput: (event) => {
+      draft.color = event.target.value;
+      colorText.value = draft.color;
+      refreshPreview();
+    },
+  });
+  colorPick.value = /^#[0-9a-f]{6}$/i.test(draft.color || "") ? draft.color : "#44a8d9";
+  colorText.addEventListener("input", () => {
+    if (/^#[0-9a-f]{6}$/i.test(colorText.value)) colorPick.value = colorText.value;
+  });
+
+  const description = h("textarea", {
+    class: "field",
+    maxlength: 240,
+    rows: 3,
+    placeholder: "One or two lines shown on the tile.",
+    onInput: (event) => {
+      draft.description = event.target.value;
+      refreshPreview();
+    },
+  });
+  description.value = draft.description || "";
+
+  const audienceChips = h(
+    "div",
+    { class: "check-list" },
+    ...AUDIENCES.filter((aud) => aud.id !== "all").map((aud) => {
+      const box = h("input", {
+        type: "checkbox",
+        value: aud.id,
+        onChange: (event) => {
+          const set = new Set(draft.audience);
+          if (event.target.checked) set.add(aud.id);
+          else set.delete(aud.id);
+          draft.audience = Array.from(set);
+        },
+      });
+      box.checked = draft.audience.includes(aud.id);
+      return h("label", { class: "check-chip" }, box, aud.label);
+    })
+  );
+  const toggle = (key, label, hint) => {
+    const box = h("input", {
+      type: "checkbox",
+      onChange: (event) => {
+        draft[key] = event.target.checked;
+        refreshPreview();
+      },
+    });
+    box.checked = Boolean(draft[key]);
+    return h(
+      "label",
+      { class: "check-chip" },
+      box,
+      label,
+      hint ? h("span", { class: "sub", text: hint }) : null
+    );
+  };
+
+  const save = h(
+    "button",
+    { type: "button", class: "btn btn-primary", onClick: () => saveEditor() },
+    h("span", { html: I.check }),
+    app ? "Save changes" : "Add tile"
+  );
+  const cancel = h("button", {
+    type: "button",
+    class: "btn btn-ghost",
+    text: "Cancel",
+    onClick: closeEditor,
+  });
+  const remove = app
+    ? h(
+        "button",
+        { type: "button", class: "btn btn-danger", onClick: () => removeTile(app) },
+        h("span", { html: I.trash }),
+        "Remove"
+      )
+    : null;
+
+  const form = h(
+    "form",
+    {
+      class: "form-grid",
+      onSubmit: (event) => {
+        event.preventDefault();
+        saveEditor();
+      },
+    },
+    formField(
+      "Name",
+      textField("name", { maxlength: 80, required: true, placeholder: "e.g. Deal Builder" })
+    ),
+    formField(
+      "Subtitle",
+      textField("subtitle", { maxlength: 100, placeholder: "Optional second line" })
+    ),
+    formField("Description", description),
+    formField(
+      "Link",
+      textField("url", {
+        type: "url",
+        maxlength: 500,
+        required: true,
+        inputmode: "url",
+        spellcheck: "false",
+      }),
+      "https://, mailto: or tel:"
+    ),
+    h("div", { class: "form-row" }, formField("Section", tabEl), groupWrap),
+    h(
+      "div",
+      { class: "form-row" },
+      formField(
+        "Monogram",
+        textField("monogram", { maxlength: 3, placeholder: "Auto" }),
+        "1–3 characters on the icon"
+      ),
+      formField("Icon tint", h("div", { class: "color-field" }, colorPick, colorText))
+    ),
+    formField(
+      "Icon image",
+      textField("icon", {
+        type: "url",
+        maxlength: 500,
+        placeholder: "https://… (optional)",
+        spellcheck: "false",
+      }),
+      "Replaces the monogram. Host must be allowed by the CSP."
+    ),
+    h(
+      "div",
+      { class: "form-row" },
+      formField(
+        "Login type",
+        selectField(AUTH_OPTIONS, draft.auth || "sso", (value) => {
+          draft.auth = value;
+          refreshPreview();
+        })
+      ),
+      formField(
+        "Classification",
+        selectField(
+          CLASS_OPTIONS.map((c) => [c, c || "—"]),
+          draft.classification || "",
+          (value) => {
+            draft.classification = value;
+            refreshPreview();
+          }
+        )
+      )
+    ),
+    h(
+      "div",
+      { class: "form-row" },
+      formField("Owner", textField("owner", { maxlength: 60, placeholder: "Team or person" })),
+      formField(
+        "Owner email",
+        textField("ownerEmail", {
+          type: "email",
+          maxlength: 120,
+          placeholder: "Access requests go here",
+        })
+      )
+    ),
+    formField("Search tags", textField("tags", { placeholder: "comma, separated, words" })),
+    formField("Visible to", audienceChips, "Leave empty for everyone."),
+    h(
+      "div",
+      { class: "check-list" },
+      toggle("featured", "Featured on Home"),
+      toggle("verify", "Needs URL verification")
+    ),
+    h("div", { class: "form-error", "data-editor-error": "", hidden: true }),
+    h(
+      "div",
+      { class: "form-actions" },
+      save,
+      cancel,
+      remove ? h("span", { class: "spacer" }) : null,
+      remove
+    )
+  );
+
+  panel.append(
+    h(
+      "div",
+      { class: "panel-head" },
+      h("span", { class: "panel-glyph", html: app ? I.edit : I.plus }),
+      h(
+        "div",
+        { class: "who" },
+        h("strong", { text: app ? `Edit ${app.name}` : "New tile" }),
+        h("span", null, app ? `id ${app.id}` : (tabById.get(draft.tab) || {}).label || "")
+      ),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": "Close editor",
+        html: I.x,
+        onClick: closeEditor,
+      })
+    ),
+    h(
+      "div",
+      { class: "panel-body" },
+      h("div", { "data-editor-preview": "" }, previewTile(draft)),
+      form
+    )
+  );
+};
+
+const saveEditor = async () => {
+  if (!editorRef) return;
+  const { app, draft } = editorRef;
+  const tile = {
+    ...draft,
+    tags: String(draft.tags || "")
+      .split(/[,;]/)
+      .map((tag) => tag.trim())
+      .filter(Boolean),
+    featured: Boolean(draft.featured),
+    verify: Boolean(draft.verify),
+  };
+  delete tile.id;
+  showEditorError(null);
+  setEditorBusy(true);
+  try {
+    const result = app
+      ? await api(`/api/admin/apps/${encodeURIComponent(app.id)}`, {
+          method: "PUT",
+          body: { ifVersion: state.catalog.version, tile },
+        })
+      : await api("/api/admin/apps", {
+          method: "POST",
+          body: { ifVersion: state.catalog.version, tile },
+        });
+    await loadCatalog();
+    closeEditor();
+    refreshAll();
+    toast(app ? `${result.tile.name} updated` : `${result.tile.name} added`);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    showEditorError(error);
+  } finally {
+    setEditorBusy(false);
+  }
+};
+
+const removeTile = async (app) => {
+  if (!isAdmin()) return;
+  const ok = window.confirm(`Remove “${app.name}” from the hub for everyone?`);
+  if (!ok) return;
+  try {
+    await api(
+      `/api/admin/apps/${encodeURIComponent(app.id)}?ifVersion=${encodeURIComponent(state.catalog.version)}`,
+      { method: "DELETE" }
+    );
+    await loadCatalog();
+    closeEditor();
+    refreshAll();
+    toast(`${app.name} removed`);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    toast(error.message);
+  }
+};
+
+/* ───── administration view ───── */
+const exportCatalog = () => {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    source: state.catalog.source,
+    version: state.catalog.version,
+    apps: APPS,
+    announcements: ANNOUNCEMENTS,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = h("a", { href: url, download: `hub-catalog-v${state.catalog.version}.json` });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
+const adminCard = (title, lead, { actions = null, span = false } = {}, ...content) =>
+  h(
+    "section",
+    { class: `card admin-card${span ? " span-2" : ""}` },
+    h(
+      "div",
+      { class: "admin-card-head" },
+      h("h2", { text: title }),
+      actions ? h("div", { class: "admin-actions" }, ...[].concat(actions)) : null,
+      lead ? h("p", { text: lead }) : null
+    ),
+    ...content
+  );
+
+const kvRow = (...children) => h("div", { class: "kv-row" }, ...children);
+
+const renderAdmin = (main) => {
+  main.append(
+    h(
+      "div",
+      { class: "view-head" },
+      h(
+        "div",
+        null,
+        h("span", { class: "eyebrow eyebrow-brand", text: "Manage" }),
+        h("h1", { text: "Administration" }),
+        h("p", {
+          text: "Edit tiles and announcements in place. Changes go live for everyone immediately; the repository catalog stays as the seed and the reset target.",
+        })
+      ),
+      h(
+        "div",
+        { class: "view-meta" },
+        h("span", {
+          class: `chip chip-caps ${state.role === "super" ? "chip-brand" : "chip-info"}`,
+          text: roleLabel(state.role),
+        })
+      )
+    )
+  );
+  if (!isAdmin()) {
+    const email = (state.identity && state.identity.email) || "an unknown address";
+    main.append(
+      emptyState(
+        "Admin role required",
+        `The hub resolved this sign-in as ${email} with the ${roleLabel(state.role)} role. Admins are appointed by a Super Admin in this screen; Super Admins are listed in the Worker configuration (HUB_SUPER_ADMINS) and must match the sign-in email exactly.`,
+        h(
+          "a",
+          {
+            class: "btn btn-soft btn-sm",
+            href: mailto(
+              SUPPORT_EMAIL,
+              "Enterprise Hub admin access",
+              "Please add me as a hub admin."
+            ),
+          },
+          "Request admin access"
+        )
+      )
+    );
+    return;
+  }
+  const grid = h("div", { class: "admin-grid" });
+  main.append(grid);
+  if (!state.catalog.storage)
+    grid.append(
+      h(
+        "div",
+        { class: "notice span-2" },
+        h("strong", { text: "Storage not configured" }),
+        h("span", {
+          text: "The HUB_KV binding is missing on this Worker, so saves will fail. Bind the KV namespace in wrangler.toml and redeploy.",
+        })
+      )
+    );
+  grid.append(catalogCard(), announcementsCard(), rolesCard(), onboardingAdminCard(), auditCard());
+};
+
+const catalogCard = () => {
+  const c = state.catalog;
+  const live = c.source === "kv";
+  const reset = isSuper()
+    ? h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-danger btn-sm",
+          disabled: !live,
+          onClick: async () => {
+            if (
+              !window.confirm(
+                "Discard every edit made in the hub and go back to the repository catalog? This cannot be undone."
+              )
+            )
+              return;
+            try {
+              const doc = await api("/api/admin/reset", { method: "POST", body: {} });
+              applyCatalog(doc);
+              refreshAll();
+              toast("Catalog reset to the repository seed");
+            } catch (error) {
+              toast(error.message);
+            }
+          },
+        },
+        h("span", { html: I.refresh }),
+        "Reset to repository"
+      )
+    : null;
+  return adminCard(
+    "Catalog",
+    live
+      ? `Live edits, version ${c.version}. Export to carry them back into catalog.js.`
+      : "Serving the repository catalog. The first edit creates the live version.",
+    {
+      actions: [
+        h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => loadCatalog().then(refreshAll),
+          },
+          h("span", { html: I.refresh }),
+          "Reload"
+        ),
+        h(
+          "button",
+          { type: "button", class: "btn btn-soft btn-sm", onClick: exportCatalog },
+          h("span", { html: I.download }),
+          "Export JSON"
+        ),
+        reset,
+      ],
+    },
+    h(
+      "div",
+      { class: "kv-list" },
+      kvRow(
+        h("span", { class: `dot ${live ? "dot-ok dot-live" : ""}` }),
+        h(
+          "span",
+          { class: "grow" },
+          h("strong", { text: live ? "Live catalog" : "Repository seed" })
+        ),
+        h("span", { class: "sub", text: live ? `v${c.version}` : "v0" })
+      ),
+      kvRow(
+        h("span", { class: "grow", text: "Tiles" }),
+        h("strong", { text: String(APPS.length) })
+      ),
+      kvRow(
+        h("span", { class: "grow", text: "Announcements" }),
+        h("strong", { text: String(ANNOUNCEMENTS.length) })
+      ),
+      live
+        ? kvRow(
+            h("span", { class: "grow", text: "Last change" }),
+            h("span", {
+              class: "sub",
+              text: `${c.updatedBy || "unknown"} · ${c.updatedAt ? relativeTime(Date.parse(c.updatedAt)) : ""}`,
+            })
+          )
+        : null
+    ),
+    h("p", {
+      class: "form-hint",
+      text: "Tiles are edited from their ⋯ menu on any section, or with “Add tile” at the top of a section.",
+    })
+  );
+};
+
+const saveAnnouncements = async (list, message) => {
+  try {
+    await api("/api/admin/announcements", {
+      method: "PUT",
+      body: { ifVersion: state.catalog.version, announcements: list },
+    });
+    await loadCatalog();
+    refreshAll();
+    toast(message);
+  } catch (error) {
+    if (error.status === 409) {
+      await loadCatalog();
+      refreshAll();
+    }
+    toast(error.message);
+  }
+};
+
+let announcementDraft = null; // { index: number | -1, item }
+
+const announcementForm = () => {
+  const draft = announcementDraft;
+  const item = draft.item;
+  const bind = (key, el) => {
+    el.value = item[key] || "";
+    el.addEventListener("input", () => {
+      item[key] = el.value;
+    });
+    return el;
+  };
+  const authorSelect = selectField(
+    AGENTS.map((agent) => [agent.id, `${agent.name} · ${agent.role}`]),
+    item.author || CONCIERGE.id,
+    (value) => {
+      item.author = value;
+    }
+  );
+  return h(
+    "form",
+    {
+      class: "inline-form",
+      onSubmit: (event) => {
+        event.preventDefault();
+        const next = ANNOUNCEMENTS.slice();
+        const clean = { ...item, author: item.author || CONCIERGE.id };
+        if (!clean.href) delete clean.href;
+        if (draft.index === -1) next.unshift(clean);
+        else next[draft.index] = clean;
+        announcementDraft = null;
+        saveAnnouncements(
+          next,
+          draft.index === -1 ? "Announcement posted" : "Announcement updated"
+        );
+      },
+    },
+    h(
+      "div",
+      { class: "form-row" },
+      formField("Date", bind("date", h("input", { class: "field", type: "date", required: true }))),
+      formField("Posted by", authorSelect)
+    ),
+    formField(
+      "Title",
+      bind("title", h("input", { class: "field", type: "text", maxlength: 120, required: true }))
+    ),
+    formField(
+      "Body",
+      bind("body", h("textarea", { class: "field", rows: 3, maxlength: 600, required: true }))
+    ),
+    formField(
+      "Link",
+      bind(
+        "href",
+        h("input", {
+          class: "field",
+          type: "url",
+          maxlength: 500,
+          placeholder: "https://… (optional)",
+        })
+      )
+    ),
+    h(
+      "div",
+      { class: "form-actions" },
+      h("button", {
+        type: "submit",
+        class: "btn btn-primary btn-sm",
+        text: draft.index === -1 ? "Post" : "Save",
+      }),
+      h("button", {
+        type: "button",
+        class: "btn btn-ghost btn-sm",
+        text: "Cancel",
+        onClick: () => {
+          announcementDraft = null;
+          renderView();
+        },
+      })
+    )
+  );
+};
+
+const announcementsCard = () => {
+  const rows = ANNOUNCEMENTS.map((item, index) => {
+    const author = agentById(item.author) || CONCIERGE;
+    return kvRow(
+      h("span", { html: avatarSvg(author, { size: 28, decorative: true }) }),
+      h(
+        "span",
+        { class: "grow" },
+        h("strong", { text: item.title }),
+        h("span", { class: "sub", text: ` · ${formatDate(item.date)}` })
+      ),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": `Edit ${item.title}`,
+        html: I.edit,
+        onClick: () => {
+          announcementDraft = { index, item: { ...item } };
+          renderView();
+        },
+      }),
+      h("button", {
+        type: "button",
+        class: "icon-btn",
+        "aria-label": `Remove ${item.title}`,
+        html: I.trash,
+        onClick: () => {
+          if (!window.confirm(`Remove the announcement “${item.title}”?`)) return;
+          saveAnnouncements(
+            ANNOUNCEMENTS.filter((_, i) => i !== index),
+            "Announcement removed"
+          );
+        },
+      })
+    );
+  });
+  return adminCard(
+    "Announcements",
+    "Shown on Home, newest first. Posted in the voice of a teammate.",
+    {
+      actions: h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary btn-sm",
+          disabled: announcementDraft !== null,
+          onClick: () => {
+            announcementDraft = {
+              index: -1,
+              item: { date: today(), title: "", body: "", author: CONCIERGE.id, href: "" },
+            };
+            renderView();
+          },
+        },
+        h("span", { html: I.plus }),
+        "New"
+      ),
+    },
+    announcementDraft ? announcementForm() : null,
+    rows.length
+      ? h("div", { class: "kv-list" }, ...rows)
+      : h("p", { class: "form-hint", text: "No announcements yet." })
+  );
+};
+
+const rolesCard = () => {
+  const body = h("div", { class: "kv-list" }, h("p", { class: "form-hint", text: "Loading…" }));
+  const fill = (data) => {
+    body.textContent = "";
+    (data.superAdmins || []).forEach((email) =>
+      body.append(
+        kvRow(
+          h("span", { class: "identity-avatar", text: initials(email) }),
+          h("span", { class: "grow" }, h("strong", { text: email })),
+          h("span", { class: "chip chip-brand chip-caps", text: "Super Admin" })
+        )
+      )
+    );
+    (data.admins || []).forEach((admin) =>
+      body.append(
+        kvRow(
+          h("span", { class: "identity-avatar", text: initials(admin.email) }),
+          h(
+            "span",
+            { class: "grow" },
+            h("strong", { text: admin.email }),
+            admin.addedBy ? h("span", { class: "sub", text: ` · added by ${admin.addedBy}` }) : null
+          ),
+          h("span", { class: "chip chip-info chip-caps", text: "Admin" }),
+          isSuper()
+            ? h("button", {
+                type: "button",
+                class: "icon-btn",
+                "aria-label": `Remove ${admin.email} as admin`,
+                html: I.trash,
+                onClick: async () => {
+                  if (!window.confirm(`Remove ${admin.email} as an admin?`)) return;
+                  try {
+                    const next = await api(`/api/admin/roles/${encodeURIComponent(admin.email)}`, {
+                      method: "DELETE",
+                    });
+                    fill({ ...data, admins: next.admins });
+                    toast(`${admin.email} is no longer an admin`);
+                  } catch (error) {
+                    toast(error.message);
+                  }
+                },
+              })
+            : null
+        )
+      )
+    );
+    if (!(data.admins || []).length)
+      body.append(h("p", { class: "form-hint", text: "No additional admins yet." }));
+    if (isSuper()) {
+      const email = h("input", {
+        class: "field",
+        type: "email",
+        placeholder: "colleague@3hue.net",
+        required: true,
+        autocomplete: "off",
+        "aria-label": "Email of the new admin",
+      });
+      body.append(
+        h(
+          "form",
+          {
+            class: "add-admin",
+            onSubmit: async (event) => {
+              event.preventDefault();
+              try {
+                const next = await api("/api/admin/roles", {
+                  method: "POST",
+                  body: { email: email.value.trim() },
+                });
+                fill({ ...data, admins: next.admins });
+                toast(`${email.value.trim().toLowerCase()} can now edit the hub`);
+              } catch (error) {
+                toast(error.message);
+              }
+            },
+          },
+          email,
+          h(
+            "button",
+            { type: "submit", class: "btn btn-primary" },
+            h("span", { html: I.userPlus }),
+            "Add admin"
+          )
+        )
+      );
+    }
+  };
+  api("/api/admin/roles")
+    .then(fill)
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Who can edit",
+    isSuper()
+      ? "Admins edit tiles and announcements. Only Super Admins add or remove admins."
+      : "Admins edit tiles and announcements. Only a Super Admin can add or remove admins.",
+    {},
+    body
+  );
+};
+
+const ACTION_LABEL = {
+  "tile.add": "Added tile",
+  "tile.update": "Edited tile",
+  "tile.delete": "Removed tile",
+  "announcements.update": "Updated announcements",
+  "catalog.reset": "Reset catalog",
+  "admin.add": "Added admin",
+  "admin.remove": "Removed admin",
+};
+
+const auditCard = () => {
+  const body = h("div", null, h("p", { class: "form-hint", text: "Loading…" }));
+  api("/api/admin/audit")
+    .then((data) => {
+      const entries = (data.entries || data || []).slice(0, 50);
+      body.textContent = "";
+      if (!entries.length) {
+        body.append(h("p", { class: "form-hint", text: "No changes recorded yet." }));
+        return;
+      }
+      body.append(
+        h(
+          "div",
+          { class: "doc-table-wrap" },
+          h(
+            "table",
+            { class: "audit-table" },
+            h(
+              "thead",
+              null,
+              h(
+                "tr",
+                null,
+                h("th", { text: "When" }),
+                h("th", { text: "Who" }),
+                h("th", { text: "Change" }),
+                h("th", { text: "Target" })
+              )
+            ),
+            h(
+              "tbody",
+              null,
+              ...entries.map((entry) =>
+                h(
+                  "tr",
+                  null,
+                  h("td", {
+                    class: "audit-when",
+                    text: entry.at ? relativeTime(Date.parse(entry.at)) : "",
+                  }),
+                  h("td", { text: entry.by || "" }),
+                  h("td", { text: ACTION_LABEL[entry.action] || entry.action || "" }),
+                  h("td", null, h("code", { text: entry.target || "" }))
+                )
+              )
+            )
+          )
+        )
+      );
+    })
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Recent changes",
+    "Every edit is recorded with who made it.",
+    { span: true },
+    body
+  );
+};
+
 const loadIdentity = async () => {
   const attempts = [
     [
@@ -2760,6 +5627,9 @@ const loadIdentity = async () => {
         name: "",
         source: "worker",
         ai: Boolean(data && data.aiEnabled),
+        role: (data && data.role) || "member",
+        storage: Boolean(data && data.catalogStorage),
+        build: (data && data.build) || null,
       }),
     ],
     [
@@ -2767,19 +5637,38 @@ const loadIdentity = async () => {
       (data) => ({ name: data.name || "", email: data.email || "", source: "access" }),
     ],
   ];
-  for (const [path, map] of attempts) {
+  const fetchJson = async (path, timeoutMs) => {
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 2500);
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
     try {
       const res = await fetch(path, {
         credentials: "same-origin",
         headers: { Accept: "application/json" },
         signal: controller.signal,
       });
-      if (!res.ok) continue;
-      const mapped = map(await res.json());
+      return res.ok ? await res.json() : null;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
+  for (const [path, map] of attempts) {
+    try {
+      // The role comes from /api/me, so give a cold Worker time and retry once rather than
+      // silently falling back to "member". The Access identity probe may hang locally; keep it short.
+      let data = null;
+      if (path === "/api/me") {
+        data = await fetchJson(path, 10000).catch(() => null);
+        if (!data) data = await fetchJson(path, 10000);
+      } else {
+        data = await fetchJson(path, 2500);
+      }
+      if (!data) continue;
+      const mapped = map(data);
       if (path === "/api/me") {
         state.ai = { enabled: Boolean(mapped.ai), checked: true };
+        state.role = mapped.role;
+        state.catalog = { ...state.catalog, storage: mapped.storage };
+        state.serverBuild = mapped.build;
         if (mapped.email)
           state.identity = {
             ...(state.identity || {}),
@@ -2796,10 +5685,9 @@ const loadIdentity = async () => {
       }
     } catch (error) {
       /* not behind the Worker / Access (local preview) */
-    } finally {
-      window.clearTimeout(timer);
     }
   }
+  state.roleChecked = true;
   renderNav();
   renderView();
 };
@@ -3136,7 +6024,13 @@ const init = () => {
   renderView();
   if (initial.agent) openAgent(initial.agent);
   if (initial.ask) openAsk();
-  loadIdentity().finally(() => loadInventory());
+  if (initial.step) state.onboarding.step = initial.step;
+  Promise.allSettled([loadIdentity(), loadCatalog()])
+    .then(() => loadOnboarding())
+    .then(() => {
+      refreshAll();
+      loadInventory();
+    });
 };
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

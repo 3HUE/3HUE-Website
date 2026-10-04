@@ -605,7 +605,7 @@ select.field {
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none; /* leave no stacking context behind once settled (menus must rise above siblings) */
   }
 }
 

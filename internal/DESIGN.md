@@ -125,6 +125,24 @@ and `icons/agents/*.png`, exported from it) for names, pronouns, roles, tints, v
 portraits — bylines on deliverables, Teams cards and their own Team screens then match the hub.
 A product may add its own fields (skills, prompts, schedules) but never a second name or face.
 
+## Guided journeys and the spotlight tour
+
+Onboarding is the first _journey_: a stepper on the left (horizontal chips on phones), one step on
+stage at a time, and Huey speaking first in a teal bubble before any form or checklist appears. The
+rules that keep it feeling like a colleague rather than a wizard:
+
+- **Huey talks like Huey.** Two or three short paragraphs per step in his voice (warm, dry, no
+  jargon), written in `onboarding.js`, never generated at render time. The completion line is his too.
+- **Nothing is locked.** Steps can be visited in any order and skipped; the record remembers what was
+  done. Required items are simply the ones without an _Optional_ chip.
+- **Real UI, not screenshots.** The tour spotlights live elements with a dimmed backdrop
+  (`.tour-spot` box-shadow) and a card that sits beside the target on desktop and docks above the
+  bottom bar on phones. The same machinery points at a single tile ("KnowBe4 lives here").
+- **Progress is a record, not a flag.** One document per person (steps, tasks, Later list, events),
+  stored server-side with a local mirror and merged on conflict, so the journey resumes anywhere.
+- **Celebrate once.** The finale is a warm card with a brief confetti pass in the three hues, then it
+  settles into a reference page: the Later list and the tour stay available.
+
 ## Adding Prism to another 3HUE product
 
 1. Copy `prism.css` (or import it) and load Sora / IBM Plex Sans / IBM Plex Mono.

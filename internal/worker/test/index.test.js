@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import worker from "../index.js";
 import { clearJwksCache } from "../access.js";
 import { makeIssuer, segment } from "./helpers.js";
+import { HUB_BUILD } from "../../public/build.js";
 
 const TEAM = "3hue.cloudflareaccess.com";
 const AUD = "aud-tag";
@@ -111,8 +112,11 @@ test("/api/me reports the verified identity", async () => {
   assert.deepEqual(await res.json(), {
     authenticated: true,
     email: "staff@3hue.net",
+    role: "member",
     local: false,
     aiEnabled: false,
+    catalogStorage: false,
+    build: HUB_BUILD,
   });
 });
 
@@ -134,9 +138,12 @@ test("local bypass applies on loopback hosts only", async () => {
     assert.equal(res.status, 200, origin);
     assert.deepEqual(await res.json(), {
       authenticated: false,
-      email: null,
+      email: "dev@localhost",
+      role: "super",
       local: true,
       aiEnabled: false,
+      catalogStorage: false,
+      build: HUB_BUILD,
     });
   }
   const prod = await get(`${PROD}/api/me`, { env });
@@ -207,4 +214,126 @@ test("/api/ask still requires a valid Access token", async () => {
     body: JSON.stringify({ question: "hi" }),
   });
   assert.equal(res.status, 403);
+});
+
+/* ───────────── roles and the editable catalog ───────────── */
+const memoryKv = () => {
+  const store = new Map();
+  return {
+    store,
+    async get(key, type) {
+      const raw = store.get(key);
+      if (raw === undefined) return null;
+      return type === "json" ? JSON.parse(raw) : raw;
+    },
+    async put(key, value) {
+      store.set(key, value);
+    },
+    async delete(key) {
+      store.delete(key);
+    },
+  };
+};
+
+// One issuer per test: the Worker caches the JWKS it fetched first, so every token in a test must
+// come from the same key pair.
+const signerFor = async () => {
+  const issuer = await makeIssuer();
+  globalThis.fetch = issuer.fetcher;
+  return async (email) => ({
+    "Cf-Access-Jwt-Assertion": await issuer.sign(claims({ email, sub: email })),
+  });
+};
+
+test("/api/me resolves Super Admin from configuration and Admin from KV", async () => {
+  const as = await signerFor();
+  const HUB_KV = memoryKv();
+  await HUB_KV.put(
+    "roles:admins",
+    JSON.stringify({ admins: [{ email: "ops@3hue.net", addedBy: "aramirez@3hue.net" }] })
+  );
+  const env = { ...ENV, HUB_KV, HUB_SUPER_ADMINS: "aramirez@3hue.net" };
+  const superMe = await get(`${PROD}/api/me`, { env, headers: await as("ARamirez@3hue.net") });
+  assert.equal((await superMe.json()).role, "super");
+  const adminMe = await get(`${PROD}/api/me`, { env, headers: await as("ops@3hue.net") });
+  const adminBody = await adminMe.json();
+  assert.equal(adminBody.role, "admin");
+  assert.equal(adminBody.catalogStorage, true);
+  const memberMe = await get(`${PROD}/api/me`, { env, headers: await as("staff@3hue.net") });
+  assert.equal((await memberMe.json()).role, "member");
+});
+
+test("/api/catalog is readable by every member; /api/admin requires the Admin role", async () => {
+  const as = await signerFor();
+  const env = { ...ENV, HUB_KV: memoryKv(), HUB_SUPER_ADMINS: "aramirez@3hue.net" };
+  const headers = await as("staff@3hue.net");
+  const cat = await get(`${PROD}/api/catalog`, { env, headers });
+  assert.equal(cat.status, 200);
+  const doc = await cat.json();
+  assert.equal(doc.source, "static");
+  assert.ok(doc.apps.length > 50);
+
+  const denied = await get(`${PROD}/api/admin/apps`, {
+    env,
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tile: { name: "X", url: "https://x.example", tab: "core", group: "collab" },
+    }),
+  });
+  assert.equal(denied.status, 403);
+  assert.match((await denied.json()).error, /Admin role/);
+  const roles = await get(`${PROD}/api/admin/roles`, { env, headers });
+  assert.equal(roles.status, 403);
+});
+
+test("an Admin edits a tile and the change shows up in the effective catalog", async () => {
+  const as = await signerFor();
+  const HUB_KV = memoryKv();
+  await HUB_KV.put("roles:admins", JSON.stringify({ admins: [{ email: "ops@3hue.net" }] }));
+  const env = { ...ENV, HUB_KV, HUB_SUPER_ADMINS: "aramirez@3hue.net" };
+  const headers = { ...(await as("ops@3hue.net")), "Content-Type": "application/json" };
+  const before = await (await get(`${PROD}/api/catalog`, { env, headers })).json();
+  const ecarm = before.apps.find((app) => app.id === "ecarm");
+  assert.ok(ecarm);
+  const res = await get(`${PROD}/api/admin/apps/ecarm`, {
+    env,
+    method: "PUT",
+    headers,
+    body: JSON.stringify({
+      ifVersion: before.version,
+      tile: { ...ecarm, url: "https://ecarm.3hue.net" },
+    }),
+  });
+  assert.equal(res.status, 200, await res.text());
+  const after = await (await get(`${PROD}/api/catalog`, { env, headers })).json();
+  assert.equal(after.source, "kv");
+  assert.equal(after.version, 1);
+  assert.equal(after.apps.find((app) => app.id === "ecarm").url, "https://ecarm.3hue.net");
+
+  // An Admin cannot appoint other admins; a Super Admin can.
+  const add = (hdrs) =>
+    get(`${PROD}/api/admin/roles`, {
+      env,
+      method: "POST",
+      headers: { ...hdrs, "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "new@3hue.net" }),
+    });
+  assert.equal((await add(headers)).status, 403);
+  const asSuper = await add(await as("aramirez@3hue.net"));
+  assert.equal(asSuper.status, 201);
+  assert.equal(
+    (await (await get(`${PROD}/api/me`, { env, headers: await as("new@3hue.net") })).json()).role,
+    "admin"
+  );
+});
+
+test("unknown /api/admin paths are 404 for admins and 405 is not leaked for non-admins", async () => {
+  const as = await signerFor();
+  const env = { ...ENV, HUB_KV: memoryKv(), HUB_SUPER_ADMINS: "aramirez@3hue.net" };
+  const res = await get(`${PROD}/api/admin/nothing`, {
+    env,
+    headers: await as("aramirez@3hue.net"),
+  });
+  assert.equal(res.status, 404);
 });

@@ -44,3 +44,12 @@ ALLOWED_EMAIL_DOMAINS = "3hue.net"
 #   npx wrangler secret put ANTHROPIC_API_KEY      (console.anthropic.com → API keys)
 # Without it the hub still answers from the catalog deterministically.
 ANTHROPIC_MODEL = "claude-opus-5-5"
+# Super Admins (comma-separated @3hue.net emails). Supers manage the catalog AND appoint Admins;
+# Admins (appointed in the hub's Admin screen) edit tiles and announcements. Everyone else is a member.
+HUB_SUPER_ADMINS = "aramirez@3hue.net"
+
+# Editable catalog, admin roles and the audit log. Created with:
+#   npx wrangler kv namespace create enterprise-hub
+[[kv_namespaces]]
+binding = "HUB_KV"
+id = "f457a0c31b0747edaa6fea354e196d8f"

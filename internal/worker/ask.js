@@ -137,7 +137,14 @@ export const createClient = (env) =>
  * Ask the concierge. Resolves { answer, model, usage } or { answer, refused: true }.
  * Throws AskError for bad input; lets SDK errors propagate for the caller to map to HTTP codes.
  */
-export async function answerQuestion({ question, history = [], context = {}, env, client }) {
+export async function answerQuestion({
+  question,
+  history = [],
+  context = {},
+  env,
+  client,
+  catalog,
+}) {
   if (typeof question !== "string" || !question.trim())
     throw new AskError(400, "question is required");
   if (question.length > MAX_QUESTION_CHARS)
@@ -149,7 +156,13 @@ export async function answerQuestion({ question, history = [], context = {}, env
     betas: ["server-side-fallback-2026-07-01"],
     fallbacks: "default", // route a safety decline to Anthropic's recommended substitute instead of failing
     output_config: { effort: "low" }, // concierge chat: fast, terse
-    system: [{ type: "text", text: buildSystemPrompt(), cache_control: { type: "ephemeral" } }],
+    system: [
+      {
+        type: "text",
+        text: buildSystemPrompt(catalog ? { catalog } : {}),
+        cache_control: { type: "ephemeral" },
+      },
+    ],
     messages: [
       ...sanitizeHistory(history),
       { role: "user", content: buildUserMessage(question, context) },

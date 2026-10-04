@@ -180,6 +180,7 @@
           <a href="https://3hue.sharepoint.com/sites/InternalAssets">Internal Assets</a> &middot;
           <a href="mailto:info@3hue.net?subject=Enterprise%20Hub">Feedback</a> &middot;
           <a href="/cdn-cgi/access/logout">Sign out</a>
+          &middot; <span data-build title="Hub build loaded in this browser"></span>
         </span>
       </footer>
     </div>
@@ -271,6 +272,14 @@
       aria-label="Ask Huey"
       aria-hidden="true"
     ></aside>
+    <aside
+      class="panel panel-wide"
+      data-editor-panel
+      role="dialog"
+      aria-modal="false"
+      aria-label="Tile editor"
+      aria-hidden="true"
+    ></aside>
 
     <div
       class="palette"
@@ -313,6 +322,8 @@
         </div>
       </div>
     </div>
+
+    <div class="tour" data-tour hidden></div>
 
     <div class="toast" data-toast role="status" aria-live="polite" hidden></div>
 
