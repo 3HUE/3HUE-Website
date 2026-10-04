@@ -86,15 +86,16 @@ loopback client address, which wrangler dev provides and Cloudflare's edge never
 
 ## What is in the hub
 
-| Area                      | What you get                                                                                                                                                                                  |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Home**                  | Time-aware greeting, live stats, Huey's daily note, pinned tiles, recently launched, teammates, featured systems, field quick actions, announcements                                          |
-| **Workspace sections**    | Core Systems · Business Systems (Deal Builder, Playbooks, Assessments, **ECARM**) · Infrastructure · Customer Acquisition · Security & Compliance · People & Support · Documents              |
-| **Digital Workforce**     | The roster: Huey (concierge) and Ava (client experience) on duty; Marlowe, Aries, Vera, Theo and Trevor on duty inside ECARM; Sage, Vesper and Quinn in onboarding — each with a full profile |
-| **Ask Huey**              | Slide-over chat. Always answers from the catalog (owners, access, documents, review dates); with an Anthropic key it answers open questions in plain language                                 |
-| **Command palette**       | `⌘K` / `/` — apps, documents, teammates, sections and actions, keyboard navigable                                                                                                             |
-| **Documents & Artifacts** | Secure repositories with classification ceilings + the SharePoint-fed inventory (filters, sort, overdue flags, CSV export)                                                                    |
-| **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                             |
+| Area                      | What you get                                                                                                                                                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Home**                  | Time-aware greeting, live stats, Huey's daily note, pinned tiles, recently launched, teammates, featured systems, field quick actions, announcements                                                                     |
+| **Workspace sections**    | Core Systems · Business Systems (Deal Builder, Playbooks, Assessments, **ECARM**) · Infrastructure · Customer Acquisition · Security & Compliance · People & Support · Documents                                         |
+| **Digital Workforce**     | The roster: Huey (concierge) and Ava (client experience) on duty; Marlowe, Aries, Vera, Theo and Trevor on duty inside ECARM; Sage, Vesper and Quinn in onboarding — each with a full profile                            |
+| **Ask Huey**              | Slide-over chat. Always answers from the catalog (owners, access, documents, review dates); with an Anthropic key it answers open questions in plain language                                                            |
+| **Onboarding**            | Huey's guided first week for employees and contractors: welcome profile, spotlight tour, role toolkit, KnowBe4 training, Microsoft 365 profile, day-one checklist, teammates, note to the manager; resumes on any device |
+| **Command palette**       | `⌘K` / `/` — apps, documents, teammates, sections and actions, keyboard navigable                                                                                                                                        |
+| **Documents & Artifacts** | Secure repositories with classification ceilings + the SharePoint-fed inventory (filters, sort, overdue flags, CSV export)                                                                                               |
+| **Phone layer**           | Bottom bar (Home, Browse, Search, Team, Ask), sheets, full-width tiles, full-screen chat, safe-area aware, installable (manifest)                                                                                        |
 
 Cross-cutting: a **View as** role filter, favorites, recent launches, per-tile menu (Request
 access, Copy link, Ask Huey, Report a problem — plus Edit and Remove for admins), SSO chips,
@@ -129,6 +130,7 @@ internal/
                              role resolution and the /api/catalog + /api/admin/* routes
   worker/access.js           JWT verification (WebCrypto, dependency-free)
   worker/admin.js            roles, the editable catalog in KV, validation, audit log
+  worker/onboarding.js       per-person onboarding progress in KV (+ admin overview), validation
   worker/ask.js              Huey's AI brain: grounded prompt + Anthropic SDK call
   worker/test/               node:test suites (verifier, Worker routes, ask prompt/response handling)
   public/index.html          shell: sidebar, top bar, bottom bar, panels, palette
@@ -137,6 +139,9 @@ internal/
   public/portal.js           the app: routing, views, tiles, palette, chat, inventory adapter
   public/agents.js           the digital workforce: identities, voice, portrait generator
   public/catalog.js          THE CONTENT: sections, groups, audiences, tiles, announcements
+  public/onboarding.js       the onboarding journey: tracks, steps, tasks, Huey's lines, tour stops
+  public/build.js            build marker shared by Worker and page (stale-tab detection)
+  docs/onboarding-video-higgsfield.md  production prompt pack for the onboarding film
   public/config.js           runtime config: SharePoint site/list, Entra app ids, field map
   public/data/inventory.sample.json  preview records shown until the SharePoint list is connected
   public/lib/msal-browser.min.js     Microsoft Authentication Library 2.39.0 (MIT), vendored
@@ -225,6 +230,33 @@ Super Admin against wrangler's local KV, so the whole admin flow can be exercise
   portrait), then capabilities marked live or planned. Guidelines in `DESIGN.md`.
 
 Before pushing: `npm run lint:html` (repo root) and `npx prettier --check internal/`.
+
+## Onboarding with Huey
+
+`#onboarding` is a guided first week that Huey walks every new employee and contractor through.
+Home shows a "Welcome aboard" card to anyone who has not started (dismissable); the sidebar keeps
+an **Onboarding** entry with the step count. The journey, in order:
+
+| #   | Step                                | What happens                                                                                                                                                                                                                         |
+| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Welcome aboard                      | Preferred name, **track** (Leadership, Sales & Marketing, Delivery & Consulting, Finance & Admin, IT & Engineering), **employee or contractor**, start date, manager's name and email                                                |
+| 2   | Tour of the hub                     | Spotlight tour of the real UI (nine stops on desktop, seven on phones): Home, sections, search, Ask Huey, Digital Workforce, a tile, View as, identity, Documents. Can be rerun any time                                             |
+| 3   | Your toolkit                        | The track's weekly systems plus the core set; pin at least three. Deep dives are parked on a per-person **Later** list                                                                                                               |
+| 4   | Security awareness training         | The KnowBe4 tile: "Show me where it lives" spotlights it in Security & Compliance; "Launch KnowBe4 for me" opens it. Read the InfoSec policy; contractors acknowledge acceptable use. An attestation checkbox records the completion |
+| 5   | Complete your Microsoft 365 profile | Photo, title/department, phone, Authenticator, Outlook signature (Brand Kit), Teams status; each item opens the exact page                                                                                                           |
+| 6   | Ready for day one                   | Teams channels, calendar, Internal Assets, help desk, Intune (employees) or device baseline + access scope (contractors), plus track-specific items (ECARM, HubSpot, Teamwork, Playbooks, QuickBooks, Entra, Trust Center)           |
+| 7   | Meet your teammates (optional)      | The digital teammates for the track; open a profile, say hi to Huey                                                                                                                                                                  |
+| 8   | Tell your manager you're ready      | Huey drafts the update (steps, dates, training attestation); send by email or Teams. Completing it ends the journey with a celebration and keeps the Later list                                                                      |
+
+Tasks can be limited to a track or an engagement type; steps 2–7 can be skipped; nothing is locked,
+so a person can jump around. Progress is a single record per person in KV
+(`onboarding:<email>`, `worker/onboarding.js`) with a localStorage mirror, so closing the app and
+resuming on another device lands on the same step. Saves carry an `ifUpdatedAt` stamp; a stale
+device gets a 409 and merges rather than overwriting. Admins see everyone's progress on the
+Administration page (track, step, last activity, whether the manager was told), and Huey answers
+"where am I in onboarding?" in the chat. Content lives in `public/onboarding.js`; the KnowBe4 and
+My Microsoft Account tiles it relies on are ordinary catalog tiles, so admins can fix their links in
+the hub. The intro film's production prompts are in `docs/onboarding-video-higgsfield.md`.
 
 ## Document & Artifact Inventory
 

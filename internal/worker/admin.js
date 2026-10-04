@@ -155,6 +155,7 @@ const str = (value, max, label, errors, { required = false } = {}) => {
 };
 
 const validUrl = (value) => {
+  if (/^#[a-z0-9][a-z0-9/-]*$/i.test(String(value || ""))) return true; // in-hub route, e.g. #onboarding
   try {
     const url = new URL(value);
     return ["https:", "http:", "mailto:", "tel:"].includes(url.protocol);

@@ -9,6 +9,23 @@ import { HUB_CONFIG as CONFIG } from "./config.js";
 import { HUB_CATALOG as CATALOG } from "./catalog.js";
 import { HUB_BUILD } from "./build.js";
 import {
+  STEPS,
+  TRACKS,
+  ENGAGEMENTS,
+  TOUR_STOPS,
+  toolkitFor,
+  laterFor,
+  agentsFor,
+  tasksFor,
+  requiredTasks,
+  stepStatus,
+  progressOf,
+  nextStep,
+  managerMessage,
+  trackById,
+  engagementById,
+} from "./onboarding.js";
+import {
   AGENTS,
   STATUS as AGENT_STATUS,
   agentById,
@@ -35,6 +52,7 @@ const KEYS = {
   audience: "3hue-hub-audience",
   inventory: "3hue-hub-inventory",
   chat: "3hue-hub-chat",
+  onboarding: "3hue-hub-onboarding",
 };
 
 /* ───────────────────────── icons (static SVG, 24-grid, stroke) ───────────────────────── */
@@ -115,6 +133,8 @@ const I = {
   sliders: svg(
     '<path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/>'
   ),
+  map: svg('<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>'),
+  user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
   userPlus: svg(
     '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/>'
   ),
@@ -180,6 +200,13 @@ const storage = {
       /* storage unavailable — preferences simply won't persist */
     }
   },
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      /* ignore */
+    }
+  },
   session(key, value) {
     try {
       if (value === undefined) {
@@ -239,6 +266,17 @@ const state = {
   role: "member",
   roleChecked: false,
   serverBuild: null,
+  onboarding: {
+    record: null,
+    loaded: false,
+    storage: false,
+    saving: false,
+    savedAt: null,
+    error: null,
+    step: null,
+    celebrate: false,
+    serverUpdatedAt: null,
+  },
   catalog: {
     source: "static",
     version: 0,
@@ -263,6 +301,8 @@ const parseHash = () => {
   if (raw === "ask") return { ...state.route, ask: true };
   if (raw === "documents") return { view: "documents" };
   if (raw === "admin") return { view: "admin" };
+  if (raw === "onboarding") return { view: "onboarding" };
+  if (raw.startsWith("onboarding/")) return { view: "onboarding", step: raw.slice(11) };
   if (tabById.has(raw)) return { view: "section", section: raw };
   return { view: "home" };
 };
@@ -272,6 +312,7 @@ const routeHash = (route) => {
   if (route.view === "team") return route.agent ? `#team/${route.agent}` : "#team";
   if (route.view === "documents") return "#documents";
   if (route.view === "admin") return "#admin";
+  if (route.view === "onboarding") return "#onboarding";
   if (route.view === "section") return `#${route.section}`;
   return "#home";
 };
@@ -299,6 +340,7 @@ window.addEventListener("popstate", () => {
     return;
   }
   state.route = route;
+  if (route.step) state.onboarding.step = route.step;
   renderView();
   renderNav();
   if (route.agent) openAgent(route.agent);
@@ -367,6 +409,10 @@ const toggleFavorite = (id) => {
 };
 
 const recordLaunch = (id) => {
+  if (id === "knowbe4") {
+    markOnboardingTask("security.launch");
+    logOnboardingEvent("knowbe4.launched", "tile");
+  }
   state.recent = [{ id, ts: Date.now() }, ...state.recent.filter((entry) => entry.id !== id)].slice(
     0,
     10
@@ -533,7 +579,11 @@ const renderNav = () => {
               ? '<span class="dot dot-ok dot-live" title="AI answers on"></span>'
               : "",
           })
-        )
+        ),
+        navItem({ view: "onboarding" }, I.map, "Onboarding", {
+          count: onboardingNavCount(),
+          current: isCurrent({ view: "onboarding" }),
+        })
       ),
       isAdmin()
         ? h(
@@ -560,7 +610,9 @@ const renderNav = () => {
             ? "Documents & Artifacts"
             : r.view === "admin"
               ? "Administration"
-              : (tabById.get(r.section) || {}).label || "";
+              : r.view === "onboarding"
+                ? "Onboarding"
+                : (tabById.get(r.section) || {}).label || "";
     title.textContent = "";
     title.append(
       h("span", { class: "eyebrow", text: "Enterprise Hub" }),
@@ -600,6 +652,10 @@ const renderSheet = () => {
     navItem({ view: "team" }, I.sparkles, "Digital Workforce", {
       count: AGENTS.length,
       current: isCurrent({ view: "team" }),
+    }),
+    navItem({ view: "onboarding" }, I.map, "Onboarding", {
+      count: onboardingNavCount(),
+      current: isCurrent({ view: "onboarding" }),
     }),
     isAdmin()
       ? navItem({ view: "admin" }, I.sliders, "Administration", {
@@ -948,6 +1004,7 @@ const renderView = () => {
   else if (r.view === "team") renderTeam(main);
   else if (r.view === "documents") renderDocuments(main);
   else if (r.view === "admin") renderAdmin(main);
+  else if (r.view === "onboarding") renderOnboarding(main);
   else renderSection(main, r.section);
   const buildSlot = $("[data-build]");
   if (buildSlot)
@@ -1074,6 +1131,8 @@ const renderHome = (main) => {
     )
   );
   main.append(hero);
+  const journeyCard = onboardingHomeCard();
+  if (journeyCard) main.append(journeyCard);
 
   const favorites = Array.from(state.favorites)
     .map((id) => appById.get(id))
@@ -1520,6 +1579,7 @@ const agentCard = (agent, index) => {
 const openAgent = (id) => {
   const agent = agentById(id);
   if (!agent) return;
+  markOnboardingTask("team.profiles", { rerender: true });
   const panel = $("[data-agent-panel]");
   if (!panel) return;
   const status = AGENT_STATUS[agent.status] || AGENT_STATUS.planned;
@@ -2291,6 +2351,19 @@ const cardFromRef = (ref) => {
         )
       : null;
   }
+  if (ref.type === "route")
+    return h(
+      "button",
+      { type: "button", class: "msg-card", onClick: () => navigate(ref.route) },
+      h("span", { class: "tile-icon", style: { "--tile": "#1fbf8f" }, html: ref.icon || I.map }),
+      h(
+        "span",
+        { class: "msg-card-text" },
+        h("strong", { text: ref.label }),
+        ref.desc ? h("span", { text: ref.desc }) : null
+      ),
+      h("span", { html: I.arrow })
+    );
   if (ref.type === "link")
     return h(
       "a",
@@ -2363,6 +2436,7 @@ const renderInline = (el, text) => {
 };
 
 const ask = async (question) => {
+  markOnboardingTask("team.ask");
   state.chat.push({ role: "me", text: question, ts: Date.now() });
   state.chatBusy = true;
   saveChat();
@@ -2410,7 +2484,20 @@ const askRemote = async (question) => {
     body: JSON.stringify({
       question,
       history,
-      context: { inventory: compactInventory(), audience: state.audience, user: firstName() },
+      context: {
+        inventory: compactInventory(),
+        audience: state.audience,
+        user: firstName(),
+        onboarding: ob()
+          ? {
+              started: true,
+              completed: Boolean(ob().completedAt),
+              ...journeyProgress(),
+              current: (nextStep(ob()) || {}).title || "",
+              track: ob().profile.track,
+            }
+          : { started: false },
+      },
     }),
   });
   if (!res.ok) throw new Error(`ask ${res.status}`);
@@ -2465,6 +2552,38 @@ const answerLocally = (question, { aiFailed = false } = {}) => {
     return {
       text: `${greetingFor(CONCIERGE, firstName())} I can find apps and documents, tell you who owns a system, draft an access request, or introduce you to the team.`,
       cards: [],
+    };
+  }
+  if (
+    /onboard|new hire|first (day|week)|where (am|was) i|resume|continue|my checklist|knowbe4|training/.test(
+      q
+    )
+  ) {
+    const record = ob();
+    const progress = journeyProgress();
+    const next = record ? nextStep(record) : STEPS[0];
+    const text = !record
+      ? "You haven't started onboarding yet. It's a guided first week with me: the tour, your role's toolkit, security training in KnowBe4, your Microsoft 365 profile, day-one prep and a note to your manager. About an hour, in pieces, and it saves as you go."
+      : record.completedAt
+        ? `You've finished onboarding: ${progress.done} of ${progress.total} steps done. Your Later list and the tour are still on the Onboarding page whenever you want them.`
+        : `You're ${progress.done} of ${progress.total} steps in. Next up: **${next.title}** (about ${next.estimate}). Your place is saved on every device.`;
+    return {
+      text,
+      cards: [
+        {
+          type: "route",
+          route: { view: "onboarding" },
+          label: record
+            ? record.completedAt
+              ? "Open onboarding"
+              : "Continue onboarding"
+            : "Start onboarding",
+          desc:
+            record && next && !record.completedAt
+              ? `Step ${STEPS.indexOf(next) + 1} · ${next.title}`
+              : "With Huey",
+        },
+      ],
     };
   }
   if (/what can you (do|help)|^help\b|capabilit/.test(q)) {
@@ -2722,6 +2841,25 @@ const buildIndex = () => {
       icon: I.folder,
       run: () => window.open(SP.libraryUrl, "_blank", "noopener"),
     });
+  items.push({
+    kind: "action",
+    label: obDone() ? "Onboarding" : obStarted() ? "Continue onboarding" : "Start onboarding",
+    sub:
+      obStarted() && !obDone()
+        ? `${journeyProgress().done} of ${STEPS.length} steps`
+        : "Huey's guided first week",
+    text: "onboarding new hire first week checklist start continue huey journey",
+    icon: I.map,
+    run: startOnboarding,
+  });
+  items.push({
+    kind: "action",
+    label: "Take the hub tour",
+    sub: "Spotlight walk-through, 4 minutes",
+    text: "tour walkthrough spotlight guide show me around",
+    icon: I.sparkles,
+    run: () => startTour({ onDone: () => markOnboardingTask("tour.complete", { rerender: true }) }),
+  });
   if (isAdmin()) {
     items.push({
       kind: "action",
@@ -2906,6 +3044,1514 @@ const closePalette = () => {
 };
 
 /* ───────────────────────── identity & inventory (SharePoint via Graph) ───────────────────────── */
+/* ───────────────────────── onboarding journey ─────────────────────────
+ * Huey's step-by-step walkthrough for new employees and contractors. The record lives in KV via
+ * /api/onboarding (one per person) with a localStorage mirror, so progress survives closing the app
+ * and follows the person between laptop and phone. Step content is data in onboarding.js. */
+const ob = () => state.onboarding.record;
+const obStarted = () => Boolean(ob());
+const obDone = () => Boolean(ob() && ob().completedAt);
+const nowIso = () => new Date().toISOString();
+
+const newOnboardingRecord = () => ({
+  version: 1,
+  email: (state.identity && state.identity.email) || "",
+  profile: {
+    preferredName: firstName(),
+    track:
+      state.audience !== "all" && TRACKS.some((t) => t.id === state.audience) ? state.audience : "",
+    engagement: "",
+    startDate: "",
+    managerName: "",
+    managerEmail: "",
+  },
+  steps: {},
+  tasks: {},
+  later: [],
+  events: [],
+  current: "welcome",
+  startedAt: nowIso(),
+  updatedAt: nowIso(),
+  completedAt: null,
+  dismissedAt: null,
+  managerNotifiedAt: null,
+});
+
+/** Union of two copies of the journey: nothing anyone ticked on either device is lost. */
+const mergeOnboarding = (server, local) => {
+  if (!local) return server;
+  if (!server) return local;
+  const profile = { ...server.profile };
+  Object.entries(local.profile || {}).forEach(([key, value]) => {
+    if (value) profile[key] = value;
+  });
+  const steps = { ...(server.steps || {}) };
+  Object.entries(local.steps || {}).forEach(([id, value]) => {
+    if (!steps[id] || (value.status === "done" && steps[id].status !== "done")) steps[id] = value;
+  });
+  const seen = new Set();
+  const events = [...(server.events || []), ...(local.events || [])]
+    .filter((event) => {
+      const key = `${event.at}|${event.type}|${event.detail || ""}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => String(a.at).localeCompare(String(b.at)))
+    .slice(-100);
+  const merged = {
+    ...server,
+    profile,
+    steps,
+    tasks: { ...(server.tasks || {}), ...(local.tasks || {}) },
+    later: Array.from(new Set([...(server.later || []), ...(local.later || [])])),
+    events,
+    completedAt: server.completedAt || local.completedAt || null,
+    dismissedAt: server.dismissedAt || local.dismissedAt || null,
+    managerNotifiedAt: server.managerNotifiedAt || local.managerNotifiedAt || null,
+    startedAt: [server.startedAt, local.startedAt].filter(Boolean).sort()[0] || nowIso(),
+  };
+  const next = nextStep(merged);
+  merged.current = next ? next.id : "";
+  if (!next && !merged.completedAt) merged.completedAt = nowIso();
+  return merged;
+};
+
+const mirrorOnboarding = () => {
+  const record = ob();
+  if (record) storage.set(KEYS.onboarding, record);
+  else storage.remove(KEYS.onboarding);
+};
+
+let onboardingSaveTimer = null;
+const saveOnboardingNow = async () => {
+  const record = ob();
+  if (!record) return;
+  state.onboarding.saving = true;
+  renderJourneySaveState();
+  try {
+    const data = await api("/api/onboarding", {
+      method: "PUT",
+      body: { ...record, ifUpdatedAt: state.onboarding.serverUpdatedAt || "" },
+    });
+    if (data && data.record) {
+      // Keep the server's copy (normalized, server timestamps) unless we changed things meanwhile.
+      if (!onboardingSaveTimer) state.onboarding.record = data.record;
+      state.onboarding.serverUpdatedAt = data.record.updatedAt;
+      mirrorOnboarding();
+    }
+    state.onboarding.savedAt = Date.now();
+    state.onboarding.error = null;
+  } catch (error) {
+    if (error.status === 409 && error.record) {
+      // Another device saved first: merge the two and save once more.
+      state.onboarding.record = mergeOnboarding(error.record, ob());
+      state.onboarding.serverUpdatedAt = error.record.updatedAt;
+      mirrorOnboarding();
+      state.onboarding.saving = false;
+      if (state.route.view === "onboarding") renderView();
+      toast("Merged progress from another device");
+      return saveOnboardingNow();
+    }
+    state.onboarding.error =
+      error.status === 503 || error.status === 401 || error.status === 404
+        ? "Saved on this device only"
+        : "Could not sync; saved on this device";
+  } finally {
+    state.onboarding.saving = false;
+    renderJourneySaveState();
+  }
+};
+const scheduleOnboardingSave = () => {
+  window.clearTimeout(onboardingSaveTimer);
+  onboardingSaveTimer = window.setTimeout(() => {
+    onboardingSaveTimer = null;
+    saveOnboardingNow();
+  }, 500);
+};
+
+/** Mutate the record, mirror it locally and schedule a sync. */
+const touchOnboarding = (mutate) => {
+  if (!state.onboarding.record) state.onboarding.record = newOnboardingRecord();
+  const record = state.onboarding.record;
+  mutate(record);
+  record.updatedAt = nowIso();
+  mirrorOnboarding();
+  scheduleOnboardingSave();
+  return record;
+};
+
+const logOnboardingEvent = (type, detail) =>
+  touchOnboarding((r) => {
+    r.events = [...(r.events || []), { at: nowIso(), type, ...(detail ? { detail } : {}) }].slice(
+      -100
+    );
+  });
+
+/** Tick a task if the journey is under way and the task is not already ticked. */
+const markOnboardingTask = (taskId, { rerender = false } = {}) => {
+  const record = ob();
+  if (!record || record.tasks[taskId]) return;
+  touchOnboarding((r) => {
+    r.tasks[taskId] = true;
+  });
+  if (rerender && state.route.view === "onboarding") renderView();
+};
+
+const loadOnboarding = async () => {
+  const email = (state.identity && state.identity.email) || "";
+  let server = null;
+  let storageOn = false;
+  try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 8000);
+    const res = await fetch("/api/onboarding", {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    window.clearTimeout(timer);
+    if (res.ok) {
+      const data = await res.json();
+      server = data.record || null;
+      storageOn = Boolean(data.storage);
+      state.onboarding.serverUpdatedAt = server ? server.updatedAt : null;
+    }
+  } catch (error) {
+    /* static preview or offline: fall back to the local mirror */
+  }
+  const local = storage.get(KEYS.onboarding, null);
+  const localUsable = local && (!email || !local.email || local.email === email) ? local : null;
+  let record = server;
+  if (localUsable) {
+    if (!storageOn) {
+      record = localUsable; // no server storage (preview / offline): this device is the record
+    } else if (server && String(localUsable.updatedAt) > String(server.updatedAt)) {
+      record = mergeOnboarding(server, localUsable); // this device was ahead: merge and push up
+      scheduleOnboardingSave();
+    }
+    // storage on and no server record: it was reset elsewhere, so the stale mirror is dropped.
+  }
+  state.onboarding = { ...state.onboarding, record, loaded: true, storage: storageOn };
+  mirrorOnboarding();
+};
+
+const journeyProgress = () => progressOf(ob() || {});
+const currentJourneyStep = () => {
+  const record = ob();
+  const wanted = state.onboarding.step || (record && record.current) || "welcome";
+  return STEPS.find((step) => step.id === wanted) || STEPS[0];
+};
+
+const stepIcon = (step) => I[step.icon] || I.check;
+
+const profileComplete = (record) => {
+  const p = (record && record.profile) || {};
+  return Boolean(
+    p.track && p.engagement && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.managerEmail || "")
+  );
+};
+
+/** Can this step be marked done right now? */
+const stepReady = (step) => {
+  const record = ob() || newOnboardingRecord();
+  if (step.kind === "profile") return profileComplete(record);
+  const required = requiredTasks(step, record.profile);
+  if (!required.every((task) => record.tasks[task.id])) return false;
+  if (step.attest && !record.tasks[step.attest.id]) return false;
+  return true;
+};
+
+const completeStep = (step, status = "done") => {
+  touchOnboarding((r) => {
+    r.steps[step.id] = { status, at: nowIso() };
+    const next = nextStep(r);
+    r.current = next ? next.id : "";
+    if (!next && !r.completedAt) r.completedAt = nowIso();
+  });
+  logOnboardingEvent(status === "done" ? "step.done" : "step.skipped", step.id);
+  const record = ob();
+  const next = nextStep(record);
+  state.onboarding.step = next ? next.id : null;
+  if (!next && record.completedAt) {
+    state.onboarding.celebrate = true;
+    toast(step.huey.done);
+  } else if (status === "done") toast(step.huey.done);
+  renderNav();
+  renderView();
+  const main = $("#main");
+  if (main) window.scrollTo({ top: Math.max(main.offsetTop - 80, 0), behavior: "smooth" });
+};
+
+const restartOnboarding = async () => {
+  if (!window.confirm("Start onboarding over? Your checklist progress will be cleared.")) return;
+  window.clearTimeout(onboardingSaveTimer);
+  onboardingSaveTimer = null;
+  state.onboarding.record = null;
+  state.onboarding.step = null;
+  state.onboarding.celebrate = false;
+  mirrorOnboarding();
+  try {
+    await api("/api/onboarding", { method: "DELETE" });
+  } catch (error) {
+    /* local only */
+  }
+  renderNav();
+  renderView();
+};
+
+const startOnboarding = () => {
+  if (!ob()) {
+    touchOnboarding(() => {});
+    logOnboardingEvent("journey.started");
+  }
+  state.onboarding.step = (ob() && ob().current) || "welcome";
+  navigate({ view: "onboarding" });
+};
+
+/* ───── Home card ───── */
+const progressRing = (percent, size = 64) => {
+  const r = (size - 8) / 2;
+  const c = 2 * Math.PI * r;
+  return h("span", {
+    class: "progress-ring",
+    style: { width: `${size}px`, height: `${size}px` },
+    "aria-hidden": "true",
+    html: `<svg viewBox="0 0 ${size} ${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="ring-track"/><circle cx="${size / 2}" cy="${size / 2}" r="${r}" class="ring-value" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - percent / 100)}"/></svg><strong>${percent}%</strong>`,
+  });
+};
+
+const onboardingHomeCard = () => {
+  const record = ob();
+  if (record && (record.completedAt || record.dismissedAt)) return null;
+  const progress = journeyProgress();
+  const next = record ? nextStep(record) : STEPS[0];
+  const name = firstName();
+  return h(
+    "section",
+    { class: "journey-card rise", style: { "animation-delay": "90ms" } },
+    h("span", { class: "journey-card-avatar", html: avatarSvg(CONCIERGE, { size: 64 }) }),
+    h(
+      "div",
+      { class: "journey-card-body" },
+      h("span", {
+        class: "eyebrow eyebrow-brand",
+        text: record ? "Onboarding · in progress" : "New here?",
+      }),
+      h("h2", {
+        text: record
+          ? `Pick up where you left off${name ? `, ${name}` : ""}.`
+          : `Welcome aboard${name ? `, ${name}` : ""}. Let me show you around.`,
+      }),
+      h("p", {
+        text: record
+          ? `Next: ${next ? `${next.title} · about ${next.estimate}` : "wrap up"}. Your place is saved on every device.`
+          : "A guided first week with Huey: the tour, your role's toolkit, security training, your profile and the note to your manager. About an hour, in pieces, and it saves as you go.",
+      }),
+      h(
+        "div",
+        { class: "journey-card-actions" },
+        h(
+          "button",
+          { type: "button", class: "btn btn-primary", onClick: startOnboarding },
+          h("span", { html: I.arrow }),
+          record ? "Continue" : "Start onboarding"
+        ),
+        record
+          ? h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-ghost",
+                onClick: () => {
+                  touchOnboarding((r) => {
+                    r.dismissedAt = nowIso();
+                  });
+                  renderView();
+                  toast("Hidden from Home. Onboarding stays in the sidebar.");
+                },
+              },
+              "Hide from Home"
+            )
+          : h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-ghost",
+                onClick: () => {
+                  touchOnboarding((r) => {
+                    r.dismissedAt = nowIso();
+                  });
+                  renderView();
+                  toast("No problem. Onboarding is in the sidebar if you change your mind.");
+                },
+              },
+              "I've been here a while"
+            )
+      )
+    ),
+    record ? progressRing(progress.percent) : null
+  );
+};
+
+/* ───── journey view ───── */
+let journeySaveSlot = null;
+const renderJourneySaveState = () => {
+  if (!journeySaveSlot || !journeySaveSlot.isConnected) return;
+  const o = state.onboarding;
+  journeySaveSlot.textContent = o.saving
+    ? "Saving…"
+    : o.error
+      ? o.error
+      : o.savedAt
+        ? `Saved · syncs across your devices`
+        : o.storage
+          ? "Progress saves automatically"
+          : "Progress saves on this device";
+};
+
+const hueyBubble = (lines) =>
+  h(
+    "div",
+    { class: "huey-bubble" },
+    h("span", {
+      class: "huey-bubble-avatar",
+      html: avatarSvg(CONCIERGE, { size: 44, state: "speaking" }),
+    }),
+    h("div", { class: "huey-bubble-text" }, ...lines.map((line) => h("p", { text: line })))
+  );
+
+const taskRow = (task, record, { onToggle } = {}) => {
+  const checked = Boolean(record.tasks[task.id]);
+  const box = h("input", {
+    type: "checkbox",
+    id: `task-${task.id}`,
+    onChange: (event) => {
+      touchOnboarding((r) => {
+        if (event.target.checked) r.tasks[task.id] = true;
+        else delete r.tasks[task.id];
+      });
+      if (onToggle) onToggle();
+    },
+  });
+  box.checked = checked;
+  const tile = task.tile ? appById.get(task.tile) : null;
+  const href = task.href || (tile ? tile.url : "");
+  return h(
+    "li",
+    { class: `task-row${checked ? " is-done" : ""}` },
+    box,
+    h(
+      "label",
+      { for: `task-${task.id}`, class: "task-label" },
+      h("span", { text: task.label }),
+      task.optional ? h("span", { class: "chip", text: "Optional" }) : null
+    ),
+    href
+      ? h(
+          "a",
+          {
+            class: "btn btn-soft btn-sm task-link",
+            href,
+            target: isHttp(href) ? "_blank" : null,
+            rel: isHttp(href) ? "noopener noreferrer" : null,
+            onClick: () => {
+              if (tile) recordLaunch(tile.id);
+            },
+          },
+          h("span", { html: I.external }),
+          tile ? tile.name : "Open"
+        )
+      : null
+  );
+};
+
+const stageActions = (step, { primary = [], allowSkip = true } = {}) => {
+  const record = ob();
+  const status = stepStatus(record, step.id);
+  const ready = stepReady(step);
+  const index = STEPS.findIndex((s) => s.id === step.id);
+  const prev = STEPS[index - 1];
+  const next = STEPS[index + 1];
+  return h(
+    "div",
+    { class: "stage-actions" },
+    ...primary,
+    status === "done"
+      ? h("span", { class: "chip chip-ok" }, h("span", { html: I.check }), "Completed")
+      : h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-primary",
+            disabled: !ready,
+            title: ready ? "" : "Finish the required items first",
+            onClick: () => completeStep(step, "done"),
+          },
+          h("span", { html: I.check }),
+          step.kind === "profile" ? "Save and continue" : "Mark step complete"
+        ),
+    status !== "done" && allowSkip && step.id !== "welcome"
+      ? h(
+          "button",
+          { type: "button", class: "btn btn-ghost", onClick: () => completeStep(step, "skipped") },
+          "Skip for now"
+        )
+      : null,
+    h("span", { class: "spacer" }),
+    prev
+      ? h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => {
+              state.onboarding.step = prev.id;
+              renderView();
+            },
+          },
+          h("span", { html: I.chevronLeft }),
+          prev.short
+        )
+      : null,
+    next
+      ? h(
+          "button",
+          {
+            type: "button",
+            class: "btn btn-ghost btn-sm",
+            onClick: () => {
+              state.onboarding.step = next.id;
+              renderView();
+            },
+          },
+          next.short,
+          h("span", { html: I.chevronRight })
+        )
+      : null
+  );
+};
+
+const choiceGrid = (options, value, onPick, { name }) =>
+  h(
+    "div",
+    { class: "choice-grid", role: "radiogroup", "aria-label": name },
+    ...options.map((opt) =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: `choice${value === opt.id ? " is-selected" : ""}`,
+          role: "radio",
+          "aria-checked": String(value === opt.id),
+          onClick: () => onPick(opt.id),
+        },
+        h("strong", { text: opt.label }),
+        h("span", { text: opt.blurb })
+      )
+    )
+  );
+
+const stageProfile = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const p = record.profile;
+  const bind = (key, el) => {
+    el.value = p[key] || "";
+    el.addEventListener("input", () => {
+      touchOnboarding((r) => {
+        r.profile[key] = el.value;
+      });
+      refreshPrimary();
+    });
+    return el;
+  };
+  let actions = stageActions(step, { allowSkip: false });
+  const refreshPrimary = () => {
+    const fresh = stageActions(step, { allowSkip: false });
+    actions.replaceWith(fresh);
+    actions = fresh;
+  };
+  const pick = (key) => (value) => {
+    touchOnboarding((r) => {
+      r.profile[key] = value;
+    });
+    renderView();
+  };
+  return [
+    h(
+      "div",
+      { class: "form-grid" },
+      formField(
+        "What should I call you?",
+        bind(
+          "preferredName",
+          h("input", { class: "field", type: "text", maxlength: 40, placeholder: "First name" })
+        )
+      ),
+      h(
+        "div",
+        { class: "form-field" },
+        h("span", { class: "form-label", text: "Your track" }),
+        choiceGrid(TRACKS, p.track, pick("track"), { name: "Track" })
+      ),
+      h(
+        "div",
+        { class: "form-field" },
+        h("span", { class: "form-label", text: "You are joining as" }),
+        choiceGrid(ENGAGEMENTS, p.engagement, pick("engagement"), { name: "Engagement type" })
+      ),
+      h(
+        "div",
+        { class: "form-row" },
+        formField("Start date", bind("startDate", h("input", { class: "field", type: "date" }))),
+        formField(
+          "Manager's name",
+          bind(
+            "managerName",
+            h("input", {
+              class: "field",
+              type: "text",
+              maxlength: 80,
+              placeholder: "Who you report to",
+            })
+          )
+        )
+      ),
+      formField(
+        "Manager's email",
+        bind(
+          "managerEmail",
+          h("input", {
+            class: "field",
+            type: "email",
+            maxlength: 120,
+            placeholder: "name@3hue.net",
+            inputmode: "email",
+          })
+        ),
+        "I'll write the ready-for-day-one note to this address at the end."
+      )
+    ),
+    actions,
+  ];
+};
+
+const stageTour = (step) => {
+  const record = ob();
+  const done = stepStatus(record, step.id) === "done";
+  return [
+    h(
+      "div",
+      { class: "stage-feature" },
+      h("span", { class: "stage-feature-icon", html: I.map }),
+      h(
+        "div",
+        null,
+        h("strong", { text: done ? "Tour complete" : "The spotlight tour" }),
+        h("p", {
+          text: "Nine stops, about four minutes: Home, the workspace sections, search, asking me, the Digital Workforce, how a tile works, View as, your identity card and Documents. Arrow keys or the buttons move you along; Esc leaves.",
+        })
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () =>
+            startTour({
+              onDone: () => {
+                markOnboardingTask("tour.complete");
+                logOnboardingEvent("tour.completed");
+                if (stepStatus(ob(), "tour") !== "done") {
+                  navigate({ view: "onboarding" });
+                  completeStep(step, "done");
+                } else {
+                  navigate({ view: "onboarding" });
+                }
+              },
+            }),
+        },
+        h("span", { html: I.sparkles }),
+        done ? "Run it again" : "Start the tour"
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageToolkit = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const track = record.profile.track;
+  if (!record.later.length && track) {
+    touchOnboarding((r) => {
+      r.later = laterFor(track);
+    });
+  }
+  if (state.favorites.size >= 3 && !record.tasks["toolkit.pin"]) markOnboardingTask("toolkit.pin");
+  const kit = toolkitFor(track)
+    .map((id) => appById.get(id))
+    .filter(Boolean);
+  const later = (record.later || []).map((id) => appById.get(id)).filter(Boolean);
+  const trackDef = trackById(track);
+  return [
+    !track
+      ? h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "Pick a track first" }),
+          h("span", { text: "Go back to Welcome and choose your track so I can tailor this list." })
+        )
+      : null,
+    h(
+      "div",
+      { class: "stage-section" },
+      h("h3", {
+        text: trackDef ? `${trackDef.label}: open these every week` : "Everyone opens these",
+      }),
+      h("p", {
+        class: "form-hint",
+        text: `Star the ones you'll use daily. Pinned tiles sit at the top of Home. ${state.favorites.size} pinned so far.`,
+      }),
+      tileSet(kit)
+    ),
+    later.length
+      ? h(
+          "div",
+          { class: "stage-section" },
+          h("h3", { text: "Later: deep dives I've parked for you" }),
+          h("p", {
+            class: "form-hint",
+            text: "Worth a proper sitting in week two or three. They stay on your Onboarding page.",
+          }),
+          tileSet(later, "list")
+        )
+      : null,
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const launchApp = (app, taskId, eventType) => {
+  if (!app) return;
+  recordLaunch(app.id);
+  window.open(app.url, "_blank", "noopener");
+  if (taskId) markOnboardingTask(taskId);
+  if (eventType) logOnboardingEvent(eventType, app.id);
+  renderView();
+};
+
+const stageSecurity = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const app = appById.get(step.tile);
+  const attestBox = h("input", {
+    type: "checkbox",
+    id: "attest-security",
+    onChange: (event) => {
+      touchOnboarding((r) => {
+        if (event.target.checked) {
+          r.tasks[step.attest.id] = true;
+          r.tasks["security.modules"] = true;
+        } else delete r.tasks[step.attest.id];
+      });
+      if (event.target.checked) logOnboardingEvent("training.attested", "knowbe4");
+      renderView();
+    },
+  });
+  attestBox.checked = Boolean(record.tasks[step.attest.id]);
+  return [
+    app
+      ? h(
+          "div",
+          { class: "stage-feature" },
+          h("div", { class: "stage-feature-tile" }, buildTile(app)),
+          h(
+            "div",
+            { class: "stage-feature-actions" },
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn",
+                onClick: () => spotlightTile(app.id, { view: "section", section: app.tab }, step),
+              },
+              h("span", { html: I.search }),
+              "Show me where it lives"
+            ),
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary",
+                onClick: () => launchApp(app, "security.launch", "knowbe4.launched"),
+              },
+              h("span", { html: I.external }),
+              "Launch KnowBe4 for me"
+            )
+          )
+        )
+      : h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "KnowBe4 tile missing" }),
+          h("span", { text: "An admin needs to add the KnowBe4 tile to Security & Compliance." })
+        ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    h(
+      "label",
+      { class: `attest${attestBox.checked ? " is-done" : ""}`, for: "attest-security" },
+      attestBox,
+      h(
+        "span",
+        null,
+        h("strong", { text: step.attest.label }),
+        h("span", {
+          class: "sub",
+          text: " Ticking this records the date on your onboarding record and in the note to your manager.",
+        })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageChecklist = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const app = step.tile ? appById.get(step.tile) : null;
+  const tasks = tasksFor(step, record.profile);
+  const done = tasks.filter((task) => record.tasks[task.id]).length;
+  return [
+    app
+      ? h(
+          "div",
+          { class: "stage-feature" },
+          h("div", { class: "stage-feature-tile" }, buildTile(app)),
+          h(
+            "div",
+            { class: "stage-feature-actions" },
+            h(
+              "button",
+              {
+                type: "button",
+                class: "btn btn-primary",
+                onClick: () => launchApp(app, null, "profile.opened"),
+              },
+              h("span", { html: I.external }),
+              `Open ${app.name}`
+            )
+          )
+        )
+      : null,
+    h("p", {
+      class: "form-hint",
+      text: `${done} of ${tasks.length} ticked. Required items are those without an Optional chip.`,
+    }),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasks.map((task) => taskRow(task, record, { onToggle: renderView }))
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageTeam = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const agents = agentsFor(record.profile.track)
+    .map((id) => agentById(id))
+    .filter(Boolean);
+  return [
+    h("div", { class: "agent-strip" }, ...agents.map((agent) => agentChip(agent))),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () => {
+            markOnboardingTask("team.ask");
+            openAsk("Hi Huey, I'm new. What should I know in my first week?");
+          },
+        },
+        h("span", { html: I.message }),
+        "Say hi to Huey"
+      ),
+      h(
+        "button",
+        { type: "button", class: "btn", onClick: () => navigate({ view: "team" }) },
+        "See the whole roster"
+      )
+    ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step),
+  ];
+};
+
+const stageManager = (step) => {
+  const record = ob() || newOnboardingRecord();
+  const who = state.identity || {};
+  const text = managerMessage({
+    name: who.name || record.profile.preferredName || who.email,
+    email: who.email,
+    record,
+    dateLabel: (iso) => formatDate(iso.slice(0, 10)),
+  });
+  const draft = h("textarea", {
+    class: "field manager-draft",
+    rows: 12,
+    "aria-label": "Message to your manager",
+  });
+  draft.value = text;
+  const to = record.profile.managerEmail || "";
+  const subject = `Ready for day one: ${who.name || record.profile.preferredName || who.email || "new hire"}`;
+  const sent = (channel) => {
+    markOnboardingTask("manager.sent");
+    touchOnboarding((r) => {
+      r.managerNotifiedAt = nowIso();
+    });
+    logOnboardingEvent("manager.notified", channel);
+    renderView();
+  };
+  return [
+    !to
+      ? h(
+          "div",
+          { class: "notice" },
+          h("strong", { text: "No manager email yet" }),
+          h("span", { text: "Add it in the Welcome step and I'll address the note for you." })
+        )
+      : null,
+    h(
+      "div",
+      { class: "form-field" },
+      h("span", { class: "form-label", text: `To ${to || "your manager"}` }),
+      draft,
+      h("span", { class: "form-hint", text: "Edit anything you like before sending." })
+    ),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "a",
+        {
+          class: "btn btn-primary",
+          href: mailto(to || SUPPORT_EMAIL, subject, text),
+          onClick: (event) => {
+            // open the mail client with whatever the draft says now
+            event.currentTarget.href = mailto(to || SUPPORT_EMAIL, subject, draft.value);
+            sent("email");
+          },
+        },
+        h("span", { html: I.mail }),
+        "Send by email"
+      ),
+      h(
+        "a",
+        {
+          class: "btn",
+          href: to
+            ? `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(to)}&message=${encodeURIComponent(text)}`
+            : "https://teams.microsoft.com/",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          onClick: (event) => {
+            if (to)
+              event.currentTarget.href = `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(to)}&message=${encodeURIComponent(draft.value)}`;
+            sent("teams");
+          },
+        },
+        h("span", { html: I.message }),
+        "Send in Teams"
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-ghost btn-sm",
+          onClick: async () => {
+            try {
+              await navigator.clipboard.writeText(draft.value);
+              toast("Copied");
+            } catch (error) {
+              toast("Copy failed");
+            }
+          },
+        },
+        h("span", { html: I.link }),
+        "Copy"
+      )
+    ),
+    h(
+      "ul",
+      { class: "task-list" },
+      ...tasksFor(step, record.profile).map((task) =>
+        taskRow(task, record, { onToggle: renderView })
+      )
+    ),
+    stageActions(step, { allowSkip: false }),
+  ];
+};
+
+const stageBody = (step) => {
+  if (step.kind === "profile") return stageProfile(step);
+  if (step.kind === "tour") return stageTour(step);
+  if (step.kind === "toolkit") return stageToolkit(step);
+  if (step.kind === "security") return stageSecurity(step);
+  if (step.kind === "team") return stageTeam(step);
+  if (step.kind === "manager") return stageManager(step);
+  return stageChecklist(step);
+};
+
+const confetti = () =>
+  h(
+    "div",
+    { class: "confetti", "aria-hidden": "true" },
+    ...Array.from({ length: 28 }, (_, i) => h("i", { style: { "--i": String(i) } }))
+  );
+
+const celebration = () => {
+  const record = ob();
+  const progress = journeyProgress();
+  const later = (record.later || []).map((id) => appById.get(id)).filter(Boolean);
+  const started = record.startedAt ? new Date(record.startedAt) : null;
+  const finished = record.completedAt ? new Date(record.completedAt) : null;
+  const days =
+    started && finished ? Math.max(1, Math.round((finished - started) / 86400000)) : null;
+  return h(
+    "section",
+    { class: "celebration card" },
+    state.onboarding.celebrate ? confetti() : null,
+    h("span", {
+      class: "celebration-avatar",
+      html: avatarSvg(CONCIERGE, { size: 72, state: "speaking" }),
+    }),
+    h("span", { class: "eyebrow eyebrow-brand", text: "Onboarding complete" }),
+    h("h2", {
+      text: `Welcome to 3HUE, ${firstName() || record.profile.preferredName || "colleague"}. Properly, this time.`,
+    }),
+    h("p", {
+      text: `${progress.done} of ${progress.total} steps done${progress.skipped ? `, ${progress.skipped} skipped` : ""}${days ? `, over ${days} day${days === 1 ? "" : "s"}` : ""}. ${record.managerNotifiedAt ? "Your manager has the update." : "Your manager hasn't been sent the update yet; the Manager step has it ready."}`,
+    }),
+    h(
+      "div",
+      { class: "stage-feature-actions" },
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn btn-primary",
+          onClick: () => startTour({ onDone: () => navigate({ view: "onboarding" }) }),
+        },
+        h("span", { html: I.map }),
+        "Run the tour again"
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "btn",
+          onClick: () => openAsk("What should I focus on in my second week?"),
+        },
+        h("span", { html: I.message }),
+        "Ask Huey what's next"
+      ),
+      h(
+        "button",
+        { type: "button", class: "btn btn-ghost", onClick: restartOnboarding },
+        "Start over"
+      )
+    ),
+    later.length
+      ? h(
+          "div",
+          { class: "stage-section" },
+          h("h3", { text: "Your Later list" }),
+          tileSet(later, "list")
+        )
+      : null
+  );
+};
+
+const renderOnboarding = (main) => {
+  const record = ob();
+  const progress = journeyProgress();
+  const step = currentJourneyStep();
+  const name = firstName() || (record && record.profile.preferredName) || "";
+
+  main.append(
+    h(
+      "div",
+      { class: "journey-head" },
+      h("span", { class: "journey-head-avatar", html: avatarSvg(CONCIERGE, { size: 64 }) }),
+      h(
+        "div",
+        { class: "journey-head-text" },
+        h("span", { class: "eyebrow eyebrow-brand", text: "Onboarding with Huey" }),
+        h("h1", {
+          text:
+            record && record.completedAt
+              ? "You're all set"
+              : record
+                ? `Your first week${name ? `, ${name}` : ""}`
+                : `Welcome aboard${name ? `, ${name}` : ""}`,
+        }),
+        h("p", {
+          text:
+            record && record.completedAt
+              ? "Everything below stays here for reference, and the Later list is yours to work through."
+              : "Step by step, in order, saved as you go. Close the laptop and pick it up on your phone; you'll land exactly here.",
+        }),
+        h("span", { class: "journey-save", "data-journey-save": "" })
+      ),
+      h(
+        "div",
+        { class: "journey-head-aside" },
+        progressRing(progress.percent, 72),
+        h("span", { class: "journey-count", text: `${progress.done} of ${progress.total} steps` }),
+        record
+          ? h("button", {
+              type: "button",
+              class: "btn btn-ghost btn-sm",
+              onClick: restartOnboarding,
+              text: "Start over",
+            })
+          : null
+      )
+    )
+  );
+  journeySaveSlot = $("[data-journey-save]", main);
+  renderJourneySaveState();
+
+  if (record && record.completedAt) {
+    main.append(celebration());
+    state.onboarding.celebrate = false;
+  }
+
+  const stepper = h(
+    "ol",
+    { class: "journey-steps", "aria-label": "Onboarding steps" },
+    ...STEPS.map((s, index) => {
+      const status = stepStatus(record, s.id);
+      const current = s.id === step.id;
+      return h(
+        "li",
+        null,
+        h(
+          "button",
+          {
+            type: "button",
+            class: `journey-step${current ? " is-current" : ""}${status ? ` is-${status}` : ""}`,
+            "aria-current": current ? "step" : null,
+            onClick: () => {
+              state.onboarding.step = s.id;
+              renderView();
+            },
+          },
+          h("span", {
+            class: "journey-step-mark",
+            html:
+              status === "done"
+                ? I.check
+                : status === "skipped"
+                  ? I.chevronRight
+                  : `<b>${index + 1}</b>`,
+          }),
+          h(
+            "span",
+            { class: "journey-step-text" },
+            h("strong", { text: s.title }),
+            h("span", {
+              text:
+                status === "done"
+                  ? "Completed"
+                  : status === "skipped"
+                    ? "Skipped"
+                    : `About ${s.estimate}`,
+            })
+          ),
+          s.optional ? h("span", { class: "chip", text: "Optional" }) : null
+        )
+      );
+    })
+  );
+
+  const stage = h(
+    "section",
+    { class: "journey-stage card", "aria-live": "polite" },
+    h(
+      "div",
+      { class: "stage-head" },
+      h("span", { class: "stage-icon", html: stepIcon(step) }),
+      h(
+        "div",
+        null,
+        h("span", {
+          class: "eyebrow",
+          text: `Step ${STEPS.indexOf(step) + 1} of ${STEPS.length} · about ${step.estimate}`,
+        }),
+        h("h2", { text: step.title })
+      )
+    ),
+    hueyBubble(step.huey.intro),
+    ...stageBody(step)
+  );
+
+  main.append(
+    h("div", { class: "journey" }, h("aside", { class: "journey-side" }, stepper), stage)
+  );
+};
+
+/* ───── spotlight tour ───── */
+let tour = null;
+
+const tourEl = () => $("[data-tour]");
+
+const endTour = (completed) => {
+  const el = tourEl();
+  if (el) {
+    el.hidden = true;
+    el.textContent = "";
+  }
+  document.body.classList.remove("tour-on");
+  const done = tour && tour.onDone;
+  tour = null;
+  if (completed && done) done();
+};
+
+const positionTour = () => {
+  if (!tour) return;
+  const el = tourEl();
+  const stop = tour.stops[tour.index];
+  if (!el || !stop) return;
+  const mobile = window.innerWidth < 1025;
+  const target = $(mobile && stop.mobile ? stop.mobile : stop.target);
+  const spot = $(".tour-spot", el);
+  const card = $(".tour-card", el);
+  if (!target || !spot || !card) return;
+  const rect = target.getBoundingClientRect();
+  const pad = 8;
+  spot.style.top = `${rect.top - pad}px`;
+  spot.style.left = `${rect.left - pad}px`;
+  spot.style.width = `${rect.width + pad * 2}px`;
+  spot.style.height = `${rect.height + pad * 2}px`;
+  if (mobile) {
+    card.style.top = "";
+    card.style.left = "";
+    card.classList.add("is-docked");
+    return;
+  }
+  card.classList.remove("is-docked");
+  const cw = card.offsetWidth || 360;
+  const ch = card.offsetHeight || 220;
+  const below = rect.bottom + pad + 12;
+  const top = below + ch < window.innerHeight - 16 ? below : Math.max(16, rect.top - pad - 12 - ch);
+  let left = rect.left + rect.width / 2 - cw / 2;
+  if (
+    rect.right + 12 + cw < window.innerWidth &&
+    rect.width < 240 &&
+    rect.left < window.innerWidth / 3
+  )
+    left = rect.right + pad + 12; // beside narrow sidebar targets
+  left = Math.min(Math.max(16, left), window.innerWidth - cw - 16);
+  card.style.top = `${top}px`;
+  card.style.left = `${left}px`;
+};
+
+const showTourStop = () => {
+  if (!tour) return;
+  const el = tourEl();
+  const stop = tour.stops[tour.index];
+  if (!el || !stop) {
+    endTour(true);
+    return;
+  }
+  const route = stop.route === "home" ? { view: "home" } : stop.route;
+  if (
+    route &&
+    (route.view !== state.route.view || (route.section && route.section !== state.route.section))
+  ) {
+    navigate(route);
+  }
+  const mobile = window.innerWidth < 1025;
+  const selector = mobile && stop.mobile ? stop.mobile : stop.target;
+  const target = $(selector);
+  if (!target || (mobile && !stop.mobile && target.closest(".sidebar"))) {
+    // Nothing to point at on this layout; move on.
+    tour.index += 1;
+    if (tour.index >= tour.stops.length) endTour(true);
+    else showTourStop();
+    return;
+  }
+  if (!target.closest(".sidebar, .topbar, .bottombar"))
+    target.scrollIntoView({ block: "center", behavior: "instant" });
+  const last = tour.index === tour.stops.length - 1;
+  el.textContent = "";
+  el.hidden = false;
+  document.body.classList.add("tour-on");
+  el.append(
+    h("div", { class: "tour-spot", "aria-hidden": "true" }),
+    h(
+      "div",
+      { class: "tour-card", role: "dialog", "aria-label": stop.title },
+      h(
+        "div",
+        { class: "tour-card-head" },
+        h("span", { html: avatarSvg(CONCIERGE, { size: 36, state: "speaking" }) }),
+        h(
+          "div",
+          null,
+          h("span", {
+            class: "eyebrow",
+            text: tour.label || `Tour · ${tour.index + 1} of ${tour.stops.length}`,
+          }),
+          h("strong", { text: stop.title })
+        ),
+        h("button", {
+          type: "button",
+          class: "icon-btn",
+          "aria-label": "End tour",
+          html: I.x,
+          onClick: () => endTour(false),
+        })
+      ),
+      h("p", { text: stop.text }),
+      h(
+        "div",
+        { class: "tour-card-actions" },
+        ...(stop.actions
+          ? stop.actions.map((action) =>
+              h("button", {
+                type: "button",
+                class: `btn btn-sm ${action.primary ? "btn-primary" : ""}`,
+                text: action.label,
+                onClick: action.run,
+              })
+            )
+          : [
+              tour.index > 0
+                ? h("button", {
+                    type: "button",
+                    class: "btn btn-ghost btn-sm",
+                    onClick: () => {
+                      tour.index -= 1;
+                      showTourStop();
+                    },
+                    text: "Back",
+                  })
+                : h("button", {
+                    type: "button",
+                    class: "btn btn-ghost btn-sm",
+                    onClick: () => endTour(false),
+                    text: "Skip tour",
+                  }),
+              h("span", {
+                class: "tour-dots",
+                html: tour.stops
+                  .map((_, i) => `<i class="${i === tour.index ? "is-on" : ""}"></i>`)
+                  .join(""),
+              }),
+              h(
+                "button",
+                {
+                  type: "button",
+                  class: "btn btn-primary btn-sm",
+                  onClick: () => {
+                    tour.index += 1;
+                    if (tour.index >= tour.stops.length) endTour(true);
+                    else showTourStop();
+                  },
+                },
+                last ? "Finish" : "Next",
+                h("span", { html: last ? I.check : I.arrow })
+              ),
+            ])
+      )
+    )
+  );
+  window.requestAnimationFrame(positionTour);
+  $(".tour-card .btn-primary", el)?.focus();
+};
+
+const startTour = ({ onDone } = {}) => {
+  closeEverything();
+  const mobile = window.innerWidth < 1025;
+  const stops = TOUR_STOPS.filter((stop) => !(mobile && stop.desktopOnly));
+  tour = { stops, index: 0, onDone };
+  showTourStop();
+};
+
+/** One-stop spotlight on a tile in its section, e.g. "here is KnowBe4". */
+const spotlightTile = (appId, route, step) => {
+  const app = appById.get(appId);
+  if (!app) return;
+  closeEverything();
+  tour = {
+    label: "Huey",
+    stops: [
+      {
+        route,
+        target: `#main .tile[data-app-id='${appId}']`,
+        title: `${app.name} lives here`,
+        text: `This is the tile. Launch it when you're ready and sign in with your @3hue.net account. Your onboarding place is saved; come back when the training is done.`,
+        actions: [
+          {
+            label: "Launch it",
+            primary: true,
+            run: () => {
+              launchApp(app, "security.launch", "knowbe4.launched");
+              endTour(false);
+              navigate({ view: "onboarding" });
+            },
+          },
+          {
+            label: "Back to onboarding",
+            run: () => {
+              endTour(false);
+              state.onboarding.step = step ? step.id : "security";
+              navigate({ view: "onboarding" });
+            },
+          },
+        ],
+      },
+    ],
+    index: 0,
+  };
+  showTourStop();
+};
+
+window.addEventListener("resize", () => positionTour());
+window.addEventListener("scroll", () => positionTour(), { passive: true });
+document.addEventListener("keydown", (event) => {
+  if (!tour) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    endTour(false);
+  } else if (event.key === "ArrowRight" || event.key === "Enter") {
+    if (tour.stops[tour.index] && tour.stops[tour.index].actions) return;
+    event.preventDefault();
+    tour.index += 1;
+    if (tour.index >= tour.stops.length) endTour(true);
+    else showTourStop();
+  } else if (event.key === "ArrowLeft" && tour.index > 0) {
+    event.preventDefault();
+    tour.index -= 1;
+    showTourStop();
+  }
+});
+
+/* ───── admin: onboarding overview ───── */
+const onboardingAdminCard = () => {
+  const body = h("div", null, h("p", { class: "form-hint", text: "Loading…" }));
+  api("/api/admin/onboarding")
+    .then((data) => {
+      const people = data.people || [];
+      body.textContent = "";
+      if (!people.length) {
+        body.append(h("p", { class: "form-hint", text: "Nobody has started onboarding yet." }));
+        return;
+      }
+      body.append(
+        h(
+          "div",
+          { class: "doc-table-wrap" },
+          h(
+            "table",
+            { class: "audit-table onboarding-table" },
+            h(
+              "thead",
+              null,
+              h(
+                "tr",
+                null,
+                h("th", { text: "Person" }),
+                h("th", { text: "Track" }),
+                h("th", { text: "Progress" }),
+                h("th", { text: "Current step" }),
+                h("th", { text: "Last activity" })
+              )
+            ),
+            h(
+              "tbody",
+              null,
+              ...people.map((p) => {
+                const track = trackById(p.track);
+                const eng = engagementById(p.engagement);
+                const current = STEPS.find((s) => s.id === p.current);
+                const pct = Math.round((p.done / (p.total || STEPS.length)) * 100);
+                return h(
+                  "tr",
+                  null,
+                  h(
+                    "td",
+                    null,
+                    h("strong", { text: p.preferredName || p.email }),
+                    h("div", { class: "sub", text: p.email })
+                  ),
+                  h("td", { text: `${track ? track.label : "—"}${eng ? ` · ${eng.label}` : ""}` }),
+                  h(
+                    "td",
+                    null,
+                    h(
+                      "span",
+                      { class: "mini-bar", "aria-hidden": "true" },
+                      h("i", { style: { width: `${pct}%` } })
+                    ),
+                    h("span", {
+                      class: "sub",
+                      text: ` ${p.done}/${p.total}${p.completedAt ? " · complete" : ""}${p.managerNotifiedAt ? " · manager told" : ""}`,
+                    })
+                  ),
+                  h("td", { text: p.completedAt ? "Done" : current ? current.title : "—" }),
+                  h("td", {
+                    class: "audit-when",
+                    text: p.updatedAt ? relativeTime(Date.parse(p.updatedAt)) : "",
+                  })
+                );
+              })
+            )
+          )
+        )
+      );
+    })
+    .catch((error) => {
+      body.textContent = "";
+      body.append(h("div", { class: "form-error", text: error.message }));
+    });
+  return adminCard(
+    "Onboarding",
+    "Who is on the journey, how far they are, and whether their manager has the update.",
+    { span: true },
+    body
+  );
+};
+
+const onboardingNavCount = () => {
+  const record = ob();
+  if (!record) return "new";
+  if (record.completedAt) return "✓";
+  const progress = journeyProgress();
+  return `${progress.done}/${progress.total}`;
+};
+
 /* ───────────────────────── catalog + administration ─────────────────────────
  * The effective catalog comes from the Worker (/api/catalog): the repository seed until an admin
  * edits something, then the KV document. Admins edit tiles and announcements in place; only Super
@@ -2934,6 +4580,7 @@ const api = async (path, { method = "GET", body } = {}) => {
     const err = new Error((data && data.error) || `The hub returned ${res.status}.`);
     err.status = res.status;
     err.details = data && data.details;
+    if (data && data.record) err.record = data.record;
     throw err;
   }
   return data;
@@ -3531,7 +5178,7 @@ const renderAdmin = (main) => {
         })
       )
     );
-  grid.append(catalogCard(), announcementsCard(), rolesCard(), auditCard());
+  grid.append(catalogCard(), announcementsCard(), rolesCard(), onboardingAdminCard(), auditCard());
 };
 
 const catalogCard = () => {
@@ -4377,10 +6024,13 @@ const init = () => {
   renderView();
   if (initial.agent) openAgent(initial.agent);
   if (initial.ask) openAsk();
-  Promise.allSettled([loadIdentity(), loadCatalog()]).then(() => {
-    refreshAll();
-    loadInventory();
-  });
+  if (initial.step) state.onboarding.step = initial.step;
+  Promise.allSettled([loadIdentity(), loadCatalog()])
+    .then(() => loadOnboarding())
+    .then(() => {
+      refreshAll();
+      loadInventory();
+    });
 };
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -7,6 +7,7 @@
 import { verifyAccessJwt, AccessError } from "./access.js";
 import { answerQuestion, AskError, mapAnthropicError } from "./ask.js";
 import { adminRoute, getCatalog, resolveRole, HttpError, ROLES } from "./admin.js";
+import { onboardingRoute } from "./onboarding.js";
 import { HUB_CATALOG } from "../public/catalog.js";
 import { HUB_BUILD } from "../public/build.js";
 
@@ -184,9 +185,15 @@ export default {
       });
     }
 
-    if (url.pathname === "/api/catalog" || url.pathname.startsWith("/api/admin/")) {
+    if (
+      url.pathname === "/api/catalog" ||
+      url.pathname === "/api/onboarding" ||
+      url.pathname.startsWith("/api/admin/")
+    ) {
       try {
-        const handled = await adminRoute({ request, url, env, identity: who, role });
+        const handled =
+          (await onboardingRoute({ request, url, env, identity: who, role })) ||
+          (await adminRoute({ request, url, env, identity: who, role }));
         if (handled) return json(handled.body, { status: handled.status });
         return json({ error: "Not found." }, { status: 404 });
       } catch (error) {
