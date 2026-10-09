@@ -87,22 +87,33 @@ pads the bottom bar and composer. The manifest makes the hub installable (standa
 
 Every AI agent 3HUE operates is designed as a colleague. `public/agents.js` is the single source.
 
-| Field                           | Meaning                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------- |
-| `name`, `pronouns`              | A real first name, no acronyms, no "bot". Pronouns like any colleague.                |
-| `role`, `team`, `reportsTo`     | A job title, a 3HUE team, and the human owner accountable for it.                     |
-| `since`, `status`               | Start date and honest status: **On duty**, **In onboarding**, **Planned**.            |
-| `tagline`, `bio`, `personality` | One line in their voice, a short bio, four traits that shape their copy.              |
-| `capabilities`                  | Each marked `live: true`, `live: "ai"` (needs the AI key) or `live: false` (planned). |
-| `systems`, `reach`              | The catalog tiles they work in, and how to reach them.                                |
-| `voice`                         | Greeting variants, thinking/found/not-found lines, a hand-off line, sign-offs.        |
-| `avatar`, `tint`                | Portrait features (eyes, brows, mouth, hair, accessory, blush) and a Prism tint.      |
+| Field                           | Meaning                                                                                                                         |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `name`, `pronouns`              | A real first name, no acronyms, no "bot". Pronouns like any colleague.                                                          |
+| `role`, `team`, `reportsTo`     | A job title, a 3HUE team, and the human owner accountable for it.                                                               |
+| `since`, `status`               | Start date and honest status: **On duty**, **In onboarding**, **Planned**.                                                      |
+| `tagline`, `bio`, `personality` | One line in their voice, a short bio, four traits that shape their copy.                                                        |
+| `capabilities`                  | Each marked `live: true`, `live: "ai"` (needs the AI key) or `live: false` (planned).                                           |
+| `systems`, `reach`              | The catalog tiles they work in, and how to reach them.                                                                          |
+| `voice`                         | Greeting variants, thinking/found/not-found lines, a hand-off line, sign-offs.                                                  |
+| `look`, `tint`                  | Portrait inputs: skin, hair base and style, brows, lashes, beard, garment, accessory, prop; a Prism tint for the hi/lo colours. |
+| `signature`                     | The gesture that identifies them in motion (name + one-line description).                                                       |
+| `intro`                         | How they introduce themselves, in their own words, as three short beats.                                                        |
 
-**Portraits** are generated vectors (`avatarSvg`) in one visual family: rounded-square frame in
-the agent's tint, ivory face plate, expressive geometric eyes and brows, one accessory that says
-something about the job (Huey's headset, Sage's glasses, Vesper's hood, Quinn's visor, Marlowe's
-monocle, Aries's pen, Vera's badge, Theo's collar, Trevor's goggles, Ava's halo from the tour). They blink idly, bob while thinking, and the mouth animates
-while speaking, so an agent feels present without ever pretending to be human.
+**Portraits** are generated vectors drawn by `portrait.js`, the character renderer shared with the
+"3HUE Digital Workforce" introduction, so the hub, ECARM and the films show the same people. Each
+agent is a full character: a face with real skin tones and hair (Huey's coily hair and full beard,
+Ava's long auburn hair, Sage's green swoop, Vesper's bun, Quinn's locs, Marlowe's violet bob,
+Aries's ponytail, Vera's afro, Theo's crop, Trevor's cap), a garment in their tint (tie, blouse,
+mandarin collar, turtleneck or tee), one accessory that says something about the job (Huey's
+headset, Sage's round glasses, Vesper's visor, Quinn's earpiece, Marlowe's monocle, Aries's stylus,
+Vera's half glasses, Ava's earrings) and a prop in hand (keys, clicker, folders, radar, stopwatch,
+dossier, phone, stamp, checklist, binoculars). Agents in onboarding wear an onboarding lanyard.
+`avatarSvg` renders the head as a square thumbnail everywhere, and the whole character on the
+profile hero, where the ambient details (hair sheen, lens scan, radar sweep) are allowed to move.
+Thumbnails blink idly; the mouth animates while speaking. Each agent also has a **signature move**
+(Huey's "This way", Vera's "Hold, then verify", Trevor's "Spotted") that the introduction film
+performs and the profile describes.
 
 **Voice & tone.** Warm, direct, brief. Dry humor in small doses, never at the user's expense. No
 exclamation marks in a row, no emoji, no "As an AI". Agents say "I don't have that" and hand off to

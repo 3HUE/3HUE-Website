@@ -137,7 +137,8 @@ internal/
   public/prism.css           the Prism design tokens and primitives (shared language — see DESIGN.md)
   public/portal.css          hub layout and components on top of Prism
   public/portal.js           the app: routing, views, tiles, palette, chat, inventory adapter
-  public/agents.js           the digital workforce: identities, voice, portrait generator
+  public/agents.js           the digital workforce: identities, looks, signatures, voice
+  public/portrait.js         character renderer shared with the Digital Workforce introduction
   public/catalog.js          THE CONTENT: sections, groups, audiences, tiles, announcements
   public/onboarding.js       the onboarding journey: tracks, steps, tasks, Huey's lines, tour stops
   public/build.js            build marker shared by Worker and page (stale-tab detection)
@@ -145,7 +146,7 @@ internal/
   public/config.js           runtime config: SharePoint site/list, Entra app ids, field map
   public/data/inventory.sample.json  preview records shown until the SharePoint list is connected
   public/lib/msal-browser.min.js     Microsoft Authentication Library 2.39.0 (MIT), vendored
-  public/icons/, manifest.webmanifest  installable web app
+  public/icons/, manifest.webmanifest  installable web app; icons/agents/<id>.png (head) and <id>-full.png (character)
   public/404.html            not-found page
   DESIGN.md                  Prism design language + agent identity system
   package.json               wrangler, @anthropic-ai/sdk, test scripts

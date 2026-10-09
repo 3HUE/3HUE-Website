@@ -1534,6 +1534,14 @@ const agentCard = (agent, index) => {
       )
     ),
     h("p", { class: "tagline", text: `“${agent.tagline}”` }),
+    agent.signature
+      ? h(
+          "div",
+          { class: "signature-line", title: agent.signature.description },
+          h("span", { html: I.sparkles }),
+          h("span", { text: `Signature: ${agent.signature.name}` })
+        )
+      : null,
     h(
       "div",
       { class: "status-row" },
@@ -1616,7 +1624,10 @@ const openAgent = (id) => {
       h(
         "div",
         { class: "profile-hero" },
-        h("span", { html: avatarSvg(agent, { size: 120, decorative: false }) }),
+        h("span", {
+          class: "profile-portrait",
+          html: avatarSvg(agent, { size: 168, decorative: false, full: true }),
+        }),
         h("h2", { text: agent.name }),
         h("div", { class: "role", text: agent.role }),
         h("div", { class: "pronouns", text: agent.pronouns }),
@@ -1701,12 +1712,30 @@ const openAgent = (id) => {
             .map((app) => appCard(app))
         )
       ),
-      agent.voice && agent.voice.handoff
+      agent.signature
+        ? h(
+            "div",
+            { class: "profile-section" },
+            h("h3", { text: "Signature move" }),
+            h(
+              "div",
+              { class: "signature-move" },
+              h("span", { class: "chip chip-brand", text: agent.signature.name }),
+              h("span", { text: agent.signature.description })
+            )
+          )
+        : null,
+      (agent.intro && agent.intro.length) || (agent.voice && agent.voice.handoff)
         ? h(
             "div",
             { class: "profile-section" },
             h("h3", { text: "In their words" }),
-            h("div", { class: "profile-quote", text: `“${agent.voice.handoff}”` })
+            agent.intro && agent.intro.length
+              ? h("div", { class: "profile-quote", text: `“${agent.intro.join(" ")}”` })
+              : null,
+            agent.voice && agent.voice.handoff
+              ? h("p", { class: "form-hint", text: agent.voice.handoff })
+              : null
           )
         : null,
       h(

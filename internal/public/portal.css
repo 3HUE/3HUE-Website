@@ -1042,45 +1042,282 @@ body.rail .shell {
 }
 
 /* ───────────────────────── agents ───────────────────────── */
+/* Portraits come from portrait.js (shared character renderer). Thumbnails are the head crop; the
+ * profile hero is the full character. Ambient animations only run on the full character. */
 .avatar {
   border-radius: 28%;
   flex: 0 0 auto;
+  display: block;
 }
 
-.avatar .av-eyes {
-  transform-origin: 48px 46px;
+.avatar .eye,
+.avatar .browL,
+.avatar .browR,
+.avatar .seal,
+.avatar .reticle,
+.avatar .fxN,
+.avatar .fxA {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.avatar .tilt,
+.avatar .float,
+.avatar .body,
+.avatar .armWave,
+.avatar .armProp {
   transform-box: view-box;
+}
+
+.avatar .mouthOpen {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+
+.avatar .tear,
+.avatar .sad-only {
+  opacity: 0;
+}
+
+/* The span that holds a portrait must never shrink in a flex row. */
+span:has(> .avatar) {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.avatar .eye {
   animation: prism-blink 5.6s ease-in-out infinite;
 }
 
-.avatar-ava .av-eyes {
+.avatar-ava .eye {
   animation-delay: 1.3s;
 }
 
-.avatar-thinking .av-eyes {
+.avatar-thinking .eye {
   animation: none;
-  transform: translate(2px, -3px);
+  transform: translate(1px, -1px);
 }
 
-.avatar-thinking .av-head {
+.avatar-thinking .tilt {
   animation: prism-bob 1.6s ease-in-out infinite;
-  transform-origin: 48px 60px;
-  transform-box: view-box;
+  transform-origin: 48px 76px;
 }
 
-.avatar-speaking .av-mouth {
-  transform-origin: 48px 60px;
-  transform-box: view-box;
-  animation: hub-talk 0.55s ease-in-out infinite;
+.avatar-speaking .mouthOpen {
+  animation: hub-mouth 0.5s steps(1, end) infinite;
 }
 
-@keyframes hub-talk {
+.avatar-speaking .smile {
+  animation: hub-smile 0.5s steps(1, end) infinite;
+}
+
+@keyframes hub-mouth {
   0%,
   100% {
-    transform: scaleY(1);
+    transform: scaleY(0);
   }
   50% {
-    transform: scaleY(1.6) translateY(-1px);
+    transform: scaleY(1);
+  }
+}
+
+@keyframes hub-smile {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ambient life, full character only */
+.avatar:not(.avatar-full) .seam,
+.avatar:not(.avatar-full) .photon,
+.avatar:not(.avatar-full) .dataScroll,
+.avatar:not(.avatar-full) .lensScan,
+.avatar:not(.avatar-full) .radarSweep,
+.avatar:not(.avatar-full) .platRing,
+.avatar:not(.avatar-full) .holoScan,
+.avatar:not(.avatar-full) .scriptScan,
+.avatar:not(.avatar-full) .visorScan,
+.avatar:not(.avatar-full) .watchArc,
+.avatar:not(.avatar-full) .onbBar,
+.avatar:not(.avatar-full) .hairSheen,
+.avatar:not(.avatar-full) .blipA,
+.avatar:not(.avatar-full) .blipB {
+  animation: none !important;
+}
+
+.avatar-full .seam {
+  stroke-dasharray: 2.4 7;
+  animation: wf-flow 3.2s linear infinite;
+}
+
+.avatar-full .photon {
+  stroke-dasharray: 1.2 30;
+  animation: wf-photon 2.4s linear infinite;
+}
+
+.avatar-full .dataScroll {
+  animation: wf-scroll 5s linear infinite;
+}
+
+.avatar-full .lensScan {
+  transform-box: view-box;
+  transform-origin: 57.5px 47.3px;
+  animation: wf-spin 6s linear infinite;
+}
+
+.avatar-full .radarSweep {
+  transform-box: view-box;
+  transform-origin: 63px 105px;
+  animation: wf-spin 3.2s linear infinite;
+}
+
+.avatar-full .platRing {
+  animation: wf-ring 9s linear infinite;
+}
+
+.avatar-full .holoScan {
+  animation: wf-holo 2.8s ease-in-out infinite;
+}
+
+.avatar-full .scriptScan {
+  animation: wf-script 3.6s ease-in-out infinite;
+}
+
+.avatar-full .visorScan {
+  animation: wf-visor 2.6s ease-in-out infinite;
+}
+
+.avatar-full .watchArc {
+  stroke-dasharray: 36;
+  animation: wf-watch 4s linear infinite;
+}
+
+.avatar-full .onbBar {
+  animation: wf-onb 2.2s ease-in-out infinite;
+}
+
+.avatar-full .hairSheen {
+  animation: wf-sheen 6s ease-in-out infinite;
+}
+
+.avatar-full .blipA {
+  animation: wf-blip 3.2s ease-in-out infinite;
+}
+
+.avatar-full .blipB {
+  animation: wf-blip 3.2s ease-in-out infinite 1.4s;
+}
+
+@keyframes wf-flow {
+  to {
+    stroke-dashoffset: -9.4;
+  }
+}
+
+@keyframes wf-photon {
+  from {
+    stroke-dashoffset: 31;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wf-scroll {
+  to {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes wf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wf-ring {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+@keyframes wf-holo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes wf-script {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(11px);
+  }
+}
+
+@keyframes wf-visor {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+}
+
+@keyframes wf-watch {
+  from {
+    stroke-dashoffset: 36;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wf-onb {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5.4px);
+  }
+}
+
+@keyframes wf-sheen {
+  0%,
+  55% {
+    transform: translateX(-30px);
+  }
+  85%,
+  100% {
+    transform: translateX(70px);
+  }
+}
+
+@keyframes wf-blip {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar * {
+    animation: none !important;
   }
 }
 
@@ -1704,6 +1941,36 @@ body.rail .shell {
   height: 120px;
   border-radius: 34px;
   box-shadow: var(--shadow-3);
+}
+
+.profile-hero .avatar-full {
+  width: 168px;
+  height: 280px;
+  border-radius: 28px;
+}
+
+.signature-move {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: var(--text-sm);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.signature-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--ink-subtle);
+}
+
+.signature-line svg {
+  width: 13px;
+  height: 13px;
+  color: var(--accent-signal);
 }
 
 .profile-hero h2 {

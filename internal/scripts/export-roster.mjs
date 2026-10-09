@@ -22,7 +22,15 @@ const roster = AGENTS.map((agent) => ({
   capabilities: agent.capabilities,
   systems: agent.systems,
   voice: agent.voice,
-  portrait: { svg: avatarSvg(agent, { size: 96 }), png: `icons/agents/${agent.id}.png` },
+  look: agent.look,
+  signature: agent.signature,
+  intro: agent.intro,
+  portrait: {
+    svg: avatarSvg(agent, { size: 96 }),
+    fullSvg: avatarSvg(agent, { size: 240, full: true }),
+    png: `icons/agents/${agent.id}.png`,
+    fullPng: `icons/agents/${agent.id}-full.png`,
+  },
 }));
 
 mkdirSync(new URL("../public/data/", import.meta.url), { recursive: true });

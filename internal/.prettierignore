@@ -3,3 +3,5 @@ public/lib/
 .wrangler/
 package-lock.json
 node_modules/
+public/portrait.js
+public/data/roster.json
