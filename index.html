@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=48ef2bd2">
+<link rel="stylesheet" href="/assets/css/site.css?v=6a9394a5">
 <link rel="icon" href="/assets/img/logos/favicon.svg" type="image/svg+xml"><link rel="icon" href="/assets/img/logos/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/assets/img/logos/apple-touch-icon.png">
 <link rel="canonical" href="https://3hue.net/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="3HUE Executive Consulting"><meta property="og:title" content="3HUE GRC Acceleration"><meta property="og:description" content="Governed AI, proven security, one workspace. A 10-day Snapshot, the Client Vision platform, or a fractional CISO who runs the program in it. Published starting prices."><meta property="og:url" content="https://3hue.net/"><meta property="og:image" content="https://3hue.net/assets/vids/web/snapshot-poster.jpg"><meta name="twitter:card" content="summary_large_image">
@@ -47,6 +47,7 @@
               <a href="/services/soc2.html">SOC 2 <small>Audit-ready and stay there</small></a>
               <a href="/services/cmmc.html">CMMC Level 2 <small>Phase 2 suspended; what still applies</small></a>
               <a href="/services/hipaa.html">HIPAA <small>The rule can wait; enforcement won't</small></a>
+              <a href="/services/iso-27001.html">ISO 27001 / 27701 <small>ISMS and privacy, certification-ready</small></a>
               <a href="/services/eu-ai-act.html">EU AI Act <small>Deferred, not cancelled</small></a>
               <div class="group-title">Professional services</div>
               <a href="/services/staff-augmentation.html">Staff Augmentation <small>AI-enabled security and GRC expertise</small></a>
@@ -59,7 +60,7 @@
         <li>
           <button class="nav-link" type="button" aria-expanded="false" aria-controls="menuCompany">Company <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
           <div class="menu" id="menuCompany" data-open="false">
-            <a href="/about.html">About &amp; Leadership <small>Founder-led, practitioner depth</small></a>
+            <a href="/about.html">About &amp; Leadership <small>Executive-led, practitioner depth</small></a>
             <a href="/experience/index.html">Inside the ISG Building <small>Guided tour with Ava, sound on</small></a>
             <a href="/trust/index.html">Trust Center</a>
             <a href="/partner-program.html">Partner Program</a>
@@ -79,29 +80,33 @@
 
 
 <main>
-<section class="hero" aria-labelledby="heroTitle">
+<section class="hero hero-split" aria-labelledby="heroTitle">
   <div class="wrap">
-    <p class="label">GRC Acceleration &middot; Client Vision by 3HUE</p>
-    <h1 id="heroTitle">Governed AI. <span class="grad">Proven</span> security.<br>One workspace.</h1>
-    <p class="lede">Enterprise AI needs a governing layer. 3HUE builds it: a Snapshot that tells you where you stand in ten business days, a workspace that scores every cloud account and framework, and a fractional CISO who runs the program in it. Fixed scope. Clear lanes. No handoffs.</p>
-    <div class="actions center">
-      <a class="btn btn-primary" href="#ways">See your options</a>
-      <a class="btn btn-ghost" href="https://calendly.com/aramirez-vcio/15min">Book a 15-min call</a>
+    <div class="hero-copy">
+      <p class="label">GRC Acceleration &middot; Client Vision by 3HUE</p>
+      <h1 id="heroTitle">Governed AI. <span class="grad">Proven</span> security.<br>One workspace.</h1>
+      <p class="lede">SOC 2, HIPAA, CMMC, ISO 27001 and EU AI Act readiness. A named fractional CISO. Incident response and risk programs by runbook. All run in one workspace that scores every cloud account and framework, so the board reads one posture and the auditor tests the same evidence.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#ways">See your options</a>
+        <a class="btn btn-ghost" href="https://calendly.com/aramirez-vcio/15min">Book a 15-min call</a>
+      </div>
     </div>
-    <div class="stage has-film" id="stage">
-      <video id="heroFilm" autoplay muted loop playsinline preload="metadata" poster="/assets/vids/web/snapshot-poster.jpg" aria-label="AI &amp; Security Risk Posture Snapshot: the 30-second film, looping silently">
-        <source src="/assets/vids/web/snapshot-loop-30s.mp4" type="video/mp4">
-      </video>
-      <button class="sound" id="soundBtn" type="button" data-film="/assets/vids/web/snapshot-film-69s.mp4"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>Watch with sound &middot; 1:09</button>
+    <div class="hero-media">
+      <div class="stage has-film" id="stage">
+        <video id="heroFilm" autoplay muted loop playsinline preload="metadata" poster="/assets/vids/web/snapshot-poster.jpg" aria-label="AI &amp; Security Risk Posture Snapshot: the 30-second film, looping silently">
+          <source src="/assets/vids/web/snapshot-loop-30s.mp4" type="video/mp4">
+        </video>
+        <button class="sound" id="soundBtn" type="button" data-film="/assets/vids/web/snapshot-film-69s.mp4"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>Watch with sound &middot; 1:09</button>
+      </div>
+      <p class="demo-note">The 30-second cut loops silently; &ldquo;Watch with sound&rdquo; plays the full film. Screens in the film are illustrative client views.</p>
     </div>
-    <p class="demo-note">The 30-second cut loops silently; &ldquo;Watch with sound&rdquo; plays the full film. Screens in the film are illustrative client views.</p>
   </div>
 </section>
 
 <div class="proof-strip">
   <div class="wrap">
     <div class="who"><span class="label quiet">Trusted in regulated industries</span><span>A transit technology company</span><span>A large North American bank</span><span>A marine services company</span></div>
-    <div class="facts"><span><b>3</b> regulated industries</span><span><b>10</b> business-day Snapshot</span><span><b>100%</b> founder-involved delivery</span></div>
+    <div class="facts"><span><b>3</b> regulated industries</span><span><b>10</b> business-day Snapshot</span><span><b>100%</b> executive-led delivery</span></div>
   </div>
 </div>
 
@@ -122,7 +127,7 @@
           <li>Multi: all six governance packs; AI Signals as an add-on</li>
           <li>POA&amp;M with a 90-day SLA; board-ready ROAR and GROC reports</li>
         </ul>
-        <div class="price"><span class="from">Free to start &middot; plans annual or monthly</span><span class="fine">One organization per workspace, ordinary collaborators included. <a href="/pricing.html">See pricing &rarr;</a></span></div>
+        <div class="price"><span class="from">Free to start &middot; plans annual or monthly</span><span class="fine">One organization per workspace, ordinary collaborators included. <a href="/pricing.html#plans">See pricing &rarr;</a></span></div>
         <a class="btn btn-primary" href="/contact.html?plan=free">Start free</a>
         <a class="film-link" href="/product/client-vision.html">See the product &rarr;</a>
       </article>
@@ -135,12 +140,12 @@
           <li>Your own Client Vision tenant, onboarded with Signals running</li>
           <li>A 90-day plan you keep; the fee is credited if you continue to Managed</li>
         </ul>
-        <div class="price"><span class="from">Fixed fee &middot; 10 business days</span><span class="fine">One business unit, one AI program; multi-entity scoped on the call. <a href="/pricing.html">See pricing &rarr;</a></span></div>
+        <div class="price"><span class="from">Fixed fee &middot; 10 business days</span><span class="fine">One business unit, one AI program; multi-entity scoped on the call. <a href="/pricing.html#snapshot">See pricing &rarr;</a></span></div>
         <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/15min">Book the Snapshot</a>
         <a class="film-link" href="#stage">Watch the 30-second film &uarr;</a>
       </article>
       <article class="lane featured reveal">
-        <div class="k"><p class="label">03 &middot; Managed by 3HUE</p><span class="tag">We run it with you</span></div>
+        <div class="k"><p class="label">03 &middot; Managed</p><span class="tag">We run it with you</span></div>
         <h3>The CISO seat, filled<small>A named vCISO and scoped programs, run in your workspace</small></h3>
         <ul>
           <li>Named fractional CISO, monthly cadence, quarterly board pack</li>
@@ -148,13 +153,34 @@
           <li>SOC 2, HIPAA, CMMC or EU AI Act readiness run for you</li>
           <li>Runs in the Client Vision plan you hold; nothing is billed twice</li>
         </ul>
-        <div class="price"><span class="from">Monthly seat &middot; programs annual</span><span class="fine">The seat plus the programs in your operating plan; Foundation build for a fast start. <a href="/pricing.html">See pricing &rarr;</a></span></div>
+        <div class="price"><span class="from">Monthly seat &middot; programs annual</span><span class="fine">The seat plus the programs in your operating plan; Foundation build for a fast start. <a href="/pricing.html#managed">See pricing &rarr;</a></span></div>
         <a class="btn btn-primary" href="https://calendly.com/aramirez-vcio/15min">Book a vCISO strategy call</a>
+        <a class="film-link" href="/pricing.html#managed">See the program menu &rarr;</a>
       </article>
     </div>
     <div class="lanes-foot">
       <span>More than one entity, cloud or framework? <a href="/contact.html">Talk to us</a></span>
-      <a href="/pricing.html">Compare the three lanes in detail &rarr;</a>
+      <a href="/pricing.html#lanes">Compare the three lanes in detail &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="band mist" id="outcomes" aria-labelledby="outTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="label">What do you need done?</p>
+      <h2 id="outTitle">Start from the outcome. <span class="grad">The lane follows.</span></h2>
+      <p class="lede">Every one of these runs in the same workspace, on the same evidence. Pick the result you are accountable for; each page says what is included, how long it takes and how it is priced.</p>
+    </div>
+    <div class="outcomes">
+      <a class="outcome reveal" href="/services/soc2.html"><span class="ok">Readiness</span><h3>SOC 2</h3><p>Type I or Type II, with hash-verified evidence the auditor tests in the workspace.</p><span class="go">SOC 2 readiness &rarr;</span></a>
+      <a class="outcome reveal" href="/services/hipaa.html"><span class="ok">Readiness</span><h3>HIPAA</h3><p>Security Rule safeguards mapped, the risk analysis done, enforcement-ready.</p><span class="go">HIPAA readiness &rarr;</span></a>
+      <a class="outcome reveal" href="/services/cmmc.html"><span class="ok">Readiness</span><h3>CMMC Level 2</h3><p>The 110 practices, SSP and POA&amp;M, assessment-ready before the clause lands.</p><span class="go">CMMC readiness &rarr;</span></a>
+      <a class="outcome reveal" href="/services/eu-ai-act.html"><span class="ok">Readiness</span><h3>EU AI Act</h3><p>AI systems classified and the obligations met on their dates, not after.</p><span class="go">EU AI Act readiness &rarr;</span></a>
+      <a class="outcome reveal" href="/services/iso-27001.html"><span class="ok">Readiness</span><h3>ISO 27001 / 27701</h3><p>An ISMS and its privacy extension, certification-ready with the evidence attached.</p><span class="go">ISO readiness &rarr;</span></a>
+      <a class="outcome reveal" href="/services/vciso.html"><span class="ok">Leadership</span><h3>The CISO seat</h3><p>A named fractional CISO who owns the program, the board pack and the cadence.</p><span class="go">vCISO services &rarr;</span></a>
+      <a class="outcome reveal" href="/pricing.html#managed"><span class="ok">Programs</span><h3>Incident response and risk</h3><p>CIRP and RMP by runbook: playbook, tabletop, register and treatments, run under the seat.</p><span class="go">The program menu &rarr;</span></a>
+      <a class="outcome reveal" href="/services/it-project-management.html"><span class="ok">Delivery</span><h3>IT governance and delivery</h3><p>Project leadership and embedded practitioners who deliver inside your controls.</p><span class="go">Professional services &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -316,10 +342,10 @@
       <span class="cap">Headshot to come</span>
     </div>
     <div class="founder-copy reveal">
-      <p class="label">Founder-led</p>
+      <p class="label">Executive-led</p>
       <h2 id="founderTitle">Practitioner depth, from day one.</h2>
       <p class="name">Andrew Ramirez<small>Founder, 3HUE Executive Consulting &middot; vCIO / vCISO</small></p>
-      <p>Every engagement is founder-involved. Not a staffing firm, not a Big 4 engagement: a practitioner who has run security and governance inside regulated organizations, working in the same workspace your team uses, with the evidence in view.</p>
+      <p>Every engagement is executive-led. Not a staffing firm, not a Big 4 engagement: a practitioner who has run security and governance inside regulated organizations, working in the same workspace your team uses, with the evidence in view.</p>
       <div class="actions"><a class="btn btn-ghost" href="/about.html">About 3HUE</a><a class="btn btn-ghost" href="/trust/index.html">Trust Center</a></div>
     </div>
   </div>
@@ -378,6 +404,7 @@
           <li><a href="/services/soc2.html">SOC 2</a></li>
           <li><a href="/services/cmmc.html">CMMC Level 2</a></li>
           <li><a href="/services/hipaa.html">HIPAA</a></li>
+          <li><a href="/services/iso-27001.html">ISO 27001 / 27701</a></li>
           <li><a href="/services/eu-ai-act.html">EU AI Act</a></li>
           <li><a href="/services/staff-augmentation.html">Professional services</a></li>
         </ul>
@@ -405,7 +432,7 @@
     </div>
     <div class="fine">
       <span>© 2026 3HUE Executive Consulting LLC. All rights reserved. Client Vision is powered by the AiVRIC platform. Screens show demo data.</span>
-      <span><a href="https://www.linkedin.com/company/3hue/">LinkedIn</a> · <a href="https://www.youtube.com/@3hueexecutiveconsulting747">YouTube</a> · <a href="https://x.com/3huevcio">X</a> · <a href="https://www.instagram.com/3huevcio">Instagram</a></span>
+      <span><a href="https://www.linkedin.com/company/3hueiq/" rel="me">LinkedIn</a> · <a href="https://www.youtube.com/@3hueiq" rel="me">YouTube</a> · <a href="https://x.com/3hueiq" rel="me">X</a> · <a href="https://www.instagram.com/3hueiq/" rel="me">Instagram</a></span>
     </div>
   </div>
 </footer>
