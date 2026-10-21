@@ -1,0 +1,61 @@
+/* Client Vision light-theme UI, shared by the film stage and the landing page. */
+  .cvui {
+    /* Client Vision light theme, lifted from its live stylesheet */
+    --page: #f7f9fb; --surface: #fff; --surface-2: #f1f5f9;
+    --ink: #0f172a; --ink-2: #3f4f66; --mute: #5d6e86;
+    --line: #e6ebf2; --line-2: #cbd5e1;
+    --brand: #00aeef; --brand-deep: #0579aa; --accent-text: #0077ad; --royal: #0039e6;
+    --crit: #d03b3b; --high: #ec835a; --med: #fab219; --low: #0ca30c;
+    --crit-t: #b22b2b; --high-t: #b3541f; --med-t: #8a6002; --low-t: #0a7a0a;
+    --good: #17a34a; --chart-grid: #edf1f6; --chart-axis: #98a5b8;
+    --shadow-card: 0 1px 2px #0f172a0a, 0 8px 24px -12px #0f172a1a;
+    --logo-blue: #0bb8f7; --logo-gray: #666668;
+    --display: "Sora", system-ui, sans-serif;
+    --ui: "Inter", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+.cvui * { box-sizing: border-box; }
+  .cvui .abs { position: absolute; }
+  .cvui .hide { visibility: hidden; }
+
+  /* ---- paper texture: faint dot grid on white ---- */
+  .cvui .paper { position: absolute; inset: -2000px; background-image: radial-gradient(#e3e9f1 1.4px, transparent 1.6px); background-size: 34px 34px; }
+
+  /* ---- app window (browser chrome + Client Vision shell) ---- */
+  .cvui .win { position: absolute; width: 1600px; height: 1000px; border-radius: 18px; background: var(--page); overflow: hidden;
+         box-shadow: 0 0 0 1px #dfe6ef, 0 30px 80px -30px #0f172a40, 0 12px 30px -18px #0f172a30; }
+  .cvui .chrome { height: 44px; display: flex; align-items: center; gap: 14px; padding: 0 18px; background: #fff; border-bottom: 1px solid var(--line); }
+  .cvui .dots { display: flex; gap: 7px; } .dots i { width: 11px; height: 11px; border-radius: 50%; background: #e2e8f0; display: block; }
+  .cvui .url { flex: 0 1 560px; margin: 0 auto; height: 28px; border-radius: 8px; background: var(--surface-2); color: var(--mute); font: 500 13px/28px var(--ui); text-align: center; }
+  .cvui .url b { color: var(--ink); font-weight: 600; }
+  .cvui .shell { position: absolute; top: 44px; left: 0; right: 0; bottom: 0; display: flex; }
+  .cvui .side { width: 236px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 16px 14px; display: flex; flex-direction: column; gap: 2px; }
+  .cvui .brandrow { display: flex; align-items: center; gap: 10px; padding: 2px 6px 14px; font: 700 15px var(--ui); }
+  .cvui .brandrow .mark { width: 30px; height: 30px; }
+  .cvui .search { height: 34px; border: 1px solid var(--line); border-radius: 9px; font: 500 12.5px/32px var(--ui); color: var(--mute); padding: 0 10px; margin-bottom: 10px; }
+  .cvui .navh { font: 700 10px var(--ui); letter-spacing: .14em; color: #8a99ae; padding: 12px 8px 5px; }
+  .cvui .nav { display: flex; align-items: center; gap: 10px; height: 31px; padding: 0 9px; border-radius: 8px; font: 500 13.5px var(--ui); color: var(--ink-2); }
+  .cvui .nav .ic { width: 16px; height: 16px; border-radius: 4px; border: 1.8px solid #94a3b8; flex: none; }
+  .cvui .nav.on { background: #e6f6fd; color: var(--accent-text); font-weight: 600; } .nav.on .ic { border-color: var(--brand); }
+  .cvui .nav .ct { margin-left: auto; min-width: 19px; height: 19px; border-radius: 10px; background: var(--surface-2); font: 600 11px/19px var(--ui); text-align: center; color: var(--ink-2); }
+  .cvui .nav .ct.red { background: var(--crit); color: #fff; }
+  .cvui .main { flex: 1; position: relative; overflow: hidden; }
+  .cvui .topbar { height: 54px; display: flex; align-items: center; gap: 12px; padding: 0 26px; background: #fff; border-bottom: 1px solid var(--line); font: 500 13px var(--ui); color: var(--ink-2); }
+  .cvui .topbar .crumb b { color: var(--ink); font-weight: 600; }
+  .cvui .pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 11px; border-radius: 13px; border: 1px solid var(--line); background: #fff; font: 600 11.5px var(--ui); color: var(--ink-2); }
+  .cvui .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+  .cvui .content { position: absolute; top: 54px; left: 0; right: 0; bottom: 0; padding: 26px 30px; }
+  .cvui .eyebrow { font: 600 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); }
+  .cvui .h1 { font: 700 34px/1.15 var(--ui); letter-spacing: -.02em; margin: 6px 0 8px; }
+  .cvui .lede { font: 400 15px/1.55 var(--ui); color: var(--ink-2); max-width: 820px; }
+  .cvui .card { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-card); }
+  .cvui .k { font: 700 10.5px var(--ui); letter-spacing: .13em; text-transform: uppercase; color: var(--mute); }
+  .cvui .big { font: 700 40px/1 var(--ui); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .cvui .sub { font: 500 12.5px var(--ui); color: var(--mute); }
+  .cvui .tag { display: inline-flex; align-items: center; height: 21px; padding: 0 8px; border-radius: 6px; font: 700 10.5px var(--ui); letter-spacing: .08em; text-transform: uppercase; }
+  .cvui .tag.high { background: #fdece4; color: var(--high-t); } .tag.crit { background: #fbe7e7; color: var(--crit-t); }
+  .cvui .tag.med { background: #fdf3dc; color: var(--med-t); } .tag.low { background: #e5f6e5; color: var(--low-t); }
+  .cvui .tag.info { background: #e6f6fd; color: var(--accent-text); } .tag.gray { background: var(--surface-2); color: var(--ink-2); }
+  .cvui .btn { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 16px; border-radius: 9px; background: var(--brand-deep); color: #fff; font: 600 13.5px var(--ui); }
+  .cvui .row { display: flex; align-items: center; }
+

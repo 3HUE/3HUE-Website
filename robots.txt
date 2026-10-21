@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /internal/
+Sitemap: https://3hue.net/sitemap.xml

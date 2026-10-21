@@ -13,3 +13,9 @@ engagements/
 # Internal-only material, built and deployed separately. This repo is public —
 # nothing under here may ever be committed (second guard: _config.yml exclude).
 assessor-playbook/
+
+# added at launch: original brand films are too large for Cloudflare Pages (the web encodes in assets/vids/web are what the site plays)
+assets/vids/*.mp4
+# Pages build output and the pre-launch staging copy
+_site/
+new-site/

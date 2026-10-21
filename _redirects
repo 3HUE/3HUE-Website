@@ -1,0 +1,21 @@
+# Retired URLs from the 2026 redesign -> their replacements (Cloudflare Pages)
+/ai-advisory/ai-snapshot.html /services/snapshot.html 301
+/ai-advisory/ai-consulting.html /services/ai-governance.html 301
+/ai-advisory/ai-governance.html /services/ai-governance.html 301
+/ai-advisory/ai-readiness.html /services/ai-governance.html 301
+/offers/insider-and-vciso-intro.html /services/vciso.html 301
+/services/security-compliance-services.html /services/soc2.html 301
+/services/isg-managed-programs.html /pricing.html 301
+/services/continuous-risk-management.html /pricing.html 301
+/services/itg-managed-services.html /pricing.html 301
+/services/risk-posture-assessment.html /services/snapshot.html 301
+/isg/pricing.html /pricing/rate-card.html 301
+/industries/* /customer-stories/index.html 301
+/ai-advisory/* /services/ai-governance.html 301
+/services/index.html /pricing.html 301
+/services/cloudsignals-riskops.html /product/client-vision.html 301
+/services/cyber-incident-response-program.html /pricing/rate-card.html 301
+/customer-stories/transit-technologies/ /customer-stories/transit-technologies.html 301
+/customer-stories/large-north-american-bank/ /customer-stories/large-north-american-bank.html 301
+/customer-stories/rolly-marine/ /customer-stories/rolly-marine.html 301
+/insights/continuous-compliance/ /insights/continuous-compliance.html 301
