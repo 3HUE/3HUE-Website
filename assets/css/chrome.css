@@ -19,7 +19,7 @@
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root[data-theme="dark"] {
     color-scheme: dark;
     --paper: #0b1220; --mist: #101a2d; --mist-2: #16233a;
     --ink: #f1f5f9; --ink-2: #b6c2d4; --mute: #8595ab; --line: #1f2d47; --line-2: #2c3d5c;
@@ -67,11 +67,12 @@
 .site-top nav a.nav-link, .site-top nav button.nav-link { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 10px; border: 0; background: transparent; color: var(--ink-2); font: 500 14.5px var(--ui); text-decoration: none; cursor: pointer; }
 .site-top nav a.nav-link:hover, .site-top nav button.nav-link:hover, .site-top nav button.nav-link[aria-expanded="true"] { color: var(--ink); background: var(--mist); }
 .site-top nav .nav-link svg { width: 12px; height: 12px; transition: transform .18s; }
+.site-top nav .nav-link .pill { font: 700 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--sunset); padding: 3px 7px; border-radius: 999px; line-height: 1; }
 .site-top nav button.nav-link[aria-expanded="true"] svg { transform: rotate(180deg); }
 .menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 300px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 10px; display: none; z-index: 60; }
 .menu[data-open="true"] { display: grid; gap: 2px; }
 .menu.wide { min-width: 560px; grid-template-columns: 1fr 1fr; gap: 14px; padding: 14px; }
-.menu .group { display: grid; gap: 2px; }
+.menu .group { display: grid; gap: 2px; align-content: start; }
 .menu .group-title { font: 600 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); padding: 8px 10px 4px; }
 .menu a { display: grid; gap: 1px; padding: 9px 10px; border-radius: 10px; text-decoration: none; color: var(--ink); font: 500 14.5px/1.35 var(--ui); }
 .menu a small { font: 400 12.5px/1.4 var(--ui); color: var(--mute); }

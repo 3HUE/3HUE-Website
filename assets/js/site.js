@@ -6,7 +6,7 @@
   const root = document.documentElement;
   try { const t = localStorage.getItem('3hue-theme'); if (t === 'dark' || t === 'light') root.dataset.theme = t; } catch (e) {}
   const themeBtn = $('#themeBtn');
-  const isDark = () => root.dataset.theme === 'dark' || (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDark = () => root.dataset.theme === 'dark'; // light is the default for everyone; the toggle persists the choice in localStorage
   const paintTheme = () => { if (!themeBtn) return; const d = isDark(); themeBtn.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); themeBtn.dataset.mode = d ? 'dark' : 'light'; };
   if (themeBtn) themeBtn.addEventListener('click', () => { const next = isDark() ? 'light' : 'dark'; root.dataset.theme = next; try { localStorage.setItem('3hue-theme', next); } catch (e) {} paintTheme(); });
   paintTheme();
@@ -19,7 +19,7 @@
     const m = document.getElementById(b.getAttribute('aria-controls'));
     b.addEventListener('click', () => { const open = b.getAttribute('aria-expanded') === 'true'; closeMenus(b); b.setAttribute('aria-expanded', String(!open)); if (m) m.dataset.open = String(!open); });
   });
-  document.addEventListener('click', (e) => { if (!e.target.closest('.top nav')) closeMenus(); });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.site-top')) closeMenus(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMenus(); if (top) top.dataset.mobile = 'closed'; const bg = $('#burger'); if (bg) bg.setAttribute('aria-expanded', 'false'); } });
   const burger = $('#burger');
   if (burger && top) burger.addEventListener('click', () => { const open = top.dataset.mobile === 'open'; top.dataset.mobile = open ? 'closed' : 'open'; burger.setAttribute('aria-expanded', String(!open)); if (open) closeMenus(); });
