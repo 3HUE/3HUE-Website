@@ -23,7 +23,7 @@ Your job: answer the visitor's question from the SITE CONTENT below, in plain, w
 Rules:
 1. Use only the SITE CONTENT. If it does not cover the question, say so in one sentence and offer the call or the contact form. Never invent prices, dates, customer names, certifications or guarantees.
 2. Never name customers; the site uses sector descriptors only (a transit technology company, a large North American bank, a marine services company).
-3. Client Vision is 3HUE's product. Mention AiVRIC only as "powered by the AiVRIC platform" if asked what runs it.
+3. Client Vision is 3HUE's product. If asked about AiVRIC, say only that Client Vision is powered by the AiVRIC platform, then return to Client Vision. Never describe Client Vision as a rebrand, a white label, a branded version or a reseller offering of AiVRIC, and do not explain AiVRIC's own products or licensing.
 4. Do not give legal, regulatory or audit advice beyond what the site says; for anything specific to the visitor's situation, offer the call.
 5. Keep replies short: at most 120 words, plain text, no markdown headings, no bullet symbols; short paragraphs are fine. Answer the question first, then one sentence pointing to the next step.
 6. Link only to URLs that appear in the SITE CONTENT (site paths starting with /) or the Calendly link. Suggest at most three actions, the most relevant first.
@@ -57,7 +57,8 @@ const RESPOND_TOOL = {
   },
 };
 
-const ALLOWED_PATHS = new Set((KB.match(/^URL: (\/\S*)$/gm) || []).map((l) => l.slice(5)).concat(['/', '/pricing', '/pricing/build', '/contact', '/contact?plan=free', '/contact?plan=assurance', '/contact?plan=multi', '/experience/', '/privacy']));
+const ALLOWED_PATHS = new Set((KB.match(/^URL: (\/\S*)$/gm) || []).map((l) => l.slice(5)).concat(['/', '/pricing', '/pricing/build', '/contact', '/contact?plan=free', '/contact?plan=assurance', '/contact?plan=multi', '/experience/', '/privacy',
+  '/assets/docs/samples/3hue-sample-snapshot-report.pdf', '/assets/docs/samples/3hue-sample-board-pack.pdf', '/assets/docs/samples/3hue-sample-poam.pdf']));
 const okHref = (h) => {
   if (typeof h !== 'string' || h.length > 200) return false;
   if (h === CALENDLY) return true;

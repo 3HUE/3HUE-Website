@@ -13,3 +13,5 @@
   Cache-Control: public, max-age=604800
 /assets/img/*
   Cache-Control: public, max-age=604800
+/assets/docs/*
+  Cache-Control: public, max-age=86400

@@ -47,7 +47,7 @@
     const p = document.createElement('div'); p.className = 'huey-bubble'; p.innerHTML = esc(m.content).replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>'); el.append(p);
     if (m.actions && m.actions.length) {
       const row = document.createElement('div'); row.className = 'huey-actions';
-      m.actions.forEach((a) => { const b = document.createElement('a'); b.className = 'huey-act'; b.href = a.href; b.textContent = a.label; if (/^https?:\/\//.test(a.href) && !a.href.startsWith(location.origin)) { b.target = '_blank'; b.rel = 'noopener'; } row.append(b); });
+      m.actions.forEach((a) => { const b = document.createElement('a'); b.className = 'huey-act'; b.href = a.href; b.textContent = a.label; if ((/^https?:\/\//.test(a.href) && !a.href.startsWith(location.origin)) || /\.pdf$/i.test(a.href)) { b.target = '_blank'; b.rel = 'noopener'; } row.append(b); });
       el.append(row);
     }
     return el;
