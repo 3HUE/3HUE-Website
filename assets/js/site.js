@@ -190,6 +190,8 @@
   try {
     const plan = new URLSearchParams(location.search).get('plan') || new URLSearchParams(location.hash.replace(/^#/, '')).get('plan');
     const map = { free: ['Client Vision Free', 'Please set up a free Client Vision workspace for us.'], assurance: ['Client Vision Assurance', 'We would like Client Vision Assurance, billed annually. Governance pack: '], multi: ['Client Vision Assurance Multi', 'We would like Client Vision Assurance Multi, billed annually.'] };
+    const quote = (new URLSearchParams(location.search).get('quote') || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 32);
+    if (quote && quote !== 'preview') { const ref = 'Pricing page: https://3hue.net/pricing/for/' + quote; if (!f.message.value.includes(ref)) f.message.value = ref + '\n\n' + f.message.value; if (!plan) { f.interest.value = f.interest.querySelector('option[value*="Managed"], option[value*="vCISO"]') ? f.interest.querySelector('option[value*="Managed"], option[value*="vCISO"]').value : f.interest.value; } }
     if (plan && map[plan]) {
       f.interest.value = map[plan][0]; if (!f.message.value) f.message.value = map[plan][1];
       const h = document.getElementById('formTitle'); if (h) { h.classList.remove('sr-only'); h.textContent = plan === 'free' ? 'Start your free workspace' : 'Order ' + map[plan][0]; h.style.marginBottom = '4px'; }

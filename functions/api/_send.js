@@ -30,12 +30,12 @@ export function rateLimited(request) {
   return arr.length > 20;
 }
 
-export async function sendMail(env, { subject, text, html, replyTo }) {
+export async function sendMail(env, { subject, text, html, replyTo, to }) {
   if (!env.RESEND_API_KEY || !env.NOTIFY_TO) return { queued: false, reason: 'mail not configured' };
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: env.FROM_ADDRESS || '3HUE <no-reply@3hue.net>', to: [env.NOTIFY_TO], reply_to: replyTo || undefined, subject, text, html }),
+    body: JSON.stringify({ from: env.FROM_ADDRESS || '3HUE <no-reply@3hue.net>', to: [to || env.NOTIFY_TO], reply_to: replyTo || undefined, subject, text, html }),
   });
   if (!r.ok) return { queued: false, reason: `resend ${r.status}` };
   return { queued: true };
