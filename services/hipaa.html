@@ -232,7 +232,10 @@
   .count small { display: block; margin-top: 6px; font: 600 11.5px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
   .count-note { margin: 8px 0 0; font: 600 14px var(--mono); letter-spacing: .06em; color: var(--accent); }
   /* levels */
-  .levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+  .levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+  .levels-row { margin-top: clamp(26px, 4vw, 40px); }
+  .levels-row .levels { margin-top: 0; }
+  .lvl { display: grid; gap: 6px; align-content: start; }
   @media (max-width: 640px) { .levels { grid-template-columns: 1fr; } }
   .lvl { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
   .lvl.on { border-color: var(--brand); background: var(--mist); }
@@ -269,7 +272,8 @@
 
 
   /* HIPAA additions */
-  .levels.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .levels.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 960px) { .levels.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 640px) { .levels.four { grid-template-columns: 1fr; } }
   .status-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
   .stat-chip { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 16px; border-radius: 20px; font: 500 14.5px var(--ui); color: var(--ink-2); border: 1.5px solid var(--line); background: var(--paper); text-align: left; }
@@ -396,13 +400,16 @@
       <div><p class="label">What is HIPAA compliance?</p><h2>Protecting health data, and proving that you do.</h2></div>
       <div>
         <p class="def">HIPAA compliance means meeting the federal rules that protect health information: the Privacy Rule, the Security Rule and the Breach Notification Rule. They apply to health plans, most healthcare providers and clearinghouses, and to the business associates that handle their data. An employer’s self-funded group health plan is a health plan under HIPAA, too.</p>
-        <div class="levels four">
+
+      </div>
+    </div>
+    <div class="wrap levels-row">
+      <div class="levels four">
           <div class="lvl"><b>Privacy Rule</b><span>Who may use and disclose protected health information, and patients’ rights to access it.</span></div>
           <div class="lvl on"><b>Security Rule</b><span>Administrative, physical and technical safeguards for electronic PHI, starting with an accurate, thorough risk analysis.</span></div>
           <div class="lvl"><b>Breach Notification</b><span>Tell affected individuals within 60 days of discovery. For 500+ people, HHS and the media too.</span></div>
           <div class="lvl"><b>Who’s covered</b><span>Providers, health plans (including self-funded employer plans), clearinghouses and their business associates.</span></div>
         </div>
-      </div>
     </div>
   </section>
 
@@ -656,7 +663,7 @@
   const rail = el('rail'), view = el('view');
   const railBtns = STEPS.map((st, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'st-' + i; b.innerHTML = `<small>${String(i + 1).padStart(2, '0')}</small><span></span><i class="tick"></i>`; b.querySelector('span').textContent = st.w; rail.append(b); return b; });
   STEPS.forEach((st) => { const sc = document.createElement('div'); sc.className = 'scene'; const cam = document.createElement('div'); cam.className = 'cam cvui'; const win = st.make(); cam.append(win.el); sc.append(cam); view.append(sc); st.sc = sc; st.cam = cam; st.r = win.r; if (st.rest) st.rest(win.r); });
-  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; }); };
+  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; st.cam.style.clipPath = `polygon(${x}px ${y}px, ${x + w}px ${y}px, ${x + w}px ${y + h}px, ${x}px ${y + h}px)`; }); };
   new ResizeObserver(frame).observe(view);
   let cur = -1, t0 = 0, paused = false; const DUR = 6500;
   function show(i, user) { if (i === cur) return; cur = i; railBtns.forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; b.querySelector('.tick').style.width = '0'; });

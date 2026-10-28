@@ -578,7 +578,7 @@
   const rail = document.getElementById('rail'), view = document.getElementById('view');
   const railBtns = STEPS.map((st, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'st-' + st.w.toLowerCase(); b.innerHTML = `<small>${String(i + 1).padStart(2, '0')}</small><span>${st.w}</span><i class="tick"></i>`; rail.append(b); return b; });
   STEPS.forEach((st) => { const sc = document.createElement('div'); sc.className = 'scene'; const cam = document.createElement('div'); cam.className = 'cam cvui'; const win = st.make(); cam.append(win.el); sc.append(cam); view.append(sc); st.sc = sc; st.cam = cam; st.r = win.r; if (st.rest) st.rest(win.r); });
-  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; }); };
+  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; st.cam.style.clipPath = `polygon(${x}px ${y}px, ${x + w}px ${y}px, ${x + w}px ${y + h}px, ${x}px ${y + h}px)`; }); };
   new ResizeObserver(frame).observe(view);
   let cur = -1, t0 = 0, paused = false; const DUR = 6500;
   function show(i, user) { if (i === cur) return; cur = i; railBtns.forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; b.querySelector('.tick').style.width = '0'; });

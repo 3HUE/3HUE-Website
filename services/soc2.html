@@ -552,7 +552,7 @@
     const inc = STEPS[4].r; inc.newRow.style.opacity = 1; inc.k[3].nEl.textContent = '2'; inc.tl.forEach((e) => { e.style.opacity = 1; });
     const au = STEPS[5].r; au.chip.style.opacity = 1; au.rows.forEach((x) => { x.ok.style.opacity = 1; });
     const tr = STEPS[6].r; tr.item.style.opacity = 1; })();
-  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; }); };
+  const frame = () => { const vw = view.clientWidth, vh = view.clientHeight; STEPS.forEach((st) => { const [x, y, w, h] = st.region; const k = Math.min(vw / w, vh / h); st.cam.style.transform = `translate(${(vw - w * k) / 2}px,${(vh - h * k) / 2}px) scale(${k}) translate(${-x}px,${-y}px)`; st.cam.style.clipPath = `polygon(${x}px ${y}px, ${x + w}px ${y}px, ${x + w}px ${y + h}px, ${x}px ${y + h}px)`; }); };
   new ResizeObserver(frame).observe(view);
   let cur = -1, t0 = 0, paused = false; const DUR = 6500;
   function show(i, user) { if (i === cur) return; cur = i; railBtns.forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; b.querySelector('.tick').style.width = '0'; });
