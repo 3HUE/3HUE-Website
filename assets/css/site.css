@@ -1015,3 +1015,27 @@ body.modal-open { overflow: hidden; }
 @media print { .site-top-wrap, .site-footer, .qp-actions, .qp-change, .qp-preview-note, #topSentinel { display: none !important; } .qp-side { position: static; } .qp-grid { grid-template-columns: 1fr; } .qp-total, .qp-card { box-shadow: none; } body { background: #fff; } }
 
 .lanes-note { margin: 22px auto 0; max-width: 76ch; text-align: center; font: 400 15px/1.6 var(--ui); color: var(--mute); text-wrap: pretty; }
+
+/* ---- Founder's note (About) ---- */
+.founder .two { align-items: start; }
+.founder .portrait { position: sticky; top: 96px; }
+.founder-note { display: grid; gap: 14px; }
+.founder-note h2 { font-size: clamp(1.9rem, 3.2vw, 2.7rem); letter-spacing: -.04em; line-height: 1.08; text-wrap: balance; }
+.founder-note .note-lead { font: 500 clamp(1.08rem, 1.5vw, 1.25rem)/1.55 var(--ui); color: var(--ink); max-width: 58ch; margin-top: 4px; }
+.founder-note p { color: var(--ink-2); font-size: 16px; line-height: 1.65; max-width: 62ch; }
+.founder-note .note-sign { display: grid; gap: 3px; margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--line); max-width: 62ch; }
+.founder-note .note-sign b { font: 700 1.15rem var(--display); letter-spacing: -.02em; color: var(--ink); }
+.founder-note .note-sign span { font: 500 13px var(--ui); color: var(--mute); }
+.founder-note .actions { margin-top: 6px; }
+.threads { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: clamp(24px, 4vw, 56px); margin-top: clamp(44px, 6vw, 72px); padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--line); }
+.threads-head h3 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); letter-spacing: -.03em; margin: 8px 0 10px; text-wrap: balance; }
+.threads-head p { color: var(--ink-2); font-size: 15.5px; line-height: 1.6; max-width: 46ch; }
+.thread-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.thread-list li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); }
+.thread-list li:first-child { border-top: 0; padding-top: 0; }
+.thread-list .t-n { font: 700 13px var(--mono); letter-spacing: .1em; color: var(--accent); padding-top: 5px; }
+.thread-list b { display: block; font: 700 1.12rem var(--display); letter-spacing: -.02em; color: var(--ink); margin-bottom: 4px; }
+.thread-list p { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.thread-list a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.thread-list a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .founder .portrait { position: static; } .threads { grid-template-columns: 1fr; } }

@@ -224,7 +224,7 @@
               <a href="/services/cmmc">CMMC Level 2 <small>Phase 2 suspended; what still applies</small></a>
               <a href="/services/hipaa">HIPAA <small>The rule can wait; enforcement won't</small></a>
               <a href="/services/iso-27001">ISO 27001 / 27701 <small>ISMS and privacy, certification-ready</small></a>
-              <a href="/services/eu-ai-act">EU AI Act <small>Deferred, not cancelled</small></a>
+              <a href="/services/eu-ai-act">EU AI Act <small>Deferred, not canceled</small></a>
               <div class="group-title">Professional services</div>
               <a href="/services/staff-augmentation">Staff Augmentation <small>AI-enabled security and GRC expertise</small></a>
               <a href="/services/it-project-management">IT Project Management <small>Delivery leadership for regulated programs</small></a>
@@ -346,7 +346,7 @@
       <div>
         <p class="label">SOC 2 compliance checklist</p>
         <h2>Where do you stand today?</h2>
-        <p class="lede">Tick what's already true. Your progress stays in this browser.</p>
+        <p class="lede">Check what's already true. Your progress stays in this browser.</p>
         <div class="meter" aria-live="polite">
           <b id="mScore">0%</b> <span style="color:var(--mute);font-weight:600">audit-ready</span>
           <div class="bar"><i id="mBar"></i></div>
@@ -509,7 +509,7 @@
   // Trust Services Criteria wheel
   const TSC = [
     ['Security', '#00aeef', 'Required in every SOC 2 report', 'Protection against unauthorized access, disclosure and damage — the common criteria (CC1 to CC9) every report covers.', 'Client Vision: controls cross-walked to CC6 (access) and CC7 (operations), with MFA, access reviews and remediation on the record.'],
-    ['Availability', '#17a34a', 'Included when uptime is part of your commitment', 'Systems are available for operation and use as committed or agreed.', 'Client Vision: backup and restoration control BCD-01 mapped to A1.2, with recovery posture derived from the live estate.'],
+    ['Availability', '#17a34a', 'Included when uptime is part of your commitment', 'Systems are available for operation and use as committed or agreed.', 'Client Vision: backup and restoration control BCD-01 mapped to A1.2, with recovery posture derived from the live environment.'],
     ['Processing Integrity', '#ec835a', 'Included when you process transactions for customers', 'Processing is complete, valid, accurate, timely and authorized.', 'Client Vision: change and remediation records on the POA&M, with owners and deadlines for every failing check.'],
     ['Confidentiality', '#7b2cbf', 'Included when you handle confidential data', 'Information designated as confidential is protected as committed or agreed.', 'Client Vision: encryption-in-transit control NET-02 mapped to CC6.7, with exceptions carried knowingly and set to expire.'],
     ['Privacy', '#0039e6', 'Included when you collect personal information', 'Personal information is collected, used, retained and disclosed in line with your commitments.', 'Client Vision: privacy controls in the same baseline, cross-walked to GDPR, CCPA and ISO 27701 alongside SOC 2.'],
@@ -583,7 +583,7 @@
     list.append(grp); });
   function meter() { const n = boxes.filter((b) => b.checked).length, p = Math.round(100 * n / boxes.length);
     document.getElementById('mScore').textContent = p + '%'; document.getElementById('mBar').style.width = p + '%';
-    document.getElementById('mMsg').textContent = p === 100 ? 'Every box ticked. Time to book the auditor — or let us check your evidence first.' : p >= 60 ? 'You\'re close. A readiness assessment finds the last gaps before your auditor does.' : p > 0 ? `${boxes.length - n} items to go. Most teams stall on evidence, not controls.` : 'Start with scope. Everything else builds on it.'; }
+    document.getElementById('mMsg').textContent = p === 100 ? 'Every box checked. Time to book the auditor — or let us check your evidence first.' : p >= 60 ? 'You\'re close. A readiness assessment finds the last gaps before your auditor does.' : p > 0 ? `${boxes.length - n} items to go. Most teams stall on evidence, not controls.` : 'Start with scope. Everything else builds on it.'; }
   meter();
 })();
 </script>
